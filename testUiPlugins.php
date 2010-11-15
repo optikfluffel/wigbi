@@ -18,19 +18,23 @@
 					unlink($file);
 				foreach (glob("wigbi/plugins/ui/*.*") as $file)
 					unlink($file);
-			} 			
+			}
 			
-			if ($cleanUp)
-				deletePlugins();
-			else
+			deletePlugins();
+			if (!$cleanUp)
+			{
 				addPlugins();
+				Wigbi::start();
+			}
+				
 		?>
 	</head>
 	<body>
-		<?php if (!$cleanUp) { ?>
-		
-		
-		<?php } ?>
+		<?php
+			if (!$cleanUp)
+				foreach (glob("tests/plugins/ui/*php") as $file)
+					require($file);
+		?>
 		
 		<h1 style="text-align:center">
 			<a href="testUiPlugins.php">Try again</a>  <a href="testUiPlugins.php?clean=1">Finish</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
