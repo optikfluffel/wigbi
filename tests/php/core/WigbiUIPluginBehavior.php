@@ -54,6 +54,15 @@ class WigbiUIPluginBehavior extends UnitTestCase
 		$this->assertEqual(substr_count($result, "</div>"), 1);	
 	}
 	
+	function test_beginPlugin_shouldStartOutputBuffer()
+	{
+		$this->obj->beginPlugin();
+		print "foo";
+		$result = ob_get_clean();
+		
+		$this->assertEqual($result, "foo");	
+	}
+	
 	function test_beginPluginDiv_shouldAddElements()
 	{
 		ob_start();
@@ -96,6 +105,24 @@ class WigbiUIPluginBehavior extends UnitTestCase
 		$result = ob_get_clean();
 		
 		$this->assertEqual(strpos($result, "</div>"), 0);
+	}
+	
+	function test_endPlugin_shouldEndOutputBufferAndPrintAndReturnIfNonAjax()
+	{
+		//TODO: This cannot be tested since ob_get_clean() is run inside.
+	}
+	
+	function test_endPlugin_shouldEndOutputBufferAndReturnIfAjax()
+	{
+		$_POST["wigbi_asyncPostBack"] = 1;
+		 
+		ob_start();
+		print "foo";
+		$result = $this->obj->endPlugin();
+		
+		$this->assertEqual($result, "foo");
+		
+		$_POST["wigbi_asyncPostBack"] = 0;
 	}
 	
 	function test_endPluginDiv_shouldAddElement()

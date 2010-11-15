@@ -26,27 +26,22 @@ function HtmlContentControl(id, htmlContentForm)
 	$.extend(this, new WigbiUIPlugin(id));
 	
 	
-	//Get the edit form, if any
-	this.form = function(newVal)
-	{
-		return this._htmlContentForm;
-	};
-	
 	//Get/set the object that is handled by the form
 	this.obj = function(newVal)
 	{
 		if (typeof(newVal) != "undefined")
 		{
 			this.getElement("object").html(JSON.stringify(newVal));
-			if (this.form() && this.form().obj() != newVal)
-				this.form().obj(newVal);
+			if (htmlContentForm && htmlContentForm.obj() != newVal)
+				htmlContentForm.obj(newVal);
 			this.reset();
 		}
+		
 		return this.getElementData("object", new HtmlContent());
 	};
 	
 	
-	//Reset the form
+	//Reset the control
 	this.reset = function()
 	{
 		this.getElement("content").html(this.obj().content());

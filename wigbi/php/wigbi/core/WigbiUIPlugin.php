@@ -99,6 +99,19 @@ abstract class WigbiUIPlugin
 	}
 	
 	/**
+	 * Begin building the plugin.
+	 * 
+	 * This method will start the output cache, which is then
+	 * handled correctly by calling endPlugin when it is done.
+	 * 
+	 * @access	public
+	 */
+	public function beginPlugin()
+	{
+		ob_start();
+	}
+	
+	/**
 	 * Begin embedding the plugin within an div structure.
 	 * 
 	 * @access	public
@@ -134,6 +147,29 @@ abstract class WigbiUIPlugin
 	public function endEditDiv()
 	{
 		?></div><?php
+	}
+	
+	/**
+	 * End building the plugin.
+	 * 
+	 * This method will end output buffering and print the final HTML
+	 * result to the page, but only if the request is a non-AJAX one.
+	 * If the request is an AJAX one, the result is returned instead.
+	 * 
+	 * Remember to always return the return value from this function
+	 * if it should be possible to add the plugin with AJAX.  
+	 * 
+	 * @access	public
+	 * 
+	 * @return	string	HTML result.
+	 */
+	public function endPlugin()
+	{
+		$result = ob_get_clean();
+		
+		if (!Wigbi::isAjaxPostback())
+			print $result;
+		return $result;
 	}
 	
 	/**

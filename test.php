@@ -9,7 +9,7 @@
 			Wigbi::start();
 			
 			$cleanUp = array_key_exists("clean", $_GET);
-			$test_phpcore = false && !$cleanUp;
+			$test_phpcore = true && !$cleanUp;
 			$test_php = true && !$cleanUp;
 			$test_dataPlugins = false && !$cleanUp;
 			$test_js = false && !$cleanUp;
