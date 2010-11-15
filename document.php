@@ -1,0 +1,1 @@
+<?php header("Location: tools/PhpDocumentor/index.html"); ?>
