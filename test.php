@@ -3,8 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" >
 	<head>
 		<?php
-		
-			//Start dummy Wigbi instance to initialize the framework
 			Wigbi::configFile($root . "tests/resources/config.ini");
 			Wigbi::start();
 			
@@ -23,17 +21,15 @@
 				Wigbi::start();
 				ob_end_clean();
 			}
-			
 			function deletePlugins() {
 				Wigbi::dbHandler()->query("DROP TABLE Ratings");
 				$files = array("wigbi/plugins/data/Rating.php", "wigbi/plugins/ui/LoginForm.php", "wigbi/plugins/ui/LoginForm.js", "wigbi/js/wigbi_dataPlugins.js", "wigbi/js/wigbi_uiPlugins.js");
 				foreach ($files as $file)
 					if (file_exists($file))
 						unlink ($file);
-			} 
-			
+			} 			
 			deletePlugins();
-	?>
+		?>
 	</head>
 	<body>
 		<?php
@@ -102,12 +98,12 @@
 				
 				<br/>
 				
-				<h1 style="text-align:center">
-					<a href="">Try again</a>  <a href="">Finish</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</h1>
-				<div class="footer">&nbsp;</div>
-				
 		<?php } ?>
+		
+		<h1 style="text-align:center">
+			<a href="test.php">Try again</a>  <a href="test.php?clean=1">Finish</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</h1>
+		<div class="footer">&nbsp;</div>
 		
 	</body>
 </html>
