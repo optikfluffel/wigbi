@@ -92,14 +92,13 @@ class HtmlContentControl extends WigbiUIPlugin
 		if (!$obj->name())
 			$obj->name($objectName);
 	
-		ob_start();
+		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
-		
 		if ($embedForm)
 			$plugin->beginViewDiv($embedForm && $obj->id());
 		
-		$plugin->addTextArea("object", json_encode($obj), null, "hide");
-		$plugin->addText("content", $obj->content());
+		View::addTextArea("object", json_encode($obj), "class='hide'");
+		View::addDiv("content", $obj->content());
 		
 		if ($embedForm)
 		{
@@ -121,11 +120,7 @@ class HtmlContentControl extends WigbiUIPlugin
 		
 		<?php
 		$plugin->endPluginDiv();
-		$result = ob_get_clean();
-		
-		if (!Wigbi::isAjaxPostback())
-			print $result;
-		return Wigbi::isAjaxPostback() ? $result : "";
+		return $plugin->endPlugin();
 	}
 }
 

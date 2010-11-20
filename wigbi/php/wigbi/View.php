@@ -90,15 +90,29 @@ class View
 	}
 	
 	/**
+	 * Add a checkbox input element (input type="checkbox") to the page.
+	 * 
+	 * @access	public
+	 * 
+	 * @param	string	$id					The ID of the element.
+	 * @param	string	$checked		Whether or not the checkbox should be checked; default false.
+	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
+	 */
+	public function addCheckBox($id, $checked = false, $attributes = "")
+	{
+		View::addElement("input", array("type" => "text", "id" => $id, "value" => $value), $attributes);
+	}
+	
+	/**
 	 * Add a div element to the page.
 	 * 
 	 * @access	public
 	 * 
 	 * @param	string	$id					The id of the element.
-	 * @param	string	$content		The content of the div.
+	 * @param	string	$content		The content of the div; default blank.
 	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
 	 */
-	public function addDiv($id, $text, $attributes = "")
+	public function addDiv($id, $text = "", $attributes = "")
 	{
 		View::addElement("div", array("id" => $id), $attributes, $text);
 	}
@@ -128,44 +142,15 @@ class View
 	}
 	
 	/**
-	 * Add a form closing element to the page.
-	 * 
-	 * @access	public
-	 */
-	public function addFormClosingTag()
-	{
-		print "</form>";
-	}
-	
-	/**
-	 * Add an form opening tag to the page.
-	 * 
-	 * @access	public
-	 * 
-	 * @param	string	$id					The ID of the element.
-	 * @param	string	$action			The action of the form; default blank.
-	 * @param	string	$onsubmit		The onsubmit event of the form; default blank.
-	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
-	 */
-	public function addFormOpeningTag($id, $action = "", $onsubmit = "", $attributes = "")
-	{
-		ob_start();
-		View::addElement("form", array("id" => $id, "action" => $action, "onsubmit" => $onsubmit), $attributes);
-		$result = ob_get_clean(); 
-		
-		print str_replace(" />", ">", $result);
-	}
-	
-	/**
 	 * Add a password input element (input type="password") to the page.
 	 * 
 	 * @access	public
 	 * 
 	 * @param	string	$id					The ID of the element.
-	 * @param	string	$value			The value of the element.
+	 * @param	string	$value			The value of the element; default blank.
 	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
 	 */
-	public function addPasswordInput($id, $value, $attributes = "")
+	public function addPasswordInput($id, $value = "", $attributes = "")
 	{
 		View::addElement("input", array("type" => "password", "id" => $id, "value" => $value), $attributes);
 	}
@@ -176,12 +161,12 @@ class View
 	 * @access	public
 	 * 
 	 * @param	string	$id					The ID of the element.
-	 * @param	string	$value			The value of the element.
+	 * @param	string	$text				The button text.
 	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
 	 */
-	public function addResetInput($id, $value, $attributes = "")
+	public function addResetButton($id, $text, $attributes = "")
 	{
-		View::addElement("input", array("type" => "reset", "id" => $id, "value" => $value), $attributes);
+		View::addElement("input", array("type" => "reset", "id" => $id, "value" => $text), $attributes);
 	}
 	
 	/**
@@ -190,10 +175,10 @@ class View
 	 * @access	public
 	 * 
 	 * @param	string	$id					The id of the element.
-	 * @param	string	$content		The content of the span.
+	 * @param	string	$content		The content of the span; default blank.
 	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
 	 */
-	public function addSpan($id, $text, $attributes = "")
+	public function addSpan($id, $text = "", $attributes = "")
 	{
 		View::addElement("span", array("id" => $id), $attributes, $text);
 	}
@@ -204,12 +189,12 @@ class View
 	 * @access	public
 	 * 
 	 * @param	string	$id					The ID of the element.
-	 * @param	string	$value			The value of the element.
+	 * @param	string	$text				The button text.
 	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
 	 */
-	public function addSubmitInput($id, $value, $attributes = "")
+	public function addSubmitButton($id, $text, $attributes = "")
 	{
-		View::addElement("input", array("type" => "submit", "id" => $id, "value" => $value), $attributes);
+		View::addElement("input", array("type" => "submit", "id" => $id, "value" => $text), $attributes);
 	}
 	
 	/**
@@ -218,10 +203,10 @@ class View
 	 * @access	public
 	 * 
 	 * @param	string	$id					The ID of the element.
-	 * @param	string	$content		The content of the element.
+	 * @param	string	$content		The content of the element; default blank.
 	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
 	 */
-	public function addTextArea($id, $content, $attributes = "")
+	public function addTextArea($id, $content = "", $attributes = "")
 	{
 		View::addElement("textarea", array("id" => $id), $attributes, $content);
 	}
@@ -232,10 +217,10 @@ class View
 	 * @access	public
 	 * 
 	 * @param	string	$id					The ID of the element.
-	 * @param	string	$value			The value of the element.
+	 * @param	string	$value			The value of the element; default blank.
 	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
 	 */
-	public function addTextInput($id, $value, $attributes = "")
+	public function addTextInput($id, $value = "", $attributes = "")
 	{
 		View::addElement("input", array("type" => "text", "id" => $id, "value" => $value), $attributes);
 	}
@@ -259,6 +244,36 @@ class View
 		require str_replace("~/", Wigbi::serverRoot(), $viewPath);
 		
 		View::$_currentViewData = null;
+	}
+	
+	
+	/**
+	 * Add a form closing element to the page.
+	 * 
+	 * @access	public
+	 */
+	public function closeForm()
+	{
+		print "</form>";
+	}
+	
+	/**
+	 * Add an form opening tag to the page.
+	 * 
+	 * @access	public
+	 * 
+	 * @param	string	$id					The ID of the element.
+	 * @param	string	$action			The action of the form; default blank.
+	 * @param	string	$onsubmit		The onsubmit event of the form; default blank.
+	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
+	 */
+	public function openForm($id, $action = "", $onsubmit = "", $attributes = "")
+	{
+		ob_start();
+		View::addElement("form", array("id" => $id, "action" => $action, "onsubmit" => $onsubmit), $attributes);
+		$result = ob_get_clean(); 
+		
+		print str_replace(" />", ">", $result);
 	}
 }
 

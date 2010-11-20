@@ -21,13 +21,15 @@
 				Wigbi::start();
 				ob_end_clean();
 			}
+			
 			function deletePlugins() {
 				Wigbi::dbHandler()->query("DROP TABLE Ratings");
 				$files = array("wigbi/plugins/data/Rating.php", "wigbi/plugins/ui/LoginForm.php", "wigbi/plugins/ui/LoginForm.js", "wigbi/js/wigbi_dataPlugins.js", "wigbi/js/wigbi_uiPlugins.js");
 				foreach ($files as $file)
 					if (file_exists($file))
 						unlink ($file);
-			} 			
+			} 
+						
 			deletePlugins();
 		?>
 	</head>

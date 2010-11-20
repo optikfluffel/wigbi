@@ -13,6 +13,7 @@
 				foreach (glob("plugins/ui/*.*") as $file)
 					copy($file, "wigbi/plugins/ui/" . basename($file));
 			}
+			
 			function deletePlugins() {
 				foreach (glob("wigbi/plugins/data/*.*") as $file)
 					unlink($file);
@@ -20,27 +21,29 @@
 					unlink($file);
 			}
 			
+			function runTests($cleanUp) {
+				if ($cleanUp)
+					return;
+					//TODO: REPlace with iterating over real classes to ensure that they all are tested
+				foreach (glob("tests/plugins/ui/*php") as $file)
+					include($file);	
+			}
+			
 			deletePlugins();
+			
 			if (!$cleanUp)
 			{
 				addPlugins();
 				Wigbi::start();
 			}
-				
 		?>
 	</head>
 	<body>
-		<?php
-			if (!$cleanUp)
-				foreach (glob("tests/plugins/ui/*php") as $file)
-					require($file);
-		?>
-		
+		<?php runTests($cleanUp); ?>
 		<h1 style="text-align:center">
 			<a href="testUiPlugins.php">Try again</a>  <a href="testUiPlugins.php?clean=1">Finish</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</h1>
 		<div class="footer">&nbsp;</div>
-		
 	</body>
 </html>
 
