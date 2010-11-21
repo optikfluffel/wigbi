@@ -114,7 +114,7 @@ Wigbi.ajax = function(className, object, functionName, functionParameters, callB
 	//Handle empty parameters
 	if (!requestObject.functionParameters)
 		requestObject.functionParameters = [];
-		
+
 	//Create async data object
 	var asyncData = {"wigbi_asyncPostBack":1, "wigbi_asyncPostBackData":JSON.stringify(requestObject)};
 	

@@ -37,6 +37,11 @@
 				Wigbi::start();
 			}
 		?>
+		
+		<script type="text/javascript">
+			function addDone(elementId)
+			{ }
+		</script>
 	</head>
 	<body>
 		<?php runTests($cleanUp); ?>

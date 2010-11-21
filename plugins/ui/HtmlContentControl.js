@@ -58,6 +58,8 @@ function HtmlContentControl(id, htmlContentForm)
 //[AJAX] Add a new plugin instance to the page
 HtmlContentControl.add = function(id, objectId, objectName, embedForm, targetContainerId, onAdd)
 {
+	embedForm = embedForm ? 1 : 0;
+	
 	Wigbi.ajax("HtmlContentControl", null, "add", [id, objectId, objectName, embedForm], function(response) 
 	{
 		$("#" + targetContainerId).html(response);

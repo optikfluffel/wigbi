@@ -182,7 +182,7 @@ class ViewBehavior extends UnitTestCase
 	function test_closeForm_shouldAddElement()
 	{
 		ob_start();
-		View::closeFOrm();
+		View::closeForm();
 		$result = ob_get_clean();
 		
 		$this->assertEqual($result, "</form>");	

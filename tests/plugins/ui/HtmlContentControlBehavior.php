@@ -14,14 +14,14 @@
 
 <fieldset>
 	<legend>HtmlContentControl</legend>
-	<div id="hcc_target">
+	<div id="hcc_target">sa
 		<?php HtmlContentControl::add("hcc", $obj1, "", false); ?>
 	</div>
 	<div class="pluginControls">
 		Id: <?php View::addTextInput("hcc_id") ?>
 		Name: <?php View::addTextInput("hcc_name", "") ?>
-		EmbedForm: <input id="hcc_embed" type="checkbox" /> 
-		<?php View::addButton("hcc_addButton", "Add", "HtmlContentControl.add($('hcc_id').val(), $('hcc_name').val(), $('hcc_embed').val(), 'hcc_target')"); ?>
+		EmbedForm: <input id="hcc_embed" type="checkbox" />
+		<?php View::addButton("hcc_addButton", "Add", "HtmlContentControl.add('hcc', $('#hcc_id').val(), $('#hcc_name').val(), $('#hcc_embed').attr('checked'), 'hcc_target', addDone)"); ?>
 	</div>
 </fieldset>
 

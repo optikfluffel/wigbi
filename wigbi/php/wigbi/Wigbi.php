@@ -815,7 +815,8 @@ class Wigbi
 		print "<script type=\"text/javascript\" src=\"" . $jsPath . "\"></script>";
 		
 		//Build the page's js code
-		$jsCode  = "Wigbi._webRoot = '" . Wigbi::webRoot() . "';";
+		$jsCode  = "Wigbi._ajaxConfigFile = '" . Wigbi::configFile() . "';";
+		$jsCode .= "Wigbi._webRoot = '" . Wigbi::webRoot() . "';";
 		$jsCode .= "Wigbi._dataPluginClasses = " . ((sizeof(Wigbi::dataPluginClasses()) == 0) ? "[];" : "['" . implode("','", Wigbi::dataPluginClasses()) . "'];");
 		$jsCode .= "Wigbi._uiPluginClasses = " . ((sizeof(Wigbi::uiPluginClasses()) == 0) ? "[];" : "['" . implode("','", Wigbi::uiPluginClasses()) . "'];");
 		$jsCode .= "Wigbi._cacheHandler = new CacheHandler('" . Wigbi::webRoot() . str_replace("../", "", Wigbi::configuration("folder", "cacheHandler")) . "');";
