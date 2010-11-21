@@ -14,10 +14,17 @@
 
 <fieldset>
 	<legend>HtmlContentControl</legend>
-	<div id="hcc_target">sa
+	<div id="hcc_target">
 		<?php HtmlContentControl::add("hcc", $obj1, "", false); ?>
 	</div>
-	<div class="pluginControls">
+	<div class="propertyBox">
+		<select onchange="hcc.obj(JSON.parse(this.value))">
+			<option value='<?php print json_encode($obj1) ?>'>Foo</option>
+			<option value='<?php print json_encode($obj2) ?>'>Bar</option>
+		</select>
+		<button onclick="hcc.reset()">Reset</button>
+	</div>
+	<div class="addBox">
 		Id: <?php View::addTextInput("hcc_id") ?>
 		Name: <?php View::addTextInput("hcc_name", "") ?>
 		EmbedForm: <input id="hcc_embed" type="checkbox" />

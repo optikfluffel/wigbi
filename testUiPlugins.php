@@ -15,9 +15,11 @@
 			}
 			
 			function deletePlugins() {
-				foreach (glob("wigbi/plugins/data/*.*") as $file)
+				foreach (glob("wigbi/plugins/data/*.php") as $file)
 					unlink($file);
-				foreach (glob("wigbi/plugins/ui/*.*") as $file)
+				foreach (glob("wigbi/plugins/ui/*.php") as $file)
+					unlink($file);
+				foreach (glob("wigbi/plugins/ui/*.js") as $file)
 					unlink($file);
 			}
 			

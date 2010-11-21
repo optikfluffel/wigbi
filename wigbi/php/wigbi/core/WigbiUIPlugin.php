@@ -200,7 +200,7 @@ abstract class WigbiUIPlugin
 	 * @param		string	$elementId	The ID of the element.
 	 * @return	string							The resulting id string.
 	 */
-	private function getChildId($elementId)
+	public function getChildId($elementId)
 	{
 		return $this->id() . '-' . $elementId;
 	}
