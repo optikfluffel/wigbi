@@ -21,10 +21,10 @@
  * The Wigbi.Plugins.UI.HtmlContentControl PHP class.
  * 
  * This plugin can be used to display the content of any HtmlContent
- * object. It can also be set to embed a HtmlContentForm plugin with
- * which the object can be edited.
+ * object. It can also be set to embed a HtmlContentForm, with which
+ * the object can be edited.
  * 
- * If an object form is embedded, it will automatically be displayed
+ * If an HtmlContentForm is embedded, it will automatically be shown
  * if the control is added without an object.
  * 
  * 
@@ -97,7 +97,7 @@ class HtmlContentControl extends WigbiUIPlugin
 		if ($embedForm)
 			$plugin->beginViewDiv($embedForm && $obj->id());
 		
-		View::addTextArea($plugin->getChildId("object"), json_encode($obj), "class='hide'");
+		View::addTextArea($plugin->getChildId("object"), json_encode($obj), "style='display:none'");
 		View::addDiv($plugin->getChildId("content"), $obj->content());
 		
 		if ($embedForm)

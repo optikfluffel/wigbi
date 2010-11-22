@@ -34,6 +34,7 @@ function HtmlContentForm(id)
 			this.getElement("object").html(JSON.stringify(newVal));
 			this.reset();
 		}
+		
 		return this.getElementData("object", new HtmlContent());
 	};
 	
@@ -56,7 +57,7 @@ function HtmlContentForm(id)
 		try { obj.setContent(tinyMCE.get(this.getElement("content").attr("id")).getContent()); }
 		catch(e) { }
 		
-		var button = this.getElement("submitButton");
+		var button = this.getElement("submit");
 		button.attr("disabled", "disabled");
 		
 		var _this = this;
@@ -67,9 +68,15 @@ function HtmlContentForm(id)
 			_this.onSubmit();
 		});
 	};
+	
 
 	//This event method is raised after a submit operation succeeds	
 	this.onSubmit = function() {};
+	
+	
+	//Override the form submit event
+	var _this = this;
+	this.getElement("form").submit(function() { _this.submit(); return false; });
 };
 
 

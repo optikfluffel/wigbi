@@ -21,7 +21,7 @@
  * The Wigbi.Plugins.UI.HtmlContentForm PHP class.
  * 
  * This plugin can be used to edit an HtmlContent object. The plugin
- * form is submitted with AJAX.
+ * form is submitted with AJAX, without reloading the page.
  * 
  * 
  * JAVASCRIPT ********************
@@ -85,18 +85,25 @@ class HtmlContentForm extends WigbiUIPlugin
 		$obj = new HtmlContent();
 		$obj = $obj->loadOrInit($objectOrId, $objectName, "name");
 		
-		ob_start();
+		if (!$obj->name())
+			$obj->name($objectName);
+	
+		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
+		View::openForm($plugin->getChildId("form"));
+		View::addTextArea($plugin->getChildId("object"), json_encode($obj), "style='display:none'");
 		
-		$plugin->addTextArea("object", json_encode($obj), null, "hide");
-		$plugin->addTextBox("name", $obj->name() ? $obj->name() : $objectName, $plugin->translate("name"). ":", "");
-		$plugin->addTextArea("content", $obj->content(), $plugin->translate("content"). ":", "wysiwyg advanced");
+		View::addDiv($plugin->getChildId("nameTitle"), $plugin->translate("name") . ":", "class='input-title'");
+		View::addTextInput($plugin->getChildId("name"), $obj->name(), "");
+		
+		View::addDiv($plugin->getChildId("contentTitle"), $plugin->translate("content") . ":", "class='input-title'");
+		View::addTextArea($plugin->getChildId("content"), $obj->content(), "class='wysiwyg advanced'");
 		?>
 		
 		<div class="buttons">
 			<?php
-				$plugin->addButton("resetButton", "reset", $plugin->translate("reset"));
-				$plugin->addButton("submitButton", "submit", $plugin->translate("save"));
+				View::addButton($plugin->getChildId("reset"), $plugin->translate("reset"), $id . ".reset(); return false;");
+				View::addSubmitButton($plugin->getChildId("submit"), $plugin->translate("save"));
 			?>
 		</div>
 		
@@ -105,12 +112,9 @@ class HtmlContentForm extends WigbiUIPlugin
 		</script>
 		
 		<?php
+		View::closeForm();
 		$plugin->endPluginDiv();
-		$result = ob_get_clean();
-		
-		if (!Wigbi::isAjaxPostback())
-			print $result;
-		return Wigbi::isAjaxPostback() ? $result : "";
+		return $plugin->endPlugin();
 	}
 }
 
