@@ -33,7 +33,7 @@
  * @version			1.0.0
  */
 
-class City extends WigbiDataPlugin 
+class City extends WigbiDataPlugin
 {
 	/**#@+
 	 * @ignore
