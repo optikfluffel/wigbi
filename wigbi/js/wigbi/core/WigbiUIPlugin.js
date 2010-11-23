@@ -43,23 +43,36 @@ function WigbiUIPlugin(id)
 	
 
 	//Bind error messages to plugin DOM elements
-	this.bindErrors = function(elementIds, errorCodes)
+	this.bindErrors = function(elementIds, errorCodes, errorMessage)
 	{ 
 		var errorClass = "validation-error";
 		
-		if (typeof(errorCodes) == "string")
-				errorCodes = errorCodes.split(",");
+		if (errorMessage)
+		{
+			this.getElement("validation").html(errorMessage);
+			this.getElement("validation").show();
+		}	
+		else
+		{
+			this.getElement("validation").hide();
+		}
+		
+		if (errorCodes && typeof(errorCodes) == "string")
+			errorCodes = errorCodes.split(",");
 		
 		for (var i=0; i<elementIds.length; i++)
 		{
 			var fullId = "#" + this.id() + "-" + elementIds[i];
 			$(fullId).removeClass(errorClass);
 			
+			if (!errorCodes)
+				continue;
+			
 			for (var j=0; j<errorCodes.length; j++)
 			{
 				if (errorCodes[j].substring(0, elementIds[i].length) == elementIds[i])
 				{
-					$(fullId).attr("title", Wigbi.languageHandler().translate(errorCodes[j]));
+					$(fullId).attr("title", this.translate(errorCodes[j]));
 					$(fullId).addClass(errorClass);
 				}
 			}

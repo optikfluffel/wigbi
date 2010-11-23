@@ -93,7 +93,7 @@ class LoginForm extends WigbiUIPlugin
 		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
 		View::openForm($plugin->getChildId("form"));
-		View::addHiddenInput($plugin->getChildId("redirectPage"), $redirectUrl, "");
+		View::addHiddenInput($plugin->getChildId("redirectUrl"), $redirectUrl, "");
 		
 		View::addDiv($plugin->getChildId("validation"), "&nbspM", "class='validation-error hide'");
 		

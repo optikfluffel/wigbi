@@ -22,9 +22,6 @@
  */
 function LogoutLink(id, redirectUrl)
 {
-	//Private variables
-	this._redirectUrl = redirectUrl;
-	
 	//Inherit WigbiUIPlugin
 	$.extend(this, new WigbiUIPlugin(id));
 	
@@ -32,13 +29,20 @@ function LogoutLink(id, redirectUrl)
 	//Submit the plugin
 	this.submit = function()
 	{
+		var redirectUrl = this.getElement("redirectUrl").val();
+
 		var _this = this;
 		User.logout(function(result)
 		{
 			_this.onSubmit(result);
 			
-			if (result && _this._redirectUrl)
-				location.href = _this._redirectUrl;
+			if (result)
+			{
+				if (redirectUrl)
+					location.href = redirectUrl;
+				else
+					location.href = location.href;
+			}
 		});
 	};
 

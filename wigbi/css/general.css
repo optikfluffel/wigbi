@@ -5,3 +5,7 @@ input.validation-error {
 	border: solid #CA2220 1px !important;
 	background: #FFAEAD;
 }
+
+div.validation-error {
+	margin-bottom: 10px;
+}

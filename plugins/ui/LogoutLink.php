@@ -21,12 +21,11 @@
  * The Wigbi.Plugins.UI.LogoutLink PHP class.
  * 
  * This plugin can be used to logout a logged in user from the site,
- * using the User data plugin. The operation is submitted with AJAX.
+ * using the User data plugin. The operation is submitted with AJAX,
+ * without reloading the page.
  * 
  * If redirectUrl is set, the plugin will redirect a user to the URL
  * when he/she is successfully logged out.
- * 
- * Note that this plugin is never displayed if no user is logged in.
  * 
  * 
  * JAVASCRIPT ********************
@@ -82,13 +81,12 @@ class LogoutLink extends WigbiUIPlugin
 	 */
 	public static function add($id, $redirectUrl)
 	{
-		if (!User::getCurrentUser()->id())
-			return;
-		
 		$plugin = new LogoutLink($id);
 		
-		ob_start();
+		$plugin->beginPlugin();
+		View::addHiddenInput($plugin->getChildId("redirectUrl"), $redirectUrl, "");
 		?>
+		
 			<script type="text/javascript">
 				var <?print $id ?> = new LogoutLink("<?print $id ?>", "<?php print $redirectUrl; ?>");
 			</script>
@@ -96,12 +94,8 @@ class LogoutLink extends WigbiUIPlugin
 			<a href="" onclick="<?print $id ?>.submit(); return false;">
 				<?php print $plugin->translate("logout") ?>
 			</a>
-		<?php
-		$result = ob_get_clean();
-		
-		if (!Wigbi::isAjaxPostback())
-			print $result;
-		return Wigbi::isAjaxPostback() ? $result : "";
+			
+		<?php return $plugin->endPlugin();
 	}
 }
 

@@ -40,35 +40,22 @@ function LoginForm(id)
 		User.login(userName, password, function(result, exceptions)
 		{
 			button.attr("disabled", "");
-			_this.bindErrors(["userName", "password"], exceptions);
-			_this.onSubmit(result, exception);
+			_this.bindErrors(["userName", "password"], exceptions, !result ? _this.translate("invalidCredentials") : "");
+			_this.onSubmit(result, exceptions);
 			
-			if (result && redirectUrl)
-				location.href = redirectUrl;
+			if (result)
+			{
+				if (redirectUrl)
+					location.href = redirectUrl;
+				else
+					location.href = location.href;
+			} 
 		});
 	};
+	
 
-
-	//This event method is raised after a submit operation succeeds	
-	this.onSubmit = function(loginResult, exception)
-	{
-		var msg = "";
-		
-		if (!loginResult || exception)
-			msg = this.translate("loginFailed") + ". ";
-		if (!loginResult)
-			msg += this.translate("invalidCredentials") + ". ";
-			
-		if (exception)
-		{
-			var exceptions = exception.split(",");
-			for (var i=0; i<exceptions.length; i++)
-				msg += this.translate(exceptions[i]) + ". ";
-		}
-		
-		if (msg)
-			alert(msg);		//TODO: Display error in div
-	};
+	//This event method is raised after a submit operation finishes	
+	this.onSubmit = function(result, exceptions) {};
 	
 	
 	//Override the form submit event
@@ -78,11 +65,9 @@ function LoginForm(id)
 
 
 //[AJAX] Add a new plugin instance to the page
-LoginForm.add = function(id, redirectUrl, autoRedirect, targetContainerId, onAdd)
+LoginForm.add = function(id, redirectUrl, targetContainerId, onAdd)
 {
-	autoRedirect = autoRedirect ? 1 : 0;
-	
-	Wigbi.ajax("LoginForm", null, "add", [id, redirectUrl, autoRedirect], function(response) 
+	Wigbi.ajax("LoginForm", null, "add", [id, redirectUrl, 0], function(response) 
 	{
 		$("#" + targetContainerId).html(response);
 		eval(id + " = new LoginForm('" + id + "');");
