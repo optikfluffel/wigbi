@@ -41,6 +41,7 @@ $(document).ready(function()
 		obj._numRatings = 5;
 		
 		obj.save(function(result) {
+			start();
 			equals(obj.id().length, 40);
 			equals(obj.name(), "Rating");
 			equals(obj.anonymous(), true);
@@ -48,7 +49,6 @@ $(document).ready(function()
 			equals(obj.numRatings(), 5);
 			same(obj, result);
 			
-			start();
 		});
 	});
 	
