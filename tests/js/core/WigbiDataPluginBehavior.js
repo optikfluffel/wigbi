@@ -14,7 +14,6 @@ $(document).ready(function()
 		var obj = new WigbiDataPlugin();
 		
 		equals(obj.className(), "WigbiDataPlugin");
-		equals(obj.id(), "");
 	});
 	
 	
@@ -259,7 +258,7 @@ $(document).ready(function()
 		
 		tmpObj.validate(function(result) {
 			equals(result.length, 1);
-			equals(result[0], "minTooLarge");
+			equals(result[0], "min_tooLarge");
 			
 			start();
 		});

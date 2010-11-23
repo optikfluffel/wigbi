@@ -79,7 +79,7 @@ class ForumPostBehavior extends UnitTestCase
 	{
 		$this->forumPost->content("       ");
 		
-		$this->assertEqual($this->forumPost->validate(), array("contentRequired"));
+		$this->assertEqual($this->forumPost->validate(), array("content_required"));
 		
 		$this->forumPost->content("foo bar");
 		

@@ -113,9 +113,9 @@ class Message extends WigbiDataPlugin
 		
 		//Require that a subject and a text is defined
 		if (!trim($this->subject()))
-			array_push($errorList, "subjectRequired");
+			array_push($errorList, "subject_required");
 		if (!trim($this->text()))
-			array_push($errorList, "textRequired");
+			array_push($errorList, "text_required");
 			
 		//Return error list
 		return $errorList;

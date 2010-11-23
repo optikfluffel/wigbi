@@ -79,7 +79,7 @@ class File extends WigbiDataPlugin
 		
 		//Require that a file URL is defined
 		if (!trim($this->fileUrl()))
-			array_push($errorList, "fileUrlRequired");
+			array_push($errorList, "fileUrl_required");
 			
 		//Return error list
 		return $errorList;

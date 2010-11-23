@@ -114,7 +114,7 @@ class RatingBehavior extends UnitTestCase
 	
 	function test_getRatingValue_shouldFailForUnsavedObject()
 	{
-		$this->expectException(new Exception("idRequired"));
+		$this->expectException(new Exception("id_required"));
 		$this->rating->getRatingValue();
 	}
 	
@@ -123,7 +123,7 @@ class RatingBehavior extends UnitTestCase
 		$this->rating->loadBy("min", 1.1);
 		$this->rating->anonymous(false);
 		
-		$this->expectException(new Exception("createdByRequired"));
+		$this->expectException(new Exception("createdBy_required"));
 		$this->rating->getRatingValue(null);
 	}
 	
@@ -149,7 +149,7 @@ class RatingBehavior extends UnitTestCase
 	
 	function test_rate_shouldFailForUnsavedObject()
 	{
-		$this->expectException(new Exception("idRequired"));
+		$this->expectException(new Exception("id_required"));
 		$this->rating->rate(4, null);
 	}
 	
@@ -158,7 +158,7 @@ class RatingBehavior extends UnitTestCase
 		$this->rating->anonymous(false);
 		$this->rating->save();
 		
-		$this->expectException(new Exception("createdByRequired"));
+		$this->expectException(new Exception("createdBy_required"));
 		$this->rating->rate(3, null);
 	}
 	
@@ -167,7 +167,7 @@ class RatingBehavior extends UnitTestCase
 		$this->rating->loadBy("min", 1.1);
 		$this->rating->anonymous(true);
 		
-		$this->expectException(new Exception("valueTooSmall"));
+		$this->expectException(new Exception("value_tooSmall"));
 		$this->rating->rate(1, null);
 	}
 	
@@ -176,7 +176,7 @@ class RatingBehavior extends UnitTestCase
 		$this->rating->loadBy("min", 1.1);
 		$this->rating->anonymous(true);
 		
-		$this->expectException(new Exception("valueTooLarge"));
+		$this->expectException(new Exception("value_tooLarge"));
 		$this->rating->rate(5, null);
 	}
 	
@@ -259,7 +259,7 @@ class RatingBehavior extends UnitTestCase
 	
 	function test_unrate_shouldFailForUnsavedObject()
 	{
-		$this->expectException(new Exception("idRequired"));
+		$this->expectException(new Exception("id_required"));
 		$result = $this->rating->unrate(null);
 	}
 	
@@ -268,7 +268,7 @@ class RatingBehavior extends UnitTestCase
 		$this->rating->loadBy("min", 1.1);
 		$this->rating->anonymous(false);
 		
-		$this->expectException(new Exception("createdByRequired"));
+		$this->expectException(new Exception("createdBy_required"));
 		$result = $this->rating->unrate(null);
 	}
 	
@@ -286,7 +286,7 @@ class RatingBehavior extends UnitTestCase
 		$this->rating->min(5);
 		$this->rating->max(1);
 		
-		$this->assertEqual($this->rating->validate(), array("minTooLarge"));
+		$this->assertEqual($this->rating->validate(), array("min_tooLarge"));
 		
 		$this->rating->min(1);
 		$this->rating->max(5);

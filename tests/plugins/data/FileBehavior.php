@@ -73,7 +73,7 @@ class FileBehavior extends UnitTestCase
 	{
 		$this->file->fileUrl("       ");
 		
-		$this->assertEqual($this->file->validate(), array("fileUrlRequired"));
+		$this->assertEqual($this->file->validate(), array("fileUrl_required"));
 		
 		$this->file->fileUrl("foo bar");
 		

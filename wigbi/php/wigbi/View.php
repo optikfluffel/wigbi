@@ -100,7 +100,11 @@ class View
 	 */
 	public function addCheckBox($id, $checked = false, $attributes = "")
 	{
-		View::addElement("input", array("type" => "text", "id" => $id, "value" => $value), $attributes);
+		$arguments = array("type" => "checkbox", "id" => $id);
+		if ($checked)
+			$arguments["checked"] = "checked";
+			
+		View::addElement("input", $arguments, $attributes);
 	}
 	
 	/**
@@ -142,7 +146,7 @@ class View
 	}
 	
 	/**
-	 * Add a password input element (input type="password") to the page.
+	 * Add a hidden input element (input type="hidden") to the page.
 	 * 
 	 * @access	public
 	 * 
@@ -150,9 +154,22 @@ class View
 	 * @param	string	$value			The value of the element; default blank.
 	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
 	 */
-	public function addPasswordInput($id, $value = "", $attributes = "")
+	public function addHiddenInput($id, $value = "", $attributes = "")
 	{
-		View::addElement("input", array("type" => "password", "id" => $id, "value" => $value), $attributes);
+		View::addElement("input", array("type" => "hidden", "id" => $id, "value" => $value), $attributes);
+	}
+	
+	/**
+	 * Add a password input element (input type="password") to the page.
+	 * 
+	 * @access	public
+	 * 
+	 * @param	string	$id					The ID of the element.
+	 * @param	string	$attributes	Optional, additional attributes to apply to the element; default blank.
+	 */
+	public function addPasswordInput($id, $attributes = "")
+	{
+		View::addElement("input", array("type" => "password", "id" => $id), $attributes);
 	}
 	
 	/**

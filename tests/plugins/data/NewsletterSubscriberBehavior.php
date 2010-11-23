@@ -67,11 +67,11 @@ class NewsletterSubscriberBehavior extends UnitTestCase
 	{
 		$this->newsletterSubscriber->email("       ");
 		
-		$this->assertEqual($this->newsletterSubscriber->validate(), array("emailRequired"));
+		$this->assertEqual($this->newsletterSubscriber->validate(), array("email_required"));
 		
 		$this->newsletterSubscriber->email("foo bar");
 		
-		$this->assertEqual($this->newsletterSubscriber->validate(), array("emailInvalid"));
+		$this->assertEqual($this->newsletterSubscriber->validate(), array("email_invalid"));
 		
 		$this->newsletterSubscriber->email("foo.bar@foobar.com");
 		

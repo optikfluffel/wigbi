@@ -77,7 +77,7 @@ class CityBehavior extends UnitTestCase
 	{
 		$this->city->name("       ");
 		
-		$this->assertEqual($this->city->validate(), array("nameRequired"));
+		$this->assertEqual($this->city->validate(), array("name_required"));
 		
 		$this->city->name("foo bar");
 		

@@ -26,13 +26,6 @@ function LoginForm(id)
 	$.extend(this, new WigbiUIPlugin(id));
 	
 
-	//Reset the form
-	this.reset = function()
-	{
-		this.getElement("name").val(this.obj().name());
-		this.getElement("content").val(this.obj().content());
-	};
-
 	//Submit the form
 	this.submit = function()
 	{
@@ -40,18 +33,14 @@ function LoginForm(id)
 		var password = this.getElement("password").val();
 		var redirectUrl = this.getElement("redirectUrl").val();
 		
-		this.getElement("submitButton").attr("disabled", "disabled");
+		var button = this.getElement("submit");
+		button.attr("disabled", "disabled");
 		
 		var _this = this;
-		User.login(userName, password, function(result, exception)
+		User.login(userName, password, function(result, exceptions)
 		{
-			_this.getElement("submitButton").attr("disabled", "");
-			
-			var exceptions = [];
-			if (exception)
-				exceptions = exception.split(",");
+			button.attr("disabled", "");
 			_this.bindErrors(["userName", "password"], exceptions);
-			
 			_this.onSubmit(result, exception);
 			
 			if (result && redirectUrl)
@@ -69,6 +58,7 @@ function LoginForm(id)
 			msg = this.translate("loginFailed") + ". ";
 		if (!loginResult)
 			msg += this.translate("invalidCredentials") + ". ";
+			
 		if (exception)
 		{
 			var exceptions = exception.split(",");
@@ -77,14 +67,21 @@ function LoginForm(id)
 		}
 		
 		if (msg)
-			alert(msg);
+			alert(msg);		//TODO: Display error in div
 	};
+	
+	
+	//Override the form submit event
+	var _this = this;
+	this.getElement("form").submit(function() { _this.submit(); return false; });
 };
 
 
 //[AJAX] Add a new plugin instance to the page
 LoginForm.add = function(id, redirectUrl, autoRedirect, targetContainerId, onAdd)
 {
+	autoRedirect = autoRedirect ? 1 : 0;
+	
 	Wigbi.ajax("LoginForm", null, "add", [id, redirectUrl, autoRedirect], function(response) 
 	{
 		$("#" + targetContainerId).html(response);

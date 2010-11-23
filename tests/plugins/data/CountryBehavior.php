@@ -77,7 +77,7 @@ class CountryBehavior extends UnitTestCase
 	{
 		$this->country->name("       ");
 		
-		$this->assertEqual($this->country->validate(), array("nameRequired"));
+		$this->assertEqual($this->country->validate(), array("name_required"));
 		
 		$this->country->name("foo bar");
 		

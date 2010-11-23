@@ -103,13 +103,13 @@ class ImageFile extends WigbiDataPlugin
 		
 		//Require that a file URL is defined
 		if (!trim($this->fileUrl()))
-			array_push($errorList, "fileUrlRequired");
+			array_push($errorList, "fileUrl_required");
 			
 		//Require positive width/height
 		if ($this->width() < 0)
-			array_push($errorList, "widthNegative");
+			array_push($errorList, "width_negative");
 		if ($this->height() < 0)
-			array_push($errorList, "heightNegative");
+			array_push($errorList, "height_negative");
 			
 		//Return error list
 		return $errorList;

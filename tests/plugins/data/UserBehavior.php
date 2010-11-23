@@ -182,11 +182,11 @@ class UserBehavior extends UnitTestCase
     	
 	function test_validate_shouldOnlySucceedForValidObject()
 	{
-		$this->assertEqual($this->user->validate(), array("userNameRequired"));
+		$this->assertEqual($this->user->validate(), array("userName_required"));
 		$this->user->email("foo bar");
-		$this->assertEqual($this->user->validate(), array("userNameRequired", "emailInvalid"));
+		$this->assertEqual($this->user->validate(), array("userName_required", "email_invalid"));
 		$this->user->userName("foo bar");
-		$this->assertEqual($this->user->validate(), array("emailInvalid"));
+		$this->assertEqual($this->user->validate(), array("email_invalid"));
 		$this->user->email("foo.bar@gmail.com");
 		$this->assertEqual($this->user->validate(), array());
 	}

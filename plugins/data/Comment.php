@@ -119,11 +119,11 @@ class Comment extends WigbiDataPlugin
 		
 		//Require a valid e-mail address if one is defined
 		if ($this->authorEmail() && !ValidationHandler::isEmail($this->authorEmail()))
-			array_push($errorList, "emailInvalid");
+			array_push($errorList, "email_invalid");
 		
 		//Require that a text is defined
 		if (!trim($this->text()))
-			array_push($errorList, "textRequired");
+			array_push($errorList, "text_required");
 			
 		//Return error list
 		return $errorList;

@@ -92,7 +92,7 @@ class ForumPost extends WigbiDataPlugin
 		
 		//Require that content is defined
 		if (!trim($this->content()))
-			array_push($errorList, "contentRequired");
+			array_push($errorList, "content_required");
 			
 		//Return error list
 		return $errorList;

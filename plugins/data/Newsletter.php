@@ -101,7 +101,7 @@ class Newsletter extends WigbiDataPlugin
 	{
 		//Abort if the newsletter has not been saved
 		if (!$this->id())
-			throw new Exception("idRequired");
+			throw new Exception("id_required");
 		
 		//Create new subscriber
 		$subscriber = new NewsletterSubscriber();
@@ -139,7 +139,7 @@ class Newsletter extends WigbiDataPlugin
 	{
 		//Abort if the newsletter has not been saved
 		if (!$this->id())
-			throw new Exception("idRequired");
+			throw new Exception("id_required");
 		
 		//Abort if the e-mail address is already a subscriber
 		$searchFilter = new SearchFilter();
@@ -169,15 +169,15 @@ class Newsletter extends WigbiDataPlugin
 		//first, abort if subject and/or content is missing    
 		$result = array();
 		if (!trim($subject))
-			array_push($result, "subjectRequired");
+			array_push($result, "subject_required");
 		if (!trim($mailBody))
-			array_push($result, "mailBodyRequired");
+			array_push($result, "mailBody_required");
 		if (sizeof($result) > 0)
 			throw new Exception(implode($result, ","));
 		
 		//Abort if the newsletter has not been saved
 		if (!$this->id())
-			throw new Exception("idRequired");
+			throw new Exception("id_required");
 			
 		//Abort if the newsletter is not valid
 		$validationResult = $this->validate();
@@ -219,9 +219,9 @@ class Newsletter extends WigbiDataPlugin
 		
 		//Require a valid e-mail address
 		if (!trim($this->fromEmail()))
-			array_push($errorList, "fromEmailRequired");
+			array_push($errorList, "fromEmail_required");
 		else if (!ValidationHandler::isEmail($this->fromEmail()))
-			array_push($errorList, "fromEmailInvalid");
+			array_push($errorList, "fromEmail_invalid");
 			
 		//Return error list
 		return $errorList;

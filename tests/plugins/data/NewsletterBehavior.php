@@ -105,7 +105,7 @@ class NewsletterBehavior extends UnitTestCase
     
 	function test_addSubscriber_shouldFailForUnsavedObject()
 	{
-		$this->expectException(new Exception("idRequired"));
+		$this->expectException(new Exception("id_required"));
 		$this->newsletter->addSubscriber("foo@bar.com");
 	}
 
@@ -113,7 +113,7 @@ class NewsletterBehavior extends UnitTestCase
 	{
 		$this->newsletter->save();
 		
-		$this->expectException(new Exception("emailRequired"));
+		$this->expectException(new Exception("email_required"));
 		$this->newsletter->addSubscriber("");
 	}
 
@@ -121,7 +121,7 @@ class NewsletterBehavior extends UnitTestCase
 	{
 		$this->newsletter->save();
 		
-		$this->expectException(new Exception("emailInvalid"));
+		$this->expectException(new Exception("email_invalid"));
 		$this->newsletter->addSubscriber("foobar.com");
 	}
 
@@ -163,7 +163,7 @@ class NewsletterBehavior extends UnitTestCase
 	
 	function test_removeSubscriber_shouldFailForUnsavedObject()
 	{
-		$this->expectException(new Exception("idRequired"));
+		$this->expectException(new Exception("id_required"));
 		$this->newsletter->removeSubscriber("foo@bar.com");
 	}
 
@@ -197,17 +197,17 @@ class NewsletterBehavior extends UnitTestCase
 	
 	function test_sendEmail_shouldFailForMissingSubjectOrMailBody()
 	{
-		$this->expectException(new Exception("subjectRequired,mailBodyRequired"));
+		$this->expectException(new Exception("subject_required,mailBody_required"));
 		$this->newsletter->sendEmail("", "");
-		$this->expectException(new Exception("subjectRequired"));
+		$this->expectException(new Exception("subject_required"));
 		$this->newsletter->sendEmail("", "Content");
-		$this->expectException(new Exception("mailBodyRequired"));
+		$this->expectException(new Exception("mailBody_required"));
 		$this->newsletter->sendEmail("Subject", "");
 	}
 	
 	function test_sendEmail_shouldFailForUnsavedObject()
 	{
-		$this->expectException(new Exception("idRequired"));
+		$this->expectException(new Exception("id_required"));
 		$this->newsletter->sendEmail("Subject", "Body");
 	}
 
@@ -215,7 +215,7 @@ class NewsletterBehavior extends UnitTestCase
 	{
 		$this->newsletter->save();
 		
-		$this->expectException(new Exception("fromEmailRequired"));
+		$this->expectException(new Exception("fromEmail_required"));
 		$result = $this->newsletter->sendEmail("Subject", "Body");
 	}
 
@@ -224,7 +224,7 @@ class NewsletterBehavior extends UnitTestCase
 		$this->newsletter->fromEmail("foo");
 		$this->newsletter->save();
 		
-		$this->expectException(new Exception("fromEmailInvalid"));
+		$this->expectException(new Exception("fromEmail_invalid"));
 		$result = $this->newsletter->sendEmail("Subject", "Body");
 	}
 
@@ -244,11 +244,11 @@ class NewsletterBehavior extends UnitTestCase
 	
 	function test_validate_shouldOnlySucceedForValidObject()
 	{
-		$this->assertEqual($this->newsletter->validate(), array("fromEmailRequired"));
+		$this->assertEqual($this->newsletter->validate(), array("fromEmail_required"));
 		
 		$this->newsletter->fromEmail("foo");
 		
-		$this->assertEqual($this->newsletter->validate(), array("fromEmailInvalid"));
+		$this->assertEqual($this->newsletter->validate(), array("fromEmail_invalid"));
 		
 		$this->newsletter->fromEmail("foo@bar.com");
 		

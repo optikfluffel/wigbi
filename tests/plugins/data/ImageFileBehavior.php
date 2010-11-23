@@ -84,15 +84,15 @@
 		$this->file->width(-1);
 		$this->file->height(-1);
 		
-		$this->assertEqual($this->file->validate(), array("fileUrlRequired", "widthNegative", "heightNegative"));
+		$this->assertEqual($this->file->validate(), array("fileUrl_required", "width_negative", "height_negative"));
 		
 		$this->file->fileUrl("foo bar");
 		
-		$this->assertEqual($this->file->validate(), array("widthNegative", "heightNegative"));
+		$this->assertEqual($this->file->validate(), array("width_negative", "height_negative"));
 		
 		$this->file->width(1);		
 		
-		$this->assertEqual($this->file->validate(), array("heightNegative"));
+		$this->assertEqual($this->file->validate(), array("height_negative"));
 		
 		$this->file->height(1);
 		

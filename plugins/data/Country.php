@@ -85,7 +85,7 @@ class Country extends WigbiDataPlugin
 			
 		//Require that a name is defined
 		if (!trim($this->name()))
-			array_push($errorList, "nameRequired");
+			array_push($errorList, "name_required");
 
 		//Return error list
 		return $errorList;

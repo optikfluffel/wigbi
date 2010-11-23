@@ -91,10 +91,11 @@ class GuestbookEntry extends WigbiDataPlugin
 		
 		//Require that a text is defined
 		if (!trim($this->text()))
-			array_push($errorList, "textRequired");
+			array_push($errorList, "text_required");
 			
 		//Return error list
 		return $errorList;
 	}
 }
+
 ?>

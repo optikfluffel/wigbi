@@ -71,9 +71,9 @@ class NewsletterSubscriber extends WigbiDataPlugin
 
 		//Require a valid e-mail address
 		if (!trim($this->email()))
-			array_push($errorList, "emailRequired");
+			array_push($errorList, "email_required");
 		else if (!ValidationHandler::isEmail($this->email()))
-			array_push($errorList, "emailInvalid");
+			array_push($errorList, "email_invalid");
 			
 		//Return error list
 		return $errorList;

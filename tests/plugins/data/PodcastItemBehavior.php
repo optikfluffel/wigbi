@@ -124,11 +124,11 @@ class PodcastItemBehavior extends UnitTestCase
 		$this->podcastItem->title("       ");
 		$this->podcastItem->description("       ");
 		
-		$this->assertEqual($this->podcastItem->validate(), array("titleRequired", "descriptionRequired"));
+		$this->assertEqual($this->podcastItem->validate(), array("title_required", "description_required"));
 		
 		$this->podcastItem->title("Title");
 		
-		$this->assertEqual($this->podcastItem->validate(), array("descriptionRequired"));
+		$this->assertEqual($this->podcastItem->validate(), array("description_required"));
 		
 		$this->podcastItem->description("Description");
 		

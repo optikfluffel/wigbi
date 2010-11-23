@@ -129,7 +129,7 @@ class ForumThread extends WigbiDataPlugin
 	{
 		//Abort if the object has not been saved
 		if (!$this->id())
-			throw new Exception("idRequired");
+			throw new Exception("id_required");
 			
 		//Create new post
 		$post = new ForumPost();
@@ -162,7 +162,7 @@ class ForumThread extends WigbiDataPlugin
 		
 		//Require that name is defined
 		if (!trim($this->name()))
-			array_push($errorList, "nameRequired");
+			array_push($errorList, "name_required");
 			
 		//Return error list
 		return $errorList;

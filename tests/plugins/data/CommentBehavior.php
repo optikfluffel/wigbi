@@ -88,12 +88,12 @@ class CommentBehavior extends UnitTestCase
 	{
 		$this->comment->authorEmail("foo bar");
 		
-		$this->assertEqual($this->comment->validate(), array("emailInvalid", "textRequired"));
+		$this->assertEqual($this->comment->validate(), array("email_invalid", "text_required"));
 		
 		$this->comment->authorEmail("foo@bar.se");
 		$this->comment->text("       ");
 		
-		$this->assertEqual($this->comment->validate(), array("textRequired"));
+		$this->assertEqual($this->comment->validate(), array("text_required"));
 		
 		$this->comment->text("foo bar");
 		

@@ -20,11 +20,12 @@
 /**
  * The Wigbi.Plugins.UI.LoginForm PHP class.
  * 
- * This plugin can be used to login to the web site, using the User
- * data plugin. The plugin form is submitted with AJAX.
+ * This plugin can be used to login a user to a Wigbi web site that
+ * is using the User data plugin. The plugin form is submitted with
+ * AJAX, without reloading the page.
  * 
  * If redirectUrl is set, the form will redirect a user to that URL
- * when he/she is successfully logged in. If autoRedirect is set to
+ * after a successful login. If the autoRedirect property is set to
  * true, the form will redirect already logged in users to that URL
  * instead of displaying a form at all. 
  * 
@@ -89,28 +90,32 @@ class LoginForm extends WigbiUIPlugin
 		
 		$plugin = new LoginForm($id);
 		
-		ob_start();
+		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
+		View::openForm($plugin->getChildId("form"));
+		View::addHiddenInput($plugin->getChildId("redirectPage"), $redirectUrl, "");
 		
-		$plugin->addTextBox("redirectUrl", $redirectUrl, "", "hide");
-		$plugin->addTextBox("userName", "", $plugin->translate("userName"). ":", "");
-		$plugin->addPasswordBox("password", "", $plugin->translate("password"). ":", "");
+		View::addDiv($plugin->getChildId("validation"), "&nbspM", "class='validation-error hide'");
+		
+		View::addDiv($plugin->getChildId("userNameTitle"), $plugin->translate("userName") . ":", "class='input-title'");
+		View::addTextInput($plugin->getChildId("userName"), "", "");
+		
+		View::addDiv($plugin->getChildId("passwordTitle"), $plugin->translate("password") . ":", "class='input-title'");
+		View::addPasswordInput($plugin->getChildId("password"), "", "");
 		?>
 		
-		<div class="buttons">
-			<?php $plugin->addButton("submitButton", "submit", $plugin->translate("submit")); ?>
-		</div>
+		<div class="formButtons"><?php
+			View::addSubmitButton($plugin->getChildId("submit"), $plugin->translate("submit"));
+		?></div>
+		
 		<script type="text/javascript">
 				var <?print $id ?> = new LoginForm("<?print $id ?>");
 		</script>
 		
 		<?php
+		View::closeForm();
 		$plugin->endPluginDiv();
-		$result = ob_get_clean();
-		
-		if (!Wigbi::isAjaxPostback())
-			print $result;
-		return Wigbi::isAjaxPostback() ? $result : "";
+		return $plugin->endPlugin();
 	}
 }
 

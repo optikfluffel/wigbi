@@ -120,7 +120,7 @@ class ForumBehavior extends UnitTestCase
 	
 	function test_addPost_shouldFailForUnsavedObject()
 	{
-		$this->expectException(new Exception("idRequired"));
+		$this->expectException(new Exception("id_required"));
 		$this->forum->addPost("Foo bar", "");
 	}
 
@@ -128,7 +128,7 @@ class ForumBehavior extends UnitTestCase
 	{
 		$this->forum->save();
 		
-		$this->expectException(new Exception("contentRequired"));
+		$this->expectException(new Exception("content_required"));
 		$this->forum->addPost("", "");
 	}
 
@@ -149,7 +149,7 @@ class ForumBehavior extends UnitTestCase
     
 	function test_addThread_shouldFailForUnsavedObject()
 	{
-		$this->expectException(new Exception("idRequired"));
+		$this->expectException(new Exception("id_required"));
 		$this->forum->addThread("Foo bar", "", "");
 	}
 
@@ -157,7 +157,7 @@ class ForumBehavior extends UnitTestCase
 	{
 		$this->forum->save();
 		
-		$this->expectException(new Exception("nameRequired"));
+		$this->expectException(new Exception("name_required"));
 		$this->forum->addThread("", "", "");
 	}
 
@@ -181,7 +181,7 @@ class ForumBehavior extends UnitTestCase
 	{
 		$this->forum->name("       ");
 		
-		$this->assertEqual($this->forum->validate(), array("nameRequired"));
+		$this->assertEqual($this->forum->validate(), array("name_required"));
 		
 		$this->forum->name("foo bar");
 		

@@ -118,11 +118,11 @@ class RssFeedItemBehavior extends UnitTestCase
 		$this->rssFeedItem->title("       ");
 		$this->rssFeedItem->description("       ");
 		
-		$this->assertEqual($this->rssFeedItem->validate(), array("titleRequired", "descriptionRequired"));
+		$this->assertEqual($this->rssFeedItem->validate(), array("title_required", "description_required"));
 		
 		$this->rssFeedItem->title("Title");
 		
-		$this->assertEqual($this->rssFeedItem->validate(), array("descriptionRequired"));
+		$this->assertEqual($this->rssFeedItem->validate(), array("description_required"));
 		
 		$this->rssFeedItem->description("Description");
 		

@@ -37,7 +37,7 @@ class HtmlContentBehavior extends UnitTestCase
 		$this->assertEqual($this->htmlContent->lastUpdatedDateTime(), "__DATETIME");
 		$this->assertEqual($this->htmlContent->name(), "__50");
 		$this->assertEqual($this->htmlContent->content(), "__TEXT");
-    }
+	}
 	
 	function test_constructor_objectShouldAutoReset()
 	{
@@ -48,7 +48,7 @@ class HtmlContentBehavior extends UnitTestCase
 		$this->assertEqual($this->htmlContent->lastUpdatedDateTime(), "");
 		$this->assertEqual($this->htmlContent->name(), "");
 		$this->assertEqual($this->htmlContent->content(), "");
-    }
+	}
 			
 	
 	
@@ -65,7 +65,7 @@ class HtmlContentBehavior extends UnitTestCase
 		$this->assertTrue($tmpObj->lastUpdatedDateTime());
 		$this->assertEqual($tmpObj->name(), "name");
 		$this->assertEqual($tmpObj->content(), "content");
-    }
+	}
 	
     
 	
@@ -73,10 +73,12 @@ class HtmlContentBehavior extends UnitTestCase
 	{
 		$this->htmlContent->name("       ");
 		
-		$this->assertEqual($this->htmlContent->validate(), array("nameRequired"));
+		$this->assertEqual($this->htmlContent->validate(), array("name_required"));
 		
 		$this->htmlContent->name("foo bar");
 		
 		$this->assertEqual($this->htmlContent->validate(), array());
-    }
-} ?>
+	}
+}
+
+?>

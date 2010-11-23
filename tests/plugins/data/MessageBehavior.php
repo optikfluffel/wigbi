@@ -84,11 +84,11 @@ class MessageBehavior extends UnitTestCase
 		$this->message->subject("       ");
 		$this->message->text("          ");
 		
-		$this->assertEqual($this->message->validate(), array("subjectRequired", "textRequired"));
+		$this->assertEqual($this->message->validate(), array("subject_required", "text_required"));
 		
 		$this->message->subject("foo bar");
 		
-		$this->assertEqual($this->message->validate(), array("textRequired"));
+		$this->assertEqual($this->message->validate(), array("text_required"));
 		
 		$this->message->text("foo bar");
 		

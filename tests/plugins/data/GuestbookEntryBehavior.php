@@ -76,7 +76,7 @@ class GuestbookEntryBehavior extends UnitTestCase
 	{
 		$this->guestbookEntry->text("       ");
 		
-		$this->assertEqual($this->guestbookEntry->validate(), array("textRequired"));
+		$this->assertEqual($this->guestbookEntry->validate(), array("text_required"));
 		
 		$this->guestbookEntry->text("foo bar");
 		

@@ -250,11 +250,11 @@ class User extends WigbiDataPlugin
 		
 		//Require a user name
 		if (!trim($this->userName()))
-			array_push($errorList, "userNameRequired");
+			array_push($errorList, "userName_required");
 		
 		//Require a valid e-mail address if one is defined
 		if ($this->email() && !ValidationHandler::isEmail($this->email()))
-			array_push($errorList, "emailInvalid");
+			array_push($errorList, "email_invalid");
 			
 		//Return error list
 		return $errorList;

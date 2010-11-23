@@ -159,9 +159,9 @@ class PodcastItem extends WigbiDataPlugin
 		
 		//Require a title and a description
 		if (!trim($this->title()))
-			array_push($errorList, "titleRequired");
+			array_push($errorList, "title_required");
 		if (!trim($this->description()))
-			array_push($errorList, "descriptionRequired");
+			array_push($errorList, "description_required");
 			
 		//Return error list
 		return $errorList;

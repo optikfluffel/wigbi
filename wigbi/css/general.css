@@ -1,1 +1,7 @@
 .hide { display: none; }
+
+div.validation-error,
+input.validation-error {
+	border: solid #CA2220 1px !important;
+	background: #FFAEAD;
+}

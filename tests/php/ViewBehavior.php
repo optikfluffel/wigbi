@@ -44,7 +44,25 @@ class ViewBehavior extends UnitTestCase
 		$this->assertEqual($result, "<button id=\"myButton\" onclick=\"alert('hello world')\" style=\"color:red\" >click me</button>");	
 	}
 	
-	function test_addDiv_shouldAddElement()
+	function test_addCheckBox_shouldAddCheckedElement()
+	{
+		ob_start();
+		View::addCheckBox("myInput", true, "style=\"color:red\"");
+		$result = ob_get_clean();
+		
+		$this->assertEqual($result, "<input type=\"checkbox\" id=\"myInput\" checked=\"checked\" style=\"color:red\" />");	
+	}
+	
+	function test_addCheckBox_shouldAddUncheckedElement()
+	{
+		ob_start();
+		View::addCheckBox("myInput", false, "style=\"color:red\"");
+		$result = ob_get_clean();
+		
+		$this->assertEqual($result, "<input type=\"checkbox\" id=\"myInput\" style=\"color:red\" />");	
+	}
+	
+	function test_addDiv_shouldAddElementWith()
 	{
 		ob_start();
 		View::addDiv("myDiv", "content", "style=\"color:red\"");
@@ -98,13 +116,22 @@ class ViewBehavior extends UnitTestCase
 		$this->assertEqual($result, "<div id=\"myElement\" class=\"myClass\" >myContent</div>");
 	}
 	
+	function test_addHiddenInput_shouldAddElement()
+	{
+		ob_start();
+		View::addHiddenInput("myInput", "myVal", "style=\"color:red\"");
+		$result = ob_get_clean();
+		
+		$this->assertEqual($result, "<input type=\"hidden\" id=\"myInput\" value=\"myVal\" style=\"color:red\" />");	
+	}
+	
 	function test_addPasswordInput_shouldAddElement()
 	{
 		ob_start();
-		View::addPasswordInput("myInput", "myPwd", "style=\"color:red\"");
+		View::addPasswordInput("myInput", "style=\"color:red\"");
 		$result = ob_get_clean();
 		
-		$this->assertEqual($result, "<input type=\"password\" id=\"myInput\" value=\"myPwd\" style=\"color:red\" />");	
+		$this->assertEqual($result, "<input type=\"password\" id=\"myInput\" style=\"color:red\" />");	
 	}
 	
 	function test_addResetButton_shouldAddElement()

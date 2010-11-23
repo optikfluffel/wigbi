@@ -100,12 +100,10 @@ class HtmlContentForm extends WigbiUIPlugin
 		View::addTextArea($plugin->getChildId("content"), $obj->content(), "class='wysiwyg advanced'");
 		?>
 		
-		<div class="buttons">
-			<?php
-				View::addButton($plugin->getChildId("reset"), $plugin->translate("reset"), $id . ".reset(); return false;");
-				View::addSubmitButton($plugin->getChildId("submit"), $plugin->translate("save"));
-			?>
-		</div>
+		<div class="formButtons"><?php
+			View::addButton($plugin->getChildId("reset"), $plugin->translate("reset"), $id . ".reset(); return false;");
+			View::addSubmitButton($plugin->getChildId("submit"), $plugin->translate("save"));
+		?></div>
 		
 		<script type="text/javascript">
 				var <?print $id ?> = new HtmlContentForm("<?print $id ?>");

@@ -4,30 +4,29 @@
 	<head>
 		<?php
 			$cleanUp = array_key_exists("clean", $_GET);
-			$test_phpcore = true && !$cleanUp;
+			$test_phpcore = false && !$cleanUp;
 			$test_php = false && !$cleanUp;
 			$test_dataPlugins = false && !$cleanUp;
 			$test_js = true && !$cleanUp;
-			
-			Wigbi::configFile($root . "tests/resources/config.ini");
-			Wigbi::start();
-			Wigbi::dbHandler()->query("DROP DATABASE " . Wigbi::dbHandler()->dbName());
-			Wigbi::start();
 			
 			$files = array("wigbi/plugins/data/Rating.php", "wigbi/plugins/ui/LoginForm.php", "wigbi/plugins/ui/LoginForm.js", "wigbi/js/wigbi_dataPlugins.js", "wigbi/js/wigbi_uiPlugins.js");
 			foreach ($files as $file)
 				if (file_exists($file))
 					unlink ($file);
+					
+			Wigbi::configFile("tests/resources/config.ini");
+			Wigbi::start();
+			Wigbi::dbHandler()->query("DROP DATABASE " . Wigbi::dbHandler()->dbName());
+			Wigbi::start();
 			
 			if ($test_phpcore || $test_php || $test_dataPlugins)
-				require_once($root . "resources/tools/SimpleTest/autorun.php");
+				require_once("resources/tools/SimpleTest/autorun.php");
 			
 			function addPlugins() {
 				ob_start();
 				Wigbi::stop();
-				copy("plugins/data/Rating.php", "wigbi/plugins/data/Rating.php");
-				copy("plugins/ui/LoginForm.php", "wigbi/plugins/ui/LoginForm.php");
-				copy("plugins/ui/LoginForm.js", "wigbi/plugins/ui/LoginForm.js");
+				foreach(glob("plugins/data/*.php") as $file)
+					require_once($file);
 				Wigbi::start();
 				ob_end_clean();
 			}
@@ -45,9 +44,9 @@
 				if ($test_phpcore)
 				{
 					$test = new GroupTest("Wigbi.PHP.Core");
-					foreach(glob($root . "tests/php/core/*.php") as $file)
+					foreach(glob("tests/php/core/*.php") as $file)
 						require_once($file);
-					foreach (glob($root . "wigbi/php/wigbi/core/*.php") as $file)
+					foreach (glob("wigbi/php/wigbi/core/*.php") as $file)
 						eval('$test->addTestCase(new ' . str_replace(".php", "", basename($file)) . 'Behavior());');
 						
 					print "<div class='box'>";
@@ -59,46 +58,52 @@
 				if ($test_php)
 				{
 					$test = new GroupTest("Wigbi.PHP");
-					foreach(glob($root . "tests/php/*.php") as $file)
+					foreach(glob("tests/php/*.php") as $file)
 						require_once($file);
-					foreach (glob($root . "wigbi/php/wigbi/*.php") as $file)
+					foreach (glob("wigbi/php/wigbi/*.php") as $file)
 						eval('$test->addTestCase(new ' . str_replace(".php", "", basename($file)) . 'Behavior());');
+					
+					print "<div class='box'>";
 					$test->run(new HtmlReporter());
-					print "<br/>";	
+					print "</div>";
 				}
+				
+				
+				//Add plugins for plugin and JS tests **
+				addPlugins();
+				
 				
 				//Wigbi.Plugins.Data *******************
 				if ($test_dataPlugins)
 				{
 					$test = new GroupTest("Wigbi.Plugins.Data");
-					foreach(glob($root . "plugins/data/*.php") as $file)
+					foreach(glob("tests/plugins/data/*.php") as $file)
 						require_once($file);
-					foreach(glob($root . "tests/plugins/data/*.php") as $file)
-						require_once($file);
-					foreach (glob($root . "plugins/data/*.php") as $file)
+					foreach (glob("plugins/data/*.php") as $file)
 						eval('$test->addTestCase(new ' . str_replace(".php", "", basename($file)) . 'Behavior());');
+					
+					print "<div class='box'>";
 					$test->run(new HtmlReporter());
-					print "<br/>";	
+					print "</div>";
 				}
 	
 				//Wigbi.JavaScript *********************
-				if ($test_js)
-				{
-					addPlugins(); ?>
-					<link rel="stylesheet" type="text/css" href="wigbi/bundle/css:tests/quni2t/" />
+				if ($test_js) { ?>
+					<link rel="stylesheet" href="http://github.com/jquery/qunit/raw/master/qunit/qunit.css" type="text/css" media="screen" />
+					<script type="text/javascript" src="http://github.com/jquery/qunit/raw/master/qunit/qunit.js"></script>
 					<script type="text/javascript">Wigbi._ajaxConfigFile = "tests/resources/config.ini";</script>
-					<script type="text/javascript" src="wigbi/bundle/js:tests/qunit/,tests/js/core/,tests/js/"></script>
-					<div class="box">
-						<h1 id="qunit-header">Wigbi JavaScript classes</h1>
-						<ol id="qunit-tests"></ol>
-				
-						<div id="test" style="display:none">
-							<div id="test-element1"></div>
-							<div id="test-element2"></div>
-							<textarea title="foo bar" id="test-name">{"name":"foo bar"}</textarea>
-						</div>
-					</div>
+					<script type="text/javascript" src="wigbi/bundle/js:tests/js/core/,tests/js/"></script>
 					
+					<h1 id="qunit-header">Wigbi JavaScript classes</h1>
+					<h2 id="qunit-banner"></h2>
+					<h2 id="qunit-userAgent"></h2>
+					<ol id="qunit-tests"></ol>
+			
+					<div id="test" style="display:none">
+						<div id="test-element1"></div>
+						<div id="test-element2"></div>
+						<textarea title="foo bar" id="test-name">{"name":"foo bar"}</textarea>
+					</div>
 			<?php } ?>
 			
 			<div class="box toolbar">

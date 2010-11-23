@@ -161,11 +161,11 @@ class Rating extends WigbiDataPlugin
 	{
 		//Abort if the object is not saved
 		if (!$this->id())
-			throw new Exception("idRequired");
+			throw new Exception("id_required");
 			
 		//Require createdBy if the rating is non-anonymous
 		if (!$this->anonymous() && !trim($createdBy))
-			throw new Exception("createdByRequired");
+			throw new Exception("createdBy_required");
 		
 		//Anonymous ratings are saved in session
 		if ($this->anonymous())
@@ -208,17 +208,17 @@ class Rating extends WigbiDataPlugin
 	{
 		//Abort if the object is not saved
 		if (!$this->id())
-			throw new Exception("idRequired");
+			throw new Exception("id_required");
 			
 		//Require createdBy if the rating is non-anonymous
 		if (!$this->anonymous() && !trim($createdBy))
-			throw new Exception("createdByRequired");
+			throw new Exception("createdBy_required");
 			
 		//Abort if the value is too small or large
 		if ($value < $this->min())
-			throw new Exception("valueTooSmall");
+			throw new Exception("value_tooSmall");
 		if ($value > $this->max())
-			throw new Exception("valueTooLarge");
+			throw new Exception("value_tooLarge");
 		
 		//Unrate the object to ensure that no existing rating exists
 		$this->unrate($createdBy);
@@ -267,11 +267,11 @@ class Rating extends WigbiDataPlugin
 	{
 		//Abort if the object is not saved
 		if (!$this->id())
-			throw new Exception("idRequired");
+			throw new Exception("id_required");
 			
 		//Require createdBy if the rating is non-anonymous
 		if (!$this->anonymous() && !trim($createdBy))
-			throw new Exception("createdByRequired");
+			throw new Exception("createdBy_required");
 			
 		//Abort if the object is not rated
 		$rating = $this->getRatingValue($createdBy);
@@ -313,7 +313,7 @@ class Rating extends WigbiDataPlugin
 		
 		//The min rating must not exceed the max one
 		if ($this->min() > $this->max())
-			array_push($errorList, "minTooLarge");
+			array_push($errorList, "min_tooLarge");
 			
 		//Return error list
 		return $errorList;
