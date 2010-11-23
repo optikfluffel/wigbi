@@ -18,6 +18,9 @@
 					unlink($file);
 				foreach (glob("wigbi/plugins/ui/*.js") as $file)
 					unlink($file);
+					
+				unlink("wigbi/js/wigbi_dataPlugins.js");
+				unlink("wigbi/js/wigbi_uiPlugins.js");
 			}
 
 			if (!$cleanUp)

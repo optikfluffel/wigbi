@@ -1,36 +1,19 @@
-<?php
-	$obj1 = new HtmlContent();
-	$obj1->name("foo");
-	$obj1->content("Foo");
-	$obj2 = new HtmlContent();
-	$obj2->name("bar");
-	$obj2->content("Bar");	
-	$obj1->loadBy("name", "foo");
-	if (!$obj1->id())
-	{
-		$obj1->save();
-		$obj2->save();	
-	}
-?>
-
 <div class="box">
-	<h1>HtmlContentControl</h1>
-	<div id="hcc_target">
-		<?php HtmlContentControl::add("hcc", $obj1, "", false); ?>
+	<h1>HtmlContentForm</h1>
+	<div id="hcf_target">
+		<?php HtmlContentForm::add("hcf", $obj1, ""); ?>
 	</div>
 	<div class="fc">
 		<div class="box add">
-			Id: <?php View::addTextInput("hcc_id") ?>
-			Name: <?php View::addTextInput("hcc_name", "") ?>
-			EmbedForm: <input id="hcc_embed" type="checkbox" />
-			<?php View::addButton("hcc_addButton", "Add", "HtmlContentControl.add('hcc', $('#hcc_id').val(), $('#hcc_name').val(), $('#hcc_embed').attr('checked'), 'hcc_target', addDone)"); ?>
+			Id: <?php View::addTextInput("hcf_id") ?>
+			Name: <?php View::addTextInput("hcf_name", "") ?>
+			<?php View::addButton("hcf_addButton", "Add", "HtmlContentForm.add('hcf', $('#hcf_id').val(), $('#hcf_name').val(), 'hcf_target', addDone)"); ?>
 		</div>
 		<div class="box prop">
-			<select onchange="hcc.obj(JSON.parse(this.value))">
+			<select onchange="hcf.obj(JSON.parse(this.value))">
 				<option value='<?php print json_encode($obj1) ?>'><?php print $obj1->name(); ?></option>
 				<option value='<?php print json_encode($obj2) ?>'><?php print $obj2->name(); ?></option>
 			</select>
-			<button onclick="hcc.reset()">Reset</button>
 		</div>
 	</div>
 </div>
