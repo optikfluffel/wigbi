@@ -21,8 +21,8 @@
  * The Wigbi.Plugins.UI.NewsControl PHP class.
  * 
  * This plugin can be used to display the content of any News object.
- * It can also embed a NewsForm UI plugin, with which the object can
- * be edited.
+ * It can also embed a NewsForm plugin, with which the object can be
+ * edited.
  * 
  * If an object form is embedded, it will automatically be displayed
  * if the control is added without an object.
@@ -91,14 +91,13 @@ class NewsControl extends WigbiUIPlugin
 		if (!$obj->title())
 			$obj->title($objectTitle);
 	
-		ob_start();
+		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
-		
 		if ($embedForm)
 			$plugin->beginViewDiv($embedForm && $obj->id());
 		
-		$plugin->addTextArea("object", json_encode($obj), null, "hide");
-		$plugin->addText("content", $obj->content());
+		View::addTextArea($plugin->getChildId("object"), json_encode($obj), "style='display:none'");
+		View::addDiv($plugin->getChildId("content"), $obj->content());
 		
 		if ($embedForm)
 		{
@@ -120,11 +119,7 @@ class NewsControl extends WigbiUIPlugin
 		
 		<?php
 		$plugin->endPluginDiv();
-		$result = ob_get_clean();
-		
-		if (!Wigbi::isAjaxPostback())
-			print $result;
-		return Wigbi::isAjaxPostback() ? $result : "";
+		return $plugin->endPlugin();
 	}
 }
 

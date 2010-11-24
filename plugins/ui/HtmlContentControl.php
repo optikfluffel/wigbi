@@ -33,7 +33,6 @@
  * This UI plugin has the following JavaScript functionality:
  * 
  * 	<ul>
- * 		<li>public HtmlContentForm form()</li>
  * 		<li>public HtmlContent obj([HtmlContent newValue])</li>
  * 		<li></li>
  * 		<li>[AJAX] public void add(string id, string objectId, string objectName, bool embedForm, string targetContainerId, function onAdd())</li>

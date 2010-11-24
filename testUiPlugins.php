@@ -8,8 +8,7 @@
 			Wigbi::configFile($root . "tests/resources/config.ini");
 			Wigbi::start();
 			
-			if ($cleanUp)
-			{
+			if ($cleanUp) {
 		 		Wigbi::dbHandler()->query("DROP DATABASE " . Wigbi::dbHandler()->dbName());
 			 
 				foreach (glob("wigbi/plugins/data/*.php") as $file)
@@ -23,14 +22,15 @@
 				unlink("wigbi/js/wigbi_uiPlugins.js");
 			}
 
-			if (!$cleanUp)
-			{
+			else {
 				foreach (glob("plugins/data/*.*") as $file)
 					copy($file, "wigbi/plugins/data/" . basename($file));
 				foreach (glob("plugins/ui/*.*") as $file)
 					copy($file, "wigbi/plugins/ui/" . basename($file));
-					
+				
+				ob_start();
 				Wigbi::start();
+				ob_get_clean();
 			}
 
 			function initTests($cleanUp) {
@@ -43,14 +43,16 @@
 		?>
 		
 		<script type="text/javascript">
-			function addDone(elementId)
-			{ }
+			function addDone(elementId) { }
 		</script>
 		<script type="text/javascript" src="wigbi/bundle/js:tests/resources/jquery.corner.js,tests/resources/test.js"></script>
 		<link rel="stylesheet" type="text/css" href="wigbi/bundle/css:tests/resources/test.css"></link>
 	</head>
 	<body>
 		<div id="main">
+			<div class="box toolbar">
+				<a href="testUiPlugins.php">Retry</a> • <a href="testUiPlugins.php?clean=1">Finish</a>
+			</div>
 			<?php initTests($cleanUp); ?>
 			<div class="box toolbar">
 				<a href="testUiPlugins.php">Retry</a> • <a href="testUiPlugins.php?clean=1">Finish</a>

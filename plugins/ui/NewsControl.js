@@ -58,6 +58,8 @@ function NewsControl(id, newsForm)
 //[AJAX] Add a new plugin instance to the page
 NewsControl.add = function(id, objectId, objectTitle, embedForm, targetContainerId, onAdd)
 {
+	embedForm = embedForm ? 1 : 0;
+	
 	Wigbi.ajax("NewsControl", null, "add", [id, objectId, objectTitle, embedForm], function(response) 
 	{
 		$("#" + targetContainerId).html(response);

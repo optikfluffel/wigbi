@@ -1,5 +1,5 @@
 <div class="box">
-	<h1>HtmlContentForm</h1>
+	<div class="box title">HtmlContentForm</div>
 	<div id="hcf_target">
 		<?php HtmlContentForm::add("hcf", $obj1, ""); ?>
 	</div>

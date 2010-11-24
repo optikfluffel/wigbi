@@ -34,6 +34,7 @@ function NewsForm(id)
 			this.getElement("object").html(JSON.stringify(newVal));
 			this.reset();
 		}
+		
 		return this.getElementData("object", new News());
 	};
 	
@@ -56,20 +57,24 @@ function NewsForm(id)
 		try { obj.setContent(tinyMCE.get(this.getElement("content").attr("id")).getContent()); }
 		catch(e) { }
 	
-		var submitButton = this.getElement("submitButton");
-		submitButton.attr("disabled", "disabled");
+		var button = this.getElement("submitButton");
+		button.attr("disabled", "disabled");
 		
 		var _this = this;
 		obj.save(function()
 		{
 			_this.obj(obj);
-			submitButton.attr("disabled", "");
+			button.attr("disabled", "");
 			_this.onSubmit();
 		});
 	};
 
-	//This event method is raised after a submit operation succeeds	
+	//This event method is raised after a submit operation	
 	this.onSubmit = function() {};
+	
+	//Override the form submit event
+	var _this = this;
+	this.getElement("form").submit(function() { _this.submit(); return false; });
 };
 
 

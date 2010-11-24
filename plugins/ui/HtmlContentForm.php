@@ -106,7 +106,7 @@ class HtmlContentForm extends WigbiUIPlugin
 		?></div>
 		
 		<script type="text/javascript">
-				var <?print $id ?> = new HtmlContentForm("<?print $id ?>");
+			var <?print $id ?> = new HtmlContentForm("<?print $id ?>");
 		</script>
 		
 		<?php

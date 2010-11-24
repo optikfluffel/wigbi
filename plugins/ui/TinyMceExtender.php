@@ -28,14 +28,9 @@
  * such elements are loaded into the page with AJAX, after Tiny MCE
  * has been applied, Tiny MCE must be re-applied with JavaScript.
  * 
- * For the JavaScript add method to work, the plugin must have been
- * added to the page with PHP first. The PHP method only works once.
- * 
  * Before this plugin can be used, Tiny MCE must be downloaded from
  * the official site and added to the application. It is not a part
- * of the Wigbi releases. 
- * 
- * Note that to make this plugin easy to use, the number of setting
+ * of Wigbi. To make this plugin easy to use, the number of setting
  * parameters have been kept to a minimum. If the basic behavior of
  * Tiny MCE should be modified, edit the JavaScript class file. 
  * 
@@ -64,13 +59,6 @@
  */
 class TinyMceExtender extends WigbiUIPlugin
 {
-	/**#@+
-	 * @ignore
-	 */
-	private static $_firstAdd = true;
-	/**#@-*/
-	
-	
 	/**
 	 * Apply TinyMceExtender to the page.
 	 * 

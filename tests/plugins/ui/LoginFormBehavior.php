@@ -16,7 +16,7 @@
 
 <? if (!User::getCurrentUser()->id()) { ?>
 	<div class="box">
-		<h1>LoginForm</h1>
+	<div class="box title">LoginForm</div>
 		<div id="lif_target">
 			<?php LoginForm::add("lif", "", false); ?>
 		</div>

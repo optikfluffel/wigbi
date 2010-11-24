@@ -68,11 +68,9 @@ function HtmlContentForm(id)
 			_this.onSubmit();
 		});
 	};
-	
 
-	//This event method is raised after a submit operation succeeds	
+	//This event method is raised after a submit operation	
 	this.onSubmit = function() {};
-	
 	
 	//Override the form submit event
 	var _this = this;

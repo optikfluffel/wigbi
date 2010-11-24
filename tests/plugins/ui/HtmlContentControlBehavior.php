@@ -14,7 +14,7 @@
 ?>
 
 <div class="box">
-	<h1>HtmlContentControl</h1>
+	<div class="box title">HtmlContentControl</div>
 	<div id="hcc_target">
 		<?php HtmlContentControl::add("hcc", $obj1, "", false); ?>
 	</div>

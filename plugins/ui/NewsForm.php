@@ -21,7 +21,7 @@
  * The Wigbi.Plugins.UI.NewsForm PHP class.
  * 
  * This plugin can be used to edit a News object. The plugin form is
- * submitted with AJAX.
+ * submitted with AJAX, without reloading the page.
  * 
  * 
  * JAVASCRIPT ********************
@@ -85,31 +85,34 @@ class NewsForm extends WigbiUIPlugin
 		$obj = new News();
 		$obj = $obj->loadOrInit($objectOrId, $objectTitle, "title");
 		
-		ob_start();
+		if (!$obj->title())
+			$obj->title($objectTitle);
+	
+		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
-		$plugin->openForm("form", "submit");
-		$plugin->addTextArea("object", json_encode($obj), null, "hide");
-		$plugin->addTextBox("title", $obj->title() ? $obj->title() : $objectTitle, $plugin->translate("title"). ":", "");
-		$plugin->addTextArea("content", $obj->content(), $plugin->translate("content"). ":", "wysiwyg simple");
+		View::openForm($plugin->getChildId("form"));
+		View::addTextArea($plugin->getChildId("object"), json_encode($obj), "style='display:none'");
+		
+		View::addDiv($plugin->getChildId("titleTitle"), $plugin->translate("title") . ":", "class='input-title'");
+		View::addTextInput($plugin->getChildId("title"), $obj->title(), "");
+		
+		View::addDiv($plugin->getChildId("contentTitle"), $plugin->translate("content") . ":", "class='input-title'");
+		View::addTextArea($plugin->getChildId("content"), $obj->content(), "class='wysiwyg simple'");
 		?>
 		
-		<div class="buttons">
-			<input type="reset" id="<?print $id /* TODO - Create reset helper */ ?>-resetButton" value="<?print $plugin->translate('reset') ?>" />
-			<input type="submit" id="<?print $id /* TODO - Create submit helper */ ?>-submitButton" value="<?print $plugin->translate('submit') ?>" />
-		</div>
+		<div class="formButtons"><?php
+			View::addButton($plugin->getChildId("reset"), $plugin->translate("reset"), $id . ".reset(); return false;");
+			View::addSubmitButton($plugin->getChildId("submit"), $plugin->translate("save"));
+		?></div>
 		
 		<script type="text/javascript">
 			var <?print $id ?> = new NewsForm("<?print $id ?>");
 		</script>
 		
 		<?php
-		$plugin->closeForm();
+		View::closeForm();
 		$plugin->endPluginDiv();
-		$result = ob_get_clean();
-		
-		if (!Wigbi::isAjaxPostback())
-			print $result;
-		return Wigbi::isAjaxPostback() ? $result : "";
+		return $plugin->endPlugin();
 	}
 }
 
