@@ -97,7 +97,7 @@ class NewsForm extends WigbiUIPlugin
 		View::addTextInput($plugin->getChildId("title"), $obj->title(), "");
 		
 		View::addDiv($plugin->getChildId("contentTitle"), $plugin->translate("content") . ":", "class='input-title'");
-		View::addTextArea($plugin->getChildId("content"), $obj->content(), "class='wysiwyg simple'");
+		View::addTextArea($plugin->getChildId("content"), $obj->content(), "class='wysiwyg slimmed'");
 		?>
 		
 		<div class="formButtons"><?php

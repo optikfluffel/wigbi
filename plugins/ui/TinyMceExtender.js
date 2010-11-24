@@ -56,6 +56,30 @@ TinyMceExtender.add = function()
 			template_replace_values : replaceValues
 		});
 		
+		$('textarea.wysiwyg.slimmed').tinymce({
+			script_url : TinyMceExtender.scriptFile,
+			content_css : TinyMceExtender.cssFile,
+
+			theme : "advanced",
+			plugins : plugins,
+			width: width,
+			
+			/* unused_buttons : abbr,absolute,acronym,advhr,backcolor,blockquote,cite,del,emotions,fontselect,fontsizeselect,help,iespell,ins,insertlayer,moveforward,movebackward,pagebreak,styleprops,template */ 
+			theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,link,unlink,|,undo,redo,|,code",
+			theme_advanced_buttons2 : "",
+			theme_advanced_buttons3 : "",
+			theme_advanced_buttons4 : "",
+			theme_advanced_statusbar_location : "bottom",
+			theme_advanced_resizing : true,
+
+			template_external_list_url : "lists/template_list.js",
+			external_link_list_url : "lists/link_list.js",
+			external_image_list_url : "lists/image_list.js",
+			media_external_list_url : "lists/media_list.js",
+
+			template_replace_values : replaceValues
+		});
+		
 		$('textarea.wysiwyg.advanced').tinymce({
 			script_url : TinyMceExtender.scriptFile,
 			content_css : TinyMceExtender.cssFile,
@@ -65,12 +89,17 @@ TinyMceExtender.add = function()
 			width: width,
 			height: 350,
 			
-			/* unused_buttons : abbr,absolute,acronym,advhr,backcolor,blockquote,cite,del,emotions,fontselect,fontsizeselect,help,iespell,ins,insertlayer,moveforward,movebackward,pagebreak,styleprops,template */ 
+			/* unused_buttons : 
+					styling (use css): 	backcolor, fontselect, fontsizeselect, styleprops
+					div handling:				insertlayer, absolute, moveforward, movebackward
+					elements:						advhr, attribs, nonbreaking, pagebreak, template
+					misc:								emotions, help, iespell, preview, visualchars
+			 */ 
 			theme_advanced_buttons1 : "save,newdocument,print,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,forecolor,|,undo,redo,|,code,fullscreen",
-			theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,|,link,unlink,anchor,|,image,charmap,media,|,insertdate,inserttime,|,attribs,cleanup,preview",
-			theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,ltr,rtl,|,visualchars,nonbreaking",
-			theme_advanced_toolbar_location : "top",
-			theme_advanced_toolbar_align : "left",
+			theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,|,link,unlink,anchor,|,image,charmap,media,|,insertdate,inserttime,|,sub,sup,|,cleanup",
+			theme_advanced_buttons3 : "tablecontrols,|,hr,visualaid,|,ltr,rtl,|,acronym,abbr,cite,blockquote,|,del,ins,|,removeformat",
+			//theme_advanced_toolbar_location : "top",
+			//theme_advanced_toolbar_align : "left",
 			theme_advanced_statusbar_location : "bottom",
 			theme_advanced_resizing : true,
 

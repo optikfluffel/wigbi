@@ -59,18 +59,26 @@
  */
 class TinyMceExtender extends WigbiUIPlugin
 {
+	/**#@+
+	 * @ignore
+	 */
+	private static $_firstAdd = true;
+	/**#@-*/
+	
+	
 	/**
 	 * Apply TinyMceExtender to the page.
 	 * 
 	 * @access	public
 	 * 
-	 * @param		string	$jqueryScriptFile	Path to the Tiny MCE jquery.tinymce.js file.
 	 * @param		string	$scriptFile				Path to the Tiny MCE tiny_mce.js file.
+	 * @param		string	$jqueryScriptFile	Path to the Tiny MCE jquery.tinymce.js file.
 	 * @param		string	$cssFile					Path to a CSS file that should be used by Tiny MCE; default blank.
 	 */
-	public static function add($jqueryScriptFile, $scriptFile, $cssFile = "")
+	public static function add($scriptFile, $jqueryScriptFile, $cssFile = "")
 	{
 		?>
+			<script type="text/javascript" src="<?php print $scriptFile; ?>"></script>
 			<script type="text/javascript" src="<?php print $jqueryScriptFile; ?>"></script>
 			<script type="text/javascript">
 				TinyMceExtender.scriptFile = "<?php print $scriptFile; ?>";
