@@ -847,7 +847,7 @@ class Wigbi
 			return null;
 			
 		//Extract posted data
-		$data = json_decode(stripslashes($_POST["wigbi_asyncPostBackData"]));
+		$data = json_decode($_POST["wigbi_asyncPostBackData"]);
 			
 		//Override the web root and config file properties
 		Wigbi::$_configFile =  $data->configFile ? Wigbi::serverRoot() . $data->configFile : Wigbi::$_configFile;

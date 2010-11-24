@@ -121,6 +121,7 @@ Wigbi.ajax = function(className, object, functionName, functionParameters, callB
 	//Define a callback function
 	function onCallBack(response)
 	{
+		alert(response);
 		if (callBack)
 		{
 			var result = JSON.parse(response.trim());
