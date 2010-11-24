@@ -31,10 +31,9 @@ class NewsBehavior extends UnitTestCase
 		WigbiDataPlugin::autoReset(true);
 		
 		$this->assertEqual($this->news->className(), "News");
-		$this->assertEqual($this->news->collectionName(), "Newss");
+		$this->assertEqual($this->news->collectionName(), "News");
 		
 		$this->assertEqual($this->news->createdDateTime(), "__DATETIME");
-		$this->assertEqual($this->news->lastUpdatedDateTime(), "__DATETIME");
 		$this->assertEqual($this->news->title(), "__50");
 		$this->assertEqual($this->news->content(), "__TEXT");
 	}
@@ -42,10 +41,9 @@ class NewsBehavior extends UnitTestCase
 	function test_constructor_objectShouldAutoReset()
 	{
 		$this->assertEqual($this->news->className(), "News");
-		$this->assertEqual($this->news->collectionName(), "Newss");
+		$this->assertEqual($this->news->collectionName(), "News");
 		
 		$this->assertEqual($this->news->createdDateTime(), "");
-		$this->assertEqual($this->news->lastUpdatedDateTime(), "");
 		$this->assertEqual($this->news->title(), "");
 		$this->assertEqual($this->news->content(), "");
 	}
@@ -62,7 +60,6 @@ class NewsBehavior extends UnitTestCase
 		$tmpObj->load($this->news->id());
 		
 		$this->assertTrue($tmpObj->createdDateTime());
-		$this->assertTrue($tmpObj->lastUpdatedDateTime());
 		$this->assertEqual($tmpObj->title(), "title");
 		$this->assertEqual($tmpObj->content(), "content");
 	}

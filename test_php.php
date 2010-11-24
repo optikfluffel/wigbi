@@ -6,29 +6,38 @@
 			$cleanUp = array_key_exists("clean", $_GET);
 			$test_phpcore = false && !$cleanUp;
 			$test_php = false && !$cleanUp;
-			$test_dataPlugins = false && !$cleanUp;
+			$test_dataPlugins = true && !$cleanUp;
 			//$test_js = true && !$cleanUp;
-			
-			$files = array("wigbi/plugins/data/Rating.php", "wigbi/plugins/ui/LoginForm.php", "wigbi/plugins/ui/LoginForm.js", "wigbi/js/wigbi_dataPlugins.js", "wigbi/js/wigbi_uiPlugins.js");
-			foreach ($files as $file)
-				if (file_exists($file))
-					unlink ($file);
 					
 			Wigbi::configFile("tests/resources/config.ini");
 			Wigbi::start();
-			Wigbi::dbHandler()->query("DROP DATABASE " . Wigbi::dbHandler()->dbName());
-			Wigbi::start();
+			
+			if ($cleanUp) {
+		 		Wigbi::dbHandler()->query("DROP DATABASE " . Wigbi::dbHandler()->dbName());
+			 
+				foreach (glob("wigbi/plugins/data/*.php") as $file)
+					unlink($file);
+				foreach (glob("wigbi/plugins/ui/*.php") as $file)
+					unlink($file);
+				foreach (glob("wigbi/plugins/ui/*.js") as $file)
+					unlink($file);
+					
+				unlink("wigbi/js/wigbi_dataPlugins.js");
+				unlink("wigbi/js/wigbi_uiPlugins.js");
+			}
 			
 			if ($test_phpcore || $test_php || $test_dataPlugins)
 				require_once("resources/tools/SimpleTest/autorun.php");
 			
 			function addPlugins() {
+				foreach (glob("plugins/data/*.*") as $file)
+					copy($file, "wigbi/plugins/data/" . basename($file));
+				foreach (glob("plugins/ui/*.*") as $file)
+					copy($file, "wigbi/plugins/ui/" . basename($file));
+				
 				ob_start();
-				Wigbi::stop();
-				foreach(glob("plugins/data/*.php") as $file)
-					require_once($file);
 				Wigbi::start();
-				ob_end_clean();
+				ob_get_clean();
 			}
 		?>
 		
@@ -89,7 +98,7 @@
 			?>
 			
 			<div class="box toolbar">
-				<a href="test.php">Retry</a> • <a href="test.php?clean=1">Finish</a>
+				<a href="test_php.php">Retry</a> • <a href="test_php.php?clean=1">Finish</a>
 			</div
 	
 			<?php Wigbi::stop(); ?>		

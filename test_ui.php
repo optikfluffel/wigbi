@@ -51,11 +51,11 @@
 	<body>
 		<div id="main">
 			<div class="box toolbar">
-				<a href="testUiPlugins.php">Retry</a> • <a href="testUiPlugins.php?clean=1">Finish</a>
+				<a href="test_ui.php">Retry</a> • <a href="test_ui.php?clean=1">Finish</a>
 			</div>
 			<?php initTests($cleanUp); ?>
 			<div class="box toolbar">
-				<a href="testUiPlugins.php">Retry</a> • <a href="testUiPlugins.php?clean=1">Finish</a>
+				<a href="test_ui.php">Retry</a> • <a href="test_ui.php?clean=1">Finish</a>
 			</div>
 		</div>
 	</body>

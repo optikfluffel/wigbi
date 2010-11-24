@@ -37,7 +37,7 @@ class News extends WigbiDataPlugin
 	 */
 	public $_createdDateTime = "__DATETIME";
 	public $_content = "__TEXT";
-	public $_title = "__20";
+	public $_title = "__50";
 	/**#@-*/
 	
 	
@@ -72,6 +72,10 @@ class News extends WigbiDataPlugin
 	{
 		//Init error list
 		$errorList = array();
+		
+		//Require that a title is defined
+		if (!trim($this->title()))
+			array_push($errorList, "title_required");
 			
 		//Return error list
 		return $errorList;
