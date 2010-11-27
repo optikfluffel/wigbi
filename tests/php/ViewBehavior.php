@@ -9,9 +9,9 @@ class ViewBehavior extends UnitTestCase
 
 
 	
-	function test_viewData_currentViewDataShouldNotExistOutsideOfView()
+	function test_model_shouldBeNullOutsideOfView()
 	{
-		$value = View::viewData();
+		$value = View::model("key");
 		
 		$this->assertNull($value);
 	}
@@ -179,7 +179,7 @@ class ViewBehavior extends UnitTestCase
 		$this->assertEqual($result, "<input type=\"text\" id=\"myInput\" value=\"myText\" style=\"color:red\" />");	
 	}
 	
-	function test_addView_shouldHandleNonExistingCurrentViewData()
+	function test_addView_shouldHandleNonSetModel()
 	{
 		ob_start();
 		View::addView(Wigbi::serverRoot() . "tests/resources/view.php");
@@ -188,7 +188,7 @@ class ViewBehavior extends UnitTestCase
 		$this->assertEqual($result, "");
 	}
 	
-	function test_addView_shouldHandleExistingCurrentViewData()
+	function test_addView_shouldHandleSetModel()
 	{
 		ob_start();
 		View::addView(Wigbi::serverRoot() . "tests/resources/view.php", "foo bar");

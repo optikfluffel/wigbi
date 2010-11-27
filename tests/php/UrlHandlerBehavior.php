@@ -41,7 +41,7 @@ class UrlHandlerBehavior extends UnitTestCase
 	
 	function test_currentUrl_shouldReturnCorrectValue()
 	{
-		$this->assertEqual(UrlHandler::currentUrl(), "http://localhost:8888/wigbi_1/test.php");
+		$this->assertEqual(UrlHandler::currentUrl(), "http://localhost:8888/wigbi_1/test_php.php");
 	}
 	
 	

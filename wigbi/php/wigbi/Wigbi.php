@@ -207,7 +207,7 @@ class Wigbi
 			Wigbi::$_cssPaths = array();
 			$paths = explode(",", $pathString);
 			foreach ($paths as $path)
-				array_push(Wigbi::$_cssPaths, Wigbi::webRoot() . trim($path));
+				array_push(Wigbi::$_cssPaths, trim($path));
 		}
 			
 		return Wigbi::$_cssPaths;

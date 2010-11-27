@@ -30,8 +30,11 @@
  * 
  * To add a view to the page, which can be done in the controller as
  * well as within in any view, just use the View::addView() function.
- * Data is passed to the view with the second, optional parameter. A
- * view can access its view data with the View::viewData() property.
+ * 
+ * Data can be passed to a view using the associative ViewData array
+ * property, which is available to all views, or by simply passing a
+ * custom model object as a second optional parameter to the addView
+ * method. The model will only be available to that particular view.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -41,33 +44,45 @@
  * @subpackage	PHP
  * @version			0.5
  * 
- * static
+ * @static
  */
 class View
 {	
 	/**#@+
 	 * @ignore
 	 */
-	private static $_currentViewData;
+	private static $_model;
 	private static $_viewData = array();
 	/**#@-*/
 	
 	
 	
 	/**
-	 * Get/set view data.
+	 * Get the currently available view model.
 	 * 
 	 * @access	public
 	 * 
-	 * @param		string	$key		Optional key value, otherwise current view specific data.
+	 * @static
+	 * 
+	 * @return	string 		The current view model.
+	 */
+	public function model()
+	{
+		return View::$_model;
+	}
+	
+	/**
+	 * Get/set custom view data values.
+	 * 
+	 * @access	public
+	 * 
+	 * @param		string	$key		Data key name.
 	 * @param		string	$value	Optional set value.
 	 * @return	string		 			The view data value.
 	 */
-	public function viewData($key = "", $value = "")
+	public function viewData($key, $value = "")
 	{
-		if (func_num_args() == 0)
-			return View::$_currentViewData;
-		if (func_num_args() == 2)
+		if (func_num_args() > 1)
 			View::$_viewData[$key] = $value;
 		return array_key_exists($key, View::$_viewData) ? View::$_viewData[$key] : null;
 	}
@@ -252,15 +267,15 @@ class View
 	 * @static
 	 * 
 	 * @param	string	$viewPath	The path to the view file.
-	 * @param	string	$viewData	Optional view data; default null.
+	 * @param	string	$mmodel		Optional view model; default null.
 	 */
-	public static function addView($viewPath, $viewData = null)
+	public static function addView($viewPath, $model = null)
 	{
-		View::$_currentViewData = $viewData;
+		View::$_model = $model;
 		
 		require str_replace("~/", Wigbi::serverRoot(), $viewPath);
 		
-		View::$_currentViewData = null;
+		View::$_model = null;
 	}
 	
 	

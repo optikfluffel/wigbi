@@ -5,8 +5,8 @@
 		<?php
 			$cleanUp = array_key_exists("clean", $_GET);
 			$test_phpcore = false && !$cleanUp;
-			$test_php = false && !$cleanUp;
-			$test_dataPlugins = true && !$cleanUp;
+			$test_php = true && !$cleanUp;
+			$test_dataPlugins = false && !$cleanUp;
 			//$test_js = true && !$cleanUp;
 					
 			Wigbi::configFile("tests/resources/config.ini");

@@ -1,1 +1,1 @@
-<?php print View::viewData(); ?>
+<?php print View::model(); ?>
