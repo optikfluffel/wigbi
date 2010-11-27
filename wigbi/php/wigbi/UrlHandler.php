@@ -24,6 +24,21 @@
  * current URL. The class is quite limited now, but will be extended
  * in the future.
  * 
+ * This file also provides four global and strangely named functions
+ * that simplifies working with application relative URL:s, based on
+ * the Wigbi server and web URL properties. The four functions are:
+ * 
+ * <ul>
+ * 	<li>psurl	- Print an application relative server URL</li>
+ * 	<li>pwurl	- Print an application relative web (client) URL</li>
+ * 	<li>surl	- Parse an application relative server URL</li>
+ * 	<li>wurl	- Parse an application relative web (client) URL</li>
+ * </ul>
+ * 
+ * The four functions use the two parse functions of this class. The
+ * only purpose to have these global functions is to make it easy to
+ * quickly use them, e.g. within a web page.
+ * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
  * @copyright		Copyright © 2010, Daniel Saidi
@@ -116,5 +131,11 @@ class UrlHandler
 		return str_replace("~/", Wigbi::webRoot(), $url);
 	}
 }
+
+
+function psurl($url) { print UrlHandler::parseServerUrl($url); }
+function pwurl($url) { print UrlHandler::parseWebUrl($url); }
+function surl($url) { UrlHandler::parseServerUrl($url); }
+function wurl($url) { UrlHandler::parseWebUrl($url); }
 
 ?>
