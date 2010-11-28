@@ -104,7 +104,6 @@ class WigbiBehavior extends UnitTestCase
 		
 		$this->assertTrue(is_dir($path));
 		$this->assertTrue(file_exists($path . ".htaccess"));
-		$this->assertTrue(file_exists($path . "config.ini"));
 		$this->assertTrue(file_exists($path . "config_default.ini"));
 		$this->assertTrue(file_exists($path . "gpl.txt"));
 		$this->assertTrue(file_exists($path . "release-notes.txt"));

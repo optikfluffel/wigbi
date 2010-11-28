@@ -9,36 +9,14 @@
 			$test_dataPlugins = false && !$cleanUp;
 			//$test_js = true && !$cleanUp;
 					
-			Wigbi::configFile("tests/resources/config.ini");
-			Wigbi::start();
-			
-			if ($cleanUp) {
-		 		Wigbi::dbHandler()->query("DROP DATABASE " . Wigbi::dbHandler()->dbName());
-			 
-				foreach (glob("wigbi/plugins/data/*.php") as $file)
-					unlink($file);
-				foreach (glob("wigbi/plugins/ui/*.php") as $file)
-					unlink($file);
-				foreach (glob("wigbi/plugins/ui/*.js") as $file)
-					unlink($file);
-					
-				unlink("wigbi/js/wigbi_dataPlugins.js");
-				unlink("wigbi/js/wigbi_uiPlugins.js");
-			}
-			
+			include "test_shared.php";
 			if ($test_phpcore || $test_php || $test_dataPlugins)
 				require_once("resources/tools/SimpleTest/autorun.php");
 			
-			function addPlugins() {
-				foreach (glob("plugins/data/*.*") as $file)
-					copy($file, "wigbi/plugins/data/" . basename($file));
-				foreach (glob("plugins/ui/*.*") as $file)
-					copy($file, "wigbi/plugins/ui/" . basename($file));
-				
-				ob_start();
-				Wigbi::start();
-				ob_get_clean();
-			}
+			Wigbi::configFile("tests/resources/config.ini");
+			Wigbi::start();
+			cleanUp();
+			Wigbi::start();
 		?>
 		
 		<script type="text/javascript" src="wigbi/bundle/js:tests/resources/jquery.corner.js,tests/resources/test.js"></script>

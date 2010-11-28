@@ -96,7 +96,7 @@ class IniHandlerBehavior extends UnitTestCase
 	
 	function test_parseFile_shouldReturnArrayForValidFile()
 	{
-		$result = $this->iniHandler->parseFile(Wigbi::wigbiFolder() . "config.ini");
+		$result = $this->iniHandler->parseFile(Wigbi::serverRoot() . "tests/resources/config.ini");
 		
 		$this->assertEqual(gettype($result), "array");
 	}

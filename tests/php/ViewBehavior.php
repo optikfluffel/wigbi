@@ -77,7 +77,7 @@ class ViewBehavior extends UnitTestCase
 		View::addElement("");
 		$result = ob_get_clean();
 		
-		$this->assertEqual($result, "< />");
+		$this->assertEqual($result, "< ></>");
 	}
 	
 	function test_addElement_shouldAddTypedElement()
@@ -86,7 +86,7 @@ class ViewBehavior extends UnitTestCase
 		View::addElement("img");
 		$result = ob_get_clean();
 		
-		$this->assertEqual($result, "<img />");
+		$this->assertEqual($result, "<img ></img>");
 	}
 	
 	function test_addElement_shouldApplyAttributes()
@@ -95,7 +95,7 @@ class ViewBehavior extends UnitTestCase
 		View::addElement("img", array("id" => "myElement", "class" => "myClass"));
 		$result = ob_get_clean();
 		
-		$this->assertEqual($result, "<img id=\"myElement\" class=\"myClass\" />");
+		$this->assertEqual($result, "<img id=\"myElement\" class=\"myClass\" ></img>");
 	}
 	
 	function test_addElement_shouldApplyCustomAttributes()
@@ -104,7 +104,7 @@ class ViewBehavior extends UnitTestCase
 		View::addElement("img", array("id" => "myElement", "class" => "myClass"), "style=\"color:red\"");
 		$result = ob_get_clean();
 		
-		$this->assertEqual($result, "<img id=\"myElement\" class=\"myClass\" style=\"color:red\" />");
+		$this->assertEqual($result, "<img id=\"myElement\" class=\"myClass\" style=\"color:red\" ></img>");
 	}
 	
 	function test_addElement_shouldApplyElementBody()
@@ -114,6 +114,24 @@ class ViewBehavior extends UnitTestCase
 		$result = ob_get_clean();
 		
 		$this->assertEqual($result, "<div id=\"myElement\" class=\"myClass\" >myContent</div>");
+	}
+	
+	function test_addElement_shouldRemoveEndTag()
+	{
+		ob_start();
+		View::addElement("div", array("id" => "myElement", "class" => "myClass"), "", "", false);
+		$result = ob_get_clean();
+		
+		$this->assertEqual($result, "<div id=\"myElement\" class=\"myClass\" />");
+	}
+	
+	function test_addElement_shouldAlwaysAddEndTagForBodyContent()
+	{
+		ob_start();
+		View::addElement("div", array("id" => "myElement", "class" => "myClass"), "", "foo bar", false);
+		$result = ob_get_clean();
+		
+		$this->assertEqual($result, "<div id=\"myElement\" class=\"myClass\" >foo bar</div>");
 	}
 	
 	function test_addHiddenInput_shouldAddElement()

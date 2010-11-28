@@ -119,7 +119,7 @@ class View
 		if ($checked)
 			$arguments["checked"] = "checked";
 			
-		View::addElement("input", $arguments, $attributes);
+		View::addElement("input", $arguments, $attributes, "", false);
 	}
 	
 	/**
@@ -137,25 +137,26 @@ class View
 	}
 	
 	/**
-	 * Add any element to the page.
+	 * Add an HTML element to the page.
 	 * 
 	 * @access	public
 	 * 
-	 * @param		string	$name							The name of the element.
-	 * @param		array		$attributes				Associative array with attribute name/value pairs; default empty array.
+	 * @param		string	$name							The name of the element; e.g. img.
+	 * @param		array		$attributes				Associative array with element attributes; default empty.
 	 * @param		string	$customAttributes	Custom attribute string to add after the array-based attributes; default blank.
 	 * @param		string	$elementBody			The element's body content, if any; default blank.
+	 * @param		string	$endTag						Whether or not the element should use an end tag; default true and always true if $elementBody is set.
 	 * @return	string										The resulting element string.
 	 */
-	public function addElement($name, $attributes = array(), $customAttributes = "", $elementBody = "")
+	public function addElement($name, $attributes = array(), $customAttributes = "", $elementBody = "", $endTag = true)
 	{
 		$result = "<$name ";
 		foreach($attributes as $key => $value)
 			$result .= $value ? "$key=\"$value\" " : "";
 		$result .= $customAttributes ? $customAttributes . " " : "";
-		$result .= $elementBody ? ">" : "/>";
+		$result .= $elementBody || $endTag ? ">" : "/>";
 		$result .= $elementBody;
-		$result .= $elementBody ? "</$name>" : "";
+		$result .= $elementBody || $endTag ? "</$name>" : "";
 		
 		print $result;
 	}
@@ -171,7 +172,7 @@ class View
 	 */
 	public function addHiddenInput($id, $value = "", $attributes = "")
 	{
-		View::addElement("input", array("type" => "hidden", "id" => $id, "value" => $value), $attributes);
+		View::addElement("input", array("type" => "hidden", "id" => $id, "value" => $value), $attributes, "", false);
 	}
 	
 	/**
@@ -184,7 +185,7 @@ class View
 	 */
 	public function addPasswordInput($id, $attributes = "")
 	{
-		View::addElement("input", array("type" => "password", "id" => $id), $attributes);
+		View::addElement("input", array("type" => "password", "id" => $id), $attributes, "", false);
 	}
 	
 	/**
@@ -198,7 +199,7 @@ class View
 	 */
 	public function addResetButton($id, $text, $attributes = "")
 	{
-		View::addElement("input", array("type" => "reset", "id" => $id, "value" => $text), $attributes);
+		View::addElement("input", array("type" => "reset", "id" => $id, "value" => $text), $attributes, "", false);
 	}
 	
 	/**
@@ -226,7 +227,7 @@ class View
 	 */
 	public function addSubmitButton($id, $text, $attributes = "")
 	{
-		View::addElement("input", array("type" => "submit", "id" => $id, "value" => $text), $attributes);
+		View::addElement("input", array("type" => "submit", "id" => $id, "value" => $text), $attributes, "", false);
 	}
 	
 	/**
@@ -254,7 +255,7 @@ class View
 	 */
 	public function addTextInput($id, $value = "", $attributes = "")
 	{
-		View::addElement("input", array("type" => "text", "id" => $id, "value" => $value), $attributes);
+		View::addElement("input", array("type" => "text", "id" => $id, "value" => $value), $attributes, "", false);
 	}
 	
 	/**
@@ -302,7 +303,7 @@ class View
 	public function openForm($id, $action = "", $onsubmit = "", $attributes = "")
 	{
 		ob_start();
-		View::addElement("form", array("id" => $id, "action" => $action, "onsubmit" => $onsubmit), $attributes);
+		View::addElement("form", array("id" => $id, "action" => $action, "onsubmit" => $onsubmit), $attributes, "", false);
 		$result = ob_get_clean(); 
 		
 		print str_replace(" />", ">", $result);
