@@ -4,10 +4,10 @@
 	<head>
 		<?php
 			$cleanUp = array_key_exists("clean", $_GET);
-			$test_phpcore = false && !$cleanUp;
+			$test_phpcore = true && !$cleanUp;
 			$test_php = true && !$cleanUp;
-			$test_dataPlugins = false && !$cleanUp;
-			//$test_js = true && !$cleanUp;
+			$test_dataPlugins = true && !$cleanUp;
+			$test_js = false && !$cleanUp;
 					
 			include "test_shared.php";
 			if ($test_phpcore || $test_php || $test_dataPlugins)
@@ -16,7 +16,8 @@
 			Wigbi::configFile("tests/resources/config.ini");
 			Wigbi::start();
 			cleanUp();
-			Wigbi::start();
+			if (!$cleanUp)
+				Wigbi::start();
 		?>
 		
 		<script type="text/javascript" src="wigbi/bundle/js:tests/resources/jquery.corner.js,tests/resources/test.js"></script>
@@ -55,14 +56,11 @@
 					print "</div>";
 				}
 				
-				
-				//Add plugins for plugin and JS tests **
-				addPlugins();
-				
-				
 				//Wigbi.Plugins.Data *******************
 				if ($test_dataPlugins)
 				{
+					addPlugins();
+					
 					$test = new GroupTest("Wigbi.Plugins.Data");
 					foreach(glob("tests/plugins/data/*.php") as $file)
 						require_once($file);

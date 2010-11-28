@@ -340,22 +340,23 @@ class WigbiDataPluginBehavior extends UnitTestCase
 	
 	function test_delete_shouldDeleteFiles()
 	{
-		$file = Wigbi::serverRoot() . "tests/resources/tmp.txt";
-		if (file_exists($file))
-			unlink($file);
+		$target = Wigbi::serverRoot() . "tests/resources/_tinyMce.css";
+		$source = Wigbi::serverRoot() . "tests/resources/tmp.txt";
+		if (file_exists($source))
+			unlink($source);
 		
-		$this->assertFalse(file_exists($file));
+		$this->assertFalse(file_exists($source));
 		
-		copy(Wigbi::serverRoot() . "wigbi/config.ini", $file);
+		copy($target, $source);
 	
-		$this->assertTrue(file_exists($file));
+		$this->assertTrue(file_exists($source));
 		
 		$obj = new MyDatabaseClass();
-		$obj->_noValue = $file; 
+		$obj->_noValue = $source; 
 		$obj->save();
 		$obj->delete();
 		
-		$this->assertFalse(file_exists($file));
+		$this->assertFalse(file_exists($source));
 	}
 	
 	function test_deleteListItem_shouldReturnFalseForUnsavedParent()
