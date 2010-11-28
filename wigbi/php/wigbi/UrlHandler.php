@@ -135,7 +135,7 @@ class UrlHandler
 
 function psurl($url) { print UrlHandler::parseServerUrl($url); }
 function pwurl($url) { print UrlHandler::parseWebUrl($url); }
-function surl($url) { UrlHandler::parseServerUrl($url); }
-function wurl($url) { UrlHandler::parseWebUrl($url); }
+function surl($url) { return UrlHandler::parseServerUrl($url); }
+function wurl($url) { return UrlHandler::parseWebUrl($url); }
 
 ?>
