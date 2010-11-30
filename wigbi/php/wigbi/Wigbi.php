@@ -742,12 +742,12 @@ class Wigbi
 	 */
 	private static function start_dataPlugins()
 	{
-		//Disable the auto-reset behavior of the base class
-		WigbiDataPlugin::autoReset(false);
-		
 		//Abort if RTB is not enabled
 		if (!Wigbi::configuration("enabled", "runtimeBuild"))
 			return;
+			
+		//Disable the auto-reset behavior of the base class
+		WigbiDataPlugin::autoReset(false);
 		
 		//Prepare the database for each class
 		foreach (Wigbi::dataPluginClasses() as $class)
