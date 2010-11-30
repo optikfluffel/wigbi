@@ -912,7 +912,7 @@ class Wigbi
 		try
 		{
 			//Extract posted data and get environment data
-			$data = json_decode(stripslashes($_POST["wigbi_asyncPostBackData"]));
+			$data = json_decode($_POST["wigbi_asyncPostBackData"]);
 			$configFile = $data->configFile;
 			$webRoot = $data->webRoot;
 			
