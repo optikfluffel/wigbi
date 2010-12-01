@@ -97,7 +97,7 @@ class HtmlContentControl extends WigbiUIPlugin
 			$plugin->beginViewDiv($embedForm && $obj->id());
 		
 		View::addTextArea($plugin->getChildId("object"), json_encode($obj), "style='display:none'");
-		View::addDiv($plugin->getChildId("content"), $obj->content());
+		View::addDiv($plugin->getChildId("content"), wurl($obj->content()));
 		
 		if ($embedForm)
 		{

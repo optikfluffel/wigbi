@@ -52,6 +52,7 @@ class View
 	 * @ignore
 	 */
 	private static $_model;
+	private static $_outerModels;
 	private static $_viewData = array();
 	/**#@-*/
 	
@@ -272,11 +273,10 @@ class View
 	 */
 	public static function addView($viewPath, $model = null)
 	{
+		$backup = View::$_model; 
 		View::$_model = $model;
-		
-		require str_replace("~/", Wigbi::serverRoot(), $viewPath);
-		
-		View::$_model = null;
+		require surl($viewPath);
+		View::$_model = $backup;
 	}
 	
 	
