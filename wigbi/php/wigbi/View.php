@@ -147,9 +147,10 @@ class View
 	 * @param		string	$customAttributes	Custom attribute string to add after the array-based attributes; default blank.
 	 * @param		string	$elementBody			The element's body content, if any; default blank.
 	 * @param		string	$endTag						Whether or not the element should use an end tag; default true and always true if $elementBody is set.
+	 * @param		string	$parseWebUrl			Whether or not to convert ~/ to the web root; default true.
 	 * @return	string										The resulting element string.
 	 */
-	public function addElement($name, $attributes = array(), $customAttributes = "", $elementBody = "", $endTag = true)
+	public function addElement($name, $attributes = array(), $customAttributes = "", $elementBody = "", $endTag = true, $parseWebUrl = true)
 	{
 		$result = "<$name ";
 		foreach($attributes as $key => $value)
@@ -242,7 +243,7 @@ class View
 	 */
 	public function addTextArea($id, $content = "", $attributes = "")
 	{
-		View::addElement("textarea", array("id" => $id), $attributes, $content);
+		View::addElement("textarea", array("id" => $id), $attributes, $content, true, false);
 	}
 	
 	/**
@@ -256,7 +257,7 @@ class View
 	 */
 	public function addTextInput($id, $value = "", $attributes = "")
 	{
-		View::addElement("input", array("type" => "text", "id" => $id, "value" => $value), $attributes, "", false);
+		View::addElement("input", array("type" => "text", "id" => $id, "value" => $value), $attributes, "", false, false);
 	}
 	
 	/**
