@@ -134,6 +134,15 @@ class ViewBehavior extends UnitTestCase
 		$this->assertEqual($result, "<div id=\"myElement\" class=\"myClass\" >foo bar</div>");
 	}
 	
+	function test_addElement_shouldParseWebUrl()
+	{
+		ob_start();
+		View::addElement("div", array("id" => "myElement", "class" => "myClass"), "", "~/foo bar", false);
+		$result = ob_get_clean();
+		
+		$this->assertEqual($result, "<div id=\"myElement\" class=\"myClass\" >foo bar</div>");
+	}
+	
 	function test_addHiddenInput_shouldAddElement()
 	{
 		ob_start();
