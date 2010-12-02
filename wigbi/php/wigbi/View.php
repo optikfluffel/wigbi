@@ -159,7 +159,7 @@ class View
 		$result .= $elementBody;
 		$result .= $elementBody || $endTag ? "</$name>" : "";
 		
-		pwurl($result;
+		pwurl($result);
 	}
 	
 	/**
