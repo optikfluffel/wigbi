@@ -160,7 +160,7 @@ class View
 		$result .= $elementBody;
 		$result .= $elementBody || $endTag ? "</$name>" : "";
 		
-		pwurl($result);
+		print $parseWebUrl ? UrlHandler::parseWebUrl($result) : $result;
 	}
 	
 	/**

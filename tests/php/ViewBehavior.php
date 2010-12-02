@@ -134,7 +134,16 @@ class ViewBehavior extends UnitTestCase
 		$this->assertEqual($result, "<div id=\"myElement\" class=\"myClass\" >foo bar</div>");
 	}
 	
-	function test_addElement_shouldParseWebUrl()
+	function test_addElement_shouldNotParseWebUrlIfDisabled()
+	{
+		ob_start();
+		View::addElement("div", array("id" => "myElement", "class" => "myClass"), "", "~/foo bar", false, false);
+		$result = ob_get_clean();
+		
+		$this->assertEqual($result, "<div id=\"myElement\" class=\"myClass\" >~/foo bar</div>");
+	}
+	
+	function test_addElement_shouldParseWebUrlIfEnabled()
 	{
 		ob_start();
 		View::addElement("div", array("id" => "myElement", "class" => "myClass"), "", "~/foo bar", false);
@@ -197,6 +206,15 @@ class ViewBehavior extends UnitTestCase
 		$this->assertEqual($result, "<textarea id=\"myArea\" style=\"color:red\" >myContent</textarea>");	
 	}
 	
+	function test_addTextArea_shouldNotParseWebUrl()
+	{
+		ob_start();
+		View::addTextArea("myArea", "~/myContent", "style=\"color:red\"");
+		$result = ob_get_clean();
+		
+		$this->assertEqual($result, "<textarea id=\"myArea\" style=\"color:red\" >~/myContent</textarea>");	
+	}
+	
 	function test_addTextInput_shouldAddElement()
 	{
 		ob_start();
@@ -204,6 +222,15 @@ class ViewBehavior extends UnitTestCase
 		$result = ob_get_clean();
 		
 		$this->assertEqual($result, "<input type=\"text\" id=\"myInput\" value=\"myText\" style=\"color:red\" />");	
+	}
+	
+	function test_addTextInput_shouldNotParseWebUrl()
+	{
+		ob_start();
+		View::addTextInput("myInput", "~/myText", "style=\"color:red\"");
+		$result = ob_get_clean();
+		
+		$this->assertEqual($result, "<input type=\"text\" id=\"myInput\" value=\"~/myText\" style=\"color:red\" />");	
 	}
 	
 	function test_addView_shouldHandleNonSetModel()
