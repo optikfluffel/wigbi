@@ -242,10 +242,19 @@ class ViewBehavior extends UnitTestCase
 		$this->assertEqual($result, "");
 	}
 	
-	function test_addView_shouldHandleSetModel()
+	function test_addView_shouldHandleModel()
 	{
 		ob_start();
 		View::addView(Wigbi::serverRoot() . "tests/resources/view.php", "foo bar");
+		$result = ob_get_clean();
+		
+		$this->assertEqual($result, "foo bar");
+	}
+	
+	function test_addView_shouldHandleExistingModel()
+	{
+		ob_start();
+		View::addView(Wigbi::serverRoot() . "tests/resources/nestingView.php", "bar");
 		$result = ob_get_clean();
 		
 		$this->assertEqual($result, "foo bar");

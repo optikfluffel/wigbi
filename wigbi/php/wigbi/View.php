@@ -52,7 +52,7 @@ class View
 	 * @ignore
 	 */
 	private static $_model;
-	private static $_outerModels;
+	private static $_outerModels = array();
 	private static $_viewData = array();
 	/**#@-*/
 	
@@ -274,10 +274,12 @@ class View
 	 */
 	public static function addView($viewPath, $model = null)
 	{
-		$backup = View::$_model; 
+		array_push(View::$_outerModels, View::$_model);
+		
 		View::$_model = $model;
 		require surl($viewPath);
-		View::$_model = $backup;
+		
+		View::$_model = array_pop(View::$_outerModels);
 	}
 	
 	
