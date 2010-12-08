@@ -20,13 +20,6 @@ class PodcastBehavior extends UnitTestCase
 	
 	function tearDown() { }
 	
-	function test_setupDatabase_shouldNotFail()
-	{
-		Wigbi::start();
-		$this->podcast->setupDatabase();
-		$this->item->setupDatabase();
-	}
-	
 	
 	
 	function test_constructor_objectVariablesShouldBeOfCorrectType()

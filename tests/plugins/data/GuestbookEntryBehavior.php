@@ -17,13 +17,7 @@ class GuestbookEntryBehavior extends UnitTestCase
 	}
 	
 	function tearDown() { }
-	
-	function test_setupDatabase_shouldNotFail()
-	{
-		Wigbi::start();
-		$this->guestbookEntry->setupDatabase();
-	}	
-	
+		
 	
 	
 	function test_constructor_objectVariablesShouldBeOfCorrectType()

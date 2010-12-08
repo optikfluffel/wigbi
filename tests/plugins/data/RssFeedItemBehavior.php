@@ -18,12 +18,6 @@ class RssFeedItemBehavior extends UnitTestCase
 	
 	function tearDown() { }
 	
-	function test_setupDatabase_shouldNotFail()
-	{
-		Wigbi::start();
-		$this->rssFeedItem->setupDatabase();
-	}
-	
 	
 	
 	function test_constructor_objectVariablesShouldBeOfCorrectType()

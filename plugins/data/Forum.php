@@ -73,9 +73,7 @@ class Forum extends WigbiDataPlugin
 		parent::__construct();
 		
 		$this->registerList("threads", "ForumThread", true, "createdDateTime DESC");
-		$this->registerList("posts", "ForumPost", true, "createdDateTime");
 		
-		$this->registerAjaxFunction("addPost", array("content", "createdById"), false);
 		$this->registerAjaxFunction("addThread", array("name", "description", "createdById"), false);
 	}
 	
@@ -114,38 +112,6 @@ class Forum extends WigbiDataPlugin
 	}
 	
 	
-	/**
-	 * Add a post to the forum.
-	 * 
-	 * @access	public
-	 * 
-	 * @param	string	$content		The textual content of the post.
-	 * @param	string	$createdById	The ID of the creator; default blank.
-	 * @return	bool					Whether or not the operation succeeded.
-	 */
-	public function addPost($content, $createdById = "")
-	{
-		//Abort if the object has not been saved
-		if (!$this->id())
-			throw new Exception("id_required");
-			
-		//Create new post
-		$post = new ForumPost();
-		$post->content($content);
-		$post->forumThreadId($this->id());
-		$post->createdById($createdById);
-			
-		//Abort if the post is invalid
-		$validationResult = $post->validate();
-		if (sizeof($validationResult) > 0)
-			throw new Exception(implode($validationResult, ","));
-			
-		//Save the post and add it to the list
-		$post->save();
-		$this->addListItem("posts", $post->id());
-		return true;
-	}
-
 	/**
 	 * Add a thread to the forum.
 	 * 

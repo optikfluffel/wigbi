@@ -19,14 +19,12 @@
 /**
  * The Wigbi.Plugins.Data.MenuItem class.
  * 
- * This class represents a menu item that, for instance, can be used
- * within a web site menu.
+ * This class represents a menu item, that can be used to link to an
+ * internal or external URL.
  * 
- * It is also possible to add sub menu items to a menu item. The sub
- * menu items are stored in a synced data list.
- * 
- * Except the display text, url and tooltip text, a link can also be
- * given a name, which can be used to identify it. It can be freely. 
+ * A menu item can either be a root menu item that has no parent, or
+ * be the child of another menu item. Sub menu items are stored in a
+ * synced data list.
  * 
  * 
  * DATA LISTS ********************
@@ -51,10 +49,10 @@ class MenuItem extends WigbiDataPlugin
 	 * @ignore
 	 */
 	public $_parentId = "__GUID";
-	public $_name = "__25";
-	public $_linkText = "__50";
 	public $_url = "__100";
+	public $_text = "__50";
 	public $_tooltip = "__50";
+	public $_name = "__25";
 	/**#@-*/
 	
 	
@@ -63,15 +61,10 @@ class MenuItem extends WigbiDataPlugin
 		parent::__construct();
 		
 		$this->registerList("subMenu", "MenuItem", true, null);
+		
+		$this->registerAjaxFunction("addMenuItem", array("url", "text", "tooltip", "name"), false);
 	}
 	
-	
-	public function linkText($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_linkText = func_get_arg(0);
-		return $this->_linkText;
-	}
 	
 	public function name($value = "")
 	{
@@ -85,6 +78,13 @@ class MenuItem extends WigbiDataPlugin
 		if (func_num_args() != 0)
 			$this->_parentId = func_get_arg(0);
 		return $this->_parentId;
+	}
+	
+	public function text($value = "")
+	{
+		if (func_num_args() != 0)
+			$this->_text = func_get_arg(0);
+		return $this->_text;
 	}
 	
 	public function tooltip($value = "")
@@ -101,6 +101,42 @@ class MenuItem extends WigbiDataPlugin
 		return $this->_url;
 	}
 	
+
+	/**
+	 * Add a sub menu item to the menu item.
+	 * 
+	 * @access	public
+	 * 
+	 * @param		string	$url			The url that the menu item links to.
+	 * @param		string	$text			The text of the menu item.
+	 * @param		string	$tooltip	The text that is displayed when the link is hovered; default blank.
+	 * @param		string	$name			The optional name of the menu item; default blank.
+	 * @return	bool							Whether or not the operation succeeded.
+	 */
+	public function addMenuItem($url, $text, $tooltip = "", $name = "")
+	{
+		//Abort if the object has not been saved
+		if (!$this->id())
+			throw new Exception("id_required");
+			
+		//Create new object
+		$item = new MenuItem();
+		$item->parentId($this->id());
+		$item->url($url);
+		$item->text($text);
+		$item->tooltip($tooltip);
+		$item->name($name);
+			
+		//Abort if the object is invalid
+		$validationResult = $item->validate();
+		if (sizeof($validationResult) > 0)
+			throw new Exception(implode($validationResult, ","));
+			
+		//Save the object and add it to the list
+		$item->save();
+		$this->addListItem("subMenu", $item->id());
+		return true;
+	}
 	
 	/**
 	 * Validate the object.
@@ -113,6 +149,10 @@ class MenuItem extends WigbiDataPlugin
 	{
 		//Init error list
 		$errorList = array();
+		
+		//Require that the object has a text
+		if (!trim($this->text()))
+			array_push($errorList, "text_required");
 			
 		//Return error list
 		return $errorList;

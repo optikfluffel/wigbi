@@ -18,12 +18,6 @@ class CountryBehavior extends UnitTestCase
 	
 	function tearDown() { }
 	
-	function test_setupDatabase_shouldNotFail()
-	{
-		Wigbi::start();
-		$this->country->setupDatabase();
-	}	
-	
 
 	
 	function test_constructor_objectVariablesShouldBeOfCorrectType()

@@ -17,12 +17,6 @@ class MessageBehavior extends UnitTestCase
 	
 	function tearDown() { }
 	
-	function test_setupDatabase_shouldNotFail()
-	{
-		Wigbi::start();
-		$this->message->setupDatabase();
-	}	
-	
 	
 	
 	function test_constructor_objectVariablesShouldBeOfCorrectType()

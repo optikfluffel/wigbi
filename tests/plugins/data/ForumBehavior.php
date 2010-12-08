@@ -22,14 +22,6 @@ class ForumBehavior extends UnitTestCase
 	
 	function tearDown() { }
 	
-	function test_setupDatabase_shouldNotFail()
-	{
-		Wigbi::start();
-		$this->forum->setupDatabase();
-		$this->forumThread->setupDatabase();
-		$this->forumPost->setupDatabase();
-	}
-	
 	
 	
 	function test_constructor_objectVariablesShouldBeOfCorrectType()
@@ -64,14 +56,7 @@ class ForumBehavior extends UnitTestCase
 	{
 		$lists = $this->forum->lists();
 		
-		$this->assertEqual(sizeof($lists), 2);
-		
-		$list = $lists["posts"];
-		
-		$this->assertEqual($list->name(), "posts");
-		$this->assertEqual($list->itemClass(), "ForumPost");
-		$this->assertEqual($list->isSynced(), true);
-		$this->assertEqual($list->sortRule(), "createdDateTime");
+		$this->assertEqual(sizeof($lists), 1);
 		
 		$list = $lists["threads"];
 		
@@ -82,15 +67,9 @@ class ForumBehavior extends UnitTestCase
 		
 		$functions = $this->forum->ajaxFunctions();
 		
-		$this->assertEqual(sizeof($functions), 2);
+		$this->assertEqual(sizeof($functions), 1);
 		
 		$function = $functions[0];
-		
-		$this->assertEqual($function->name(), "addPost");
-		$this->assertEqual($function->parameters(), array("content", "createdById"));
-		$this->assertEqual($function->isStatic(), false);
-		
-		$function = $functions[1];
 		
 		$this->assertEqual($function->name(), "addThread");
 		$this->assertEqual($function->parameters(), array("name", "description", "createdById"));
@@ -118,35 +97,6 @@ class ForumBehavior extends UnitTestCase
 	
     
 	
-	function test_addPost_shouldFailForUnsavedObject()
-	{
-		$this->expectException(new Exception("id_required"));
-		$this->forum->addPost("Foo bar", "");
-	}
-
-	function test_addPost_shouldFailForMissingContent()
-	{
-		$this->forum->save();
-		
-		$this->expectException(new Exception("content_required"));
-		$this->forum->addPost("", "");
-	}
-
-	function test_addPost_shouldAddMultiplePosts()
-	{
-		$this->forum->save();
-		
-		$result = $this->forum->addPost("Foo bar", "");
-		$posts = $this->forum->getListItems("posts");
-		$posts = $posts[0];
-		$post = $posts[0];
-		
-		$this->assertTrue($result);
-		$this->assertEqual(sizeof($posts), 1);
-		$this->assertEqual($post->content(), "Foo bar");
-		$this->assertEqual($post->createdById(), "");
-	}
-    
 	function test_addThread_shouldFailForUnsavedObject()
 	{
 		$this->expectException(new Exception("id_required"));
@@ -163,18 +113,26 @@ class ForumBehavior extends UnitTestCase
 
 	function test_addThread_shouldAddMultipleThreads()
 	{
+		
 		$this->forum->save();
 		
-		$result = $this->forum->addThread("Foo bar", "", "");
-		$threads = $this->forum->getListItems("threads");
-		$threads = $threads[0];
-		$thread = $threads[0];
+		$this->assertTrue($this->forum->addThread("Foo"));
+		$this->assertTrue($this->forum->addThread("Bar", "A bar related thread", "foo bar"));
+
+		$items = $this->forum->getListItems("threads");		
+		$items = $items[0];
+		$item1 = $items[0];
+		$item2 = $items[1];
 		
-		$this->assertTrue($result);
-		$this->assertEqual(sizeof($threads), 1);
-		$this->assertEqual($thread->name(), "Foo bar");
-		$this->assertEqual($thread->description(), "");
-		$this->assertEqual($thread->createdById(), "");
+		$this->assertEqual(sizeof($items), 2);
+		
+		$this->assertEqual($item1->name(), "Foo");
+		$this->assertEqual($item1->description(), "");
+		$this->assertEqual($item1->createdById(), "");
+		
+		$this->assertEqual($item2->name(), "Bar");
+		$this->assertEqual($item2->description(), "A bar related thread");
+		$this->assertEqual($item2->createdById(), "foo bar");
 	}
     
 	function test_validate_shouldOnlySucceedForValidObject()

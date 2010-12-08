@@ -17,12 +17,6 @@ class HtmlContentBehavior extends UnitTestCase
 	
 	function tearDown() { }
 	
-	function test_setupDatabase_shouldNotFail()
-	{
-		Wigbi::start();
-		$this->htmlContent->setupDatabase();
-	}	
-	
 	
 	function test_constructor_objectVariablesShouldBeOfCorrectType()
 	{

@@ -20,13 +20,6 @@ class ForumThreadBehavior extends UnitTestCase
 	
 	function tearDown() { }
 	
-	function test_setupDatabase_shouldNotFail()
-	{
-		Wigbi::start();
-		$this->forumThread->setupDatabase();
-		$this->forumPost->setupDatabase();
-	}	
-	
 	
 	
 	function test_constructor_objectVariablesShouldBeOfCorrectType()

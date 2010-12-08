@@ -17,12 +17,6 @@ class NewsBehavior extends UnitTestCase
 	
 	function tearDown() { }
 	
-	function test_setupDatabase_shouldNotFail()
-	{
-		Wigbi::start();
-		$this->news->setupDatabase();
-	}	
-	
 	
 	function test_constructor_objectVariablesShouldBeOfCorrectType()
 	{

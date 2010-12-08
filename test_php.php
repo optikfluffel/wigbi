@@ -25,6 +25,10 @@
 	</head>
 	<body>
 		<div id="main">
+		
+			<div class="box toolbar">
+				<a href="test_php.php">Retry</a> • <a href="test_php.php?clean=1">Finish</a>
+			</div
 			
 			<?php
 		
