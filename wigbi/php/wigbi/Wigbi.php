@@ -93,15 +93,16 @@ class Wigbi
 	
 	
 	/**
-	 * Get the default Wigbi CacheHandler instance.
+	 * Get/set the default Wigbi CacheHandler instance.
 	 * 
-	 * This object is initialized when Wigbi is started and uses the
+	 * This object is initialized when Wigbi is started, using the
 	 * cacheHandler section in the Wigbi config file.
 	 * 
 	 * @access	public
 	 * @static
 	 * 
-	 * @return	CacheHandler	The default Wigbi CacheHandler object.
+	 * @param		CacheHandler	$value	Optional set value.
+	 * @return	CacheHandler					The default Wigbi CacheHandler object.
 	 */
 	public static function cacheHandler()
 	{
