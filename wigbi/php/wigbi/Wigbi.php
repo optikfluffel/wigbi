@@ -41,7 +41,7 @@
  * To stop Wigbi, execute the Wigbi::stop function when Wigbi is not
  * needed anymore, e.g. at the end of the page.
  * 
- * 
+ *
  * WIGBI RUNTIME BUILD (RTB) ***************
  * 
  * Runtime Build - RTB - is a Wigbi feature that automatically keeps
@@ -80,6 +80,7 @@ class Wigbi
 	private static $_dataPluginClasses;
 	private static $_dbHandler;
 	private static $_generateHtml = true;
+	private static $_isStarted;
 	private static $_jsPaths;
 	private static $_languageFile;
 	private static $_languageHandler;
@@ -198,7 +199,7 @@ class Wigbi
 		{
 			$pathString = trim(Wigbi::configuration("cssPaths", "application"));
 			if (!$pathString)
-				return array();
+				return null;
 			
 			Wigbi::$_cssPaths = array();
 			$paths = explode(",", $pathString);
@@ -312,6 +313,19 @@ class Wigbi
 	}
 	
 	/**
+	 * Get whether or not Wigbi is started.
+	 * 
+	 * @access	public
+	 * @static
+	 * 
+	 * @return	bool	Whether or not Wigbi is started.
+	 */
+	public static function isStarted()
+	{
+		return Wigbi::$_isStarted;
+	}
+	
+	/**
 	 * Get/set a list of JavaScript folder/file paths to apply during when Wigbi is started.
 	 * 
 	 * By default, Wigbi will use the application.jsPaths configuration
@@ -334,7 +348,7 @@ class Wigbi
 		{
 			$pathString = trim(Wigbi::configuration("jsPaths", "application"));
 			if (!$pathString)
-				return array();
+				return null;
 			
 			Wigbi::$_jsPaths = array();
 			$paths = explode(",", $pathString);
@@ -650,6 +664,9 @@ class Wigbi
 		
 		//Generate page output
 		Wigbi::start_generateHtml();
+		
+		//Set Wigbi to started
+		Wigbi::$_isStarted = true;
 	}
 	
 	/**
@@ -796,7 +813,7 @@ class Wigbi
 		print "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $cssPath . "\" />";
 		 
 		//Create js tag
-		$jsPath	 = Wigbi::webRoot() . "wigbi/bundle/js:wigbi/js,wigbi/js/wigbi";
+		$jsPath	 = Wigbi::webRoot() . "wigbi/bundle/js:wigbi/js/wigbi/core,wigbi/js/wigbi,wigbi/js";
 		$jsPaths = Wigbi::jsPaths() == null ? null : join(",", Wigbi::jsPaths());
 		$jsPath	.= $jsPaths ? "," . $jsPaths : "";
 		print "<script type=\"text/javascript\" src=\"" . $jsPath . "\"></script>";
@@ -1075,6 +1092,9 @@ class Wigbi
 		//Set some variables to null
 		Wigbi::$_dataPluginClasses = null;
 		Wigbi::$_uiPluginClasses = null;
+		
+		//Set Wigbi to not started
+		Wigbi::$_isStarted = false;
 	}
 }
 

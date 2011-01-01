@@ -46,6 +46,7 @@ class WigbiBehavior extends UnitTestCase
 	{
 		Wigbi::cssPaths(null);
 		Wigbi::generateHtml(true);
+		Wigbi::jsPaths(null);
 		$_POST["wigbi_asyncPostBack"] = 0;
 		$_POST["wigbi_asyncPostBackData"] = null;
 	}
@@ -260,22 +261,6 @@ class WigbiBehavior extends UnitTestCase
 		array_pop($_POST);
 	}
 	
-	function test_isPostBack_shouldReturnFalseForNoData()
-	{
-		$_POST = array();
-		
-		$this->assertFalse(Wigbi::isPostBack());
-	}
-
-	function test_isPostBack_shouldReturnTrueForData()
-	{
-		$_POST["foo"] = "bar";
-		
-		$this->assertTrue(Wigbi::isPostBack());
-		
-		array_pop($_POST);
-	}
-	
 	function test_isStarted_shouldReturnFalseWhenStopped()
 	{
 		Wigbi::stop();
@@ -287,16 +272,45 @@ class WigbiBehavior extends UnitTestCase
 	{
 		$this->assertTrue(Wigbi::isStarted());
 	}
-	
-	function test_jsFolders_shouldReturnAllFolders()
+
+	function test_jsPaths_shouldGetSetValue()
 	{
-		$folders = Wigbi::jsFolders();
-		$baseFolder = Wigbi::wigbiFolder() . "js/";
+		$this->assertEqual(Wigbi::jsPaths(), null);
+		$this->assertEqual(Wigbi::jsPaths(array("foo", "bar")), array("foo", "bar"));
+		$this->assertEqual(Wigbi::jsPaths(), array("foo", "bar"));
+		$this->assertEqual(Wigbi::jsPaths(null), null);
+	}
+	
+	function test_jsPaths_shouldReturnNullIfPropertyIsNotSetAndWigbiIsStopped()
+	{
+		ob_start();
+		Wigbi::stop();
+		ob_end_clean();
 		
-		$this->assertEqual(sizeof($folders), 3);
-		$this->assertEqual($folders[0], $baseFolder . "wigbi/core/");
-		$this->assertEqual($folders[1], $baseFolder . "wigbi/");
-		$this->assertEqual($folders[2], $baseFolder);
+		$this->assertEqual(Wigbi::jsPaths(), null);
+	}
+	
+	function test_jsPaths_shouldReturnNullIfPropertyIsNotSetAndConfigValueIsBlank()
+	{
+		$this->assertEqual(Wigbi::jsPaths(), null);
+	}
+
+	function test_jsPaths_shouldReturnConfigValueIfPropertyIsNotSetAndConfigValueIsNotBlank()
+	{
+		Wigbi::configFile($this->resourceFolder . "config_jsPaths.ini");
+		$this->resetWigbi();
+		
+		$this->assertEqual(Wigbi::jsPaths(), array("bar", "foo"));
+	}
+	
+	function test_jsPaths_shouldReturnPropertyValueIfPropertyIsSetAndConfigValueIsNotBlank()
+	{
+		$this->assertEqual(Wigbi::jsPaths(array("foo", "bar")), array("foo", "bar"));
+		
+		Wigbi::configFile($this->resourceFolder . "config_jsPaths.ini");
+		$this->resetWigbi();
+		
+		$this->assertEqual(Wigbi::jsPaths(), array("foo", "bar"));
 	}
 	
 	function test_languageFile_shouldGetSetValue()
@@ -967,7 +981,7 @@ class WigbiBehavior extends UnitTestCase
 
 		$this->assertTrue(strpos(" " . $result, "<meta http-equiv=\"Content-Type\" content=\"text/css; charset=UTF-8\" />"));
 		$this->assertTrue(strpos($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . Wigbi::webRoot() . "wigbi/bundle/css:wigbi/css,foo,bar"));
-		$this->assertTrue(strpos($result, "<script type=\"text/javascript\" src=\"" . Wigbi::webRoot() . "wigbi/bundle/js:wigbi/js/wigbi/core/,wigbi/js/wigbi/,wigbi/js/\"></script>"));
+		$this->assertTrue(strpos($result, "<script type=\"text/javascript\" src=\"" . Wigbi::webRoot() . "wigbi/bundle/js:wigbi/js/wigbi/core,wigbi/js/wigbi,wigbi/js\"></script>"));
 		$this->assertTrue(strpos($result, "<script type=\"text/javascript\">eval("));
 	}
 
