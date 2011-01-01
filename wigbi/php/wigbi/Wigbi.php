@@ -80,7 +80,6 @@ class Wigbi
 	private static $_dataPluginClasses;
 	private static $_dbHandler;
 	private static $_generateHtml = true;
-	private static $_isStarted;
 	private static $_jsPaths;
 	private static $_languageFile;
 	private static $_languageHandler;
@@ -323,19 +322,6 @@ class Wigbi
 	public static function isPostBack()
 	{
 		return sizeof($_POST) > 0;
-	}
-	
-	/**
-	 * Get whether or not Wigbi is started.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	bool	Whether or not Wigbi is started.
-	 */
-	public static function isStarted()
-	{
-		return Wigbi::$_isStarted;
 	}
 	
 	/**
@@ -677,9 +663,6 @@ class Wigbi
 		
 		//Generate page output
 		Wigbi::start_generateHtml();
-		
-		//Set Wigbi to started
-		Wigbi::$_isStarted = true;
 	}
 	
 	/**
@@ -1105,9 +1088,6 @@ class Wigbi
 		//Set some variables to null
 		Wigbi::$_dataPluginClasses = null;
 		Wigbi::$_uiPluginClasses = null;
-		
-		//Set Wigbi to not started
-		Wigbi::$_isStarted = false;
 	}
 }
 
