@@ -41,7 +41,7 @@
  * To stop Wigbi, execute the Wigbi::stop function when Wigbi is not
  * needed anymore, e.g. at the end of the page.
  * 
- *
+ * 
  * WIGBI RUNTIME BUILD (RTB) ***************
  * 
  * Runtime Build - RTB - is a Wigbi feature that automatically keeps
