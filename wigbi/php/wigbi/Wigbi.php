@@ -81,6 +81,7 @@ class Wigbi
 	private static $_dbHandler;
 	private static $_generateHtml = true;
 	private static $_isStarted;
+	private static $_jsPaths;
 	private static $_languageFile;
 	private static $_languageHandler;
 	private static $_logHandler;
@@ -108,16 +109,16 @@ class Wigbi
 	}
 	
 	/**
-	 * Get/set the application relative path to the Wigbi config file.
+	 * Get/set the path to the Wigbi config file.
 	 * 
-	 * To override the value in the configuration file, set this property
-	 * to the paths you want to use, before starting Wigbi.
+	 * This property must be set before Wigbi is started. Otherwise,
+	 * the default wigbi/config.ini file will be used.
 	 * 
 	 * @access	public
 	 * @static
 	 * 
 	 * @param		string	$value	Optional set value.
-	 * @return	string					The application relative path to the Wigbi config file.
+	 * @return	string					The path to the Wigbi config file.
 	 */
 	public static function configFile($value = "")
 	{
@@ -129,12 +130,12 @@ class Wigbi
 	}
 	
 	/**
-	 * Get the application relative path to the Wigbi config template file.
+	 * Get the path to the Wigbi config template file.
 	 * 
 	 * @access	public
 	 * @static
 	 * 
-	 * @return	string	The application relative path to the Wigbi config template file.
+	 * @return	string	The path to the Wigbi config template file.
 	 */
 	public static function configFile_default()
 	{
@@ -147,10 +148,8 @@ class Wigbi
 	 * This object is initialized when Wigbi is started and uses the
 	 * configFile() property to parse a Wigbi configuration INI file.
 	 * 
-	 * This property can either return the IniHandler object that was
-	 * used to load the config file as well as a single configuration
-	 * parameter. Call it without any parameters to return the object
-	 * and with parameters to return a configuration parameter.
+	 * This property can either return the IniHandler object (do not
+	 * use any parameters) as well a single configuration key.
 	 * 
 	 * @access	public
 	 * @static
@@ -178,20 +177,18 @@ class Wigbi
 	}
 	
 	/**
-	 * Get/set a list of CSS folder and file paths to apply during startup.
+	 * Get/set a list of CSS folder/file paths to apply during when Wigbi is started.
 	 * 
-	 * By default, Wigbi will use the application.cssPaths value from the
-	 * configuration file to set this property.
-	 * 
-	 * To override the value in the configuration file, set this property
-	 * to the paths you want to use, before starting Wigbi.
+	 * By default, Wigbi will use the application.cssPaths configuration
+	 * key from the configuration file. To override this value, set this
+	 * property to the paths you want to use, before starting Wigbi.
 	 * 
 	 * 
 	 * @access	public
 	 * @static
 	 * 
 	 * @param		array	$value	Optional set value.
-	 * @return	array					A list of CSS folder and file paths to apply during startup.
+	 * @return	array					A list of CSS folder/file paths to apply when Wigbi is started.
 	 */
 	public function cssPaths($value = null)
 	{
@@ -202,7 +199,7 @@ class Wigbi
 		{
 			$pathString = trim(Wigbi::configuration("cssPaths", "application"));
 			if (!$pathString)
-				return null;
+				return array();
 			
 			Wigbi::$_cssPaths = array();
 			$paths = explode(",", $pathString);
@@ -227,10 +224,8 @@ class Wigbi
 		if (Wigbi::$_dataPluginClasses)
 			return Wigbi::$_dataPluginClasses;
 
-		//Init variables
-		$result = array();
-
-		//Loop through class folder
+		//Add all existing data plugin class names
+		$result = array();		
 		foreach (glob(Wigbi::dataPluginFolder() . "*.php") as $classFile)
 			array_push($result, str_replace(".php", "", basename($classFile)));
 
@@ -240,7 +235,7 @@ class Wigbi
 	}
 	
 	/**
-	 * Get the application relative path to the data plugin folder.
+	 * Get the path to the data plugin folder.
 	 * 
 	 * @access	public
 	 * @static
@@ -269,11 +264,10 @@ class Wigbi
 	 * Get the default Wigbi DatabaseHandler object.
 	 * 
 	 * This object is initialized when Wigbi is started and uses the
-	 * mySQL section parameters from the configuration file to setup
-	 * a connection to the Wigbi database.
+	 * mySQL section parameters from the configuration file.
 	 * 
 	 * If you do not want Wigbi to use a database, leave the section
-	 * parameters blank.
+	 * blank. Do note, however, that data plugins require a database.
 	 * 
 	 * @access	public
 	 * @static
@@ -287,6 +281,8 @@ class Wigbi
 	
 	/**
 	 * Get/set whether or not Wigbi is to generate any HTML when started.
+	 * 
+	 * This property is only used by Wigbi, to avoid HTML with AJAX. 
 	 * 
 	 * @access	public
 	 * @static
@@ -343,18 +339,37 @@ class Wigbi
 	}
 	
 	/**
-	 * Get the application relative paths to the JS folders that are handled by Wigbi.
+	 * Get/set a list of JavaScript folder/file paths to apply during when Wigbi is started.
+	 * 
+	 * By default, Wigbi will use the application.jsPaths configuration
+	 * key from the configuration file. To override this value, set the
+	 * property to the paths you want to use, before starting Wigbi.
+	 * 
 	 * 
 	 * @access	public
 	 * @static
 	 * 
-	 * @return	array	The application relative paths to the JS folders that are handled by Wigbi.
+	 * @param		array	$value	Optional set value.
+	 * @return	array					A list of JavaScript folder/file paths to apply when Wigbi is started.
 	 */
-	public static function jsFolders()
+	public function jsPaths($value = null)
 	{
-		$baseFolder = Wigbi::wigbiFolder() . "js/";
-		
-		return array($baseFolder . "wigbi/core/", $baseFolder . "wigbi/", $baseFolder);
+		if (func_num_args() != 0)
+			Wigbi::$_jsPaths = func_get_arg(0);
+
+		if (Wigbi::$_jsPaths == null && Wigbi::configuration() != null)
+		{
+			$pathString = trim(Wigbi::configuration("jsPaths", "application"));
+			if (!$pathString)
+				return array();
+			
+			Wigbi::$_jsPaths = array();
+			$paths = explode(",", $pathString);
+			foreach ($paths as $path)
+				array_push(Wigbi::$_jsPaths, trim($path));
+		}
+			
+		return Wigbi::$_jsPaths;
 	}
 	
 	/**
@@ -811,11 +826,12 @@ class Wigbi
 		print "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $cssPath . "\" />";
 		 
 		//Create js tag
-		$jsPath		 = Wigbi::webRoot() . "wigbi/bundle/js:" . str_replace("../", "", implode(",", Wigbi::jsFolders()));
+		$jsPath	 = Wigbi::webRoot() . "wigbi/bundle/js:wigbi/js,wigbi/js/wigbi";
+		$jsPaths = Wigbi::jsPaths() == null ? null : join(",", Wigbi::jsPaths());
+		$jsPath	.= $jsPaths ? "," . $jsPaths : "";
 		print "<script type=\"text/javascript\" src=\"" . $jsPath . "\"></script>";
 		
 		//Build the page's js code
-		//$jsCode  = "Wigbi._ajaxConfigFile = '" . Wigbi::configFile() . "';";
 		$jsCode  = "Wigbi._webRoot = '" . Wigbi::webRoot() . "';";
 		$jsCode .= "Wigbi._dataPluginClasses = " . ((sizeof(Wigbi::dataPluginClasses()) == 0) ? "[];" : "['" . implode("','", Wigbi::dataPluginClasses()) . "'];");
 		$jsCode .= "Wigbi._uiPluginClasses = " . ((sizeof(Wigbi::uiPluginClasses()) == 0) ? "[];" : "['" . implode("','", Wigbi::uiPluginClasses()) . "'];");
