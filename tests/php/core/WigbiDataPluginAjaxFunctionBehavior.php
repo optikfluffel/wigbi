@@ -11,10 +11,7 @@ class WigbiDataPluginAjaxFunctionBehavior extends UnitTestCase
 		$this->UnitTestCase("WigbiDataPluginAjaxFunction");
 	}
 	
-	function setUp()
-	{
-		$this->obj = new WigbiDataPluginAjaxFunction("myFunction", array("foo", "bar"), true);
-	}
+	function setUp() { }
 	
 	function tearDown() { }
 	
@@ -31,26 +28,11 @@ class WigbiDataPluginAjaxFunctionBehavior extends UnitTestCase
 	
 	function test_constructor_shouldInitializeCustomObject()
 	{
+		$this->obj = new WigbiDataPluginAjaxFunction("myFunction", array("foo", "bar"), true);
+		
 		$this->assertEqual($this->obj->name(), "myFunction");
 		$this->assertEqual($this->obj->parameters(), array("foo", "bar"));
 		$this->assertEqual($this->obj->isStatic(), true);
-	}
-			
-	
-	
-	function test_isStatic_shouldReturnCorrectValue()
-	{
-		$this->assertEqual($this->obj->isStatic(), true);
-	}
-	
-	function test_name_shouldReturnCorrectValue()
-	{
-		$this->assertEqual($this->obj->name(), "myFunction");
-	}
-	
-	function test_parameters_shouldReturnCorrectValue()
-	{
-		$this->assertEqual($this->obj->parameters(), array("foo", "bar"));
 	}
 }
 

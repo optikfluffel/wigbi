@@ -17,18 +17,18 @@
  */
 
 /**
- * The Wigbi.PHP.Core.WigbiDataPlugin class.
+ * The Wigbi.PHP.Core.WigbiDataPlugin base class.
  * 
- * This class provides Wigbi data plugins with base functionality. A
- * data plugin must inherit this class and call the constructor from
- * within its own constructor.
+ * All data plugins must inherit this class, and call its constructor
+ * from within their own. See any standard data plugin for examples.
  * 
- * To use a data plugin in a Wigbi application, simply add the class
- * file to the wigbi/plugins/data folder.
+ * Wigbi data plugins can be persisted to the database. To add a data
+ * plugin to a Wigbi application, simply add the plugin class file to
+ * the wigbi/plugins/data folder.
  * 
- * Wigbi will automatically generate JavaScript classes for all data
- * plugins that are added to a Wigbi application and also bundle and
- * obfuscate the code, as long as RTB is enabled in the config file. 
+ * If the Runtime Build feature is enabled in the Wigbi configuration
+ * file, Wigbi will generate a JavaScript class file for every plugin
+ * that is added to the Wigbi application. 
  * 
  * 
  * DATABASE PERSISTENCY ******************************
@@ -37,13 +37,11 @@
  * make sure that it has all the tables it needs, provided that data
  * persistency and RTB is enabled in the Wigbi configuration file.
  * 
- * Wigbi will create a database table for each added data plugin. It
- * uses the collectionName(...) of each plugin to name its table and
- * creates columns for all PUBLIC variables. Getter/setter functions
- * are not supported, since they are regarded as public variables.
+ * Wigbi will automatically create a database table for every plugin.
+ * It uses the collectionName() property as table name and creates a
+ * column for each public variable.
  * 
- * Make sure to use this variable/property pattern:
- * 
+ * To avoid name conflicts, use this variable/property name pattern:
  * <ul>
  * 	<li>Variable - _x</li>
  * 	<li>Get property - function x()</li>
@@ -52,14 +50,10 @@
  * 
  * Wigbi will set all database table columns, except ID, to NULL. If
  * this is not wanted, change the columns manually afterwards. Wigbi
- * will only ADD tables and columns to the database, not delete them
- * when they are no longer needed.
+ * will only ADD tables and columns, never delete them.
  * 
- * This base class only defines one database stored property; the id
- * property, which is set when an object is saved for the first time.
- * However, Wigbi will automatically set the following variables, if
- * they exist for any data plugin class that are saved:
- * 
+ * Wigbi will automatically set the value of the following variables,
+ * if they exist when a data plugin is saved:
  * <ul>
  * 	<li>_createdDateTime - __DATETIME</li>
  * 	<li>_lastUpdatedDateTime - __DATETIME</li>
@@ -69,86 +63,69 @@
  * VARIABLE TYPES AND DEFAULT VALUE ******************
  * 
  * The Wigbi persistency engine supports booleans, doubles, integers
- * as well as strings.
- * 
- * To be able to handle database types that are not available in PHP,
- * use string variables. Unlike the default value of the four scalar
- * types, the default value of a string variable can be divided into
- * a value and a type, as such: "[default value]__[type]".
+ * and strings. To handle database types that are unavailable in PHP,
+ * use string variables, which default values are divided into value
+ * and type, as such: "[default value]__[type]".
  * 
  * All standard database types are supported, using the format above.
  * The following "extra" types are also supported:
- * 
  * <ul>
- *	<li><b>N/A</b></li>			= VARCHAR(255); e.g. "No specified type"</li>
+ *	<li><b><none></b></li>	= VARCHAR(255); e.g. "No specified type"</li>
  * 	<li><b><int></b>				= VARCHAR(<int>); e.g. "Twenty length string__20"</li>
- *	<li></li> 
  * 	<li><b>FILE</b>					= VARCHAR(255); e.g. "/img/profile.png__FILE"</li> 
- * 	<li><b>GUID</b>					= VARCHAR(40); e.g. "c70e694643a8d159c498054589d9356e__GUID"</li> 
- *	<li></li> 
+ * 	<li><b>GUID</b>					= VARCHAR(40); e.g. "c70e694643a8d159c498054589d9356e__GUID"</li>
  * </ul>
  * 
  * The FILE type can be used to bind a certain file to an object. It
  * make sure that the file is deleted together with the object.
  * 
  * 
- * REGISTER AND USE DATA LISTS *****************
+ * DATA LISTS **********************************
  * 
  * Data lists make it easy to create relationships between available
- * data plugin classes. For instance, A User data plugin class could
- * store Image data plugin objects in a list called "images".
+ * data plugins. For simplicity, this class uses the name "list" and
+ * not "dataList" when naming properties and methods, e.g. "getList".  
  * 
- * For simplicity, this class uses "list" instead of "dataList" when
- * naming properties and methods, e.g. "registerList" and "getList".  
- * 
- * Data lists contain <i>items</i>, which are ID pointers that refer
- * to <i>objects</i>. A data plugin object must thus be saved before
- * it can use data lists or be stored within a list.
+ * Data lists contain <i>items</i>, which are ID pointers to objects.
+ * A data plugin object must thus be saved to the database before it
+ * can be used in list operations.
  * 
  * To register a data list, just call the registerList method in the
- * class constructor. Wigbi will then create a database table so the
- * plugin-to-plugin relation can be handled in the database.
+ * constructor. Wigbi will then create a database table for the list.
  * 
  * A data list can either be synced or non-synced. With synced lists,
  * objects are automatically deleted if they are removed from a list
  * or if the owner object is deleted. Non-synced lists, on the other
- * hand, will never delete any objects except the list item itself.
+ * hand, will never delete any objects except the list item.
  * 
  * For instance, consider a User friend list. Just because a user is
- * removed from the list, he/she should probably not be deleted. Use
- * a non-synced list in this case. However, if a user can write blog
- * posts, which are stored in a data list, all posts should probably
- * be deleted together with the user. Use a synced list in this case.
- * 
- * In short, synced lists are NOT to be used to contain objects that
- * have a reason to exist outside of the list.
+ * removed from such a list, he/she should (probably) not be deleted.
+ * Use a non-synced list in this case. Blog posts and images, on the
+ * other hand, should probably be deleted with the user. If so, make
+ * sure to use synced lists.
  * 
  * Finally, data lists can specify a sort rule that is automatically
- * used when objects are retrieved with getListItems(). For instance,
- * the friend list could use "name" or "name DESC". The sort rule is
- * used in the database query, so all SQL ORDER BY clauses work.
+ * used by the getListItems function. All valid SQL ORDER BY clauses
+ * apply for this sort rule.
  * 
  * 
  * REGISTER AJAX FUNCTIONALITY *****************
  * 
- * Wigbi data plugins can tell Wigbi to make any functions available
- * in JavaScript, so that they can be executed with AJAX as well. It
- * makes it easy to execute server-side functionality asynchronously.
- * 
- * To register AJAX functions, simply use the registerAjaxFunction()
- * method in the class constructor. Wigbi will automatically add all
- * registered AJAX functions to the auto-generated JavaScript class.
+ * A data plugin can tell Wigbi to include any of its methods in the
+ * auto-generated JavaScript class so that they can be executed with
+ * AJAX. TO do so, simply use the registerAjaxFunction method in the
+ * class constructor for each method that you wish to register.
  * 
  * 
  * VALIDATION **********************************
  * 
- * This base class has a validate method, which can be overridden by
- * inheriting classes to define how a data plugin is validated.
+ * This base class has a validate method, which can be overridden to
+ * define how a data plugin is validated.
  * 
- * The JavaScript WigbiDataPlugin class has an asynchronous validate
- * method as well, which calls the PHP method. Object validation can
- * therefore be specified at one single place, but at the price that
- * JavaScript validation requires a roundtrip to the server. 
+ * The validate method is available in the auto-generated JavaScript
+ * class as well, which uses AJAX to call the PHP method. Validation
+ * can therefore be specified at one single place, at the price of a
+ * server roundtrip for each JavaScript validation operation. 
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -165,8 +142,9 @@ abstract class WigbiDataPlugin
 	/**#@+
 	 * @ignore
 	 */
-	private $_ajaxFunctions = array();
 	private static $_autoReset = true;
+	
+	private $_ajaxFunctions = array();
 	private $_lists = array();
 	private $_collectionName;
 	
@@ -208,10 +186,8 @@ abstract class WigbiDataPlugin
 	 * Get/set whether or not objects should auto-reset when being created.
 	 * 
 	 * This property should always be true, except in the rare cases
-	 * where one must know a variable's type and database type.
-	 * 
-	 * This property is only meant to be used by Wigbi, so if you do
-	 * not have a real need for it, just ignore it.
+	 * where one must know a variable's type and database type. Just
+	 * ignore it.
 	 * 
 	 * @access	public
 	 * @static
@@ -228,8 +204,6 @@ abstract class WigbiDataPlugin
 	/**
 	 * Get the plugin class name.
 	 * 
-	 * This property is also available by simply calling get_class.
-	 * 
 	 * @access	public
 	 * 
 	 * @return	string	The plugin class name.
@@ -243,9 +217,8 @@ abstract class WigbiDataPlugin
 	 * Get the plugin collection name.
 	 * 
 	 * This property returns the regular pluralis form of the class
-	 * name. If this does not work for the class name (for instance,
-	 * "wolf" becomes "wolfs" and not "wolves"), it can be manually
-	 * set in the class constructor.
+	 * name. If the value is incorrect (for example, "wolf" becomes
+	 * "wolfs" and not "wolves"), the value can be overridden.
 	 * 
 	 * @access	public
 	 *
@@ -280,8 +253,7 @@ abstract class WigbiDataPlugin
 	 * Get all database variables for the object.
 	 * 
 	 * This function returns all class variables that will be saved
-	 * to and loaded from the database. These variables are all the
-	 * public variables of the class.  
+	 * to and loaded from the database.
 	 * 
 	 * @return	array	All database variables for the object.
 	 */
@@ -294,8 +266,7 @@ abstract class WigbiDataPlugin
 	 * Get all database variables for the base class.
 	 * 
 	 * This function returns all class variables that will be saved
-	 * to and loaded from the database, and that are defined in the
-	 * WigbiDataPlugin base class.  
+	 * to and loaded from the database and are base class variables.
 	 */
 	public function databaseVariables_base()
 	{
@@ -307,8 +278,7 @@ abstract class WigbiDataPlugin
 	 * Get all database variables for the base class.
 	 * 
 	 * This function returns all class variables that will be saved
-	 * to and loaded from the database, and that are defined in the
-	 * WigbiDataPlugin base class.  
+	 * to and loaded from the database and are defined in the class.
 	 */
 	public function databaseVariables_self()
 	{
@@ -322,7 +292,9 @@ abstract class WigbiDataPlugin
 	}
 	
 	/**
-	 * Get the object ID, which is set when the object is saved.
+	 * Get the object ID.
+	 * 
+	 * This property is set when the object is saved.
 	 * 
 	 * @access	public
 	 * 
@@ -372,9 +344,7 @@ abstract class WigbiDataPlugin
 		$this->reset();
 
 		//Abort if the parent or child have not been saved
-		if (!$this->id())
-			return false;
-		if (!$objectId)
+		if (!$this->id() || !$objectId)
 			return false;
 			
 		//Get the list, abort if none
@@ -420,7 +390,6 @@ abstract class WigbiDataPlugin
 			//Handle synced and non-synced lists differently
 			if (!$list->isSynced())
 			{
-				//Non-synced lists are quickly processed
 				Wigbi::dbHandler()->query("DELETE FROM " . $list->tableName() . " WHERE ownerId = '" . $this->id() . "'");
 			}
 			else

@@ -41,7 +41,7 @@ class WigbiUIPluginBehavior extends UnitTestCase
 		$this->assertEqual(substr_count($result, "</div>"), 1);	
 	}
 	
-	function test_beginEditDiv_shouldAcceptVisibleParameter()
+	function test_beginEditDiv_shouldHandleVisibleParameter()
 	{
 		ob_start();
 		$this->obj->beginEditDiv(true);
@@ -85,7 +85,7 @@ class WigbiUIPluginBehavior extends UnitTestCase
 		$this->assertEqual(substr_count($result, "</div>"), 1);		
 	}
 	
-	function test_beginViewDiv_shouldAcceptVisibleParameter()
+	function test_beginViewDiv_shouldHandleVisibleParameter()
 	{
 		ob_start();
 		$this->obj->beginViewDiv(false);
@@ -107,7 +107,7 @@ class WigbiUIPluginBehavior extends UnitTestCase
 		$this->assertEqual(strpos($result, "</div>"), 0);
 	}
 	
-	function test_endPlugin_shouldEndOutputBufferAndPrintAndReturnIfNonAjax()
+	function test_endPlugin_shouldEndOutputBufferAndPrintAndReturnIfNotAjax()
 	{
 		//TODO: This cannot be tested since ob_get_clean() is run inside.
 	}

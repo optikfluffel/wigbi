@@ -4,19 +4,25 @@ class WigbiDataPluginBehavior extends UnitTestCase
 {
 	function WigbiDataPluginBehavior()
 	{
-		//Init unit test case
   	$this->UnitTestCase('WigbiDataPlugin');
 		
-		//Make sure that the database is ready
 		WigbiDataPlugin::autoReset(false);
 		$obj = new MyDatabaseClass();
 		$obj->setupDatabase();
 		WigbiDataPlugin::autoReset(true);
 	}
 	
-	function setUp() { }
+	function setUp()
+	{
+		$this->deleteData();
+	}
 	
 	function tearDown()
+	{
+		$this->deleteData();
+	}
+	
+	function deleteData()
 	{
 		Wigbi::dbHandler()->query("DELETE FROM MyDatabaseClasses");
 		Wigbi::dbHandler()->query("DELETE FROM MyDatabaseClass_objects");
@@ -25,7 +31,7 @@ class WigbiDataPluginBehavior extends UnitTestCase
 	
 	
 	
-	function test_constructor_objectShouldNotAutoResetIfFeatureIsDisabled()
+	function test_constructor_shouldNotAutoResetObjectIfFeatureIsDisabled()
 	{
 		WigbiDataPlugin::autoReset(false);
 		$obj = new MyPlugin();
@@ -37,7 +43,7 @@ class WigbiDataPluginBehavior extends UnitTestCase
 		$this->assertEqual(WigbiDataPlugin::getVariableValue($obj->id()), "");
 	}
 	
-	function test_constructor_objectShouldAutoReset()
+	function test_constructor_shouldAutoResetObjectByDefault()
 	{
 		$obj = new MyPlugin();
 		
@@ -352,7 +358,7 @@ class WigbiDataPluginBehavior extends UnitTestCase
 		$this->assertTrue(file_exists($source));
 		
 		$obj = new MyDatabaseClass();
-		$obj->_noValue = $source; 
+		$obj->_noValue = "tests/resources/tmp.txt"; 
 		$obj->save();
 		$obj->delete();
 		

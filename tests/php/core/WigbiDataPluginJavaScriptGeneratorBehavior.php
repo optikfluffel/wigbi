@@ -40,8 +40,9 @@ class WigbiDataPluginJavaScriptGeneratorBehavior extends UnitTestCase
 		$expectedResult = file_get_contents(Wigbi::serverRoot() . "tests/resources/wigbiDataPlugin_expected.js");
 		
 		//Remove tabs and line breaks since files may contain various formats
-		$result = str_replace(array("\n", "\r", "\t", " ", "\o", "\xOB"), '', $result);
-		$expectedResult = str_replace(array("\n", "\r", "\t", " ", "\o", "\xOB"), '', $expectedResult);
+		$removals = array("\n", "\r", "\t", " ", "\o", "\xOB"); 
+		$result = str_replace($removals, '', $result);
+		$expectedResult = str_replace($removals, '', $expectedResult);
 		
 		//Make sure the strings match
 		$this->assertEqual($result, $expectedResult);
