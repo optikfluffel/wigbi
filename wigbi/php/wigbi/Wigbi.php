@@ -312,19 +312,6 @@ class Wigbi
 	}
 	
 	/**
-	 * Get whether or not the current page state contains posted data.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	bool	Whether or not the current page state contains posted data.
-	 */
-	public static function isPostBack()
-	{
-		return sizeof($_POST) > 0;
-	}
-	
-	/**
 	 * Get/set a list of JavaScript folder/file paths to apply during when Wigbi is started.
 	 * 
 	 * By default, Wigbi will use the application.jsPaths configuration
