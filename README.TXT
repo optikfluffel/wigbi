@@ -10,8 +10,8 @@ well as with your own classes.
 
 The basic Wigbi release contains:
 
-	* wigbi/					- The latest version with everything you need
-	* plugins/				- Wigbi data and UI plugin templates to help you get started
+	* wigbi/ - The latest version with everything you need
+	* plugins/ - Wigbi data and UI plugin templates to help you get started
 	* index_wigbi.php - A simple index page that verifies that Wigbi works
 
 The full Wigbi release also contains all unit tests, that are used
