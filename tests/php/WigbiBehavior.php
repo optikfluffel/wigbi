@@ -607,15 +607,15 @@ class WigbiBehavior extends UnitTestCase
 		
 		Wigbi::languageFile("");
 	}
-	/*
+	
 	function test_start_shouldStartLogHandlerWithoutAnyHandlers()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_minimal.ini");
-		
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_minimal.ini");
 		
 		$this->assertEqual(Wigbi::logHandler()->id(), "Wigbi Test Application");
 		$this->assertEqual(sizeof(Wigbi::logHandler()->handlers()), 0);
+		
+		$this->resetConfigFile();
 	}
 	
 	function test_start_shouldStartLogHandlerWithHandlers()
@@ -652,20 +652,19 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_shouldNotStartDataPluginsWhenRtbIsDisabled()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_noRtb.ini");
-		
 		if (file_exists(Wigbi::dataPluginJavaScriptFile()))
 			unlink(Wigbi::dataPluginJavaScriptFile());
-		
-		$this->resetWigbi();
+			
+		$this->setConfigFile("resources/config_noRtb.ini");
 		
 		$this->assertFalse(file_exists(Wigbi::dataPluginJavaScriptFile()));
+		
+		$this->resetConfigFile();
 	}
 	
 	function test_start_shouldStartDataPluginsAndCreateTable()
 	{
 		$this->createDataPlugin();
-		$this->resetWigbi();
 		
 		$this->assertTrue(Wigbi::dbHandler()->tableExists("TestDataPlugins"));
 		
@@ -692,13 +691,11 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_shouldStartDataPluginsAndCreateNonObfuscatedJavaScriptFileWhenRtbIsEnabledWithoutObfuscation()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_noObfuscate.ini");
-		
 		$this->createDataPlugin();
 		if (file_exists(Wigbi::dataPluginJavaScriptFile()))
 			unlink(Wigbi::dataPluginJavaScriptFile());
 		
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_noObfuscate.ini");
 		
 		$this->assertTrue(file_exists(Wigbi::dataPluginJavaScriptFile()));
 		
@@ -708,18 +705,19 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertFalse(strpos($content, "p,a,c,k,e,d"));
 		
 		$this->deleteDataPlugin();
+		$this->resetConfigFile();
 	}
 	
 	function test_start_shouldNotStartUiPluginsWhenRtbIsDisabled()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_noRtb.ini");
-		
 		if (file_exists(Wigbi::uiPluginJavaScriptFile()))
 			unlink(Wigbi::uiPluginJavaScriptFile());
 		
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_noRtb.ini");
 		
 		$this->assertFalse(file_exists(Wigbi::uiPluginJavaScriptFile()));
+		
+		$this->resetConfigFile();
 	}
 	
 	function test_start_shouldStartUiPluginsAndCreateObfuscatedJavaScriptFileWhenRtbIsEnabledWithObfuscation()
@@ -743,13 +741,11 @@ class WigbiBehavior extends UnitTestCase
 
 	function test_start_shouldStartUiPluginsAndCreateNonObfuscatedJavaScriptFileWhenRtbIsEnabledWithoutObfuscation()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_noObfuscate.ini");
-		
 		$this->createUiPlugin();
 		if (file_exists(Wigbi::uiPluginJavaScriptFile()))
 			unlink(Wigbi::uiPluginJavaScriptFile());
-		
-		$this->resetWigbi();
+ 
+		$this->setConfigFile("resources/config_noObfuscate.ini");
 		
 		$this->assertTrue(file_exists(Wigbi::uiPluginJavaScriptFile()));
 		
@@ -760,8 +756,8 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertFalse(strpos($content, "p,a,c,k,e,d"));
 		
 		$this->deleteUiPlugin();
+		$this->resetConfigFile();
 	}
-	
 	
 	function test_start_shouldhandleAjaxPostBack()
 	{
@@ -1021,17 +1017,11 @@ class WigbiBehavior extends UnitTestCase
 		
 		MyWigbiWrapper::test_start_handleAjaxConfiguration();
 		
-		$this->assertEqual(Wigbi::configFile(), "foo");
+		$this->assertEqual(Wigbi::configFile(), "../foo");
 		
-		$data = array();
-		$data["configFile"] = $oldConfigFile;
-		$_POST["wigbi_asyncPostBackData"] = json_encode($data);
-		
-		MyWigbiWrapper::test_start_handleAjaxConfiguration();
-		
-		$this->assertEqual(Wigbi::configFile(), $oldConfigFile);
+		$this->stopWigbi();
 	}
-
+	
 	function test_start_handleAjaxConfiguration_shouldIgnoreEmptyConfigFile()
 	{
 		$oldConfigFile = Wigbi::configFile();
@@ -1043,6 +1033,8 @@ class WigbiBehavior extends UnitTestCase
 		MyWigbiWrapper::test_start_handleAjaxConfiguration();
 		
 		$this->assertEqual(Wigbi::configFile(), $oldConfigFile);
+		
+		$this->stopWigbi();
 	}
 
 	function test_start_handleAjaxParameter_shouldHandleSupportedTypes()
@@ -1072,7 +1064,7 @@ class WigbiBehavior extends UnitTestCase
 
 		$this->assertFalse(Wigbi::isStarted());
 	}
-}
+}	
 
 
 //Use this wrapper to modify Wigbi behavior
@@ -1118,6 +1110,5 @@ class WigbiAsyncTestClass extends WigbiDataPlugin
 	{
 		return "foo bar";
 	}
-*/	
 }
 ?>
