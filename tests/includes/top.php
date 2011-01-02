@@ -12,5 +12,6 @@
 		<div class="box toolbar">
 			<a href="test_php.php">PHP</a> •
 			<a href="test_data.php">Data plugins</a> •
+			<a href="test_ui.php">UI plugins</a> •
 			<a href="test_finish.php">FINISH</a>
 		</div>

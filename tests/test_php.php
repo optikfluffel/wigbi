@@ -24,5 +24,6 @@
 	print "</div>";
 	
 	
+	require("includes/cleanup.php");
 	require("includes/bottom.php");
 ?>

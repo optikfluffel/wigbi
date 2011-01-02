@@ -8,176 +8,40 @@ For further information, see http://www.wigbi.com
 
 
 ************************
-Wigbi 1.0.0 [2010-09-xx]
+Wigbi 1.0.0 [2011-01-01]
 ************************
 
 Wigbi 1.0.0 is a complete rewrite of previous Wigbi versions. New developers
 are adviced to check out the documentation, demos and tutorials on wigbi.com.
+The release feature major changes, of which only some are listed down below.
 
 The Wigbi configuration file has been completely rewritten and uses real ini
 sections. Older configuration files will not work with Wigbi 1.0.
+
+It is now possible to change the value of the Wigbi::configFile(..) property
+to make Wigbi use another configuration file when starting up. However, make
+sure to notice that the property is currently not set for the JS Wigbi class,
+since the PHP property is relative and the JavaScript property has got to be
+application relative. Thus, if you change the config file, make sure to also
+set the Wigbi._ajaxConfigFile JavaScript variable.
 
 Some Wigbi classes that were previously static have now been made non-static
 to make it possible to create custom instances. However, the Wigbi class has
 default instances of these classes that are setup with the Wigbi config file.
 
-The wigbi/php/system and wigbi/js/system folders have been removed. Wigbi is
-now using the wigbi/php and wigbi/js folders instead, which makes the folder
-structure cleaner. Just make sure to not delete Wigbi files by accident when
-you add your own files into these folders.
-
 All property methods have been modified. Instead of x()/setX(..), properties
-now take an optional set parameter if they are settable. This is inspired by
-the jQuery syntax. 
+now take an optional set parameter if they are settabl...just like jQuery :) 
+
+Wigbi now features a quite basic MVC engine which is inspired by ASP.NET MVC.
+This makes it even easier to separate functionality from content.
 
 Wigbi now uses jQuery 1.4.2 instead of previous 1.3.2. jQuery is included in
 the Wigbi release, so there is no need to download it separately.
 
-It is now possible to change the value of the Wigbi::configFile(..) property.
-If it is changed to another (valid) file path before Wigbi is started, Wigbi
-will use that file instead.
-
-The WigbiUIPlugin base class has been simplified compared to the old Control
-base class. UI plugin classes should still inherit it, though, to ensure any
-future changes.  
-
-
-PHP system class changes:
-=========================
-
-CacheHandler:
-The class is no longer static. Wigbi creates a default instance when started.
-Serialization is now implemented in endCaching as well. Thus, developers can
-use beginCache/endCache without having to cache data manually.
-
-Configuration:
-This class has been removed. Use the Wigbi::configuration() property instead.
-						
-DatabaseHandler:
-The class is no longer static. Wigbi creates a default instance when started.
-The class is now a part of the main Wigbi PHP package instead of PHP.Core.
-						
-IniReader:
-This class has been renamed to IniHandler. The class is now part of the main
-Wigbi PHP package instead of PHP.Core and has been rewritten to support data
-files with and without sections.
-						
-LanguageHandler:
-The class is no longer static. Wigbi creates a default instance when started.
-The class has been completely rewritten and is now a descendant of IniReader.
-
-LogHandler:
-The class is no longer static. Wigbi creates a default instance when started.
-The log method can now be called drectly without using any sub handlers. Set
-all method parameters to bypass any added sub handlers. Furthermore, it's no
-longer necessary to give sub log handlers a name.						 
-												
-MasterPage:
-The class is still static, since one single master page can exist at most.
-						
-SearchFilter:
-This class has changed a bit. It has a new toString method and some property
-names have been changes.
-						
-SessionHandler:
-The class is no longer static. Wigbi creates a default instance when started.
-
-ThemeHandler:
-The class is no longer static. Wigbi creates a default instance when started.
-The getFiles() method now returns plain file names instead of the full path.
-						
-ValidationHandler:
-The class is now a part of the main Wigbi PHP package instead of PHP.Core. A
-bug in the urlExists method has been fixed as well.
-						
-Wigbi:
-This class has undergone some major changes as a result of the various Wigbi
-framework changes. It has several new methods, functions and properties.
-
-
-PHP core class changes:
-=======================
-
-BaseControl:
-This class has been renamed to WigbiUIPlugin. It is a lot more basic than in
-the previous Wigbi release.
-
-JavaScriptSeed..
-This class has been renamed to WigbiDataPluginJavaScriptClassCreator. It may
-be the shortest class name in history.
-
-Seed:
-This class has been renamed to WigbiDataPlugin. It is now even easier to use
-than before. The base constructor does not have to be called from inheriting
-classes, since the className and collectionName properties are not automated.
-The collectionName(...) property can be manually set when the auto-generated
-value is incorrect.
-
-Class instances will now automatically reset when they are created, which in
-some cases had to be done manually in previous Wigbi versions.
-						
-The string variable value/type format is changed to: [default value]__[type].
-						
-The ID that is generated when an object is saved, will now use SHA1 instead
-of MD5. This generates a 40 length string instead of 32.
-
-SeedFunction:
-This class has been renamed to WigbiDataPluginAjaxFunction, which is sligtly
-more annoying...but it is only used by WigbiDataPlugin, so just accept it :)
-						
-SeedList:
-This class has been renamed to WigbiDataPluginList (no need to be annoyed by
-this name change neither). It has been reduced to a plain data holder.
-						
-
-JavaScript system class changes:
-================================
-	
-CacheHandler:
-The class is no longer static. Wigbi creates a default instance when started.
-						
-IniHandler:
-This new class is used to parse ini formatted data so that it can be handled
-in JavaScript. It's used as a base class by the LanguageHandler class. 
-	
-LanguageHandler:
-The class is no longer static. Wigbi creates a default instance when started.
-	
-LogHandler:
-The class is no longer static. Wigbi creates a default instance when started.
-						
-SearchFilter:
-This class has gone through some minor changes. It has a new toString method
-and some property name changes.
-						
-SessionHandler:
-The class is no longer static. Wigbi creates a default instance when started.
-						
-ValidationHandler:
-This new class provides the same methods as the corresponding PHP class.
-						
-Wigbi:
-This class has undergone some major changes as a result of the various Wigbi
-framework changes. It has several new methods, functions and properties.
-
-
-JavaScript core class changes:
-==============================
-
-Control:
-This class has been renamed to WigbiUIPlugin.
-						
-Seed:
-This class has been renamed to WigbiDataPlugin. Most of its AJAX methods are
-still identical, but executeFunction has been removed since it only embedded
-the static Wigbi class method with the same name. 
-	
-WigbiClass:
-This new class is inherited by every system/core class and provides new base
-functionality, like retrieving the full class name for an object.
-
+The WigbiUIPlugin base class has been simplified compared to the old one. It
+contains a few help methods and must still be inherited.
 
 
 ***********************************************************************
-This file was created 2010-08-01. Previous releases notes are left out.
+This file was created 2011-01-01. Previous releases notes are left out.
 ***********************************************************************
