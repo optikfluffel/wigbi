@@ -4,8 +4,7 @@ Wigbi
 Author: Daniel Saidi [daniel.saidi@gmail.com]
 
 Wigbi is a minimalistic PHP/JavaScript application framework
-that features a lot of easy-to use, straightforward features
-out of the box.
+that features a lot of easy-to use, straightforward features.
 
 This repository contains:
 
