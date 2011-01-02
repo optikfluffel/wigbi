@@ -3,18 +3,18 @@
 class WigbiBehavior extends UnitTestCase
 {
 	private $ajaxData;
-	private $resourceFolder;
+	private $configFile = "resources/config.ini";
+	//private $resourceFolder;
 	
 	
-		
 	function WigbiBehavior()
 	{
 		$this->UnitTestCase("Wigbi");
 		
-		$this->resourceFolder = Wigbi::serverRoot() . "tests/resources/";
+		//$this->resourceFolder = "tests/resources/";
 		
 		$this->ajaxData = array();
-		$this->ajaxData["configFile"] = $this->resourceFolder . "config.ini";
+		$this->ajaxData["configFile"] = "tests/resources/config.ini";
 		$this->ajaxData["webRoot"] = "bar";
 		$this->ajaxData["className"] = "Wigbi";
 		$this->ajaxData["object"] = null;
@@ -24,22 +24,8 @@ class WigbiBehavior extends UnitTestCase
 
 	function setUp() 
 	{
-		$configFile = $this->resourceFolder . "config.ini";
-		
-		if (Wigbi::configFile() != $configFile)
-		{
-			Wigbi::configFile($configFile);
-			ob_start();
-			Wigbi::stop();
-			ob_end_clean();
-		}
-		
 		if (!Wigbi::isStarted())
-		{
-			ob_start();
-			Wigbi::start();
-			ob_end_clean();
-		}
+			$this->resetConfigFile();
 	}
 	
 	function tearDown()
@@ -51,53 +37,86 @@ class WigbiBehavior extends UnitTestCase
 		$_POST["wigbi_asyncPostBackData"] = null;
 	}
 	
-	function createDataPluginClass()
+
+
+	function createDataPlugin()
 	{
-		$sourceFile = $this->resourceFolder . "TestDataPlugin.php";
+		$sourceFile = "resources/TestDataPlugin.php";
 		$targetFile = Wigbi::wigbiFolder() . "plugins/data/TestDataPlugin.php";
 		
 		if (file_exists($targetFile))
 			unlink($targetFile);
 		copy($sourceFile, $targetFile);
+		
+		$this->resetWigbi();
 	}
 	
-	function createUiPluginClass()
+	function createUiPlugin()
 	{
-		$sourceFile = $this->resourceFolder . "TestUiPlugin.php";
+		$sourceFile = "resources/TestUiPlugin.php";
 		$targetFile = Wigbi::wigbiFolder() . "plugins/ui/TestUiPlugin.php";
 		
 		if (file_exists($targetFile))
 			unlink($targetFile);
 		copy($sourceFile, $targetFile);
 		
-		$sourceFile = $this->resourceFolder . "TestUiPlugin.js";
+		$sourceFile = "resources/TestUiPlugin.js";
 		$targetFile = Wigbi::wigbiFolder() . "plugins/ui/TestUiPlugin.js";
 		
 		if (file_exists($targetFile))
 			unlink($targetFile);
 		copy($sourceFile, $targetFile);
+		
+		$this->resetWigbi();
 	}
 	
-	function deleteDataPluginClass()
+	function deleteDataPlugin()
 	{
 		unlink(Wigbi::wigbiFolder() . "plugins/data/TestDataPlugin.php");
+		
+		$this->resetWigbi();
 	}
 	
-	function deleteUiPluginClass()
+	function deleteUiPlugin()
 	{
 		unlink(Wigbi::wigbiFolder() . "plugins/ui/TestUiPlugin.php");
 		unlink(Wigbi::wigbiFolder() . "plugins/ui/TestUiPlugin.js");
+		
+		$this->resetWigbi();
 	}
 	
 	function resetWigbi()
 	{
+		$this->stopWigbi();
+		$this->startWigbi();
+	}
+	
+	function resetConfigFile()
+	{
+		$this->setConfigFile("resources/config.ini");
+	}
+	
+	function setConfigFile($path)
+	{
+		Wigbi::configFile($path);
+		$this->resetWigbi();
+	}
+
+	function stopWigbi()
+	{
 		ob_start();
 		Wigbi::stop();
-		Wigbi::start();
 		ob_get_clean();
 	}
 
-
+	function startWigbi()
+	{
+		ob_start();
+		Wigbi::start();
+		ob_get_clean();
+	}
+	
+	
 
 	function test_systemFoldersAndFilesShouldExist()
 	{
@@ -144,9 +163,11 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_configFile_shouldSetValue()
 	{
-		$this->assertEqual(Wigbi::configFile(), $this->resourceFolder . "config.ini");
+		$file = Wigbi::configFile();
+		
+		$this->assertEqual(Wigbi::configFile(), $file);
 		$this->assertEqual(Wigbi::configFile("myConfigFile.ini"), "myConfigFile.ini");
-		$this->assertEqual(Wigbi::configFile(), "myConfigFile.ini");
+		$this->assertEqual(Wigbi::configFile($file), $file);
 	}
 	
 	function test_configFile_default_shouldReturnCorrectValue()
@@ -161,11 +182,12 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_configuration_shouldReturnStringForParameters()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_minimal.ini");
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_minimal.ini");
 		
 		$this->assertEqual(Wigbi::configuration("foo"), "bar");
 		$this->assertEqual(Wigbi::configuration("name", "application"), "Wigbi Test Application");
+		
+		$this->resetConfigFile();
 	}
 
 	function test_cssPaths_shouldGetSetValue()
@@ -178,9 +200,7 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_cssPaths_shouldReturnNullIfPropertyIsNotSetAndWigbiIsStopped()
 	{
-		ob_start();
-		Wigbi::stop();
-		ob_end_clean();
+		$this->stopWigbi();
 		
 		$this->assertEqual(Wigbi::cssPaths(), null);
 	}
@@ -192,32 +212,34 @@ class WigbiBehavior extends UnitTestCase
 
 	function test_cssPaths_shouldReturnConfigValueIfPropertyIsNotSetAndConfigValueIsNotBlank()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_cssPaths.ini");
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_cssPaths.ini");
 		
 		$this->assertEqual(Wigbi::cssPaths(), array("bar", "foo"));
+		
+		$this->resetConfigFile();
 	}
 	
 	function test_cssPaths_shouldReturnPropertyValueIfPropertyIsSetAndConfigValueIsNotBlank()
 	{
 		$this->assertEqual(Wigbi::cssPaths(array("foo", "bar")), array("foo", "bar"));
 		
-		Wigbi::configFile($this->resourceFolder . "config_cssPaths.ini");
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_cssPaths.ini");
 		
 		$this->assertEqual(Wigbi::cssPaths(), array("foo", "bar"));
+		
+		$this->resetConfigFile();
 	}
 	
 	function test_dataPluginClasses_shouldReturnAllClasses()
 	{
-		$this->createDataPluginClass();
+		$this->createDataPlugin();
 		
 		$classes = Wigbi::dataPluginClasses();
 		
 		$this->assertEqual(sizeof($classes), 1);
 		$this->assertEqual($classes[0], "TestDataPlugin");
 		
-		$this->deleteDataPluginClass();
+		$this->deleteDataPlugin();
 	}
 	
 	function test_dataPluginFolder_shouldReturnCorrectValue()
@@ -297,20 +319,22 @@ class WigbiBehavior extends UnitTestCase
 
 	function test_jsPaths_shouldReturnConfigValueIfPropertyIsNotSetAndConfigValueIsNotBlank()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_jsPaths.ini");
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_jsPaths.ini");
 		
 		$this->assertEqual(Wigbi::jsPaths(), array("bar", "foo"));
+	 
+		$this->resetConfigFile();
 	}
 	
 	function test_jsPaths_shouldReturnPropertyValueIfPropertyIsSetAndConfigValueIsNotBlank()
 	{
 		$this->assertEqual(Wigbi::jsPaths(array("foo", "bar")), array("foo", "bar"));
 		
-		Wigbi::configFile($this->resourceFolder . "config_jsPaths.ini");
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_jsPaths.ini");
 		
 		$this->assertEqual(Wigbi::jsPaths(), array("foo", "bar"));
+		
+		$this->resetConfigFile();
 	}
 	
 	function test_languageFile_shouldGetSetValue()
@@ -330,7 +354,7 @@ class WigbiBehavior extends UnitTestCase
 	{
 		$this->assertEqual(get_class(Wigbi::logHandler()), "LogHandler");
 	}
-	
+
 	function test_phpFolders_shouldReturnAllFolders()
 	{
 		$folders = Wigbi::phpFolders();
@@ -357,9 +381,9 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(substr_count($string, "*************************************** *"."/" . "\r\n\r\n") == 1);
 	}
 
-	function test_serverRoot_shouldReturnNonEmptyStringWhenNotInServerRoot()
+	function test_serverRoot_shouldReturnCorrectPath()
 	{
-		$this->assertEqual(Wigbi::serverRoot(), "");
+		$this->assertEqual(Wigbi::serverRoot(), "../");
 	}
 	
 	function test_sessionHandler_shouldReturnCorrectClass()
@@ -369,14 +393,14 @@ class WigbiBehavior extends UnitTestCase
 
 	function test_uiPluginClasses_shouldReturnAllClasses()
 	{
-		$this->createUiPluginClass();
+		$this->createUiPlugin();
 		
 		$classes = Wigbi::uiPluginClasses();
 		
 		$this->assertEqual(sizeof($classes), 1);
 		$this->assertEqual($classes[0], "TestUiPlugin");
 		
-		$this->deleteUiPluginClass();
+		$this->deleteUiPlugin();
 	}
 	
 	function test_uiPluginFolder_shouldReturnCorrectValue()
@@ -394,14 +418,14 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertEqual(Wigbi::version(), "1.0.0");
 	}
 
-	function test_wigbiFolder_shouldReturnCorrectValue()
+	function test_wigbiFolder_shouldReturnCorrectPath()
 	{
-		$this->assertEqual(Wigbi::wigbiFolder(), "wigbi/");
+		$this->assertEqual(Wigbi::wigbiFolder(), "../wigbi/");
 	}
 
 	function test_webRoot_shouldReturnCorrectValue()
 	{
-		$this->assertEqual(Wigbi::webRoot(), "");
+		$this->assertEqual(Wigbi::webRoot(), "../");
 	}
 
 
@@ -427,10 +451,11 @@ class WigbiBehavior extends UnitTestCase
 		$_POST["wigbi_asyncPostBack"] = 1;
 		$_POST["wigbi_asyncPostBackData"] = json_encode($this->ajaxData);
 
-		Wigbi::configFile($this->resourceFolder . "config_minimal.ini");
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_minimal.ini");
 		
-		$this->assertEqual(Wigbi::configFile(), $this->ajaxData["configFile"]);
+		$this->assertEqual(Wigbi::configFile(), Wigbi::serverRoot() . $this->ajaxData["configFile"]);
+		
+		$this->resetConfigFile();
 	}
 	
 	function test_start_shouldStartConfigurationAndFailIfNeitherConfigFileExists()
@@ -450,37 +475,28 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_shouldStartConfigurationAndFailForInvalidConfigurationFile()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_invalid.ini");
-		
-		ob_start();
-		Wigbi::stop();
-		$this->expectException(new Exception("The Wigbi configuration file " . Wigbi::configFile() . " could not be parsed. Wigbi must be able to parse this file to proceed."));
-		Wigbi::start();
-		ob_get_clean();
+		$this->expectException(new Exception("The Wigbi configuration file resources/config_invalid.ini could not be parsed. Wigbi must be able to parse this file to proceed."));
+		$this->setConfigFile("resources/config_invalid.ini");
 	}
 	
 	function test_start_shouldStartConfigurationAndFailForMissingApplicationNameParameter()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_noName.ini");
-
 		$this->expectException(new Exception('The application.name parameter in the Wigbi configuration file must have a value, e.g. "My Application".'));
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_noName.ini");
 	}
 
 	function test_start_shouldStartConfigurationAndFailForMissingWebRootParameter()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_noWebRoot.ini");
-
 		$this->expectException(new Exception('The application.webRoot parameter in the Wigbi configuration file must have a value, e.g. /myApp/ if the application is located in http://localhost/myApp/.'));
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_noWebRoot.ini");
 	}
 
 	function test_start_shouldStartCacheHandlerWithoutConfigValue()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_minimal.ini");
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_minimal.ini");
+		$this->assertEqual(Wigbi::cacheHandler()->cacheFolder(), Wigbi::serverRoot("../"));
 		
-		$this->assertEqual(Wigbi::cacheHandler()->cacheFolder(), Wigbi::serverRoot());
+		$this->resetConfigFile();
 	}
 
 	function test_start_shouldStartCacheHandlerWithConfigValue()
@@ -490,21 +506,20 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_shouldStartInactiveDatabaseHandlerWithRtbDisabled()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_minimal.ini");
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_minimal.ini");
 		
 		$this->assertEqual(Wigbi::dbHandler()->host(), "");
 		$this->assertEqual(Wigbi::dbHandler()->dbName(), "");
 		$this->assertEqual(Wigbi::dbHandler()->userName(), "");
 		$this->assertEqual(Wigbi::dbHandler()->password(), "");
 		$this->assertFalse(Wigbi::dbHandler()->isConnected());
+		
+		$this->resetConfigFile();
 	}
 	
 	function test_start_shouldStartDatabaseHandlerWithRtbDisabled()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_noRtb.ini");
-		
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_noRtb.ini");
 		
 		$this->assertEqual(Wigbi::dbHandler()->host(), "localhost");
 		$this->assertEqual(Wigbi::dbHandler()->dbName(), "wigbi_unitTests");
@@ -512,31 +527,31 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertEqual(Wigbi::dbHandler()->password(), "root");
 		$this->assertTrue(Wigbi::dbHandler()->isConnected());
 		$this->assertTrue(Wigbi::dbHandler()->databaseExists(Wigbi::dbHandler()->dbName()));
+		
+		$this->resetConfigFile();
 	}
 	
 	function test_start_shouldStartDatabaseHandlerButNotCreateDatabaseWithRtbDisabled()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_noRtb.ini");
 		Wigbi::dbHandler()->query("DROP DATABASE " . Wigbi::dbHandler()->dbName());
 		
 		$this->assertFalse(Wigbi::dbHandler()->databaseExists(Wigbi::dbHandler()->dbName()));
 		$this->expectException(new Exception("Wigbi could not establish a connection to the database wigbi_unitTests. Make sure that it exists and that the mySQL information in the Wigbi configuration file is valid."));
-		
-		$this->resetWigbi();
+
+		$this->setConfigFile("resources/config_noRtb.ini");
 	}
-	
+/*
 	function test_start_shouldStartDatabaseHandlerAndFailWithInvalidCredentialsWithRtbEnabled()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_invalidDbCredentials.ini");
 		Wigbi::dbHandler()->query("DROP DATABASE " . Wigbi::dbHandler()->dbName());
 		
 		$this->assertFalse(Wigbi::dbHandler()->databaseExists(Wigbi::dbHandler()->dbName()));
 		$this->expectException(new Exception("Wigbi could not establish a connection for creation to the specified database provider at localhost. Make sure that the mySQL information in the Wigbi configuration file is valid."));
 		$this->expectError(new PatternExpectation("/Access denied for user/i"));
 		
-		$this->resetWigbi();
+		$this->setConfigFile("config_invalidDbCredentials.ini");
 	}
-	
+	/*
 	function test_start_shouldStartDatabaseHandlerAndFailWithInvalidCredentialsWithRtbDisabled()
 	{
 		Wigbi::configFile($this->resourceFolder . "config_invalidDbCredentialsNoRtb.ini");
@@ -653,17 +668,17 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_shouldStartDataPluginsAndCreateTable()
 	{
-		$this->createDataPluginClass();
+		$this->createDataPlugin();
 		$this->resetWigbi();
 		
 		$this->assertTrue(Wigbi::dbHandler()->tableExists("TestDataPlugins"));
 		
-		$this->deleteDataPluginClass();
+		$this->deleteDataPlugin();
 	}
 	
 	function test_start_shouldStartDataPluginsAndCreateObfuscatedJavaScriptFileWhenRtbIsEnabledWithObfuscation()
 	{
-		$this->createDataPluginClass();
+		$this->createDataPlugin();
 		if (file_exists(Wigbi::dataPluginJavaScriptFile()))
 			unlink(Wigbi::dataPluginJavaScriptFile());
 		
@@ -676,14 +691,14 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(strpos(" " . $content, Wigbi::scriptFileHeader()) > 0);
 		$this->assertTrue(strpos($content, "p,a,c,k,e,d") > 0);
 		
-		$this->deleteDataPluginClass();
+		$this->deleteDataPlugin();
 	}
 	
 	function test_start_shouldStartDataPluginsAndCreateNonObfuscatedJavaScriptFileWhenRtbIsEnabledWithoutObfuscation()
 	{
 		Wigbi::configFile($this->resourceFolder . "config_noObfuscate.ini");
 		
-		$this->createDataPluginClass();
+		$this->createDataPlugin();
 		if (file_exists(Wigbi::dataPluginJavaScriptFile()))
 			unlink(Wigbi::dataPluginJavaScriptFile());
 		
@@ -696,7 +711,7 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(strpos(" " . $content, Wigbi::scriptFileHeader()) > 0);
 		$this->assertFalse(strpos($content, "p,a,c,k,e,d"));
 		
-		$this->deleteDataPluginClass();
+		$this->deleteDataPlugin();
 	}
 	
 	function test_start_shouldNotStartUiPluginsWhenRtbIsDisabled()
@@ -713,7 +728,7 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_shouldStartUiPluginsAndCreateObfuscatedJavaScriptFileWhenRtbIsEnabledWithObfuscation()
 	{
-		$this->createUiPluginClass();
+		$this->createUiPlugin();
 		if (file_exists(Wigbi::uiPluginJavaScriptFile()))
 			unlink(Wigbi::uiPluginJavaScriptFile());
 		
@@ -727,14 +742,14 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(strpos($content, "TestUiPlugin") > 0);
 		$this->assertTrue(strpos($content, "p,a,c,k,e,d") > 0);
 		
-		$this->deleteUiPluginClass();
+		$this->deleteUiPlugin();
 	}
 
 	function test_start_shouldStartUiPluginsAndCreateNonObfuscatedJavaScriptFileWhenRtbIsEnabledWithoutObfuscation()
 	{
 		Wigbi::configFile($this->resourceFolder . "config_noObfuscate.ini");
 		
-		$this->createUiPluginClass();
+		$this->createUiPlugin();
 		if (file_exists(Wigbi::uiPluginJavaScriptFile()))
 			unlink(Wigbi::uiPluginJavaScriptFile());
 		
@@ -748,7 +763,7 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(strpos($content, "TestUiPlugin") > 0);
 		$this->assertFalse(strpos($content, "p,a,c,k,e,d"));
 		
-		$this->deleteUiPluginClass();
+		$this->deleteUiPlugin();
 	}
 	
 	
@@ -1106,7 +1121,7 @@ class WigbiAsyncTestClass extends WigbiDataPlugin
 	public static function returnString_static()
 	{
 		return "foo bar";
-	}	
+	}
+*/	
 }
-
 ?>

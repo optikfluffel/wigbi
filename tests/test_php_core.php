@@ -1,7 +1,7 @@
 <?php
-	include("includes/top.php");
+	require("includes/top.php");
 	Wigbi::configFile("resources/config.ini");
-	include("includes/middle.php");
+	require("includes/middle.php");
 
 	$test = new GroupTest("Wigbi.PHP.Core");
 	foreach(glob("php/core/*.php") as $file)
@@ -13,5 +13,5 @@
 	$test->run(new HtmlReporter());
 	print "</div>";
 	
-	include("includes/bottom.php");
+	require("includes/bottom.php");
 ?>

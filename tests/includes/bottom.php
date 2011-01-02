@@ -1,5 +1,7 @@
-			<?php include("includes/toolbar.php"); ?>
-			<?php Wigbi::stop(); ?>
+			<?php
+					include("includes/toolbar.php");
+					Wigbi::stop();
+			?>
 		</div>
 	</body>
 </html>

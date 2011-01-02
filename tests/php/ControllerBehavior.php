@@ -16,7 +16,7 @@ class ControllerBehavior extends UnitTestCase
 		$this->assertEqual(Controller::action(), "index");
 	}
 	
-	function test_action_shouldReturnQueryVariableIfAnyAndNoCustomValue()
+	function test_action_shouldReturnQueryVariableIfNoCustomValue()
 	{
 		$_GET["action"] = "bar";
 		$value = Controller::action();
@@ -25,23 +25,12 @@ class ControllerBehavior extends UnitTestCase
 		$this->assertEqual($value, "bar");
 	}
 	
-	function test_action_shouldSetAndReturnCustomValue()
-	{
-		$defaultValue = Controller::action();
-		Controller::action("foo");
-		$setValue = Controller::action();
-		Controller::action("");
-		$resetValue = Controller::action();
-		
-		$this->assertEqual($defaultValue, "");
-		$this->assertEqual($setValue, "foo");
-		$this->assertEqual($resetValue, "");
-	}
-	
-	function test_action_customValueShouldOverrideQueryVariable()
+	function test_action_shouldReturnCustomValueIfAny()
 	{
 		$_GET["action"] = "bar";
-		Controller::action("foo");
+		
+		$this->assertEqual(Controller::action("foo"), "foo");
+		
 		$value = Controller::action();
 		Controller::action("");
 		$_GET["action"] = null;
@@ -54,7 +43,7 @@ class ControllerBehavior extends UnitTestCase
 		$this->assertEqual(Controller::name(), "");
 	}
 	
-	function test_name_shouldReturnQueryVariableIfAnyAndNoCustomValue()
+	function test_name_shouldReturnQueryVariableIfNoCustomValue()
 	{
 		$_GET["controller"] = "bar";
 		$value = Controller::name();
@@ -63,23 +52,12 @@ class ControllerBehavior extends UnitTestCase
 		$this->assertEqual($value, "bar");
 	}
 	
-	function test_name_shouldSetAndReturnCustomValue()
-	{
-		$defaultValue = Controller::name();
-		$setValue = Controller::name("foo");
-		$resultValue = Controller::name();
-		$resetValue = Controller::name("");
-		
-		$this->assertEqual($defaultValue, "");
-		$this->assertEqual($setValue, "foo");
-		$this->assertEqual($resultValue, "foo");
-		$this->assertEqual($resetValue, "");
-	}
-	
 	function test_name_customValueShouldOverrideQueryVariable()
 	{
 		$_GET["controller"] = "bar";
-		Controller::name("foo");
+		
+		$this->assertEqual(Controller::name("foo"), "foo");
+		
 		$value = Controller::name();
 		Controller::name("");
 		$_GET["controller"] = null;

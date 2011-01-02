@@ -41,7 +41,7 @@ class UrlHandlerBehavior extends UnitTestCase
 	
 	function test_currentUrl_shouldReturnCorrectValue()
 	{
-		$this->assertEqual(UrlHandler::currentUrl(), "http://localhost:8888/wigbi_1/test_php.php");
+		$this->assertEqual(UrlHandler::currentUrl(), "http://localhost:8888/wigbi_1/tests/test_php.php");
 	}
 	
 	
@@ -49,7 +49,7 @@ class UrlHandlerBehavior extends UnitTestCase
 	function test_parseServerUrl_shouldParseUrlWithTilde()
 	{
 		$url = "~/tests";
-		$this->assertEqual(UrlHandler::parseServerUrl($url), "tests");
+		$this->assertEqual(UrlHandler::parseServerUrl($url), "../tests");
 	}
 	
 	function test_parseServerUrl_shouldParseUrlWithoutTilde()
@@ -61,7 +61,7 @@ class UrlHandlerBehavior extends UnitTestCase
 	function test_parseWebUrl_shouldParseUrlWithTilde()
 	{
 		$url = "~/tests";
-		$this->assertEqual(UrlHandler::parseWebUrl($url), "tests");
+		$this->assertEqual(UrlHandler::parseWebUrl($url), "../tests");
 	}
 	
 	function test_parseWebUrl_shouldParseUrlWithoutTilde()

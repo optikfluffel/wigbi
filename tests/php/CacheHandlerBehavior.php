@@ -60,13 +60,9 @@ class CacheHandlerBehavior extends UnitTestCase
 			
 	
 	
-	function test_cacheFolder_shouldReturnCorrectValue()
+	function test_cacheFolder_shouldGetSetValue()
 	{
 		$this->assertEqual($this->obj->cacheFolder(), "cache");
-	}
-	
-	function test_cacheFolder_shouldSetValue()
-	{
 		$this->assertEqual($this->obj->cacheFolder("caching"), "caching");
 		$this->assertEqual($this->obj->cacheFolder(), "caching");
 	}

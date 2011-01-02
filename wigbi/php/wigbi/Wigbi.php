@@ -691,8 +691,7 @@ class Wigbi
 			throw new Exception("Neither " . Wigbi::configFile() . " nor " . Wigbi::configFile_default() . " exist. Wigbi requires any such (valid) configuration file to start.");
 			
 		//Create the config file if it does not exist
-		if (!file_exists(Wigbi::configFile()))
-			if (!copy(Wigbi::configFile_default(), Wigbi::configFile()))
+		if (!file_exists(Wigbi::configFile()) && !copy(Wigbi::configFile_default(), Wigbi::configFile()))
 				throw new Exception(Wigbi::configFile_default() . " could not be copied to " . Wigbi::configFile() . ". Copy the file manually or make sure that Wigbi is allowed to create the file.");
 		
 		//Try to parse the configuration file
