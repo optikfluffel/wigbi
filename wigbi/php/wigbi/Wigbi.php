@@ -977,12 +977,14 @@ class Wigbi
 	private static function start_languageHandler()
 	{
 		//Use custom language file, or configuration file if none is set
-		$langFile = Wigbi::languageFile() ? Wigbi::languageFile() : Wigbi::configuration("file", "languageHandler");
+		$langFile = Wigbi::languageFile();
+		if (!$langFile && Wigbi::configuration("file", "languageHandler"))
+			$langFile = Wigbi::serverRoot() . Wigbi::configuration("file", "languageHandler"); 
 		
 		//Initialize the default LanguageHandler instance
 		Wigbi::$_languageHandler = new LanguageHandler();
-		if ($langFile && !Wigbi::$_languageHandler->parseFile(Wigbi::serverRoot() . $langFile))
-			throw new Exception("The default language file " . Wigbi::serverRoot() . $langFile . " could not be parsed.");
+		if ($langFile && !Wigbi::$_languageHandler->parseFile($langFile))
+			throw new Exception("The default language file " . $langFile . " could not be parsed.");
 	}
 	
 	/**

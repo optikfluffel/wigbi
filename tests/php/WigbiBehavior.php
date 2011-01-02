@@ -588,20 +588,22 @@ class WigbiBehavior extends UnitTestCase
 		$this->setConfigFile("resources/config_minimal.ini");
 		
 		$this->assertEqual(Wigbi::languageHandler()->filePath(), "");
+		
+		$this->resetConfigFile();
 	}
 	
 	function test_start_shouldStartLanguageHandlerWithConfigFileValue()
 	{
 		$this->assertEqual(Wigbi::languageHandler()->filePath(), Wigbi::wigbiFolder() . "lang/english.ini");
 	}
-	/*
+	
 	function test_start_shouldStartLanguageHandlerWithVariableValue()
 	{
-		Wigbi::languageFile(Wigbi::wigbiFolder() . "lang/swedish.ini");
-		
+		$langFile = Wigbi::wigbiFolder() . "lang/swedish.ini";
+		Wigbi::languageFile($langFile);
 		$this->resetWigbi();
 		
-		$this->assertEqual(Wigbi::languageHandler()->filePath(), Wigbi::wigbiFolder() . "lang/swedish.ini");
+		$this->assertEqual(Wigbi::languageHandler()->filePath(), $langFile);
 		
 		Wigbi::languageFile("");
 	}
