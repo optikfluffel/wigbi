@@ -540,7 +540,7 @@ class WigbiBehavior extends UnitTestCase
 
 		$this->setConfigFile("resources/config_noRtb.ini");
 	}
-/*
+
 	function test_start_shouldStartDatabaseHandlerAndFailWithInvalidCredentialsWithRtbEnabled()
 	{
 		Wigbi::dbHandler()->query("DROP DATABASE " . Wigbi::dbHandler()->dbName());
@@ -549,17 +549,15 @@ class WigbiBehavior extends UnitTestCase
 		$this->expectException(new Exception("Wigbi could not establish a connection for creation to the specified database provider at localhost. Make sure that the mySQL information in the Wigbi configuration file is valid."));
 		$this->expectError(new PatternExpectation("/Access denied for user/i"));
 		
-		$this->setConfigFile("config_invalidDbCredentials.ini");
+		$this->setConfigFile("resources/config_invalidDbCredentials.ini");
 	}
-	/*
+	
 	function test_start_shouldStartDatabaseHandlerAndFailWithInvalidCredentialsWithRtbDisabled()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_invalidDbCredentialsNoRtb.ini");
-		
 		$this->expectException(new Exception("Wigbi could not establish a connection to the database wigbi_unitTests. Make sure that it exists and that the mySQL information in the Wigbi configuration file is valid."));
 		$this->expectError(new PatternExpectation("/Access denied for user/i"));
 
-		$this->resetWigbi();		
+		$this->setConfigFile("resources/config_invalidDbCredentialsNoRtb.ini");
 	}
 	
 	function test_start_shouldStartDatabaseHandlerAndCreateDatabaseWithRtbEnabled()
@@ -580,18 +578,14 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_shouldStartLanguageHandlerButFailForInvalidLanguageHandlerFile()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_invalidLanguageFile.ini");
+		$this->expectException(new Exception("The default language file ../wigbi/content/lang/nonexisting.ini could not be parsed."));
 		
-		$this->expectException(new Exception("The default language file wigbi/content/lang/nonexisting.ini could not be parsed."));
-		
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_invalidLanguageFile.ini");
 	}
 	
 	function test_start_shouldStartLanguageHandlerWithoutConfigFileValue()
 	{
-		Wigbi::configFile($this->resourceFolder . "config_minimal.ini");
-		
-		$this->resetWigbi();
+		$this->setConfigFile("resources/config_minimal.ini");
 		
 		$this->assertEqual(Wigbi::languageHandler()->filePath(), "");
 	}
@@ -600,7 +594,7 @@ class WigbiBehavior extends UnitTestCase
 	{
 		$this->assertEqual(Wigbi::languageHandler()->filePath(), Wigbi::wigbiFolder() . "lang/english.ini");
 	}
-	
+	/*
 	function test_start_shouldStartLanguageHandlerWithVariableValue()
 	{
 		Wigbi::languageFile(Wigbi::wigbiFolder() . "lang/swedish.ini");
@@ -611,7 +605,7 @@ class WigbiBehavior extends UnitTestCase
 		
 		Wigbi::languageFile("");
 	}
-	
+	/*
 	function test_start_shouldStartLogHandlerWithoutAnyHandlers()
 	{
 		Wigbi::configFile($this->resourceFolder . "config_minimal.ini");
