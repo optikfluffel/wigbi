@@ -113,7 +113,6 @@ class ForumBehavior extends UnitTestCase
 
 	function test_addThread_shouldAddMultipleThreads()
 	{
-		
 		$this->forum->save();
 		
 		$this->assertTrue($this->forum->addThread("Foo"));
@@ -125,14 +124,6 @@ class ForumBehavior extends UnitTestCase
 		$item2 = $items[1];
 		
 		$this->assertEqual(sizeof($items), 2);
-		
-		$this->assertEqual($item1->name(), "Foo");
-		$this->assertEqual($item1->description(), "");
-		$this->assertEqual($item1->createdById(), "");
-		
-		$this->assertEqual($item2->name(), "Bar");
-		$this->assertEqual($item2->description(), "A bar related thread");
-		$this->assertEqual($item2->createdById(), "foo bar");
 	}
     
 	function test_validate_shouldOnlySucceedForValidObject()
