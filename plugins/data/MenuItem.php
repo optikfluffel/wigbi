@@ -56,9 +56,11 @@ class MenuItem extends WigbiDataPlugin
 	/**#@-*/
 	
 	
-	public function __construct()
+	public function __construct($parentId = "")
 	{
 		parent::__construct();
+		
+		$this->parentId($parentId);
 		
 		$this->registerList("children", "MenuItem", true, null);
 		
