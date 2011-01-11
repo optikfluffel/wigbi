@@ -71,17 +71,13 @@ class LoginForm extends WigbiUIPlugin
 	
 	
 	/**
-	 * Add a LoginForm to the page. 
-	 * 
- 	 * This plugin will print the resulting HTML directly to the page if
-	 * the method is called directly and not via AJAX.
+	 * Add a LoginForm to the page.
 	 * 
 	 * @access	public
 	 * 
 	 * @param		string	$id						The unique plugin instance ID.
 	 * @param		string	$redirectUrl	The URL to redirect logged in users to.
 	 * @param		string	$autoRedirect	Whether or not to automatically redirect already logged in users.
-	 * @return	string								The resulting HTML, if any.
 	 */
 	public static function add($id, $redirectUrl, $autoRedirect = false)
 	{

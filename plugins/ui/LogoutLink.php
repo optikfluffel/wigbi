@@ -68,16 +68,12 @@ class LogoutLink extends WigbiUIPlugin
 	
 	
 	/**
-	 * Add a LogoutLink to the page. 
-	 * 
- 	 * This plugin will print the resulting HTML directly to the page if
-	 * the method is called directly and not via AJAX.
+	 * Add a LogoutLink to the page.
 	 * 
 	 * @access	public
 	 * 
 	 * @param		string	$id						The unique plugin instance ID.
 	 * @param		string	$redirectUrl	The URL to redirect logged out users to.
-	 * @return	string								The resulting HTML, if any.
 	 */
 	public static function add($id, $redirectUrl)
 	{

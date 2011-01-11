@@ -79,7 +79,6 @@ class HtmlContentControl extends WigbiUIPlugin
 	 * @param		string	$objectOrId		The object or the ID of the object to handle with the plugin.
 	 * @param		string	$objectName		The name of the object to handle with the plugin.
 	 * @param		bool		$embedForm		Whether or not to embed an HtmlContentForm; default false.
-	 * @return	string								The resulting HTML, if any.
 	 */
 	public static function add($id, $objectOrId, $objectName, $embedForm = false)
 	{

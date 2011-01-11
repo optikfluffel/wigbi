@@ -68,16 +68,12 @@ class NewsForm extends WigbiUIPlugin
 	 * $objectOrId can either be an object instance or an ID. The object
 	 * can also be loaded by title. However, if one parameter is set, do
 	 * set the other to an empty string.
-	 *    
- 	 * This plugin will print the resulting HTML directly to the page if
-	 * the method is called directly and not via AJAX.
 	 * 
 	 * @access	public
 	 * 
 	 * @param		string	$id						The unique plugin instance ID.
 	 * @param		string	$objectOrId		The object or the ID of the object to handle with the plugin.
 	 * @param		string	$objectTitle	The title of the object to handle with the plugin.
-	 * @return	string								The resulting HTML, if any.
 	 */	 
 	public static function add($id, $objectOrId, $objectTitle)
 	{

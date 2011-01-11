@@ -81,7 +81,6 @@ class MenuItemForm extends WigbiUIPlugin
 	 * @param		string	$id						The unique plugin instance ID.
 	 * @param		string	$objectOrId		The object or the ID of the object to handle with the plugin.
 	 * @param		string	$objectName		The name of the object to handle with the plugin.
-	 * @return	string								The resulting HTML, if any.
 	 */	 
 	public static function add($id, $objectOrId, $objectName)
 	{
