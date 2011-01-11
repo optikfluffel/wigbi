@@ -79,7 +79,7 @@ class HtmlContentForm extends WigbiUIPlugin
 	 * @access	public
 	 * 
 	 * @param		string	$id						The unique plugin instance ID.
-	 * @param		string	$objectOrId		The ID of the object to load into the form.
+	 * @param		string	$objectOrId		The object or the ID of the object to handle with the plugin.
 	 * @param		string	$objectName		The name of the object to load into the form.
 	 * @return	string								The resulting HTML, if any.
 	 */	 
