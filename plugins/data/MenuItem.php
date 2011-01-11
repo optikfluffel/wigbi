@@ -150,9 +150,11 @@ class MenuItem extends WigbiDataPlugin
 		//Init error list
 		$errorList = array();
 		
-		//Require that the object has a text
+		//Require that the object has a text and a url
 		if (!trim($this->text()))
 			array_push($errorList, "text_required");
+		if (!trim($this->url()))
+			array_push($errorList, "url_required");
 			
 		//Return error list
 		return $errorList;
