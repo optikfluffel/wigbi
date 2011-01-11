@@ -69,12 +69,12 @@ class HtmlContentForm extends WigbiUIPlugin
 	/**
 	 * Add a HtmlContentForm to the page. 
 	 * 
-	 * $objectOrId can either be an object instance or an ID. The object
-	 * can also be loaded by name. However, if one parameter is set, set
-	 * the other to an empty string.
-	 *    
- 	 * This plugin will print the resulting HTML directly to the page if
-	 * the method is called directly and not via AJAX.
+	 * If neither the $objectOrId nor the $objectName parameter is set,
+	 * the plugin will handle a default, unsaved object.
+	 * 
+	 * The $objectOrId parameter can either be an object instance or a
+	 * unique object ID. If this parameter is set, set the $objectName
+	 * parameter to an empty string and vice versa.
 	 * 
 	 * @access	public
 	 * 

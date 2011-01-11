@@ -22,10 +22,10 @@
  * 
  * This plugin can be used to display the content of any HtmlContent
  * object. It can also be set to embed a HtmlContentForm, with which
- * the object can be edited.
+ * the object can be edited (or created if no object is loaded).
  * 
- * If an HtmlContentForm is embedded, it will automatically be shown
- * if the control is added without an object.
+ * If a form is embedded, it is automatically displayed if no object
+ * (or an unsaved one) is handled by the plugin.
  * 
  * 
  * JAVASCRIPT ********************
@@ -66,12 +66,12 @@ class HtmlContentControl extends WigbiUIPlugin
 	/**
 	 * Add a HtmlContentControl to the page. 
 	 * 
-	 * $objectOrId can either be an object instance or an ID. The object
-	 * can also be loaded by name. However, if one parameter is set, set
-	 * the other to an empty string.
-	 *    
- 	 * This plugin will print the resulting HTML directly to the page if
-	 * the method is called directly and not via AJAX.
+	 * If neither the $objectOrId nor the $objectName parameter is set,
+	 * the plugin will handle a default, unsaved object.
+	 * 
+	 * The $objectOrId parameter can either be an object instance or a
+	 * unique object ID. If this parameter is set, set the $objectName
+	 * parameter to an empty string and vice versa.
 	 * 
 	 * @access	public
 	 * 
@@ -93,6 +93,7 @@ class HtmlContentControl extends WigbiUIPlugin
 	
 		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
+		
 		if ($embedForm)
 			$plugin->beginViewDiv($embedForm && $obj->id());
 		
@@ -102,8 +103,8 @@ class HtmlContentControl extends WigbiUIPlugin
 		if ($embedForm)
 		{
 			$plugin->endViewDiv();
-			$plugin->beginEditDiv(!$obj->id());
-			print HtmlContentForm::add($formId, $obj, "");
+			$plugin->beginEditDiv($embedForm && !$obj->id());
+			HtmlContentForm::add($formId, $obj, "");
 			$plugin->endEditDiv();	
 		}
 		?>
