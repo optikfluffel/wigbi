@@ -75,8 +75,8 @@ class NewsForm extends WigbiUIPlugin
 	 * @access	public
 	 * 
 	 * @param		string	$id						The unique plugin instance ID.
-	 * @param		string	$objectOrId		The ID of the object to load into the form.
-	 * @param		string	$objectTitle	The title of the object to load into the form.
+	 * @param		string	$objectOrId		The object or the ID of the object to handle with the plugin.
+	 * @param		string	$objectTitle	The title of the object to handle with the plugin.
 	 * @return	string								The resulting HTML, if any.
 	 */	 
 	public static function add($id, $objectOrId, $objectTitle)
