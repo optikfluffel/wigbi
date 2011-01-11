@@ -60,7 +60,7 @@ class MenuItem extends WigbiDataPlugin
 	{
 		parent::__construct();
 		
-		$this->registerList("subMenu", "MenuItem", true, null);
+		$this->registerList("children", "MenuItem", true, null);
 		
 		$this->registerAjaxFunction("addMenuItem", array("url", "text", "tooltip", "name"), false);
 	}
@@ -134,7 +134,7 @@ class MenuItem extends WigbiDataPlugin
 			
 		//Save the object and add it to the list
 		$item->save();
-		$this->addListItem("subMenu", $item->id());
+		$this->addListItem("children", $item->id());
 		return true;
 	}
 	
