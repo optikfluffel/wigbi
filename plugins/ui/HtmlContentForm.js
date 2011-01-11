@@ -43,7 +43,6 @@ function HtmlContentForm(id)
 	this.reset = function()
 	{
 		this.getElement("name").val(this.obj().name());
-		this.getElement("title").val(this.obj().title());
 		this.getElement("content").val(this.obj().content());
 		try { (tinyMCE.get(this.getElement("content").attr("id")).setContent(this.obj().content())); }
 		catch(e) { }
@@ -54,7 +53,6 @@ function HtmlContentForm(id)
 	{
 		var obj = this.obj();
 		obj.name(this.getElement("name").val());
-		obj.title(this.getElement("title").val());
 		obj.content(this.getElement("content").val());
 		try { obj.setContent(tinyMCE.get(this.getElement("content").attr("id")).getContent()); }
 		catch(e) { }

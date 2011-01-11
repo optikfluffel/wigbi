@@ -101,9 +101,6 @@ class HtmlContentForm extends WigbiUIPlugin
 		View::addDiv($plugin->getChildId("nameTitle"), $plugin->translate("name") . ":", "class='input-title'");
 		View::addTextInput($plugin->getChildId("name"), $obj->name(), "");
 		
-		View::addDiv($plugin->getChildId("titleTitle"), $plugin->translate("title") . ":", "class='input-title'");
-		View::addTextInput($plugin->getChildId("title"), $obj->title(), "");
-		
 		View::addDiv($plugin->getChildId("contentTitle"), $plugin->translate("content") . ":", "class='input-title'");
 		View::addTextArea($plugin->getChildId("content"), $obj->content(), "class='wysiwyg advanced'");
 		?>

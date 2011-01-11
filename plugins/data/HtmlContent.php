@@ -36,7 +36,6 @@ class HtmlContent extends WigbiDataPlugin
 	 * @ignore
 	 */
 	public $_name = "__50";
-	public $_title = "__25";
 	public $_createdDateTime = "__DATETIME";
 	public $_lastUpdatedDateTime = "__DATETIME";
 	public $_content = "__TEXT";
@@ -71,13 +70,6 @@ class HtmlContent extends WigbiDataPlugin
 		if (func_num_args() != 0)
 			$this->_name = func_get_arg(0);
 		return $this->_name;
-	}
-
-	public function title($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_title = func_get_arg(0);
-		return $this->_title;
 	}
 	
 	
