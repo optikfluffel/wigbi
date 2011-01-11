@@ -20,8 +20,12 @@
 /**
  * The Wigbi.Plugins.UI.HtmlContentForm PHP class.
  * 
- * This plugin can be used to edit an HtmlContent object. The plugin
- * form is submitted with AJAX, without reloading the page.
+ * This plugin can be used to create and / or edit a MenuItem object.
+ * The form is submitted with AJAX, without reloading the page.
+ * 
+ * If objectOrId or objectName are set when adding a plugin instance
+ * to the page, the plugin will modify that object. If not, the form
+ * will create a new HtmlContent object when it is submitted.
  * 
  * 
  * JAVASCRIPT ********************
@@ -90,11 +94,15 @@ class HtmlContentForm extends WigbiUIPlugin
 	
 		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
+		
 		View::openForm($plugin->getChildId("form"));
 		View::addTextArea($plugin->getChildId("object"), json_encode($obj), "style='display:none'");
 		
 		View::addDiv($plugin->getChildId("nameTitle"), $plugin->translate("name") . ":", "class='input-title'");
 		View::addTextInput($plugin->getChildId("name"), $obj->name(), "");
+		
+		View::addDiv($plugin->getChildId("titleTitle"), $plugin->translate("title") . ":", "class='input-title'");
+		View::addTextInput($plugin->getChildId("title"), $obj->title(), "");
 		
 		View::addDiv($plugin->getChildId("contentTitle"), $plugin->translate("content") . ":", "class='input-title'");
 		View::addTextArea($plugin->getChildId("content"), $obj->content(), "class='wysiwyg advanced'");
@@ -111,6 +119,7 @@ class HtmlContentForm extends WigbiUIPlugin
 		
 		<?php
 		View::closeForm();
+
 		$plugin->endPluginDiv();
 		return $plugin->endPlugin();
 	}
