@@ -81,6 +81,8 @@ MenuItemList.add = function(id, parentObjectId, parentObjectName, cssClass, canA
 {
 	Wigbi.ajax("MenuItemList", null, "add", [id, parentObjectId, parentObjectName, cssClass, canAdd, canDelete, canEdit, canSort], function(response) 
 	{
+		response = response.replace(/~\//gi, Wigbi.webRoot());
+		
 		$("#" + targetContainerId).html(response);
 		eval(id + " = new MenuItemList('" + id + "');");
 		

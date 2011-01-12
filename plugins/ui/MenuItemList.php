@@ -133,7 +133,7 @@ class MenuItemList extends WigbiUIPlugin
 						<?php } if ($canSort) { ?>
 							<span class="move"></span>
 						<?php } ?>
-						<a href="<?php pwurl($item->url()) ?>" title="<?php print $item->tooltip() ?>"><?php print $item->text() ?></a>
+						<a href="<?php print (Wigbi::isAjaxPostBack() ? $item->url() : pwurl($item->url())) ?>" title="<?php print $item->tooltip() ?>"><?php print $item->text() ?></a>
 					</li>
 				<?php } ?>
 			</ul>
