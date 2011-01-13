@@ -360,12 +360,11 @@ class WigbiBehavior extends UnitTestCase
 		$folders = Wigbi::phpFolders();
 		$baseFolder = Wigbi::wigbiFolder() . "php/";
 		
-		$this->assertEqual(sizeof($folders), 5);
-		$this->assertEqual($folders[0], $baseFolder . "wigbi/core/");
-		$this->assertEqual($folders[1], $baseFolder . "wigbi/");
+		$this->assertEqual(sizeof($folders), 4);
+		$this->assertEqual($folders[0], $baseFolder . "core/");
+		$this->assertEqual($folders[1], $baseFolder);
 		$this->assertEqual($folders[2], Wigbi::dataPluginFolder());
 		$this->assertEqual($folders[3], Wigbi::uiPluginFolder());
-		$this->assertEqual($folders[4], $baseFolder);
 	}
 
 	function test_scriptFileHeader_shouldReturnCorrectString()

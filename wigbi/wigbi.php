@@ -9,11 +9,11 @@ while(!is_dir($root . "wigbi/"))
 
 //Include Wigbi
 ob_start();
-foreach(glob($root . "wigbi/php/wigbi/tools/*.php") as $file)
+foreach(glob($root . "wigbi/php/tools/*.php") as $file)
 	require_once($file);
-foreach(glob($root . "wigbi/php/wigbi/core/*.php") as $file)
+foreach(glob($root . "wigbi/php/core/*.php") as $file)
 	require_once($file);
-foreach(glob($root . "wigbi/php/wigbi/*.php") as $file)
+foreach(glob($root . "wigbi/php/*.php") as $file)
 	require_once($file);
 ob_get_clean();
 ?>

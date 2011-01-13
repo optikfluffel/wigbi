@@ -430,7 +430,7 @@ class Wigbi
 	{
 		$baseFolder = Wigbi::wigbiFolder() . "php/";
 		
-		return array($baseFolder . "wigbi/core/", $baseFolder . "wigbi/", Wigbi::dataPluginFolder(), Wigbi::uiPluginFolder(), $baseFolder);
+		return array($baseFolder . "core/", $baseFolder, Wigbi::dataPluginFolder(), Wigbi::uiPluginFolder());
 	}
 	
 	/**

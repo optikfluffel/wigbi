@@ -18,12 +18,16 @@ The release feature major changes, of which only some are listed down below.
 The Wigbi configuration file has been completely rewritten and uses real ini
 sections. Older configuration files will not work with Wigbi 1.0.
 
+Wigbi no longer features bundled classes. All the source code is provided as
+is, which simplifies modifications and bug fixes in an already running Wigbi
+instance. The two wigbi/php/wigbi and wigbi/js/wigbi folders are now removed
+as well. The Wigbi classes are added directly in wigbi/php and wigbi/js. 
+
 It is now possible to change the value of the Wigbi::configFile(..) property
-to make Wigbi use another configuration file when starting up. However, make
-sure to notice that the property is currently not set for the JS Wigbi class,
-since the PHP property is relative and the JavaScript property has got to be
-application relative. Thus, if you change the config file, make sure to also
-set the Wigbi._ajaxConfigFile JavaScript variable.
+to make Wigbi use another configuration file when starting up. However, note
+that the property is currently not set for the JS Wigbi class, since the PHP
+property is relative and the JavaScript property must be app relative. It is
+important that you change the Wigbi._ajaxConfigFile variable as well for now.
 
 Some Wigbi classes that were previously static have now been made non-static
 to make it possible to create custom instances. However, the Wigbi class has
@@ -34,9 +38,6 @@ now take an optional set parameter if they are settabl...just like jQuery :)
 
 Wigbi now features a quite basic MVC engine which is inspired by ASP.NET MVC.
 This makes it even easier to separate functionality from content.
-
-Wigbi now uses jQuery 1.4.2 instead of previous 1.3.2. jQuery is included in
-the Wigbi release, so there is no need to download it separately.
 
 The WigbiUIPlugin base class has been simplified compared to the old one. It
 contains a few help methods and must still be inherited.
