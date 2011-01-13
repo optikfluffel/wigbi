@@ -363,6 +363,21 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertEqual(Wigbi::phpPaths(), array(Wigbi::serverRoot() . "wigbi/php/core/", Wigbi::serverRoot() . "wigbi/php/", Wigbi::serverRoot() . "wigbi/plugins/data/", Wigbi::serverRoot() . "wigbi/plugins/ui/"));
 	}
 
+	function test_phpPaths_shouldRequireAllFiles()
+	{
+		$this->assertFalse(class_exists("NestedPhpClass"));
+		$this->assertFalse(class_exists("NestedPhpClass2"));
+		$this->assertFalse(class_exists("PhpClass"));
+		
+		$this->setConfigFile("resources/config_phpPaths.ini");
+
+		$this->assertTrue(class_exists("NestedPhpClass"));
+		$this->assertTrue(class_exists("NestedPhpClass2"));
+		$this->assertTrue(class_exists("PhpClass"));
+		
+		$this->resetConfigFile();
+	}
+
 	function test_phpPaths_shouldApplyConfigValueIfAny()
 	{
 		$this->setConfigFile("resources/config_phpPaths.ini");
@@ -371,18 +386,6 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertEqual(Wigbi::phpPaths(), array(Wigbi::serverRoot() . "wigbi/php/core/", Wigbi::serverRoot() . "wigbi/php/", Wigbi::serverRoot() . "wigbi/plugins/data/", Wigbi::serverRoot() . "wigbi/plugins/ui/", Wigbi::serverRoot() . "tests/resources/phpClasses/", Wigbi::serverRoot() . "tests/resources/phpClass.php"));
 		
 		$this->resetConfigFile();
-	}
-
-	function test_phpFolders_shouldReturnAllFolders()
-	{
-		$folders = Wigbi::phpFolders();
-		$baseFolder = Wigbi::wigbiFolder() . "php/";
-		
-		$this->assertEqual(sizeof($folders), 4);
-		$this->assertEqual($folders[0], $baseFolder . "core/");
-		$this->assertEqual($folders[1], $baseFolder);
-		$this->assertEqual($folders[2], Wigbi::dataPluginFolder());
-		$this->assertEqual($folders[3], Wigbi::uiPluginFolder());
 	}
 
 	function test_scriptFileHeader_shouldReturnCorrectString()

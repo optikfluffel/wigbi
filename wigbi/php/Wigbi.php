@@ -454,20 +454,6 @@ class Wigbi
 	}
 	
 	/**
-	 * Get the PHP folders that are handled by Wigbi.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	array	The PHP folders that are handled by Wigbi.
-	 */
-	public static function phpFolders()
-	{
-		$baseFolder = Wigbi::wigbiFolder() . "php/";
-		return array($baseFolder . "core/", $baseFolder, Wigbi::dataPluginFolder(), Wigbi::uiPluginFolder());
-	}
-	
-	/**
 	 * The header that is added to automatically created Wigbi JavaScript files.
 	 * 
 	 * @access	public
