@@ -4,14 +4,11 @@ class WigbiBehavior extends UnitTestCase
 {
 	private $ajaxData;
 	private $configFile = "resources/config.ini";
-	//private $resourceFolder;
 	
 	
 	function WigbiBehavior()
 	{
 		$this->UnitTestCase("Wigbi");
-		
-		//$this->resourceFolder = "tests/resources/";
 		
 		$this->ajaxData = array();
 		$this->ajaxData["configFile"] = "tests/resources/config.ini";
@@ -30,9 +27,7 @@ class WigbiBehavior extends UnitTestCase
 	
 	function tearDown()
 	{
-		Wigbi::cssPaths(null);
 		Wigbi::generateHtml(true);
-		Wigbi::jsPaths(null);
 		$_POST["wigbi_asyncPostBack"] = 0;
 		$_POST["wigbi_asyncPostBackData"] = null;
 	}
@@ -136,6 +131,17 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(is_dir($path . "img"));
 
 		$this->assertTrue(is_dir($path . "js"));
+		$this->assertTrue(is_dir($path . "js/core"));
+		$this->assertTrue(file_exists($path . "js/core/WigbiClass.js"));
+		$this->assertTrue(file_exists($path . "js/core/WigbiDataPlugin.js"));
+		$this->assertTrue(file_exists($path . "js/core/WigbiUIPlugin.js"));
+		$this->assertTrue(file_exists($path . "js/CacheHandler.js"));
+		$this->assertTrue(file_exists($path . "js/IniHandler.js"));
+		$this->assertTrue(file_exists($path . "js/LanguageHandler.js"));
+		$this->assertTrue(file_exists($path . "js/LogHandler.js"));
+		$this->assertTrue(file_exists($path . "js/SearchFilter.js"));
+		$this->assertTrue(file_exists($path . "js/SessionHandler.js"));
+		$this->assertTrue(file_exists($path . "js/Wigbi.js"));
 		$this->assertTrue(file_exists($path . "js/jquery-1.4.2.min.js"));
 		$this->assertTrue(file_exists($path . "js/json.js"));
 		
@@ -148,6 +154,28 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(file_exists($path . "pages/postBack.php"));
 		
 		$this->assertTrue(is_dir($path . "php"));
+		$this->assertTrue(is_dir($path . "php/core"));
+		$this->assertTrue(is_dir($path . "php/tools"));
+		$this->assertTrue(is_dir($path . "php/tools/log"));
+		$this->assertTrue(file_exists($path . "php/core/WigbiDataPlugin.php"));
+		$this->assertTrue(file_exists($path . "php/core/WigbiDataPluginAjaxFunction.php"));
+		$this->assertTrue(file_exists($path . "php/core/WigbiDataPluginJavaScriptGenerator.php"));
+		$this->assertTrue(file_exists($path . "php/core/WigbiDataPluginList.php"));
+		$this->assertTrue(file_exists($path . "php/core/WigbiUIPlugin.php"));
+		$this->assertTrue(file_exists($path . "php/CacheHandler.php"));
+		$this->assertTrue(file_exists($path . "php/Controller.php"));
+		$this->assertTrue(file_exists($path . "php/DatabaseHandler.php"));
+		$this->assertTrue(file_exists($path . "php/IniHandler.php"));
+		$this->assertTrue(file_exists($path . "php/JavaScript.php"));
+		$this->assertTrue(file_exists($path . "php/LanguageHandler.php"));
+		$this->assertTrue(file_exists($path . "php/LogHandler.php"));
+		$this->assertTrue(file_exists($path . "php/MasterPage.php"));
+		$this->assertTrue(file_exists($path . "php/SearchFilter.php"));
+		$this->assertTrue(file_exists($path . "php/SessionHandler.php"));
+		$this->assertTrue(file_exists($path . "php/UrlHandler.php"));
+		$this->assertTrue(file_exists($path . "php/ValidationHandler.php"));
+		$this->assertTrue(file_exists($path . "php/View.php"));
+		$this->assertTrue(file_exists($path . "php/Wigbi.php"));
 		
 		$this->assertTrue(is_dir($path . "plugins"));
 		$this->assertTrue(is_dir($path . "plugins/data"));
@@ -189,43 +217,27 @@ class WigbiBehavior extends UnitTestCase
 		
 		$this->resetConfigFile();
 	}
-
-	function test_cssPaths_shouldGetSetValue()
-	{
-		$this->assertEqual(Wigbi::cssPaths(), null);
-		$this->assertEqual(Wigbi::cssPaths(array("foo", "bar")), array("foo", "bar"));
-		$this->assertEqual(Wigbi::cssPaths(), array("foo", "bar"));
-		$this->assertEqual(Wigbi::cssPaths(null), null);
-	}
 	
-	function test_cssPaths_shouldReturnNullIfPropertyIsNotSetAndWigbiIsStopped()
+	function test_cssPaths_shouldReturnDefaultValueIfWigbiIsStopped()
 	{
 		$this->stopWigbi();
 		
-		$this->assertEqual(Wigbi::cssPaths(), null);
+		$this->assertEqual(Wigbi::cssPaths(), array("wigbi/css"));
+		$this->assertEqual(Wigbi::cssPaths(), array("wigbi/css"));
 	}
 	
-	function test_cssPaths_shouldReturnNullIfPropertyIsNotSetAndConfigValueIsBlank()
+	function test_cssPaths_shouldReturnDefaultValueIfConfigValueIsBlank()
 	{
-		$this->assertEqual(Wigbi::cssPaths(), null);
+		$this->assertEqual(Wigbi::cssPaths(), array("wigbi/css"));
+		$this->assertEqual(Wigbi::cssPaths(), array("wigbi/css"));
 	}
 
-	function test_cssPaths_shouldReturnConfigValueIfPropertyIsNotSetAndConfigValueIsNotBlank()
+	function test_cssPaths_shouldApplyConfigValueIfAny()
 	{
 		$this->setConfigFile("resources/config_cssPaths.ini");
 		
-		$this->assertEqual(Wigbi::cssPaths(), array("bar", "foo"));
-		
-		$this->resetConfigFile();
-	}
-	
-	function test_cssPaths_shouldReturnPropertyValueIfPropertyIsSetAndConfigValueIsNotBlank()
-	{
-		$this->assertEqual(Wigbi::cssPaths(array("foo", "bar")), array("foo", "bar"));
-		
-		$this->setConfigFile("resources/config_cssPaths.ini");
-		
-		$this->assertEqual(Wigbi::cssPaths(), array("foo", "bar"));
+		$this->assertEqual(Wigbi::cssPaths(), array("wigbi/css", "bar", "foo"));
+		$this->assertEqual(Wigbi::cssPaths(), array("wigbi/css", "bar", "foo"));
 		
 		$this->resetConfigFile();
 	}
@@ -294,45 +306,27 @@ class WigbiBehavior extends UnitTestCase
 	{
 		$this->assertTrue(Wigbi::isStarted());
 	}
-
-	function test_jsPaths_shouldGetSetValue()
-	{
-		$this->assertEqual(Wigbi::jsPaths(), null);
-		$this->assertEqual(Wigbi::jsPaths(array("foo", "bar")), array("foo", "bar"));
-		$this->assertEqual(Wigbi::jsPaths(), array("foo", "bar"));
-		$this->assertEqual(Wigbi::jsPaths(null), null);
-	}
 	
-	function test_jsPaths_shouldReturnNullIfPropertyIsNotSetAndWigbiIsStopped()
+	function test_jsPaths_shouldReturnDefaultValueIfWigbiIsStopped()
 	{
-		ob_start();
-		Wigbi::stop();
-		ob_end_clean();
+		$this->stopWigbi();
 		
-		$this->assertEqual(Wigbi::jsPaths(), null);
+		$this->assertEqual(Wigbi::jsPaths(), array("wigbi/js/core", "wigbi/js", "wigbi/plugins/data", "wigbi/plugins/ui"));
+		$this->assertEqual(Wigbi::jsPaths(), array("wigbi/js/core", "wigbi/js", "wigbi/plugins/data", "wigbi/plugins/ui"));
 	}
 	
-	function test_jsPaths_shouldReturnNullIfPropertyIsNotSetAndConfigValueIsBlank()
+	function test_jsPaths_shouldReturnDefaultValueIfConfigValueIsBlank()
 	{
-		$this->assertEqual(Wigbi::jsPaths(), null);
+		$this->assertEqual(Wigbi::jsPaths(), array("wigbi/js/core", "wigbi/js", "wigbi/plugins/data", "wigbi/plugins/ui"));
+		$this->assertEqual(Wigbi::jsPaths(), array("wigbi/js/core", "wigbi/js", "wigbi/plugins/data", "wigbi/plugins/ui"));
 	}
 
-	function test_jsPaths_shouldReturnConfigValueIfPropertyIsNotSetAndConfigValueIsNotBlank()
+	function test_jsPaths_shouldApplyConfigValueIfAny()
 	{
 		$this->setConfigFile("resources/config_jsPaths.ini");
 		
-		$this->assertEqual(Wigbi::jsPaths(), array("bar", "foo"));
-	 
-		$this->resetConfigFile();
-	}
-	
-	function test_jsPaths_shouldReturnPropertyValueIfPropertyIsSetAndConfigValueIsNotBlank()
-	{
-		$this->assertEqual(Wigbi::jsPaths(array("foo", "bar")), array("foo", "bar"));
-		
-		$this->setConfigFile("resources/config_jsPaths.ini");
-		
-		$this->assertEqual(Wigbi::jsPaths(), array("foo", "bar"));
+		$this->assertEqual(Wigbi::jsPaths(), array("wigbi/js/core", "wigbi/js", "wigbi/plugins/data", "wigbi/plugins/ui", "bar", "foo"));
+		$this->assertEqual(Wigbi::jsPaths(), array("wigbi/js/core", "wigbi/js", "wigbi/plugins/data", "wigbi/plugins/ui", "bar", "foo"));
 		
 		$this->resetConfigFile();
 	}
@@ -353,6 +347,30 @@ class WigbiBehavior extends UnitTestCase
 	function test_logHandler_shouldReturnCorrectClass()
 	{
 		$this->assertEqual(get_class(Wigbi::logHandler()), "LogHandler");
+	}
+	
+	function test_phpPaths_shouldReturnDefaultValueIfWigbiIsStopped()
+	{
+		$this->stopWigbi();
+		
+		$this->assertEqual(Wigbi::phpPaths(), array(Wigbi::serverRoot() . "wigbi/php/core/", Wigbi::serverRoot() . "wigbi/php/", Wigbi::serverRoot() . "wigbi/plugins/data/", Wigbi::serverRoot() . "wigbi/plugins/ui/"));
+		$this->assertEqual(Wigbi::phpPaths(), array(Wigbi::serverRoot() . "wigbi/php/core/", Wigbi::serverRoot() . "wigbi/php/", Wigbi::serverRoot() . "wigbi/plugins/data/", Wigbi::serverRoot() . "wigbi/plugins/ui/"));
+	}
+	
+	function test_phpPaths_shouldReturnDefaultValueIfConfigValueIsBlank()
+	{
+		$this->assertEqual(Wigbi::phpPaths(), array(Wigbi::serverRoot() . "wigbi/php/core/", Wigbi::serverRoot() . "wigbi/php/", Wigbi::serverRoot() . "wigbi/plugins/data/", Wigbi::serverRoot() . "wigbi/plugins/ui/"));
+		$this->assertEqual(Wigbi::phpPaths(), array(Wigbi::serverRoot() . "wigbi/php/core/", Wigbi::serverRoot() . "wigbi/php/", Wigbi::serverRoot() . "wigbi/plugins/data/", Wigbi::serverRoot() . "wigbi/plugins/ui/"));
+	}
+
+	function test_phpPaths_shouldApplyConfigValueIfAny()
+	{
+		$this->setConfigFile("resources/config_phpPaths.ini");
+
+		$this->assertEqual(Wigbi::phpPaths(), array(Wigbi::serverRoot() . "wigbi/php/core/", Wigbi::serverRoot() . "wigbi/php/", Wigbi::serverRoot() . "wigbi/plugins/data/", Wigbi::serverRoot() . "wigbi/plugins/ui/", Wigbi::serverRoot() . "tests/resources/phpClasses/", Wigbi::serverRoot() . "tests/resources/phpClass.php"));
+		$this->assertEqual(Wigbi::phpPaths(), array(Wigbi::serverRoot() . "wigbi/php/core/", Wigbi::serverRoot() . "wigbi/php/", Wigbi::serverRoot() . "wigbi/plugins/data/", Wigbi::serverRoot() . "wigbi/plugins/ui/", Wigbi::serverRoot() . "tests/resources/phpClasses/", Wigbi::serverRoot() . "tests/resources/phpClass.php"));
+		
+		$this->resetConfigFile();
 	}
 
 	function test_phpFolders_shouldReturnAllFolders()
@@ -981,13 +999,13 @@ class WigbiBehavior extends UnitTestCase
 	function test_start_shouldGenerateHtmlByDefault()
 	{
 		ob_start();
-		Wigbi::cssPaths(array("foo", "bar"));
 		Wigbi::start();
 		$result = ob_get_clean();
 
 		$this->assertTrue(strpos(" " . $result, "<meta http-equiv=\"Content-Type\" content=\"text/css; charset=UTF-8\" />"));
-		$this->assertTrue(strpos($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . Wigbi::webRoot() . "wigbi/bundle/css:wigbi/css,foo,bar"));
-		$this->assertTrue(strpos($result, "<script type=\"text/javascript\" src=\"" . Wigbi::webRoot() . "wigbi/bundle/js:wigbi/js/wigbi/core,wigbi/js/wigbi,wigbi/js\"></script>"));
+		$this->assertTrue(strpos($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . Wigbi::webRoot() . "wigbi/bundle/css:wigbi/css\" />"));
+		
+		$this->assertTrue(strpos($result, "<script type=\"text/javascript\" src=\"" . Wigbi::webRoot() . "wigbi/bundle/js:wigbi/js/core,wigbi/js,wigbi/plugins/data,wigbi/plugins/ui\"></script>"));
 		$this->assertTrue(strpos($result, "<script type=\"text/javascript\">eval("));
 	}
 

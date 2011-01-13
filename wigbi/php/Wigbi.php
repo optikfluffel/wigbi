@@ -85,6 +85,7 @@ class Wigbi
 	private static $_languageFile;
 	private static $_languageHandler;
 	private static $_logHandler;
+	private static $_phpPaths;
 	private static $_serverRoot;
 	private static $_sessionHandler;
 	private static $_uiPluginClasses;
@@ -178,35 +179,36 @@ class Wigbi
 	}
 	
 	/**
-	 * Get/set a list of CSS folder/file paths to apply during when Wigbi is started.
+	 * Get the CSS paths that are handled by Wigbi.
 	 * 
-	 * By default, Wigbi will use the application.cssPaths configuration
-	 * key from the configuration file. To override this value, set this
-	 * property to the paths you want to use, before starting Wigbi.
+	 * Except the system folders the application.cssPaths configuration
+	 * value from the configuration file is also added to this array.
 	 * 
+	 * Note that the paths are application relative, since they will be
+	 * bundled with the Wigbi CSS bundler.
 	 * 
 	 * @access	public
 	 * @static
 	 * 
-	 * @param		array	$value	Optional set value.
-	 * @return	array					A list of CSS folder/file paths to apply when Wigbi is started.
+	 * @return	array		The CSS paths that are handled by Wigbi.
 	 */
-	public function cssPaths($value = null)
+	public function cssPaths()
 	{
-		if (func_num_args() != 0)
-			Wigbi::$_cssPaths = func_get_arg(0);
-
-		if (Wigbi::$_cssPaths == null && Wigbi::configuration() != null)
-		{
-			$pathString = trim(Wigbi::configuration("cssPaths", "application"));
-			if (!$pathString)
-				return null;
-			
-			Wigbi::$_cssPaths = array();
-			$paths = explode(",", $pathString);
-			foreach ($paths as $path)
-				array_push(Wigbi::$_cssPaths, trim($path));
-		}
+		if (Wigbi::$_cssPaths != null)
+			return Wigbi::$_cssPaths;
+		
+		Wigbi::$_cssPaths = array("wigbi/css");
+		
+		if (Wigbi::configuration() == null)
+				return Wigbi::$_cssPaths;
+				
+		$configPaths = trim(Wigbi::configuration("cssPaths", "application"));
+		if (!$configPaths)
+				return Wigbi::$_cssPaths;
+				
+		$configPaths = explode(",", $configPaths);
+		foreach ($configPaths as $path)
+			array_push(Wigbi::$_cssPaths, trim($path));
 			
 		return Wigbi::$_cssPaths;
 	}
@@ -327,35 +329,36 @@ class Wigbi
 	}
 	
 	/**
-	 * Get/set a list of JavaScript folder/file paths to apply during when Wigbi is started.
+	 * Get the JavaScript paths that are handled by Wigbi.
 	 * 
-	 * By default, Wigbi will use the application.jsPaths configuration
-	 * key from the configuration file. To override this value, set the
-	 * property to the paths you want to use, before starting Wigbi.
+	 * Except the system folders, the application.jsPaths configuration
+	 * value from the configuration file is also added to this array.
 	 * 
+	 * Note that the paths are application relative, since they will be
+	 * bundled with the Wigbi JavaScript bundler.
 	 * 
 	 * @access	public
 	 * @static
 	 * 
-	 * @param		array	$value	Optional set value.
-	 * @return	array					A list of JavaScript folder/file paths to apply when Wigbi is started.
+	 * @return	array		The JavaScript paths that are handled by Wigbi.
 	 */
-	public function jsPaths($value = null)
+	public function jsPaths()
 	{
-		if (func_num_args() != 0)
-			Wigbi::$_jsPaths = func_get_arg(0);
-
-		if (Wigbi::$_jsPaths == null && Wigbi::configuration() != null)
-		{
-			$pathString = trim(Wigbi::configuration("jsPaths", "application"));
-			if (!$pathString)
-				return null;
-			
-			Wigbi::$_jsPaths = array();
-			$paths = explode(",", $pathString);
-			foreach ($paths as $path)
-				array_push(Wigbi::$_jsPaths, trim($path));
-		}
+		if (Wigbi::$_jsPaths != null)
+			return Wigbi::$_jsPaths;
+		
+		Wigbi::$_jsPaths = array("wigbi/js/core", "wigbi/js", "wigbi/plugins/data", "wigbi/plugins/ui");
+		
+		if (Wigbi::configuration() == null)
+				return Wigbi::$_jsPaths;
+				
+		$configPaths = trim(Wigbi::configuration("jsPaths", "application"));
+		if (!$configPaths)
+				return Wigbi::$_jsPaths;
+				
+		$configPaths = explode(",", $configPaths);
+		foreach ($configPaths as $path)
+			array_push(Wigbi::$_jsPaths, trim($path));
 			
 		return Wigbi::$_jsPaths;
 	}
@@ -419,17 +422,48 @@ class Wigbi
 	}
 	
 	/**
-	 * Get the application relative path to the PHP folders that are handled by Wigbi.
+	 * Get the PHP paths that are handled by Wigbi.
+	 * 
+	 * Except the system folders the application.phpPaths configuration
+	 * value from the configuration file is also added to this array.
 	 * 
 	 * @access	public
 	 * @static
 	 * 
-	 * @return	array	The application relative path to the PHP folders that are handled by Wigbi.
+	 * @return	array		The PHP paths that are handled by Wigbi.
+	 */
+	public function phpPaths()
+	{
+		if (Wigbi::$_phpPaths != null)
+			return Wigbi::$_phpPaths;
+		
+		Wigbi::$_phpPaths = array(Wigbi::wigbiFolder() . "php/core/", Wigbi::wigbiFolder() . "php/", Wigbi::wigbiFolder() . "plugins/data/", Wigbi::wigbiFolder() . "plugins/ui/");
+		
+		if (Wigbi::configuration() == null)
+				return Wigbi::$_phpPaths;
+				
+		$configPaths = trim(Wigbi::configuration("phpPaths", "application"));
+		if (!$configPaths)
+				return Wigbi::$_phpPaths;
+				
+		$configPaths = explode(",", $configPaths);
+		foreach ($configPaths as $path)
+			array_push(Wigbi::$_phpPaths, Wigbi::serverRoot() . trim($path));
+			
+		return Wigbi::$_phpPaths;
+	}
+	
+	/**
+	 * Get the PHP folders that are handled by Wigbi.
+	 * 
+	 * @access	public
+	 * @static
+	 * 
+	 * @return	array	The PHP folders that are handled by Wigbi.
 	 */
 	public static function phpFolders()
 	{
 		$baseFolder = Wigbi::wigbiFolder() . "php/";
-		
 		return array($baseFolder . "core/", $baseFolder, Wigbi::dataPluginFolder(), Wigbi::uiPluginFolder());
 	}
 	
@@ -639,15 +673,10 @@ class Wigbi
 	{
 		//Handle async postback configuration
 		Wigbi::start_handleAjaxConfiguration();
-		
-		//Include the entire php library, except already included wigbi.php
-		foreach (Wigbi::phpFolders() as $folder)
-			foreach (glob($folder . "/*.php") as $fileName)
-				if (!strpos($fileName, "/wigbi.php"))
-					require_once($fileName);
 				
-		//Initialize configuration
+		//Initialize configuration and PHP layer
 		Wigbi::start_configuration();
+		Wigbi::start_php();
 		
 		//Start the various handlers, then init plugins
 		Wigbi::start_cacheHandler();
@@ -807,16 +836,12 @@ class Wigbi
 		print "<meta http-equiv=\"Content-Type\" content=\"text/css; charset=UTF-8\" />";
 		
 		//Create CSS tag
-		$cssPath	 = Wigbi::webRoot() . "wigbi/bundle/css:wigbi/css";
-		$cssPaths = Wigbi::cssPaths() == null ? null : join(",", Wigbi::cssPaths());
-		$cssPath	.= $cssPaths ? "," . $cssPaths : "";
-		print "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $cssPath . "\" />";
+		$cssPaths	 = Wigbi::webRoot() . "wigbi/bundle/css:" . join(",", Wigbi::cssPaths());
+		print "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $cssPaths . "\" />";
 		 
 		//Create js tag
-		$jsPath	 = Wigbi::webRoot() . "wigbi/bundle/js:wigbi/js/wigbi/core,wigbi/js/wigbi,wigbi/js";
-		$jsPaths = Wigbi::jsPaths() == null ? null : join(",", Wigbi::jsPaths());
-		$jsPath	.= $jsPaths ? "," . $jsPaths : "";
-		print "<script type=\"text/javascript\" src=\"" . $jsPath . "\"></script>";
+		$jsPaths = Wigbi::webRoot() . "wigbi/bundle/js:" . join(",", Wigbi::jsPaths());
+		print "<script type=\"text/javascript\" src=\"" . $jsPaths . "\"></script>";
 		
 		//Build the page's js code
 		$jsCode  = "Wigbi._webRoot = '" . Wigbi::webRoot() . "';";
@@ -1015,6 +1040,23 @@ class Wigbi
 	}
 	
 	/**
+	 * Start the Wigbi PHP layer.
+	 */
+	private static function start_php()
+	{
+		//Include the entire php library, except already included wigbi.php
+		foreach (Wigbi::phpPaths() as $path)
+		{
+			if (is_dir($path))
+				foreach (glob($path . "/*.php") as $fileName)
+					require_once($fileName);
+			
+			if (is_file($path))
+					require_once($path);
+		}
+	}
+	
+	/**
 	 * Start the Wigbi SessionHandler instance.
 	 */
 	private static function start_sessionHandler()
@@ -1083,19 +1125,18 @@ class Wigbi
 		if (Wigbi::dbHandler() != null && Wigbi::dbHandler()->isConnected())
 			Wigbi::dbHandler()->disconnect();	
 		
-		//Set handler objects to null
 		Wigbi::$_cacheHandler = null;
 		Wigbi::$_configuration = null;
+		Wigbi::$_cssPaths = null;
+		Wigbi::$_dataPluginClasses = null;
 		Wigbi::$_dbHandler = null;
+		Wigbi::$_jsPaths = null;
 		Wigbi::$_languageHandler = null;
 		Wigbi::$_logHandler = null;
+		Wigbi::$_phpPaths = null;
 		Wigbi::$_sessionHandler = null;
-		
-		//Set some variables to null
-		Wigbi::$_dataPluginClasses = null;
 		Wigbi::$_uiPluginClasses = null;
 		
-		//Set Wigbi to not started
 		Wigbi::$_isStarted = false;
 	}
 }
