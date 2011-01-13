@@ -763,39 +763,6 @@ class Wigbi
 			fclose($file);
 		}
 
-		
-			/*
-		//Delete the seed JavaScript file if it exists
-		$jsFile = Wigbi::dataPluginJavaScriptFile();
-		if (file_exists($jsFile))
-			unlink($jsFile);
-		
-		//Build the JavaScript source code string
-		$content = "";
-		$separator = "\r\n\r\n";
-		foreach (Wigbi::dataPluginClasses() as $class)
-		{
-			eval('$tmpObj = new ' . $class . '();');
-			$content .= WigbiDataPluginJavaScriptGenerator::getJavaScript($tmpObj) . $separator;
-		}
-		
-		//Obfuscate the source code, if obfuscation is enabled
-		if (Wigbi::configuration("obfuscate", "runtimeBuild"))
-		{
-			$seedPacker = new JavaScriptPacker($content);
-			$content = $seedPacker->pack();
-		}
-		
-		//Add script file header to file content
-		$content = Wigbi::scriptFileHeader() . $content;
-		
-		//Write the source code string to file		
-		$file = fopen($jsFile, "w");
-		if (!$file)
-			throw new Exception("Wigbi can not generate or write to the data plugin JavaScript file - " . $jsFile . ". Wigbi can not start!");
-		fwrite($file, $content);
-		fclose($file);
-		*/
 		//Enable the auto-reset behavior of the base class
 		WigbiDataPlugin::autoReset(true);
 	}
