@@ -68,6 +68,8 @@ class WigbiBehavior extends UnitTestCase
 	function deleteDataPlugin()
 	{
 		unlink(Wigbi::wigbiFolder() . "plugins/data/TestDataPlugin.php");
+		if (is_file(Wigbi::wigbiFolder() . "plugins/data/TestDataPlugin.js"))
+			unlink(Wigbi::wigbiFolder() . "plugins/data/TestDataPlugin.js");
 		
 		$this->resetWigbi();
 	}
@@ -259,11 +261,6 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertEqual(Wigbi::dataPluginFolder(), Wigbi::wigbiFolder() . "plugins/data/");
 	}
 	
-	function test_dataPluginJavaScriptFile_shouldReturnCorrectValue()
-	{
-		$this->assertEqual(Wigbi::dataPluginJavaScriptFile(), Wigbi::wigbiFolder() . "js/wigbi_dataPlugins.js");
-	}
-	
 	function test_dbHandler_shouldReturnCorrectClass()
 	{
 		$this->assertEqual(get_class(Wigbi::dbHandler()), "DatabaseHandler");
@@ -426,11 +423,6 @@ class WigbiBehavior extends UnitTestCase
 	function test_uiPluginFolder_shouldReturnCorrectValue()
 	{
 		$this->assertEqual(Wigbi::uiPluginFolder(), Wigbi::wigbiFolder() . "plugins/ui/");
-	}
-
-	function test_uiPluginJavaScriptFile_shouldReturnCorrectValue()
-	{
-		$this->assertEqual(Wigbi::uiPluginJavaScriptFile(), Wigbi::wigbiFolder() . "js/wigbi_uiPlugins.js");
 	}
 	
 	function test_version_ShouldReturnCorrectValue()
@@ -672,13 +664,18 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_shouldNotStartDataPluginsWhenRtbIsDisabled()
 	{
-		if (file_exists(Wigbi::dataPluginJavaScriptFile()))
-			unlink(Wigbi::dataPluginJavaScriptFile());
-			
+		$files = glob(Wigbi::dataPluginFolder() . "/*.js");
+		
+		$this->assertEqual(sizeof($files), 0);
+		
 		$this->setConfigFile("resources/config_noRtb.ini");
+		$this->createDataPlugin();
 		
-		$this->assertFalse(file_exists(Wigbi::dataPluginJavaScriptFile()));
+		$files = glob(Wigbi::dataPluginFolder() . "/*.js");
 		
+		$this->assertEqual(sizeof($files), 0);
+		
+		$this->deleteDataPlugin();
 		$this->resetConfigFile();
 	}
 	
@@ -691,92 +688,17 @@ class WigbiBehavior extends UnitTestCase
 		$this->deleteDataPlugin();
 	}
 	
-	function test_start_shouldStartDataPluginsAndCreateObfuscatedJavaScriptFileWhenRtbIsEnabledWithObfuscation()
+	function test_start_shouldStartDataPluginsAndCreateJavaScriptClassFile()
 	{
 		$this->createDataPlugin();
-		if (file_exists(Wigbi::dataPluginJavaScriptFile()))
-			unlink(Wigbi::dataPluginJavaScriptFile());
 		
-		$this->resetWigbi();
+		$files = glob(Wigbi::dataPluginFolder() . "/*.js");
 		
-		$this->assertTrue(file_exists(Wigbi::dataPluginJavaScriptFile()));
+		$this->assertEqual(sizeof($files), 1);
 		
-		$content = file_get_contents(Wigbi::dataPluginJavaScriptFile());
-		
-		$this->assertTrue(strpos(" " . $content, Wigbi::scriptFileHeader()) > 0);
-		$this->assertTrue(strpos($content, "p,a,c,k,e,d") > 0);
+		copy($files[0], "foo.js");
 		
 		$this->deleteDataPlugin();
-	}
-	
-	function test_start_shouldStartDataPluginsAndCreateNonObfuscatedJavaScriptFileWhenRtbIsEnabledWithoutObfuscation()
-	{
-		$this->createDataPlugin();
-		if (file_exists(Wigbi::dataPluginJavaScriptFile()))
-			unlink(Wigbi::dataPluginJavaScriptFile());
-		
-		$this->setConfigFile("resources/config_noObfuscate.ini");
-		
-		$this->assertTrue(file_exists(Wigbi::dataPluginJavaScriptFile()));
-		
-		$content = file_get_contents(Wigbi::dataPluginJavaScriptFile());
-		
-		$this->assertTrue(strpos(" " . $content, Wigbi::scriptFileHeader()) > 0);
-		$this->assertFalse(strpos($content, "p,a,c,k,e,d"));
-		
-		$this->deleteDataPlugin();
-		$this->resetConfigFile();
-	}
-	
-	function test_start_shouldNotStartUiPluginsWhenRtbIsDisabled()
-	{
-		if (file_exists(Wigbi::uiPluginJavaScriptFile()))
-			unlink(Wigbi::uiPluginJavaScriptFile());
-		
-		$this->setConfigFile("resources/config_noRtb.ini");
-		
-		$this->assertFalse(file_exists(Wigbi::uiPluginJavaScriptFile()));
-		
-		$this->resetConfigFile();
-	}
-	
-	function test_start_shouldStartUiPluginsAndCreateObfuscatedJavaScriptFileWhenRtbIsEnabledWithObfuscation()
-	{
-		$this->createUiPlugin();
-		if (file_exists(Wigbi::uiPluginJavaScriptFile()))
-			unlink(Wigbi::uiPluginJavaScriptFile());
-		
-		$this->resetWigbi();
-		
-		$this->assertTrue(file_exists(Wigbi::uiPluginJavaScriptFile()));
-		
-		$content = file_get_contents(Wigbi::uiPluginJavaScriptFile());
-		
-		$this->assertTrue(strpos(" " . $content, Wigbi::scriptFileHeader()) > 0);
-		$this->assertTrue(strpos($content, "TestUiPlugin") > 0);
-		$this->assertTrue(strpos($content, "p,a,c,k,e,d") > 0);
-		
-		$this->deleteUiPlugin();
-	}
-
-	function test_start_shouldStartUiPluginsAndCreateNonObfuscatedJavaScriptFileWhenRtbIsEnabledWithoutObfuscation()
-	{
-		$this->createUiPlugin();
-		if (file_exists(Wigbi::uiPluginJavaScriptFile()))
-			unlink(Wigbi::uiPluginJavaScriptFile());
- 
-		$this->setConfigFile("resources/config_noObfuscate.ini");
-		
-		$this->assertTrue(file_exists(Wigbi::uiPluginJavaScriptFile()));
-		
-		$content = file_get_contents(Wigbi::uiPluginJavaScriptFile());
-		
-		$this->assertTrue(strpos(" " . $content, Wigbi::scriptFileHeader()) > 0);
-		$this->assertTrue(strpos($content, "TestUiPlugin") > 0);
-		$this->assertFalse(strpos($content, "p,a,c,k,e,d"));
-		
-		$this->deleteUiPlugin();
-		$this->resetConfigFile();
 	}
 	
 	function test_start_shouldhandleAjaxPostBack()

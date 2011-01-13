@@ -23,6 +23,13 @@ is, which simplifies modifications and bug fixes in an already running Wigbi
 instance. The two wigbi/php/wigbi and wigbi/js/wigbi folders are now removed
 as well. The Wigbi classes are added directly in wigbi/php and wigbi/js. 
 
+Wigbi no longer creates bundled JavaScript files for the data and UI plugins.
+UI plugins already have a JavaScript file, so generating file for them is no
+longer necessary. For data plugins, Wigbi now generates one file per plugin.
+The obfuscate option has been removed from the configuration file since it's
+no longer used by Wigbi. For now, the JavaScriptPacker tool is still bundled
+with Wigbi, though. It may be removed in future versions.
+
 It is now possible to change the value of the Wigbi::configFile(..) property
 to make Wigbi use another configuration file when starting up. However, note
 that the property is currently not set for the JS Wigbi class, since the PHP
