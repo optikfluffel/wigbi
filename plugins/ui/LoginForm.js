@@ -22,11 +22,10 @@
  */
 function LoginForm(id)
 {
-	//Inherit WigbiUIPlugin
 	$.extend(this, new WigbiUIPlugin(id));
+	var _this = this;
 	
 
-	//Submit the form
 	this.submit = function()
 	{
 		var userName = this.getElement("userName").val();
@@ -36,7 +35,6 @@ function LoginForm(id)
 		var button = this.getElement("submit");
 		button.attr("disabled", "disabled");
 		
-		var _this = this;
 		User.login(userName, password, function(result, exceptions)
 		{
 			button.attr("disabled", "");
@@ -54,17 +52,13 @@ function LoginForm(id)
 	};
 	
 
-	//This event method is raised after a submit operation finishes	
 	this.onSubmit = function(result, exceptions) {};
 	
 	
-	//Override the form submit event
-	var _this = this;
 	this.getElement("form").submit(function() { _this.submit(); return false; });
 };
 
 
-//[AJAX] Add a new plugin instance to the page
 LoginForm.add = function(id, redirectUrl, targetContainerId, onAdd)
 {
 	Wigbi.ajax("LoginForm", null, "add", [id, redirectUrl, 0], function(response) 
@@ -73,6 +67,6 @@ LoginForm.add = function(id, redirectUrl, targetContainerId, onAdd)
 		eval(id + " = new LoginForm('" + id + "');");
 		
 		if (onAdd)
-			onAdd();
+			onAdd(eval(id));
 	});
 };

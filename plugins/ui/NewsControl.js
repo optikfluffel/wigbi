@@ -22,11 +22,10 @@
  */
 function NewsControl(id, newsForm)
 {
-	//Inherit WigbiUIPlugin
 	$.extend(this, new WigbiUIPlugin(id));
+	var _this = this;
 	
 	
-	//Get/set the object that is handled by the form
 	this.obj = function(newVal)
 	{
 		if (typeof(newVal) != "undefined")
@@ -41,21 +40,17 @@ function NewsControl(id, newsForm)
 	};
 	
 	
-	//Reset the control
 	this.reset = function()
 	{
 		this.getElement("content").html(this.obj().content());
 	};
 	
 	
-	//Make sure that the control/form objects are in sync
-	var _this = this;
 	if (newsForm)
 		newsForm.onSubmit = function() { _this.obj(newsForm.obj()); };
 };
 
 
-//[AJAX] Add a new plugin instance to the page
 NewsControl.add = function(id, objectId, objectTitle, embedForm, targetContainerId, onAdd)
 {
 	embedForm = embedForm ? 1 : 0;
@@ -67,6 +62,6 @@ NewsControl.add = function(id, objectId, objectTitle, embedForm, targetContainer
 		eval(id + " = new NewsControl('" + id + "', " + id + "Form);");
 		
 		if (onAdd)
-			onAdd();
+			onAdd(eval(id));
 	});
 };

@@ -23,9 +23,10 @@
 function MenuItemList(id)
 {
 	$.extend(this, new WigbiUIPlugin(id));
-	
 	this._oldPosition = 0;
 	this._newPosition = 0;
+	var _this = this;
+	
 	
 	this.canAdd = function() { return this.getElement("canAdd").val() == "1"; };
 	this.canDelete = function() { return this.getElement("canDelete").val() == "1"; };
@@ -34,12 +35,11 @@ function MenuItemList(id)
 	this.cssClass = function() { return this.getElement("cssClass").val(); };
 	this.parentItem = function() { return this.getElementData("object", new MenuItem()); };
 
+
 	this.deleteListItem = function(itemId)
 	{
 		if (!this.canDelete())
 			return;
-			
-		var _this = this;
 		this.parentItem().deleteListItem("children", itemId, function() { _this.reload(); _this.onDeleteListItem(itemId); });
 	};
 	
@@ -47,8 +47,6 @@ function MenuItemList(id)
 	{
 		if (!this.canSort())
 			return;
-			
-		var _this = this;
 		this.parentItem().moveListItem("children", itemId, numSteps, function() { _this.onMoveListItem(itemId, numSteps); });
 	};
 	
@@ -57,15 +55,16 @@ function MenuItemList(id)
 		MenuItemList.add(id, this.parentItem().id(), "", this.cssClass(), this.canAdd(), this.canDelete(), this.canEdit(), this.canSort(), id + "-container", this.onReload);
 	};
 
+
 	this.onAddClicked = function() {};
 	this.onDeleteListItem = function(itemId) {};
 	this.onEditClicked = function(itemId) {};
 	this.onMoveListItem = function(itemId, numSteps) {};
-	this.onReload = function(itemId) {};
+	this.onReload = function() {};
+	
 	
 	if (this.canSort())
 	{
-		var _this = this;
 		var ul = $("#" + id + ".cansort");
 		ul.sortable({
 	    start: function(e, ui) { _this.oldPosition = ul.children().index(ui.item[0]); },
@@ -76,7 +75,6 @@ function MenuItemList(id)
 };
 
 
-//[AJAX] Add a new plugin instance to the page
 MenuItemList.add = function(id, parentObjectId, parentObjectName, cssClass, canAdd, canDelete, canEdit, canSort, targetContainerId, onAdd)
 {
 	Wigbi.ajax("MenuItemList", null, "add", [id, parentObjectId, parentObjectName, cssClass, canAdd, canDelete, canEdit, canSort], function(response) 
@@ -87,6 +85,6 @@ MenuItemList.add = function(id, parentObjectId, parentObjectName, cssClass, canA
 		eval(id + " = new MenuItemList('" + id + "');");
 		
 		if (onAdd)
-			onAdd();
+			onAdd(eval(id));
 	});
 };

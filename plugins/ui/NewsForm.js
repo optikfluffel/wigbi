@@ -22,11 +22,10 @@
  */
 function NewsForm(id)
 {
-	//Inherit WigbiUIPlugin
 	$.extend(this, new WigbiUIPlugin(id));
+	var _this = this;
 	
 	
-	//Get/set the object that is handled by the form
 	this.obj = function(newVal)
 	{
 		if (typeof(newVal) != "undefined")
@@ -39,7 +38,6 @@ function NewsForm(id)
 	};
 	
 
-	//Reset the form
 	this.reset = function()
 	{
 		this.getElement("title").val(this.obj().title());
@@ -48,7 +46,6 @@ function NewsForm(id)
 		catch(e) { }
 	};
 
-	//Submit the form
 	this.submit = function()
 	{
 		var obj = this.obj();
@@ -60,7 +57,6 @@ function NewsForm(id)
 		var button = this.getElement("submitButton");
 		button.attr("disabled", "disabled");
 		
-		var _this = this;
 		obj.save(function()
 		{
 			_this.obj(obj);
@@ -69,16 +65,14 @@ function NewsForm(id)
 		});
 	};
 
-	//This event method is raised after a submit operation	
+	
 	this.onSubmit = function() {};
 	
-	//Override the form submit event
-	var _this = this;
+
 	this.getElement("form").submit(function() { _this.submit(); return false; });
 };
 
 
-//[AJAX] Add a new plugin instance to the page
 NewsForm.add = function(id, objectId, objectTitle, targetContainerId, onAdd)
 {
 	Wigbi.ajax("NewsForm", null, "add", [id, objectId, objectTitle], function(response) 
@@ -87,6 +81,6 @@ NewsForm.add = function(id, objectId, objectTitle, targetContainerId, onAdd)
 		eval(id + " = new NewsForm('" + id + "');");
 		
 		if (onAdd)
-			onAdd();
+			onAdd(eval(id));
 	});
 };

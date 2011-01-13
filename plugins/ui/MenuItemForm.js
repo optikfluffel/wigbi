@@ -22,11 +22,10 @@
  */
 function MenuItemForm(id)
 {
-	//Inherit WigbiUIPlugin
 	$.extend(this, new WigbiUIPlugin(id));
+		var _this = this;
 	
 	
-	//Get/set the object that is handled by the form
 	this.obj = function(newVal)
 	{
 		if (typeof(newVal) != "undefined")
@@ -39,7 +38,6 @@ function MenuItemForm(id)
 	};
 	
 
-	//Reset the form
 	this.reset = function()
 	{
 		this.getElement("name").val(this.obj().name());
@@ -48,7 +46,6 @@ function MenuItemForm(id)
 		this.getElement("tooltip").val(this.obj().tooltip());
 	};
 
-	//Submit the form
 	this.submit = function()
 	{
 		var obj = this.obj();
@@ -60,7 +57,6 @@ function MenuItemForm(id)
 		var button = this.getElement("submit");
 		button.attr("disabled", "disabled");
 		
-		var _this = this;
 		obj.save(function()
 		{
 			_this.obj(obj);
@@ -69,16 +65,14 @@ function MenuItemForm(id)
 		});
 	};
 
-	//This event method is raised after a submit operation	
+	
 	this.onSubmit = function() {};
 	
-	//Override the form submit event
-	var _this = this;
+	
 	this.getElement("form").submit(function() { _this.submit(); return false; });
 };
 
 
-//[AJAX] Add a new plugin instance to the page
 MenuItemForm.add = function(id, objectId, objectName, targetContainerId, onAdd)
 {
 	Wigbi.ajax("MenuItemForm", null, "add", [id, objectId, objectName], function(response) 
@@ -87,6 +81,6 @@ MenuItemForm.add = function(id, objectId, objectName, targetContainerId, onAdd)
 		eval(id + " = new MenuItemForm('" + id + "');");
 		
 		if (onAdd)
-			onAdd();
+			onAdd(eval(id));
 	});
 };

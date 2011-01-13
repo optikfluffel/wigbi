@@ -22,11 +22,10 @@
  */
 function HtmlContentControl(id, htmlContentForm)
 {
-	//Inherit WigbiUIPlugin
 	$.extend(this, new WigbiUIPlugin(id));
+	var _this = this;
 	
 	
-	//Get/set the object that is handled by the form
 	this.obj = function(newVal)
 	{
 		if (typeof(newVal) != "undefined")
@@ -41,21 +40,17 @@ function HtmlContentControl(id, htmlContentForm)
 	};
 	
 	
-	//Reset the control
 	this.reset = function()
 	{
 		this.getElement("content").html(this.obj().content());
 	};
 	
 	
-	//Make sure that the control/form objects are in sync
-	var _this = this;
 	if (htmlContentForm)
 		htmlContentForm.onSubmit = function() { _this.obj(htmlContentForm.obj()); };
 };
 
 
-//[AJAX] Add a new plugin instance to the page
 HtmlContentControl.add = function(id, objectId, objectName, embedForm, targetContainerId, onAdd)
 {
 	embedForm = embedForm ? 1 : 0;
@@ -67,6 +62,6 @@ HtmlContentControl.add = function(id, objectId, objectName, embedForm, targetCon
 		eval(id + " = new HtmlContentControl('" + id + "', " + id + "Form);");
 		
 		if (onAdd)
-			onAdd();
+			onAdd(eval(id));
 	});
 };
