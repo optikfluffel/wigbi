@@ -80,72 +80,57 @@ class WigbiDataPluginJavaScriptGenerator
 		}
 		
 		//Add class header and begin class
-		$result = "function " . $dataPlugin->className() . "()" . $line . "{" . $line2;
+		$result = "function " . $dataPlugin->className() . "()" . $line . "{" . $line;
 		
 		//Private variables
-		$result .= $tab . "/"."* Private variables *****"."/" . $line2;
 		for ($i=0; $i<sizeof($propertyNames); $i+=1)
 			$result .= $tab . "this." . $propertyNames[$i] . " = " . $propertyValues[$i] . ";" . $line;
 		$result .= $line2;
 		
 		//Inheritance
-		$result .= $tab . "/"."* Initialize ************"."/" . $line2;
-		$result .= '$.extend(this, new WigbiDataPlugin());' . $line;
-		$result .= $line2;
+		$result .= $tab . '$.extend(this, new WigbiDataPlugin());' . $line2 . $line;
 
 		//Properties
 		for ($i=0; $i<sizeof($propertyNames); $i+=1)
 		{
-			$result .= ($i == 0) ? $line . $line2 . "	/"."* Properties ************"."/" : "";
-			$result .= $line2;
-			
-			$result .= $tab . "/"."/ Get/set the value of the " . $propertyNames[$i] . " variable" . $line;
 			$result .= $tab . "this." . substr($propertyNames[$i], 1) . " = function(newVal)" . $line . "	{" . $line;
-			$result .= $tab . "if (typeof(newVal) != 'undefined')" . $line;
-			$result .= $tab . $tab . "this." . $propertyNames[$i] . " = newVal;" . $line; 
-			$result .= $tab . "return this." . $propertyNames[$i] . ";" . $line;
-			$result .= $tab . "};"; 
+			$result .= $tab . $tab . "if (typeof(newVal) != 'undefined')" . $line;
+			$result .= $tab . $tab . $tab . "this." . $propertyNames[$i] . " = newVal;" . $line; 
+			$result .= $tab . $tab . "return this." . $propertyNames[$i] . ";" . $line;
+			$result .= $tab . "};" . $line2; 
 		}
 		
 		//Non-static functions
-		$firstFunction = true;
 		for ($i=0; $i<sizeof($ajaxFunctions); $i+=1)
 		{
 			if ($ajaxFunctions[$i]->isStatic())
 				continue;
 			
-			$result .= $firstFunction ? $line . $line2 . "	/"."* Non-static AJAX functions *********"."/" : "";
-			$firstFunction = false;
-			$result .= $line2;
+			$result .= $line;
 			
-			$result .= $tab . "	/"."/ Perform an asynchronous " . $ajaxFunctions[$i]->name() . " function" . $line;
-	 		$result .= $tab . "this." . $ajaxFunctions[$i]->name() . " = function(";
+			$result .= $tab . "this." . $ajaxFunctions[$i]->name() . " = function(";
 			$result .= join(", ", $ajaxFunctions[$i]->parameters());
 			$result .= (sizeof($ajaxFunctions[$i]->parameters()) > 0) ? ", " : "";
 			$result .= "on" . ucfirst($ajaxFunctions[$i]->name()) . ") { ";
-			$result .= 'Wigbi.ajax("' . $dataPlugin->className() . '", this, "' . $ajaxFunctions[$i]->name() . '", [' . join(", ", $ajaxFunctions[$i]->parameters()) . '], ' . 'on' . ucfirst($ajaxFunctions[$i]->name()) . '); };';			 
+			$result .= 'Wigbi.ajax("' . $dataPlugin->className() . '", this, "' . $ajaxFunctions[$i]->name() . '", [' . join(", ", $ajaxFunctions[$i]->parameters()) . '], ' . 'on' . ucfirst($ajaxFunctions[$i]->name()) . '); };' . $line;			 
 		}
 
 		//End class
-		$result .= $line . "};";
+		$result .= $line . "};" . $line2;
 		
 		//Static functions
-		$firstFunction = true;
 		for ($i=0; $i<sizeof($ajaxFunctions); $i+=1)
 		{
 			if (!$ajaxFunctions[$i]->isStatic())
 				continue;
 			
-			$result .= $firstFunction ? $line . $line2 . "/"."* Static AJAX functions *********"."/" : "";
-			$firstFunction = false;
-			$result .= $line2;
+			$result .= $line;
 			
-			$result .= "/"."/ Perform an asynchronous " . $ajaxFunctions[$i]->name() . " function" . $line;
 	 		$result .= "" . $dataPlugin->className() . "." . $ajaxFunctions[$i]->name() . " = function(";
 			$result .= join(", ", $ajaxFunctions[$i]->parameters());
 			$result .= (sizeof($ajaxFunctions[$i]->parameters()) > 0) ? ", " : "";
 			$result .= "on" . ucfirst($ajaxFunctions[$i]->name()) . ") { ";
-			$result .= 'Wigbi.ajax("' . $dataPlugin->className() . '", null, "' . $ajaxFunctions[$i]->name() . '", [' . join(", ", $ajaxFunctions[$i]->parameters()) . '], ' . 'on' . ucfirst($ajaxFunctions[$i]->name()) . '); };';			 
+			$result .= 'Wigbi.ajax("' . $dataPlugin->className() . '", null, "' . $ajaxFunctions[$i]->name() . '", [' . join(", ", $ajaxFunctions[$i]->parameters()) . '], ' . 'on' . ucfirst($ajaxFunctions[$i]->name()) . '); };' . $line;		 
 		}
 		
 		//Return result

@@ -753,6 +753,7 @@ class Wigbi
 			if (file_exists($jsFile))
 				unlink($jsFile);
 				
+			eval('$tmpObj = new ' . str_replace(".php", "", basename($fileName)) . '();');
 			$content = Wigbi::scriptFileHeader() . WigbiDataPluginJavaScriptGenerator::getJavaScript($tmpObj);
 			
 			$file = fopen($jsFile, "w");
