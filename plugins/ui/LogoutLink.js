@@ -22,16 +22,14 @@
  */
 function LogoutLink(id, redirectUrl)
 {
-	//Inherit WigbiUIPlugin
 	$.extend(this, new WigbiUIPlugin(id));
+	var _this = this;
 	
 	
-	//Submit the plugin
 	this.submit = function()
 	{
 		var redirectUrl = this.getElement("redirectUrl").val();
 
-		var _this = this;
 		User.logout(function(result)
 		{
 			_this.onSubmit(result);
@@ -46,13 +44,11 @@ function LogoutLink(id, redirectUrl)
 		});
 	};
 
-
-	//This event method is raised after a submit operation succeeds	
+	
 	this.onSubmit = function(result) { };
 };
 
 
-//[AJAX] Add a new plugin instance to the page
 LogoutLink.add = function(id, redirectUrl, targetContainerId, onAdd)
 {
 	Wigbi.ajax("LogoutLink", null, "add", [id, redirectUrl], function(response) 
@@ -61,6 +57,6 @@ LogoutLink.add = function(id, redirectUrl, targetContainerId, onAdd)
 		eval(id + " = new LogoutLink('" + id + "', '" + redirectUrl + "');");
 		
 		if (onAdd)
-			onAdd();
+			onAdd(eval(id));
 	});
 };
