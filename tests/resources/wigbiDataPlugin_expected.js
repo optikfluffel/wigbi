@@ -1,7 +1,5 @@
 function WigbiDataPluginJavaScriptGeneratorTestClass()
 {	
-	/* Private variables *****/
-
 	this._name = "foo";
 	this._age = 20;
 	this._date = "";
@@ -12,14 +10,9 @@ function WigbiDataPluginJavaScriptGeneratorTestClass()
 	this._noType = "foo";
 
 
-	/* Initialize ************/
-	
 	$.extend(this, new WigbiDataPlugin());
 
 
-	/* Properties ************/
-	
-	// Get/set the value of the _name variable
 	this.name = function(newVal)
 	{
 		if (typeof(newVal) != 'undefined') 
@@ -27,7 +20,6 @@ function WigbiDataPluginJavaScriptGeneratorTestClass()
 		return this._name;
 	};
 	
-	// Get/set the value of the _age variable
 	this.age = function(newVal)
 	{
 		if (typeof(newVal) != 'undefined') 
@@ -35,7 +27,6 @@ function WigbiDataPluginJavaScriptGeneratorTestClass()
 		return this._age;
 	};
 	
-	// Get/set the value of the _date variable
 	this.date = function(newVal)
 	{
 		if (typeof(newVal) != 'undefined') 
@@ -43,7 +34,6 @@ function WigbiDataPluginJavaScriptGeneratorTestClass()
 		return this._date;
 	};
 	
-	// Get/set the value of the _dateTime variable
 	this.dateTime = function(newVal)
 	{
 		if (typeof(newVal) != 'undefined') 
@@ -51,7 +41,6 @@ function WigbiDataPluginJavaScriptGeneratorTestClass()
 		return this._dateTime;
 	};
 	
-	// Get/set the value of the _time variable
 	this.time = function(newVal)
 	{
 		if (typeof(newVal) != 'undefined') 
@@ -59,7 +48,6 @@ function WigbiDataPluginJavaScriptGeneratorTestClass()
 		return this._time;
 	};
 	
-	// Get/set the value of the _timeStamp variable
 	this.timeStamp = function(newVal)
 	{
 		if (typeof(newVal) != 'undefined') 
@@ -67,7 +55,6 @@ function WigbiDataPluginJavaScriptGeneratorTestClass()
 		return this._timeStamp;
 	};
 	
-	// Get/set the value of the _noValue variable
 	this.noValue = function(newVal)
 	{
 		if (typeof(newVal) != 'undefined') 
@@ -75,7 +62,6 @@ function WigbiDataPluginJavaScriptGeneratorTestClass()
 		return this._noValue;
 	};
 	
-	// Get/set the value of the _noType variable
 	this.noType = function(newVal)
 	{
 		if (typeof(newVal) != 'undefined') 
@@ -84,15 +70,9 @@ function WigbiDataPluginJavaScriptGeneratorTestClass()
 	};
 	
 	
-	/* Non-static AJAX functions *********/
-	
-	// Perform an asynchronous nonStaticFunc function
 	this.nonStaticFunc = function(foo, bar, onNonStaticFunc) { Wigbi.ajax("WigbiDataPluginJavaScriptGeneratorTestClass", this, "nonStaticFunc", [foo, bar], onNonStaticFunc); };
 };
 
 
-/* Static AJAX functions *********/ 
-
-// Perform an asynchronous staticFunc function
 WigbiDataPluginJavaScriptGeneratorTestClass.staticFunc = function(bar, foo, onStaticFunc) { Wigbi.ajax("WigbiDataPluginJavaScriptGeneratorTestClass", null, "staticFunc", [bar, foo], onStaticFunc); };
 

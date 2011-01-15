@@ -7,7 +7,7 @@ $root = "";
 while(!is_dir($root . "wigbi/"))
 	$root = "../" . $root;
 
-//Include Wigbi
+//Include everything that is required to make Wigbi start
 ob_start();
 foreach(glob($root . "wigbi/php/tools/*.php") as $file)
 	require_once($file);
