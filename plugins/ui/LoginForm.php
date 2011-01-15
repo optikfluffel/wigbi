@@ -48,7 +48,7 @@
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
- * @copyright		Copyright © 2010, Daniel Saidi
+ * @copyright		Copyright © 2009-2011, Daniel Saidi
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.UI

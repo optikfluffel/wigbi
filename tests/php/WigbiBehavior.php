@@ -696,8 +696,6 @@ class WigbiBehavior extends UnitTestCase
 		
 		$this->assertEqual(sizeof($files), 1);
 		
-		copy($files[0], "foo.js");
-		
 		$this->deleteDataPlugin();
 	}
 	
