@@ -1,9 +1,9 @@
-.hide { display: none; }
+.hide		{ display: none; }
 
 div.validation-error,
 input.validation-error {
-	border: solid #CA2220 1px !important;
-	background: #FFAEAD;
+	border: solid #ca2220 1px !important;
+	background: #ffaead;
 }
 
 div.validation-error {
