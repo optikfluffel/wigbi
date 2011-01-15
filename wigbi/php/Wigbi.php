@@ -71,7 +71,7 @@ class Wigbi
 	/**#@+
 	 * @ignore
 	 */
-	private static $_version = "1.0.0";
+	private static $_version = "1.0.1";
 	
 	private static $_cacheHandler;
 	private static $_configFile;

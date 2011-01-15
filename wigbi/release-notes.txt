@@ -22,8 +22,13 @@ meant to make them easier to read. Future versions will probably feature far
 better compression as well. For instance, get/set props will probably have a
 convenient method that make each property into just one row.
 
-The 1.0.1 release also featured two new UI plugins for working with the menu
-item data plugin.  
+Besides being able to specifiy additional CSS and JavaScript paths that will
+automatically be added when Wigbi is started, the Wigbi config file contains
+a key for PHP paths as well. This makes it even easier than before to extend
+Wigbi with your own functionality.
+
+The 1.0.1 release also features two new UI plugins for working with the menu
+item data plugin. The list will probably be generalized in future versions.
 
 
 
