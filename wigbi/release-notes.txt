@@ -8,6 +8,27 @@ For further information, see http://www.wigbi.com
 
 
 ************************
+Wigbi 1.0.1 [2011-01-14]
+************************
+
+This release features major plugin adjustments. For instance, the two bundle
+files that were previously created by Wigbi are no longer generated. Instead,
+Wigbi creates one per data plugin and uses the .js file of each UI plugin. A
+Wigbi 1.0.0 app MUST remove these bundle files to ensure that no classes are
+conflicting. 
+
+The auto-generated data plugin class files are no longer commented, which is
+meant to make them easier to read. Future versions will probably feature far
+better compression as well. For instance, get/set props will probably have a
+convenient method that make each property into just one row.
+
+The 1.0.1 release also featured two new UI plugins for working with the menu
+item data plugin.  
+
+
+
+
+************************
 Wigbi 1.0.0 [2011-01-01]
 ************************
 
