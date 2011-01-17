@@ -20,47 +20,52 @@
  * 
  * This part of the plugin is documented together with the PHP class.
  */
-function HtmlContentControl(id, htmlContentForm)
+function HtmlContentControl(id)
 {
 	$.extend(this, new WigbiUIPlugin(id));
 	var _this = this;
 	
 	
-	this.obj = function(newVal)
+	this.submit = function()
 	{
-		if (typeof(newVal) != "undefined")
-		{
-			this.getElement("object").html(JSON.stringify(newVal));
-			if (htmlContentForm && htmlContentForm.obj() != newVal)
-				htmlContentForm.obj(newVal);
-			this.reset();
-		}
-		
-		return this.getElementData("object", new HtmlContent());
+		var obj = new HtmlContent();
+		obj.load(_this.getElement("objectId").val(), function() {
+			obj.name(_this.getElement("nameInput").val());
+			obj.title(_this.getElement("titleInput").val());
+			obj.content(_this.getElement("contentInput").val());
+			try { obj.content(tinyMCE.get(_this.getElement("contentInput").attr("id")).getContent()); }
+			catch(e) { }
+			
+			var submitButton = _this.getElement("submit");
+			submitButton.attr("disabled", "disabled");
+			
+			obj.save(function() {
+				submitButton.attr("disabled", "");
+				_this.getElement("content").html(obj.content());
+				_this.onSubmit(obj);
+			});
+		});
 	};
 	
 	
-	this.reset = function()
-	{
-		this.getElement("content").html(this.obj().content());
-	};
+	this.onSubmit = function(obj) {};
 	
 	
-	if (htmlContentForm)
-		htmlContentForm.onSubmit = function() { _this.obj(htmlContentForm.obj()); };
+	var form = this.getElement("form");
+	if (form) {
+		form.submit(function() {
+			_this.submit();
+			return false;
+		});
+	}
 };
 
 
 HtmlContentControl.add = function(id, objectId, objectName, embedForm, targetContainerId, onAdd)
 {
-	embedForm = embedForm ? 1 : 0;
-	
-	Wigbi.ajax("HtmlContentControl", null, "add", [id, objectId, objectName, embedForm], function(response) 
-	{
+	Wigbi.ajax("HtmlContentControl", null, "add", [id, objectId, objectName, embedForm], function(response) {		
 		$("#" + targetContainerId).html(response);
-		eval(id + "Form" + " = new HtmlContentForm('" + id + "Form" + "');");
-		eval(id + " = new HtmlContentControl('" + id + "', " + id + "Form);");
-		
+		eval(id + " = new HtmlContentControl('" + id + "');");
 		if (onAdd)
 			onAdd(eval(id));
 	});
