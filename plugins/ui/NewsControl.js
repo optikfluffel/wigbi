@@ -20,47 +20,51 @@
  * 
  * This part of the plugin is documented together with the PHP class.
  */
-function NewsControl(id, newsForm)
+function NewsControl(id)
 {
 	$.extend(this, new WigbiUIPlugin(id));
 	var _this = this;
 	
 	
-	this.obj = function(newVal)
+	this.submit = function()
 	{
-		if (typeof(newVal) != "undefined")
-		{
-			this.getElement("object").html(JSON.stringify(newVal));
-			if (newsForm && newsForm.obj() != newVal)
-				newsForm.obj(newVal);
-			this.reset();
-		}
-		
-		return this.getElementData("object", new News());
+		var obj = new News();
+		obj.load(_this.getElement("objectId").val(), function() {
+			obj.title(_this.getElement("titleInput").val());
+			obj.content(_this.getElement("contentInput").val());
+			try { obj.content(tinyMCE.get(_this.getElement("contentInput").attr("id")).getContent()); }
+			catch(e) { }
+			
+			var submitButton = _this.getElement("submit");
+			submitButton.attr("disabled", "disabled");
+			
+			obj.save(function() {
+				submitButton.attr("disabled", "");
+				_this.getElement("content").html(obj.content());
+				_this.onSubmit(obj);
+			});
+		});
 	};
 	
 	
-	this.reset = function()
-	{
-		this.getElement("content").html(this.obj().content());
-	};
+	this.onSubmit = function(obj) {};
 	
 	
-	if (newsForm)
-		newsForm.onSubmit = function() { _this.obj(newsForm.obj()); };
+	var form = this.getElement("form");
+	if (form) {
+		form.submit(function() {
+			_this.submit();
+			return false;
+		});
+	}
 };
 
 
 NewsControl.add = function(id, objectId, objectTitle, embedForm, targetContainerId, onAdd)
 {
-	embedForm = embedForm ? 1 : 0;
-	
-	Wigbi.ajax("NewsControl", null, "add", [id, objectId, objectTitle, embedForm], function(response) 
-	{
+	Wigbi.ajax("NewsControl", null, "add", [id, objectId, objectTitle, embedForm], function(response) {		
 		$("#" + targetContainerId).html(response);
-		eval(id + "Form" + " = new NewsForm('" + id + "Form" + "');");
-		eval(id + " = new NewsControl('" + id + "', " + id + "Form);");
-		
+		eval(id + " = new NewsControl('" + id + "');");
 		if (onAdd)
 			onAdd(eval(id));
 	});

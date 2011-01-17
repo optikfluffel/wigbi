@@ -21,11 +21,10 @@
  * The Wigbi.Plugins.UI.NewsControl PHP class.
  * 
  * This plugin can be used to display the content of any News object.
- * It can also embed a NewsForm plugin, with which the object can be
- * edited.
  * 
- * If an object form is embedded, it will automatically be displayed
- * if the control is added without an object.
+ * The plugin can also embed a form, with which existing objects can
+ * be saved or new ones created. The form is automatically displayed
+ * if the target object is unsaved.
  * 
  * 
  * JAVASCRIPT ********************
@@ -33,19 +32,19 @@
  * This UI plugin has the following JavaScript functionality:
  * 
  * 	<ul>
- * 		<li>public News obj([News newValue])</li>
+ * 		<li>[AJAX] public void add(string id, mixed objectOrId, string objectName, bool embedForm, string targetContainerId, function onAdd())</li>
+ * 		<li>[AJAX] public void submit()</li>
  * 		<li></li>
- * 		<li>[AJAX] public void add(string id, string objectId, string objectTitle, bool embedForm, string targetContainerId, function onAdd())</li>
- * 		<li>public void reset()</li>
+ * 		<li>[VIRTUAL] public void onSubmit(News obj)</li>
  * 	</ul>
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
- * @copyright		Copyright © 2009-2011, Daniel Saidi
+ * @copyright		Copyright © 2010-2011, Daniel Saidi
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.UI
- * @version			1.0.0
+ * @version			1.0.2
  */
 class NewsControl extends WigbiUIPlugin
 {
@@ -54,7 +53,7 @@ class NewsControl extends WigbiUIPlugin
 	 * 
 	 * @access	public
 	 * 
-	 * @param	string	$id	The unique plugin instance ID.
+	 * @param	string	$id		The unique plugin instance ID.
 	 */
 	public function __construct($id)
 	{
@@ -66,51 +65,60 @@ class NewsControl extends WigbiUIPlugin
 	/**
 	 * Add a NewsControl to the page. 
 	 * 
-	 * $objectOrId can either be an object instance or an ID. The object
-	 * can also be loaded by title. However, if one parameter is set, do
-	 * set the other to an empty string.
+	 * $objectOrId can either be an object instance or an ID. Objects can
+	 * also be loaded by title, but only one of the parameters can be set.
+	 * 
+	 * If neither $objectOrId nor $objectTitle is set the plugin will use
+	 * a default, unsaved object.
 	 * 
 	 * @access	public
 	 * 
 	 * @param		string	$id						The unique plugin instance ID.
-	 * @param		string	$objectOrId		The object or the ID of the object to handle with the plugin.
-	 * @param		string	$objectTitle	The title of the object to handle with the plugin.
+	 * @param		string	$objectOrId		The object or the ID of the object to load into the form.
+	 * @param		string	$objectTitle	The title of the object to load into the form.
 	 * @param		bool		$embedForm		Whether or not to embed an NewsForm; default false.
 	 */
 	public static function add($id, $objectOrId, $objectTitle, $embedForm = false)
 	{
-		$plugin = new NewsControl($id);
-		$formId = $id . "Form";
 		$obj = new News();
-		$obj = $obj->loadOrInit($objectOrId, $objectTitle, "title");
-		
+		$obj = $obj->loadOrInit($objectOrId, $objectTitle, "name");
 		if (!$obj->title())
 			$obj->title($objectTitle);
-	
+		
+		$plugin = new NewsControl($id);
 		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
+		
 		if ($embedForm)
 			$plugin->beginViewDiv($embedForm && $obj->id());
 		
-		View::addTextArea($plugin->getChildId("object"), json_encode($obj), "style='display:none'");
-		View::addDiv($plugin->getChildId("content"), $obj->content());
+		View::addDiv($plugin->getChildId("content"), wurl($obj->content()));
+		View::addHiddenInput($plugin->getChildId("objectId"), $obj->id());
 		
 		if ($embedForm)
 		{
 			$plugin->endViewDiv();
-			$plugin->beginEditDiv(!$obj->id());
-			print NewsForm::add($formId, $obj, "");
+			$plugin->beginEditDiv($embedForm && !$obj->id());
+			
+			View::openForm($plugin->getChildId("form"));
+			View::addDiv($plugin->getChildId("titleInputTitle"), $plugin->translate("title") . ":", "class='input-title'");
+				View::addTextInput($plugin->getChildId("titleInput"), $obj->title(), "");
+			View::addDiv($plugin->getChildId("contentInputTitle"), $plugin->translate("content") . ":", "class='input-title'");
+				View::addTextArea($plugin->getChildId("contentInput"), $obj->content(), "class='wysiwyg slimmed'");
+			?>
+			
+			<div class="formButtons"><?php
+				View::addResetButton($plugin->getChildId("reset"), $plugin->translate("reset"));
+				View::addSubmitButton($plugin->getChildId("submit"), $plugin->translate("save"));
+			?></div>
+			
+			<?php
+			View::closeForm();
 			$plugin->endEditDiv();	
-		}
-		?>
+		} ?>
 
 		<script type="text/javascript">
-				<?php if ($embedForm) { ?>
-					var <?print $formId ?> = new NewsForm("<?print $formId ?>");
-					var <?print $id ?> = new NewsControl("<?print $id ?>", <?print $formId ?>);
-				<?php } else { ?>
-					var <?print $id ?> = new NewsControl("<?print $id ?>");
-				<?php } ?>
+			var <?print $id ?> = new NewsControl("<?print $id ?>");
 		</script>
 		
 		<?php

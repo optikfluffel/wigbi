@@ -119,7 +119,6 @@ class HtmlContentControl extends WigbiUIPlugin
 			View::closeForm();
 			$plugin->endEditDiv();	
 		} ?>
-		
 
 		<script type="text/javascript">
 			var <?print $id ?> = new HtmlContentControl("<?print $id ?>");
