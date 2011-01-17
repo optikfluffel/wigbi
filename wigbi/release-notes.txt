@@ -8,6 +8,20 @@ For further information, see http://www.wigbi.com
 
 
 ************************
+Wigbi 1.0.2 [2011-01-14]
+************************
+
+One minor adjustment is that Wigbi now embeds the startup JavaScript code in
+a CDATA comment. This means that the code no longer affects HTML validation.
+
+This release features even more major UI plugin adjustments. All data plugin
+form controls have been made into a part of the corresponding control, which
+means that all of the HtmlContentForm, NewsForm and MenuItemForm plugins are
+no longer part of the UI plugin collection.
+ 
+
+
+************************
 Wigbi 1.0.1 [2011-01-14]
 ************************
 
