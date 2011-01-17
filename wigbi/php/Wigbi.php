@@ -797,7 +797,7 @@ class Wigbi
 		$jsCode .= "Wigbi._logHandler._handlers = JSON.parse('" . json_encode(Wigbi::logHandler()->handlers()) . "');";
 		$jsCode .= "Wigbi._sessionHandler = new SessionHandler('" . Wigbi::configuration("name", "application") . "');";
 		$packer = new JavaScriptPacker($jsCode);
-		print "<script type=\"text/javascript\">" . $packer->pack() . "</script>";
+		print "<script type=\"text/javascript\">//<![CDATA[\n(function(){" . $packer->pack() . "}())\n//]]></script>";
 	}
 
 	/**
