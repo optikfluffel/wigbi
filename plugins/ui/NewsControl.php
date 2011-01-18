@@ -33,6 +33,7 @@
  * 
  * 	<ul>
  * 		<li>[AJAX] public void add(string id, mixed objectOrId, string objectName, bool embedForm, string targetContainerId, function onAdd())</li>
+ * 		<li>[AJAX] public void setObject(News object)</li>
  * 		<li>[AJAX] public void submit()</li>
  * 		<li></li>
  * 		<li>[VIRTUAL] public void onSubmit(News obj)</li>
@@ -92,8 +93,8 @@ class NewsControl extends WigbiUIPlugin
 		if ($embedForm)
 			$plugin->beginViewDiv($embedForm && $obj->id());
 		
+		View::addHiddenInput($plugin->getChildId("idInput"), $obj->id());
 		View::addDiv($plugin->getChildId("content"), wurl($obj->content()));
-		View::addHiddenInput($plugin->getChildId("objectId"), $obj->id());
 		
 		if ($embedForm)
 		{

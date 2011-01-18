@@ -20,12 +20,8 @@
 /**
  * The Wigbi.Plugins.UI.MenuItemForm PHP class.
  * 
- * This plugin can be used to create and / or edit a MenuItem object.
- * The form is submitted with AJAX, without reloading the page.
- * 
- * If objectOrId or objectName are set when adding a plugin instance
- * to the page, the plugin will modify that object. If not, the form
- * will create a new MenuItem object when it is submitted.
+ * This plugin displays a form, with which existing MenuItem objects
+ * can be saved or new ones created.
  * 
  * 
  * JAVASCRIPT ********************
@@ -33,22 +29,20 @@
  * This UI plugin has the following JavaScript functionality:
  * 
  * 	<ul>
- * 		<li>public MenuItem obj([MenuItem newValue])</li>
- * 		<li></li>
- * 		<li>[AJAX] public void add(string id, string objectId, string objectName, string targetContainerId, function onAdd())</li>
+ * 		<li>[AJAX] public void add(string id, mixed objectOrId, string objectName, string targetContainerId, function onAdd())</li>
+ * 		<li>[AJAX] public void setObject(MenuItem object)</li>
  * 		<li>[AJAX] public void submit()</li>
- * 		<li>public void reset()</li>
  * 		<li></li>
- * 		<li>[VIRTUAL] public void onSubmit()</li>
+ * 		<li>[VIRTUAL] public void onSubmit(MenuItem obj)</li>
  * 	</ul>
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
- * @copyright		Copyright © 2009-2011, Daniel Saidi
+ * @copyright		Copyright © 2010-2011, Daniel Saidi
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.UI
- * @version			1.0.0
+ * @version			1.0.2
  */
 class MenuItemForm extends WigbiUIPlugin
 {
@@ -57,71 +51,65 @@ class MenuItemForm extends WigbiUIPlugin
 	 * 
 	 * @access	public
 	 * 
-	 * @param	string	$id	The unique plugin instance ID.
+	 * @param	string	$id		The unique plugin instance ID.
 	 */
 	public function __construct($id)
 	{
 		parent::__construct($id);
 	}
-	
-	
+
 	
 	/**
 	 * Add a MenuItemForm to the page. 
 	 * 
-	 * If neither the $objectOrId nor the $objectName parameter is set,
-	 * the plugin will handle a default, unsaved object.
+	 * $objectOrId can either be an object instance or an ID. Objects can
+	 * also be loaded by name, but only one of the parameters can be used.
 	 * 
-	 * The $objectOrId parameter can either be an object instance or a
-	 * unique object ID. If this parameter is set, set the $objectName
-	 * parameter to an empty string and vice versa.
+	 * If neither $objectOrId nor $objectName is set, the plugin will use
+	 * a default, unsaved object.
 	 * 
 	 * @access	public
 	 * 
 	 * @param		string	$id						The unique plugin instance ID.
-	 * @param		string	$objectOrId		The object or the ID of the object to handle with the plugin.
-	 * @param		string	$objectName		The name of the object to handle with the plugin.
-	 */	 
+	 * @param		string	$objectOrId		The object or the ID of the object to load into the form.
+	 * @param		string	$objectName		The name of the object to load into the form.
+	 */
 	public static function add($id, $objectOrId, $objectName)
 	{
-		$plugin = new MenuItemForm($id);
 		$obj = new MenuItem();
 		$obj = $obj->loadOrInit($objectOrId, $objectName, "name");
-		
 		if (!$obj->name())
 			$obj->name($objectName);
-	
+		
+		$plugin = new MenuItemForm($id);
 		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
 		
 		View::openForm($plugin->getChildId("form"));
-		View::addTextArea($plugin->getChildId("object"), json_encode($obj), "style='display:none'");
-		
-		View::addDiv($plugin->getChildId("nameTitle"), $plugin->translate("name") . ":", "class='input-title'");
-		View::addTextInput($plugin->getChildId("name"), $obj->name(), "class=''");
-		
-		View::addDiv($plugin->getChildId("urlTitle"), $plugin->translate("url") . ":", "class='input-title'");
-		View::addTextInput($plugin->getChildId("url"), $obj->url(), "class=''");
-		
-		View::addDiv($plugin->getChildId("textTitle"), $plugin->translate("text") . ":", "class='input-title'");
-		View::addTextInput($plugin->getChildId("text"), $obj->text(), "class=''");
-		
-		View::addDiv($plugin->getChildId("tooltipTitle"), $plugin->translate("tooltip") . ":", "class='input-title'");
-		View::addTextInput($plugin->getChildId("tooltip"), $obj->tooltip(), "class=''");
+		View::addHiddenInput($plugin->getChildId("idInput"), $obj->id());
+		View::addHiddenInput($plugin->getChildId("parentIdInput"), $obj->parentId());
+		View::addDiv($plugin->getChildId("nameInputTitle"), $plugin->translate("name") . ":", "class='input-title'");
+			View::addTextInput($plugin->getChildId("nameInput"), $obj->name(), "");
+		View::addDiv($plugin->getChildId("urlInputTitle"), $plugin->translate("url") . ":", "class='input-title'");
+			View::addTextInput($plugin->getChildId("urlInput"), $obj->name(), "");
+		View::addDiv($plugin->getChildId("textInputTitle"), $plugin->translate("text") . ":", "class='input-title'");
+			View::addTextInput($plugin->getChildId("textInput"), $obj->name(), "");
+		View::addDiv($plugin->getChildId("tooltipInputTitle"), $plugin->translate("tooltip") . ":", "class='input-title'");
+			View::addTextInput($plugin->getChildId("tooltipInput"), $obj->name(), "");
 		?>
 		
 		<div class="formButtons"><?php
-			View::addButton($plugin->getChildId("reset"), $plugin->translate("reset"), $id . ".reset(); return false;");
+			View::addResetButton($plugin->getChildId("reset"), $plugin->translate("reset"));
 			View::addSubmitButton($plugin->getChildId("submit"), $plugin->translate("save"));
 		?></div>
 		
+		<?php View::closeForm(); ?>
+
 		<script type="text/javascript">
 			var <?print $id ?> = new MenuItemForm("<?print $id ?>");
 		</script>
 		
 		<?php
-		View::closeForm();
-
 		$plugin->endPluginDiv();
 		return $plugin->endPlugin();
 	}

@@ -34,6 +34,7 @@
  * 
  * 	<ul>
  * 		<li>[AJAX] public void add(string id, mixed objectOrId, string objectName, bool embedForm, string targetContainerId, function onAdd())</li>
+ * 		<li>[AJAX] public void setObject(HtmlContent object)</li>
  * 		<li>[AJAX] public void submit()</li>
  * 		<li></li>
  * 		<li>[VIRTUAL] public void onSubmit(HtmlContent obj)</li>
@@ -93,8 +94,8 @@ class HtmlContentControl extends WigbiUIPlugin
 		if ($embedForm)
 			$plugin->beginViewDiv($embedForm && $obj->id());
 		
+		View::addHiddenInput($plugin->getChildId("idInput"), $obj->id());
 		View::addDiv($plugin->getChildId("content"), wurl($obj->content()));
-		View::addHiddenInput($plugin->getChildId("objectId"), $obj->id());
 		
 		if ($embedForm)
 		{
@@ -104,8 +105,6 @@ class HtmlContentControl extends WigbiUIPlugin
 			View::openForm($plugin->getChildId("form"));
 			View::addDiv($plugin->getChildId("nameInputTitle"), $plugin->translate("name") . ":", "class='input-title'");
 				View::addTextInput($plugin->getChildId("nameInput"), $obj->name(), "");
-			View::addDiv($plugin->getChildId("titleInputTitle"), $plugin->translate("title") . ":", "class='input-title'");
-				View::addTextInput($plugin->getChildId("titleInput"), $obj->title(), "");
 			View::addDiv($plugin->getChildId("contentInputTitle"), $plugin->translate("content") . ":", "class='input-title'");
 				View::addTextArea($plugin->getChildId("contentInput"), $obj->content(), "class='wysiwyg advanced'");
 			?>

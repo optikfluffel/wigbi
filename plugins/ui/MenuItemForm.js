@@ -23,63 +23,58 @@
 function MenuItemForm(id)
 {
 	$.extend(this, new WigbiUIPlugin(id));
-		var _this = this;
+	var _this = this;
 	
 	
-	this.obj = function(newVal)
+	this.setObject = function(obj)
 	{
-		if (typeof(newVal) != "undefined")
-		{
-			this.getElement("object").html(JSON.stringify(newVal));
-			this.reset();
-		}
-		
-		return this.getElementData("object", new MenuItem());
-	};
+		this.getElement("idInput").val(obj.id());
+		this.getElement("parentIdInput").val(obj.parentId());
+		this.getElement("nameInput").val(obj.name());
+		this.getElement("urlInput").val(obj.url());
+		this.getElement("textInput").val(obj.text());
+		this.getElement("tooltipInput").val(obj.tooltip());
+	}
 	
-
-	this.reset = function()
-	{
-		this.getElement("name").val(this.obj().name());
-		this.getElement("url").val(this.obj().url());
-		this.getElement("text").val(this.obj().text());
-		this.getElement("tooltip").val(this.obj().tooltip());
-	};
-
 	this.submit = function()
 	{
-		var obj = this.obj();
-		obj.name(this.getElement("name").val());
-		obj.url(this.getElement("url").val());
-		obj.text(this.getElement("text").val());
-		obj.tooltip(this.getElement("tooltip").val());
-		
-		var button = this.getElement("submit");
-		button.attr("disabled", "disabled");
-		
-		obj.save(function()
-		{
-			_this.obj(obj);
-			button.attr("disabled", "");
-			_this.onSubmit();
+		var obj = new MenuItem();
+		obj.load(_this.getElement("idInput").val(), function() {
+			obj.parentId(_this.getElement("parentIdInput").val());
+			obj.name(_this.getElement("nameInput").val());
+			obj.url(_this.getElement("urlInput").val());
+			obj.text(_this.getElement("textInput").val());
+			obj.tooltip(_this.getElement("tooltipInput").val());
+			
+			var submitButton = _this.getElement("submit");
+			submitButton.attr("disabled", "disabled");
+			
+			obj.save(function() {
+				submitButton.attr("disabled", "");
+				_this.onSubmit(obj);
+			});
 		});
 	};
-
-	
-	this.onSubmit = function() {};
 	
 	
-	this.getElement("form").submit(function() { _this.submit(); return false; });
+	this.onSubmit = function(obj) {};
+	
+	
+	var form = this.getElement("form");
+	if (form) {
+		form.submit(function() {
+			_this.submit();
+			return false;
+		});
+	}
 };
 
 
 MenuItemForm.add = function(id, objectId, objectName, targetContainerId, onAdd)
 {
-	Wigbi.ajax("MenuItemForm", null, "add", [id, objectId, objectName], function(response) 
-	{
+	Wigbi.ajax("MenuItemForm", null, "add", [id, objectId, objectName], function(response) {		
 		$("#" + targetContainerId).html(response);
 		eval(id + " = new MenuItemForm('" + id + "');");
-		
 		if (onAdd)
 			onAdd(eval(id));
 	});

@@ -26,10 +26,21 @@ function NewsControl(id)
 	var _this = this;
 	
 	
+	this.setObject = function(obj)
+	{
+		_this.getElement("content").html(obj.content());
+				
+		this.getElement("idInput").val(obj.id());
+		this.getElement("titleInput").val(obj.title());
+		this.getElement("contentInput").val(obj.content());
+		try { tinyMCE.get(_this.getElement("contentInput").attr("id")).setContent(obj.content()); }
+		catch(e) { }
+	}
+	
 	this.submit = function()
 	{
 		var obj = new News();
-		obj.load(_this.getElement("objectId").val(), function() {
+		obj.load(_this.getElement("idInput").val(), function() {
 			obj.title(_this.getElement("titleInput").val());
 			obj.content(_this.getElement("contentInput").val());
 			try { obj.content(tinyMCE.get(_this.getElement("contentInput").attr("id")).getContent()); }
@@ -40,7 +51,7 @@ function NewsControl(id)
 			
 			obj.save(function() {
 				submitButton.attr("disabled", "");
-				_this.getElement("content").html(obj.content());
+				_this.setObject(obj);
 				_this.onSubmit(obj);
 			});
 		});
