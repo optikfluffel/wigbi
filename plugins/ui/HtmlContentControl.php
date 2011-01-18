@@ -77,7 +77,7 @@ class HtmlContentControl extends WigbiUIPlugin
 	 * @param		string	$id						The unique plugin instance ID.
 	 * @param		string	$objectOrId		The object or the ID of the object to load into the form.
 	 * @param		string	$objectName		The name of the object to load into the form.
-	 * @param		bool		$embedForm		Whether or not to embed an HtmlContentForm; default false.
+	 * @param		bool		$embedForm		Whether or not to embed an form; default false.
 	 */
 	public static function add($id, $objectOrId, $objectName, $embedForm = false)
 	{
