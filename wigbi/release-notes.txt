@@ -2,13 +2,12 @@
 WIGBI RELEASE NOTES
 *******************
 
-This file features release notes for each new Wigbi release.
-
-For further information, see http://www.wigbi.com
+For further information, see http://www.wigbi.com or the project web site at
+GitHub - http://www.github.com/danielsaidi/wigbi
 
 
 ************************
-Wigbi 1.0.2 [2011-01-14]
+Wigbi 1.0.2 [2011-01-18]
 ************************
 
 One minor adjustment is that Wigbi now embeds the startup JavaScript code in
@@ -18,6 +17,10 @@ This release features even more major UI plugin adjustments. All data plugin
 form controls have been made into a part of the corresponding control, which
 means that all of the HtmlContentForm, NewsForm and MenuItemForm plugins are
 no longer part of the UI plugin collection.
+
+Another big UI plugin improvement is that objects are no longer exposed with
+JSON content textareas. Instead, only the object id is set in a hidden field
+and the object loaded before it is saved.   
  
 
 
@@ -43,6 +46,9 @@ Wigbi with your own functionality.
 
 The 1.0.1 release also features two new UI plugins for working with the menu
 item data plugin. The list will probably be generalized in future versions.
+
+From this version on, unit tests are not added to the release bundle. To get
+hold of the unit test bundle, fork the source code on GitHub.  
 
 
 
