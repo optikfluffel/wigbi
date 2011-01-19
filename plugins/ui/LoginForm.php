@@ -91,7 +91,7 @@ class LoginForm extends WigbiUIPlugin
 		View::openForm($plugin->getChildId("form"));
 		View::addHiddenInput($plugin->getChildId("redirectUrl"), $redirectUrl, "");
 		
-		View::addDiv($plugin->getChildId("validation"), "&nbspM", "class='validation-error hide'");
+		View::addDiv($plugin->getChildId("validation"), "&nbsp;", "class='invalid hide'");
 		
 		View::addDiv($plugin->getChildId("userNameTitle"), $plugin->translate("userName") . ":", "class='input-title'");
 		View::addTextInput($plugin->getChildId("userName"), "", "");

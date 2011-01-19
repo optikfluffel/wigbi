@@ -37,8 +37,8 @@ $(document).ready(function()
 		var obj = new WigbiUIPlugin("test");
   	obj.bindErrors(["element1", "element2"], ["element1_required", "element2_invalid"]);	
 		
-		ok(obj.getElement("element1").hasClass("validation-error"));
-		ok(obj.getElement("element2").hasClass("validation-error"));
+		ok(obj.getElement("element1").hasClass("invalid"));
+		ok(obj.getElement("element2").hasClass("invalid"));
 	});
 	
 	test("bindErrors_shouldResetTitle", 2, function()
@@ -57,8 +57,8 @@ $(document).ready(function()
   	obj.bindErrors(["element1", "element2"], ["element1_required", "element2_invalid"]);
   	obj.bindErrors(["element1", "element2"], ["element1_required"]);	
 		
-		ok(obj.getElement("element1").hasClass("validation-error"));
-		ok(!obj.getElement("element2").hasClass("validation-error"));
+		ok(obj.getElement("element1").hasClass("invalid"));
+		ok(!obj.getElement("element2").hasClass("invalid"));
 	});
 	
 	test("bindErrors_shouldHandleCommaString", 4, function()
@@ -68,8 +68,8 @@ $(document).ready(function()
 		
 		equals(obj.getElement("element1").title(), "element1_required");
 		equals(obj.getElement("element2").title(), "element2_required");	
-		ok(obj.getElement("element1").hasClass("validation-error"));
-		ok(obj.getElement("element2").hasClass("validation-error"));
+		ok(obj.getElement("element1").hasClass("invalid"));
+		ok(obj.getElement("element2").hasClass("invalid"));
 	});
 	
 	test("getElement_shouldReturnElement", 1, function()

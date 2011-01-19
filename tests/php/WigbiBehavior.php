@@ -127,6 +127,7 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(file_exists($path . "wigbi.php"));
 		
 		$this->assertTrue(is_dir($path . "css"));
+		$this->assertTrue(is_dir($path . "css/index-wigbi"));
 		$this->assertTrue(file_exists($path . "css/general.css"));
 		$this->assertTrue(file_exists($path . "css/ui.css"));
 		
@@ -152,6 +153,7 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(file_exists($path . "lang/swedish.ini"));
 		
 		$this->assertTrue(is_dir($path . "pages"));
+		$this->assertTrue(is_dir($path . "pages/index-wigbi"));
 		$this->assertTrue(file_exists($path . "pages/bundle.php"));
 		$this->assertTrue(file_exists($path . "pages/postBack.php"));
 		
@@ -493,13 +495,13 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_shouldStartConfigurationAndFailForMissingApplicationNameParameter()
 	{
-		$this->expectException(new Exception('The application.name parameter in the Wigbi configuration file must have a value, e.g. "My Application".'));
+		$this->expectException(new Exception('The application.name key in the Wigbi configuration file must have a value, e.g. "My Application".'));
 		$this->setConfigFile("resources/config_noName.ini");
 	}
 
 	function test_start_shouldStartConfigurationAndFailForMissingWebRootParameter()
 	{
-		$this->expectException(new Exception('The application.webRoot parameter in the Wigbi configuration file must have a value, e.g. /myApp/ if the application is located in http://localhost/myApp/.'));
+		$this->expectException(new Exception('The application.webRoot key in the Wigbi configuration file must have a value, e.g. /myApp/ if the site is located in http://localhost/myApp/.'));
 		$this->setConfigFile("resources/config_noWebRoot.ini");
 	}
 

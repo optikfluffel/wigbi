@@ -45,7 +45,7 @@ function WigbiUIPlugin(id)
 	//Bind error messages to plugin DOM elements
 	this.bindErrors = function(elementIds, errorCodes, errorMessage)
 	{ 
-		var errorClass = "validation-error";
+		var errorClass = "invalid";
 		
 		if (errorMessage)
 		{

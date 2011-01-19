@@ -77,7 +77,6 @@ class Wigbi
 	private static $_configFile;
 	private static $_configuration;
 	private static $_cssPaths;
-	private static $_dataPluginClasses;
 	private static $_dbHandler;
 	private static $_generateHtml = true;
 	private static $_isStarted;
@@ -88,7 +87,6 @@ class Wigbi
 	private static $_phpPaths;
 	private static $_serverRoot;
 	private static $_sessionHandler;
-	private static $_uiPluginClasses;
 	private static $_webRoot;
 	/**#@-*/
 	
@@ -223,17 +221,9 @@ class Wigbi
 	 */
 	public static function dataPluginClasses()
 	{
-		//Return cached value, if any
-		if (Wigbi::$_dataPluginClasses)
-			return Wigbi::$_dataPluginClasses;
-
-		//Add all existing data plugin class names
 		$result = array();		
 		foreach (glob(Wigbi::dataPluginFolder() . "*.php") as $classFile)
 			array_push($result, str_replace(".php", "", basename($classFile)));
-
-		//Save and return result
-		Wigbi::$_dataPluginClasses = $result; 
 		return $result;
 	}
 	
@@ -507,19 +497,9 @@ class Wigbi
 	 */
 	public static function uiPluginClasses()
 	{
-		//Return cached value, if any
-		if (Wigbi::$_uiPluginClasses)
-			return Wigbi::$_uiPluginClasses;
-
-		//Init variables
 		$result = array();
-		
-		//Loop through class folder
 		foreach (glob(Wigbi::uiPluginFolder() . "*.php") as $classFile)
 			array_push($result, str_replace(".php", "", basename($classFile)));
-
-		//Save and return result
-		Wigbi::$_uiPluginClasses = $result; 
 		return $result;
 	}
 	
@@ -689,9 +669,9 @@ class Wigbi
 		
 		//Abort if mandatory parameters are missing
 		if (!Wigbi::configuration("name", "application"))
-			throw new Exception('The application.name parameter in the Wigbi configuration file must have a value, e.g. "My Application".');
+			throw new Exception('The application.name key in the Wigbi configuration file must have a value, e.g. "My Application".');
 		if (!Wigbi::configuration("webRoot", "application"))
-			throw new Exception('The application.webRoot parameter in the Wigbi configuration file must have a value, e.g. /myApp/ if the application is located in http://localhost/myApp/.');
+			throw new Exception('The application.webRoot key in the Wigbi configuration file must have a value, e.g. /myApp/ if the site is located in http://localhost/myApp/.');
 	}
 	
 	/**
@@ -1021,21 +1001,18 @@ class Wigbi
 	 */
 	public static function stop()
 	{
-		//Disconnect dbHandler if needed
 		if (Wigbi::dbHandler() != null && Wigbi::dbHandler()->isConnected())
 			Wigbi::dbHandler()->disconnect();	
 		
 		Wigbi::$_cacheHandler = null;
 		Wigbi::$_configuration = null;
 		Wigbi::$_cssPaths = null;
-		Wigbi::$_dataPluginClasses = null;
 		Wigbi::$_dbHandler = null;
 		Wigbi::$_jsPaths = null;
 		Wigbi::$_languageHandler = null;
 		Wigbi::$_logHandler = null;
 		Wigbi::$_phpPaths = null;
 		Wigbi::$_sessionHandler = null;
-		Wigbi::$_uiPluginClasses = null;
 		
 		Wigbi::$_isStarted = false;
 	}
