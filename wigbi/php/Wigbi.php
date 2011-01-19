@@ -685,8 +685,8 @@ class Wigbi
 		$mySQL_uid = Wigbi::configuration("uid", "mySQL");
 		$mySQL_password = Wigbi::configuration("password", "mySQL");
 		
-		//If RTB is enabled, Wigbi will try to create the database
-		if (Wigbi::configuration("enabled", "runtimeBuild"))
+		//If RTB is enabled and data plugins are added, Wigbi will try to create the database
+		if (Wigbi::configuration("enabled", "runtimeBuild") && sizeof(Wigbi::dataPluginClasses()) > 0)
 		{
 			//Connect to the database server, if any, abort if failed
 			Wigbi::$_dbHandler = new DatabaseHandler($mySQL_host, null, $mySQL_uid, $mySQL_password);

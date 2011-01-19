@@ -21,12 +21,12 @@
 			<div class="box-top one"></div>
 			<div id="main-body">
 				<?php View::addView("~/wigbi/pages/index-wigbi/config-status.php", View::viewData("error")); ?>
-				 
 				<hr />
-						
 				<div class="columns wide-left fc">
 					<div class="left">
 						<?php View::addView("~/wigbi/pages/index-wigbi/cache-handler.php"); ?>
+						<hr/>
+						<?php View::addView("~/wigbi/pages/index-wigbi/ini-handler.php"); ?>
 					</div>
 					<div class="right">
 						<?php View::addView("~/wigbi/pages/index-wigbi/data-plugins.php"); ?>
