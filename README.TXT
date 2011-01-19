@@ -12,7 +12,7 @@ The basic Wigbi release contains:
 
 	* wigbi/ - The latest version with everything you need
 	* plugins/ - Wigbi data and UI plugins to help you get started
-	* index_wigbi.php - A simple page that verifies that Wigbi works
+	* index-wigbi.php - A simple page that verifies that Wigbi works
 
 Wigbi is developed with TDD, which means that basically everything
 is tested. The unit test bundle is not part of the release. To get

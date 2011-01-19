@@ -5,6 +5,7 @@
 		<?php
 			try { Wigbi::start(); }
 			catch(Exception $e) { View::viewData("error", $e); }
+			View::viewData("start-page", wurl("~/index-wigbi.php"));
 		?>
 		<link rel="stylesheet" type="text/css" href="wigbi/bundle/css:wigbi/css" />
 		<link rel="stylesheet" type="text/css" href="wigbi/bundle/css:wigbi/css/index-wigbi" />
@@ -41,30 +42,10 @@
 			<div class="box-top"></div>
 			<div class="box">
 				© 2009-2011 <a href="http://www.saidi.se" class="em">Daniel Saidi</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-				Site developed with <a href="http://www.wigbi.com" class="em">Wigbi 1.0.1</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-		
-				Site looks great thanks to <a href="http://parsley.se/" class="em">Kristoffer Gustafsson</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-				More site features coming soon
+				v. <a href="http://www.wigbi.com" class="em">Wigbi 1.0.1</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+				Page looks great thanks to <a href="http://parsley.se/" class="em">Kristoffer Gustafsson</a>
 			</div>
 			<div class="box-bottom"></div>
-		
-			<div class="boxGroup three fc">
-				<div>
-					<div class="box-top one"></div>
-					<div class="box"></div>
-					<div class="box-bottom one"></div>
-				</div>
-				<div>
-					<div class="box-top one"></div>
-					<div class="box"></div>
-					<div class="box-bottom one"></div>
-				</div>
-				<div>
-					<div class="box-top one"></div>
-					<div class="box"></div>
-					<div class="box-bottom one"></div>
-				</div>
-			</div>
 		</div>
 	</body>
 </html>
