@@ -82,7 +82,7 @@ class NewsControl extends WigbiUIPlugin
 	public static function add($id, $objectOrId, $objectTitle, $embedForm = false)
 	{
 		$obj = new News();
-		$obj = $obj->loadOrInit($objectOrId, $objectTitle, "name");
+		$obj = $obj->loadOrInit($objectOrId, $objectTitle, "title");
 		if (!$obj->title())
 			$obj->title($objectTitle);
 		

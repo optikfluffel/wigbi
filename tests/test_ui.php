@@ -3,6 +3,7 @@
 	require("includes/top.php");
 	
 	
+	
 	?><script type="text/javascript">
 		Wigbi._ajaxConfigFile = "tests/resources/config.ini";	//TODO: This has to be manually handled
 		function addDone(elementId) { }

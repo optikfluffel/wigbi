@@ -21,16 +21,9 @@
 	<div class="fc">
 		<div class="box add">
 			Id: <?php View::addTextInput("nc_id") ?>
-			Name: <?php View::addTextInput("nc_name", "") ?>
+			Title: <?php View::addTextInput("nc_title", "") ?>
 			EmbedForm: <input id="nc_embed" type="checkbox" />
-			<?php View::addButton("nc_addButton", "Add", "NewsControl.add('nc', $('#nc_id').val(), $('#nc_name').val(), $('#nc_embed').attr('checked'), 'nc_target', addDone)"); ?>
-		</div>
-		<div class="box prop">
-			<select onchange="nc.obj(JSON.parse(this.value))">
-				<option value='<?php print json_encode($obj1) ?>'><?php print $obj1->title(); ?></option>
-				<option value='<?php print json_encode($obj2) ?>'><?php print $obj2->title(); ?></option>
-			</select>
-			<button onclick="nc.reset()">Reset</button>
+			<?php View::addButton("nc_addButton", "Add", "NewsControl.add('nc', $('#nc_id').val(), $('#nc_title').val(), $('#nc_embed').attr('checked'), 'nc_target', addDone)"); ?>
 		</div>
 	</div>
 </div>

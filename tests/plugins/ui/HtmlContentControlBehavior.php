@@ -25,12 +25,5 @@
 			EmbedForm: <input id="hcc_embed" type="checkbox" />
 			<?php View::addButton("hcc_addButton", "Add", "HtmlContentControl.add('hcc', $('#hcc_id').val(), $('#hcc_name').val(), $('#hcc_embed').attr('checked'), 'hcc_target', addDone)"); ?>
 		</div>
-		<div class="box prop">
-			<select onchange="hcc.obj(JSON.parse(this.value))">
-				<option value='<?php print json_encode($obj1) ?>'><?php print $obj1->name(); ?></option>
-				<option value='<?php print json_encode($obj2) ?>'><?php print $obj2->name(); ?></option>
-			</select>
-			<button onclick="hcc.reset()">Reset</button>
-		</div>
 	</div>
 </div>
