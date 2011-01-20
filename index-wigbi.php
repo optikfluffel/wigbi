@@ -28,6 +28,8 @@
 						<?php View::addView("~/wigbi/pages/index-wigbi/cache-handler.php"); ?>
 						<hr/>
 						<?php View::addView("~/wigbi/pages/index-wigbi/ini-handler.php"); ?>
+						<hr/>
+						<p class="ingress large">More will follow... :)</p>
 					</div>
 					<div class="right">
 						<?php View::addView("~/wigbi/pages/index-wigbi/data-plugins.php"); ?>
