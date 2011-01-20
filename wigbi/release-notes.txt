@@ -7,7 +7,7 @@ GitHub - http://www.github.com/danielsaidi/wigbi
 
 
 ************************
-Wigbi 1.0.2 [2011-01-18]
+Wigbi 1.0.2 [2011-01-20]
 ************************
 
 One minor adjustment is that Wigbi now embeds the startup JavaScript code in
