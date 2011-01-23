@@ -28,7 +28,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.2
  */
 class News extends WigbiDataPlugin
 {
@@ -36,8 +36,9 @@ class News extends WigbiDataPlugin
 	 * @ignore
 	 */
 	public $_createdDateTime = "__DATETIME";
-	public $_content = "__TEXT";
 	public $_title = "__50";
+	public $_introduction = "__200";
+	public $_content = "__TEXT";
 	/**#@-*/
 	
 	
@@ -46,38 +47,20 @@ class News extends WigbiDataPlugin
 		$this->collectionName("News");
 		parent::__construct();
 	}
-	
-	
-	public function content($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_content = func_get_arg(0);
-		return $this->_content;
-	}
-	
-	public function createdDateTime()
-	{
-		return $this->_createdDateTime;
-	}
-	
-	public function title($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_title = func_get_arg(0);
-		return $this->_title;
-	}
+
+	public function content($value = null) { return $this->getSet("_content", $value); }
+	public function createdDateTime() { return $this->_createdDateTime; }
+	public function introduction($value = null) { return $this->getSet("_introduction", $value); }
+	public function title($value = null) { return $this->getSet("_title", $value); }
 	
 	
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require that a title is defined
 		if (!trim($this->title()))
 			array_push($errorList, "title_required");
 			
-		//Return error list
 		return $errorList;
 	}
 }
