@@ -33,7 +33,8 @@ function MenuItemList(id)
 	this.canEdit = function() { return this.getElement("canEdit").val() == "1"; };
 	this.canSort = function() { return this.getElement("canSort").val() == "1"; };
 	this.cssClass = function() { return this.getElement("cssClass").val(); };
-	this.parentItem = function() { return this.getElementData("object", new MenuItem()); };
+	this.parentId = function() { return this.getElement("parentId").val(); };
+	this.parentItem = function() { var obj = new MenuItem(); obj.parentId(_this.parentId()); return obj; };
 
 
 	this.deleteListItem = function(itemId)

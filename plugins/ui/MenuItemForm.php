@@ -84,26 +84,29 @@ class MenuItemForm extends WigbiUIPlugin
 		$plugin = new MenuItemForm($id);
 		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
-		
-		View::openForm($plugin->getChildId("form"));
-		View::addHiddenInput($plugin->getChildId("idInput"), $obj->id());
-		View::addHiddenInput($plugin->getChildId("parentIdInput"), $obj->parentId());
-		View::addDiv($plugin->getChildId("nameInputTitle"), $plugin->translate("name") . ":", "class='input-title'");
-			View::addTextInput($plugin->getChildId("nameInput"), $obj->name(), "");
-		View::addDiv($plugin->getChildId("urlInputTitle"), $plugin->translate("url") . ":", "class='input-title'");
-			View::addTextInput($plugin->getChildId("urlInput"), $obj->name(), "");
-		View::addDiv($plugin->getChildId("textInputTitle"), $plugin->translate("text") . ":", "class='input-title'");
-			View::addTextInput($plugin->getChildId("textInput"), $obj->name(), "");
-		View::addDiv($plugin->getChildId("tooltipInputTitle"), $plugin->translate("tooltip") . ":", "class='input-title'");
-			View::addTextInput($plugin->getChildId("tooltipInput"), $obj->name(), "");
 		?>
 		
-		<div class="formButtons"><?php
-			View::addResetButton($plugin->getChildId("reset"), $plugin->translate("reset"));
-			View::addSubmitButton($plugin->getChildId("submit"), $plugin->translate("save"));
-		?></div>
-		
-		<?php View::closeForm(); ?>
+		<form id="<?php print $plugin->getChildId("form") ?>">
+			<input type="hidden" id="<?php print $plugin->getChildId("idInput") ?>" value="<?php print $obj->id() ?>" />
+			<input type="hidden" id="<?php print $plugin->getChildId("parentIdInput") ?>" value="<?php print $obj->parentId() ?>" />
+			
+			<div class="input-title name"><?php print $plugin->translate("name") ?>:</div>
+			<div class="input name"><input type="text" id="<?php print $plugin->getChildId("nameInput") ?>" value="<?php print $obj->name() ?>" /></div>
+			
+			<div class="input-title url"><?php print $plugin->translate("url") ?>:</div>
+			<div class="input url"><input type="text" id="<?php print $plugin->getChildId("urlInput") ?>" value="<?php print $obj->url() ?>" /></div>
+			
+			<div class="input-title text"><?php print $plugin->translate("text") ?>:</div>
+			<div class="input text"><input type="text" id="<?php print $plugin->getChildId("textInput") ?>" value="<?php print $obj->text() ?>" /></div>
+			
+			<div class="input-title tooltip"><?php print $plugin->translate("tooltip") ?>:</div>
+			<div class="input tooltip"><input type="text" id="<?php print $plugin->getChildId("tooltipInput") ?>" value="<?php print $obj->tooltip() ?>" /></div>
+			
+			<div class="formButtons">
+				<input type="reset" id="<?php print $plugin->getChildId("reset") ?>"  value="<?php print $plugin->translate("reset") ?>" />
+				<input type="submit" id="<?php print $plugin->getChildId("submit") ?>"  value="<?php print $plugin->translate("submit") ?>" />
+			</div>
+		</form>
 
 		<script type="text/javascript">
 			var <?print $id ?> = new MenuItemForm("<?print $id ?>");

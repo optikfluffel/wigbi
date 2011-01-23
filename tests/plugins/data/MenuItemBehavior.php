@@ -50,6 +50,17 @@ class MenuItemBehavior extends UnitTestCase
 		$this->assertEqual($this->menuItem->tooltip(), "");
 		$this->assertEqual($this->menuItem->url(), "");
 	}
+	
+	function test_constructor_shouldCreateCustomInstance()
+	{
+		$menuItem = new MenuItem("parent", "http://www.foobar.com", "Foo Bar", "Go to Foo Bar");
+		
+		$this->assertEqual($menuItem->name(), "");
+		$this->assertEqual($menuItem->parentId(), "parent");
+		$this->assertEqual($menuItem->text(), "Foo Bar");
+		$this->assertEqual($menuItem->tooltip(), "Go to Foo Bar");
+		$this->assertEqual($menuItem->url(), "http://www.foobar.com");
+	}
 			
 	function test_constructor_shouldRegisterListsAndFunctions()
 	{
@@ -57,9 +68,9 @@ class MenuItemBehavior extends UnitTestCase
 		
 		$this->assertEqual(sizeof($lists), 1);
 		
-		$list = $lists["subMenu"];
+		$list = $lists["children"];
 		
-		$this->assertEqual($list->name(), "subMenu");
+		$this->assertEqual($list->name(), "children");
 		$this->assertEqual($list->itemClass(), "MenuItem");
 		$this->assertEqual($list->isSynced(), true);
 		$this->assertEqual($list->sortRule(), null);
@@ -92,6 +103,9 @@ class MenuItemBehavior extends UnitTestCase
 		$this->assertTrue($tmpObj->text(), "bar");
 		$this->assertTrue($tmpObj->tooltip(), "foo bar");
 		$this->assertEqual($tmpObj->name(), "foobar");
+		
+		
+		$this->assertEqual($tmpObj->name(""), "");
 	}
 	
     
@@ -117,7 +131,7 @@ class MenuItemBehavior extends UnitTestCase
 		$this->assertTrue($this->menuItem->addMenuItem("http://www.saidi.se", "saidi.se"));
 		$this->assertTrue($this->menuItem->addMenuItem("http://www.wigbi.com", "wigbi.com", "Go to wigbi.com", "wigbi-link"));
 
-		$items = $this->menuItem->getListItems("subMenu");		
+		$items = $this->menuItem->getListItems("children");		
 		$items = $items[0];
 		$item1 = $items[0];
 		$item2 = $items[1];

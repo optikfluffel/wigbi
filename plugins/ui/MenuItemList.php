@@ -59,7 +59,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.UI
- * @version			1.0.0
+ * @version			1.0.2
  */
 class MenuItemList extends WigbiUIPlugin
 {
@@ -111,14 +111,14 @@ class MenuItemList extends WigbiUIPlugin
 		$children = $children[0];
 
 		$plugin->beginPlugin();
-		
-		View::addTextArea($plugin->getChildId("object"), json_encode($obj), "style='display:none'");
-		View::addHiddenInput($plugin->getChildId("canAdd"), $canAdd ? 1 : "");
-		View::addHiddenInput($plugin->getChildId("canDelete"), $canDelete ? 1 : "");
-		View::addHiddenInput($plugin->getChildId("canEdit"), $canEdit ? 1 : "");
-		View::addHiddenInput($plugin->getChildId("canSort"), $canSort ? 1 : "");
-		View::addHiddenInput($plugin->getChildId("cssClass"), $cssClass);
 		?>
+		
+		<input type="hidden" id="<?php print $plugin->getChildId("parentId") ?>" value="<?php print $obj->id() ?>" />
+		<input type="hidden" id="<?php print $plugin->getChildId("canAdd") ?>" value="<?php print $canAdd ? 1 : "" ?>" />
+		<input type="hidden" id="<?php print $plugin->getChildId("canDelete") ?>" value="<?php print $canDelete ? 1 : "" ?>" />
+		<input type="hidden" id="<?php print $plugin->getChildId("canEdit") ?>" value="<?php print $canEdit ? 1 : "" ?>" />
+		<input type="hidden" id="<?php print $plugin->getChildId("canSort") ?>" value="<?php print $canSort ? 1 : "" ?>" />
+		<input type="hidden" id="<?php print $plugin->getChildId("cssClass") ?>" value="<?php print $cssClass ?>" />
 		
 		<div id="<?php print $id ?>-container">
 			<ul id="<?php print $id ?>" class="<?php print $cssClass . ($canDelete ? " candelete" : "") . ($canEdit ? " canedit" : "") . ($canSort ? " cansort" : ""); ?>">		

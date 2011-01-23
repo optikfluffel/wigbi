@@ -20,10 +20,10 @@
 	</div>
 	<div class="fc">
 		<div class="box add">
-			Id: <?php View::addTextInput("hcc_id") ?>
-			Name: <?php View::addTextInput("hcc_name", "") ?>
-			EmbedForm: <input id="hcc_embed" type="checkbox" />
-			<?php View::addButton("hcc_addButton", "Add", "HtmlContentControl.add('hcc', $('#hcc_id').val(), $('#hcc_name').val(), $('#hcc_embed').attr('checked'), 'hcc_target', addDone)"); ?>
+			Id: <input type="text" id="hcc_id" />
+			Name: <input type="text" id="hcc_name" />
+			EmbedForm: <input type="checkbox" id="hcc_embed" />
+			<button id="hcc_addButton" onclick="HtmlContentControl.add('hcc', $('#hcc_id').val(), $('#hcc_name').val(), $('#hcc_embed').attr('checked'), 'hcc_target', addDone);">Add</button>
 		</div>
 	</div>
 </div>

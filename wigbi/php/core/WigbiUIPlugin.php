@@ -21,14 +21,10 @@
  * The Wigbi.PHP.Core.WigbiUIPlugin class.
  * 
  * A Wigbi UI plugin is a modular component that can be easily added
- * to a page, such as a login form, music player, Tiny MCE code etc.
+ * to a page, like a login form, Tiny MCE code etc.
  * 
- * A UI plugin consists of a .php and a .js file. To use a UI plugin,
- * simply place the two class files in the wigbi/plugins/ui folder.
- * 
- * Wigbi will automatically bundle and obfuscate the JavaScript code
- * from all the UI plugin JavaScript files that are added to a Wigbi
- * application, as long as RTB is enabled in the main config file. 
+ * A UI plugin consists of a .php and a .js file. Just place the two
+ * files in wigbi/plugins/ui to add a plugin to a Wigbi application. 
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -36,7 +32,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	PHP.Core
- * @version			1.0.0
+ * @version			1.0.2
  * 
  * @abstract
  */

@@ -429,7 +429,7 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_version_ShouldReturnCorrectValue()
 	{
-		$this->assertEqual(Wigbi::version(), "1.0.0");
+		$this->assertEqual(Wigbi::version(), "1.0.2");
 	}
 
 	function test_wigbiFolder_shouldReturnCorrectPath()
@@ -931,7 +931,7 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(strpos($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . Wigbi::webRoot() . "wigbi/bundle/css:wigbi/css\" />"));
 		
 		$this->assertTrue(strpos($result, "<script type=\"text/javascript\" src=\"" . Wigbi::webRoot() . "wigbi/bundle/js:wigbi/js/core,wigbi/js,wigbi/plugins/data,wigbi/plugins/ui\"></script>"));
-		$this->assertTrue(strpos($result, "<script type=\"text/javascript\">eval("));
+		$this->assertTrue(strpos($result, "<script type=\"text/javascript\">//<![CDATA["));
 	}
 
 	function test_start_shouldStartWigbi()

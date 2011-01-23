@@ -52,7 +52,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.UI
- * @version			1.0.0
+ * @version			1.0.2
  */
 class LoginForm extends WigbiUIPlugin
 {
@@ -88,28 +88,28 @@ class LoginForm extends WigbiUIPlugin
 		
 		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
-		View::openForm($plugin->getChildId("form"));
-		View::addHiddenInput($plugin->getChildId("redirectUrl"), $redirectUrl, "");
-		
-		View::addDiv($plugin->getChildId("validation"), "&nbsp;", "class='invalid hide'");
-		
-		View::addDiv($plugin->getChildId("userNameTitle"), $plugin->translate("userName") . ":", "class='input-title'");
-		View::addTextInput($plugin->getChildId("userName"), "", "");
-		
-		View::addDiv($plugin->getChildId("passwordTitle"), $plugin->translate("password") . ":", "class='input-title'");
-		View::addPasswordInput($plugin->getChildId("password"), "", "");
 		?>
 		
-		<div class="formButtons"><?php
-			View::addSubmitButton($plugin->getChildId("submit"), $plugin->translate("submit"));
-		?></div>
+		<form id="<?php print $plugin->getChildId("form") ?>">
+			<input type="hidden" id="<?php print $plugin->getChildId("redirectUrl") ?>" value="<?php print $redirectUrl ?>" />
+			<div id="<?php print $plugin->getChildId("validation") ?>" class="invalid hide"></div>
+		
+			<div class="input-title userName"><?php print $plugin->translate("userName") ?>:</div>
+			<div class="input userName"><input type="text" id="<?php print $plugin->getChildId("userName") ?>" /></div>
+			
+			<div class="input-title password"><?php print $plugin->translate("password") ?>:</div>
+			<div class="input password"><input type="password" id="<?php print $plugin->getChildId("password") ?>" /></div>
+		
+			<div class="formButtons">
+				<input type="submit" id="<?php print $plugin->getChildId("submit") ?>"  value="<?php print $plugin->translate("submit") ?>" />
+			</div>
+		</form>
 		
 		<script type="text/javascript">
 				var <?print $id ?> = new LoginForm("<?print $id ?>");
 		</script>
 		
 		<?php
-		View::closeForm();
 		$plugin->endPluginDiv();
 		return $plugin->endPlugin();
 	}

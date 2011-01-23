@@ -49,7 +49,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.UI
- * @version			1.0.0
+ * @version			1.0.2
  */
 class LogoutLink extends WigbiUIPlugin
 {
@@ -79,17 +79,15 @@ class LogoutLink extends WigbiUIPlugin
 	{
 		$plugin = new LogoutLink($id);
 		
-		$plugin->beginPlugin();
-		View::addHiddenInput($plugin->getChildId("redirectUrl"), $redirectUrl, "");
-		?>
-		
-			<script type="text/javascript">
-				var <?print $id ?> = new LogoutLink("<?print $id ?>", "<?php print $redirectUrl; ?>");
-			</script>
+		$plugin->beginPlugin(); ?>
 			
-			<a href="" onclick="<?print $id ?>.submit(); return false;">
-				<?php print $plugin->translate("logout") ?>
-			</a>
+		<input type="hidden" id="<?php print $plugin->getChildId("redirectUrl") ?>" value="<?php print $redirectUrl ?>" />
+		<script type="text/javascript">
+			var <?print $id ?> = new LogoutLink("<?print $id ?>", "<?php print $redirectUrl; ?>");
+		</script>
+		<a href="" onclick="<?print $id ?>.submit(); return false;">
+			<?php print $plugin->translate("logout") ?>
+		</a>
 			
 		<?php return $plugin->endPlugin();
 	}

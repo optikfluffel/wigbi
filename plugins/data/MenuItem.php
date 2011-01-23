@@ -41,7 +41,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.2
  */
 class MenuItem extends WigbiDataPlugin
 {
@@ -56,52 +56,28 @@ class MenuItem extends WigbiDataPlugin
 	/**#@-*/
 	
 	
-	public function __construct($parentId = "")
+	public function __construct($parentId = null, $url = null, $text = null, $tooltip = null)
 	{
 		parent::__construct();
 		
-		$this->parentId($parentId);
+		if (func_num_args() > 0)
+		{
+			$this->parentId($parentId);
+			$this->url($url);
+			$this->text($text);
+			$this->tooltip($tooltip);
+		}
 		
 		$this->registerList("children", "MenuItem", true, null);
-		
 		$this->registerAjaxFunction("addMenuItem", array("url", "text", "tooltip", "name"), false);
 	}
 	
 	
-	public function name($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_name = func_get_arg(0);
-		return $this->_name;
-	}
-	
-	public function parentId($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_parentId = func_get_arg(0);
-		return $this->_parentId;
-	}
-	
-	public function text($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_text = func_get_arg(0);
-		return $this->_text;
-	}
-	
-	public function tooltip($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_tooltip = func_get_arg(0);
-		return $this->_tooltip;
-	}
-	
-	public function url($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_url = func_get_arg(0);
-		return $this->_url;
-	}
+	public function name($value = null) { return $this->getSet("_name", $value); }
+	public function parentId($value = null) { return $this->getSet("_parentId", $value); }
+	public function text($value = null) { return $this->getSet("_text", $value); }
+	public function tooltip($value = null) { return $this->getSet("_tooltip", $value); }
+	public function url($value = null) { return $this->getSet("_url", $value); }
 	
 
 	/**
@@ -152,11 +128,9 @@ class MenuItem extends WigbiDataPlugin
 		//Init error list
 		$errorList = array();
 		
-		//Require that the object has a text and a url
+		//Require that the object has a text
 		if (!trim($this->text()))
 			array_push($errorList, "text_required");
-		if (!trim($this->url()))
-			array_push($errorList, "url_required");
 			
 		//Return error list
 		return $errorList;

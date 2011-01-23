@@ -51,6 +51,7 @@ function MenuItemForm(id)
 			
 			obj.save(function() {
 				submitButton.attr("disabled", "");
+				_this.setObject(obj);
 				_this.onSubmit(obj);
 			});
 		});

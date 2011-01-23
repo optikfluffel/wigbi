@@ -22,8 +22,8 @@
 		</div>
 		<div class="fc">
 			<div class="box add">
-				Redirect URL: <?php View::addTextInput("lif_redirectUrl", "") ?>
-				<?php View::addButton("lif_addButton", "Add", "LoginForm.add('lif', $('#lif_redirectUrl').val(), 'lif_target', addDone)"); ?>
+				Redirect URL: <input type="text" id="lif_redirectUrl" />
+				<button id="lif_addButton" onclick="LoginForm.add('lif', $('#lif_redirectUrl').val(), 'lif_target', addDone)">Add</button>
 			</div>
 		</div>
 	</div>

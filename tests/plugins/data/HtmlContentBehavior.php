@@ -30,7 +30,6 @@ class HtmlContentBehavior extends UnitTestCase
 		$this->assertEqual($this->htmlContent->createdDateTime(), "__DATETIME");
 		$this->assertEqual($this->htmlContent->lastUpdatedDateTime(), "__DATETIME");
 		$this->assertEqual($this->htmlContent->name(), "__50");
-		$this->assertEqual($this->htmlContent->title(), "__25");
 		$this->assertEqual($this->htmlContent->content(), "__TEXT");
 	}
 	
@@ -42,7 +41,6 @@ class HtmlContentBehavior extends UnitTestCase
 		$this->assertEqual($this->htmlContent->createdDateTime(), "");
 		$this->assertEqual($this->htmlContent->lastUpdatedDateTime(), "");
 		$this->assertEqual($this->htmlContent->name(), "");
-		$this->assertEqual($this->htmlContent->title(), "");
 		$this->assertEqual($this->htmlContent->content(), "");
 	}
 			
@@ -51,7 +49,6 @@ class HtmlContentBehavior extends UnitTestCase
 	function test_properties_shouldBePersisted()
 	{
 		$this->htmlContent->name("name");
-		$this->htmlContent->title("title");
 		$this->htmlContent->content("content");
 		$this->htmlContent->save();
 		
@@ -61,7 +58,6 @@ class HtmlContentBehavior extends UnitTestCase
 		$this->assertTrue($tmpObj->createdDateTime());
 		$this->assertTrue($tmpObj->lastUpdatedDateTime());
 		$this->assertEqual($tmpObj->name(), "name");
-		$this->assertEqual($tmpObj->title(), "title");
 		$this->assertEqual($tmpObj->content(), "content");
 	}
 	

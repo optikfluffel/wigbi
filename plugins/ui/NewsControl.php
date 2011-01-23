@@ -90,34 +90,39 @@ class NewsControl extends WigbiUIPlugin
 		$plugin->beginPlugin();
 		$plugin->beginPluginDiv();
 		
+		
 		if ($embedForm)
-			$plugin->beginViewDiv($embedForm && $obj->id());
+			$plugin->beginViewDiv($embedForm && $obj->id()); ?>
+		<input type="hidden" id="<?php print $plugin->getChildId("idInput") ?>" value="<?php print $obj->id() ?>" />
 		
-		View::addHiddenInput($plugin->getChildId("idInput"), $obj->id());
-		View::addDiv($plugin->getChildId("content"), wurl($obj->content()));
-		
+		<?php /* View area ********** */ ?>
+		<div id="<?php print $plugin->getChildId("content"); ?>">
+			<?php pwurl($obj->content()); ?>
+		</div> 
+
+		<?php /* Form area ********** */
 		if ($embedForm)
 		{
 			$plugin->endViewDiv();
-			$plugin->beginEditDiv($embedForm && !$obj->id());
-			
-			View::openForm($plugin->getChildId("form"));
-			View::addDiv($plugin->getChildId("titleInputTitle"), $plugin->translate("title") . ":", "class='input-title'");
-				View::addTextInput($plugin->getChildId("titleInput"), $obj->title(), "");
-			View::addDiv($plugin->getChildId("contentInputTitle"), $plugin->translate("content") . ":", "class='input-title'");
-				View::addTextArea($plugin->getChildId("contentInput"), $obj->content(), "class='wysiwyg slimmed'");
-			?>
-			
-			<div class="formButtons"><?php
-				View::addResetButton($plugin->getChildId("reset"), $plugin->translate("reset"));
-				View::addSubmitButton($plugin->getChildId("submit"), $plugin->translate("save"));
-			?></div>
+			$plugin->beginEditDiv($embedForm && !$obj->id()); ?>
+		
+			<form id="<?php print $plugin->getChildId("form") ?>">
+				<div class="input-title title"><?php print $plugin->translate("title") ?>:</div>
+				<div class="input title"><input type="text" id="<?php print $plugin->getChildId("titleInput") ?>" value="<?php print $obj->title() ?>" /></div>
+				
+				<div class="input-title content"><?php print $plugin->translate("content") ?>:</div>
+				<div class="input content"><textarea id="<?php print $plugin->getChildId("contentInput") ?>" class="wysiwyg advanced"><?php print $obj->content() ?></textarea></div>
+				
+				<div class="formButtons">
+					<input type="reset" id="<?php print $plugin->getChildId("reset") ?>"  value="<?php print $plugin->translate("reset") ?>" />
+					<input type="submit" id="<?php print $plugin->getChildId("submit") ?>"  value="<?php print $plugin->translate("submit") ?>" />
+				</div>
+			</form>
 			
 			<?php
-			View::closeForm();
 			$plugin->endEditDiv();	
 		} ?>
-
+			
 		<script type="text/javascript">
 			var <?print $id ?> = new NewsControl("<?print $id ?>");
 		</script>

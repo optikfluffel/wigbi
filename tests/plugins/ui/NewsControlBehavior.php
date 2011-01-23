@@ -20,10 +20,10 @@
 	</div>
 	<div class="fc">
 		<div class="box add">
-			Id: <?php View::addTextInput("nc_id") ?>
-			Title: <?php View::addTextInput("nc_title", "") ?>
-			EmbedForm: <input id="nc_embed" type="checkbox" />
-			<?php View::addButton("nc_addButton", "Add", "NewsControl.add('nc', $('#nc_id').val(), $('#nc_title').val(), $('#nc_embed').attr('checked'), 'nc_target', addDone)"); ?>
+			Id: <input type="text" id="nc_id" />
+			Name: <input type="text" id="nc_name" />
+			EmbedForm: <input type="checkbox" id="nc_embed" />
+			<button id="nc_addButton" onclick="NewsControl.add('nc', $('#nc_id').val(), $('#nc_name').val(), $('#nc_embed').attr('checked'), 'nc_target', addDone);">Add</button>
 		</div>
 	</div>
 </div>

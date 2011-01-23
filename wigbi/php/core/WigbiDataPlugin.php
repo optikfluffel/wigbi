@@ -19,27 +19,25 @@
 /**
  * The Wigbi.PHP.Core.WigbiDataPlugin base class.
  * 
- * All data plugins must inherit this class, and call its constructor
- * from within their own. See any standard data plugin for examples.
- * 
  * Wigbi data plugins can be persisted to the database. To add a data
  * plugin to a Wigbi application, simply add the plugin class file to
  * the wigbi/plugins/data folder.
  * 
  * If the Runtime Build feature is enabled in the Wigbi configuration
  * file, Wigbi will generate a JavaScript class file for every plugin
- * that is added to the Wigbi application. 
+ * that is added and will also create a database table if none exists.
+ * Make sure to enable Runtime Build if a new data plugin is added or
+ * an old one modified.
+ * 
+ * All data plugins must inherit this class, and call its constructor
+ * from within their own. See any data plugin template for an example. 
  * 
  * 
  * DATABASE PERSISTENCY ******************************
  * 
  * When Wigbi is started, it will automatically setup a database and
- * make sure that it has all the tables it needs, provided that data
- * persistency and RTB is enabled in the Wigbi configuration file.
- * 
- * Wigbi will automatically create a database table for every plugin.
- * It uses the collectionName() property as table name and creates a
- * column for each public variable.
+ * make sure that it has all the tables it needs to handle all added
+ * data plugins. Wigbi will create a column for each public variable.
  * 
  * To avoid name conflicts, use this variable/property name pattern:
  * <ul>
@@ -53,7 +51,7 @@
  * will only ADD tables and columns, never delete them.
  * 
  * Wigbi will automatically set the value of the following variables,
- * if they exist when a data plugin is saved:
+ * if they exist when a data plugin instance is saved:
  * <ul>
  * 	<li>_createdDateTime - __DATETIME</li>
  * 	<li>_lastUpdatedDateTime - __DATETIME</li>
@@ -64,8 +62,7 @@
  * 
  * The Wigbi persistency engine supports booleans, doubles, integers
  * and strings. To handle database types that are unavailable in PHP,
- * use string variables, which default values are divided into value
- * and type, as such: "[default value]__[type]".
+ * define string variables with "[default value]__[type]".
  * 
  * All standard database types are supported, using the format above.
  * The following "extra" types are also supported:
@@ -85,13 +82,12 @@
  * Data lists make it easy to create relationships between available
  * data plugins. For simplicity, this class uses the name "list" and
  * not "dataList" when naming properties and methods, e.g. "getList".  
+ * To register a data list, just call the registerList method in the
+ * constructor. Wigbi will then create a database table for the list.
  * 
  * Data lists contain <i>items</i>, which are ID pointers to objects.
  * A data plugin object must thus be saved to the database before it
  * can be used in list operations.
- * 
- * To register a data list, just call the registerList method in the
- * constructor. Wigbi will then create a database table for the list.
  * 
  * A data list can either be synced or non-synced. With synced lists,
  * objects are automatically deleted if they are removed from a list
@@ -133,7 +129,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	PHP.Core
- * @version			1.0.0
+ * @version			1.0.2
  * 
  * @abstract
  */
@@ -192,7 +188,8 @@ abstract class WigbiDataPlugin
 	 * @access	public
 	 * @static
 	 * 
-	 * @return	bool	Whether or not objects should auto-reset when being created.
+	 * @param		string	$value	Optional set value.	
+	 * @return	bool						Whether or not objects should auto-reset when being created.
 	 */
 	public static function autoReset($value = false)
 	{
@@ -517,6 +514,32 @@ abstract class WigbiDataPlugin
 		
 		//Return the search result
 		return $this->searchListItems($listName, $tmpFilter);
+	}
+	
+	/**
+	 * Get and/or set a variable value.
+	 *
+	 * This method makes it convenient to get/set an object variable.
+	 * It always returns the variable name. If a second parameter is
+	 * provided (and is not null), the method also sets the variable
+	 * to the provided value.
+	 * 
+	 * Note one important thing - this method should only be used to
+	 * get/set database variable values. It cannot be used to set an
+	 * object reference to null. In short, this is used to make data
+	 * plugin properties shorter to write.
+	 * 
+	 * @access	protected
+	 * 
+	 * @param		string	$variableName		The name of the variable to set.
+	 * @param		mixed		$value					Optional set value; default null.
+	 * @return	mixed										Variable value.
+	 */
+	protected function getSet($variableName, $newValue = null)
+	{
+		if (func_num_args() > 1 && !is_null($newValue))
+			$this->$variableName = $newValue;
+		return $this->$variableName;
 	}
 
 	/**

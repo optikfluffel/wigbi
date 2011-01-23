@@ -71,7 +71,7 @@ class Wigbi
 	/**#@+
 	 * @ignore
 	 */
-	private static $_version = "1.0.1";
+	private static $_version = "1.0.2";
 	
 	private static $_cacheHandler;
 	private static $_configFile;
@@ -686,7 +686,7 @@ class Wigbi
 		$mySQL_password = Wigbi::configuration("password", "mySQL");
 		
 		//If RTB is enabled and data plugins are added, Wigbi will try to create the database
-		if (Wigbi::configuration("enabled", "runtimeBuild") && sizeof(Wigbi::dataPluginClasses()) > 0)
+		if (Wigbi::configuration("enabled", "runtimeBuild"))
 		{
 			//Connect to the database server, if any, abort if failed
 			Wigbi::$_dbHandler = new DatabaseHandler($mySQL_host, null, $mySQL_uid, $mySQL_password);
