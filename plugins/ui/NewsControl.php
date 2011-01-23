@@ -95,10 +95,16 @@ class NewsControl extends WigbiUIPlugin
 			$plugin->beginViewDiv($embedForm && $obj->id()); ?>
 		<input type="hidden" id="<?php print $plugin->getChildId("idInput") ?>" value="<?php print $obj->id() ?>" />
 		
+		
 		<?php /* View area ********** */ ?>
+		<div id="<?php print $plugin->getChildId("date"); ?>" class="date"><?php print date("Y-m-d", strtotime($obj->createdDateTime())) ?></div>
+		<h2 id="<?php print $plugin->getChildId("title"); ?>" class="title"><?php print $obj->title(); ?></h2>
+		<h3 id="<?php print $plugin->getChildId("introduction"); ?>" class="introduction"><?php print $obj->introduction(); ?></h3>
+		
 		<div id="<?php print $plugin->getChildId("content"); ?>">
 			<?php pwurl($obj->content()); ?>
 		</div> 
+		
 
 		<?php /* Form area ********** */
 		if ($embedForm)
@@ -109,6 +115,9 @@ class NewsControl extends WigbiUIPlugin
 			<form id="<?php print $plugin->getChildId("form") ?>">
 				<div class="input-title title"><?php print $plugin->translate("title") ?>:</div>
 				<div class="input title"><input type="text" id="<?php print $plugin->getChildId("titleInput") ?>" value="<?php print $obj->title() ?>" /></div>
+				
+				<div class="input-title introduction"><?php print $plugin->translate("introduction") ?>:</div>
+				<div class="input introduction"><input type="text" id="<?php print $plugin->getChildId("introductionInput") ?>" value="<?php print $obj->introduction() ?>" /></div>
 				
 				<div class="input-title content"><?php print $plugin->translate("content") ?>:</div>
 				<div class="input content"><textarea id="<?php print $plugin->getChildId("contentInput") ?>" class="wysiwyg advanced"><?php print $obj->content() ?></textarea></div>
