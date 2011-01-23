@@ -29,7 +29,7 @@
  * @subpackage	Plugins.Data
  * @version			1.0.2
  */
-class MenuItem extends WigbiDataPlugin
+class CalendarItem extends WigbiDataPlugin
 {
 	public $_title = "__50";
 	public $_startDateTime = "__DATETIME";

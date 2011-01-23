@@ -81,7 +81,7 @@ class MenuItem extends WigbiDataPlugin
 	
 
 	/**
-	 * Add a sub menu item to the menu item.
+	 * Add an item to the menu item's sub menu.
 	 * 
 	 * @access	public
 	 * 
@@ -116,23 +116,13 @@ class MenuItem extends WigbiDataPlugin
 		return true;
 	}
 	
-	/**
-	 * Validate the object.
-	 * 
-	 * @access	public
-	 * 
-	 * @return	array	Error list; empty if valid.
-	 */
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require that the object has a text
 		if (!trim($this->text()))
 			array_push($errorList, "text_required");
 			
-		//Return error list
 		return $errorList;
 	}
 }
