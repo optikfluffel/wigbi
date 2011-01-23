@@ -35,9 +35,8 @@
  * 
  * 	<ul>
  * 		<li>[AJAX] public void add(string id, string redirectUrl, string targetContainerId, function onAdd())</li>
- * 		<li>[AJAX] public void submit()</li>
- * 		<li></li>
  * 		<li>[VIRTUAL] public void onSubmit()</li>
+ * 		<li>[AJAX] public void submit()</li>
  * 	</ul>
  * 
  * By default, the onSubmit event method alerts if the operation did

@@ -29,11 +29,10 @@
  * This UI plugin has the following JavaScript functionality:
  * 
  * 	<ul>
- * 		<li>[AJAX] public void add(string id, mixed objectOrId, string objectName, string targetContainerId, function onAdd())</li>
+ * 		<li>[AJAX] public void add(string id, mixed objectId, string objectName, string targetContainerId, function onAdd())</li>
+ * 		<li>[VIRTUAL] public void onSubmit(MenuItem obj)</li>
  * 		<li>[AJAX] public void setObject(MenuItem object)</li>
  * 		<li>[AJAX] public void submit()</li>
- * 		<li></li>
- * 		<li>[VIRTUAL] public void onSubmit(MenuItem obj)</li>
  * 	</ul>
  * 
  * 

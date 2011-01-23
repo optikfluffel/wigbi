@@ -20,28 +20,18 @@
 /**
  * The Wigbi.Plugins.UI.YouTubePlayer PHP class.
  * 
- * This plugin can be used to logout a logged in user from the site,
- * using the User data plugin. The operation is submitted with AJAX,
- * without reloading the page.
- * 
- * If redirectUrl is set, the plugin will redirect a user to the URL
- * when he/she is successfully logged out.
+ * This plugin can be used to display a YouTube player with a movie.
+ * This plugin supports the old embed format. A new version will be
+ * added soon.
  * 
  * 
  * JAVASCRIPT ********************
  * 
- * This UI plugin has the following JavaScript functionality besides
- * what is provided by the WigbiUIPlugin base class:
+ * This plugin has the following JavaScript functionality:
  * 
  * 	<ul>
  * 		<li>[AJAX] public void add(string id, string redirectUrl, string targetContainerId, function onAdd())</li>
- * 		<li>[AJAX] public void submit()</li>
- * 		<li></li>
- * 		<li>[VIRTUAL] public void onSubmit()</li>
  * 	</ul>
- * 
- * By default, the onSubmit event method alerts if the operation did
- * not succeed, as well as what went wrong.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -49,7 +39,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.UI
- * @version			1.0.0
+ * @version			1.0.2
  */
 class YouTubePlayer extends WigbiUIPlugin
 {

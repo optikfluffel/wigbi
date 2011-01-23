@@ -39,18 +39,18 @@
  * 		<li>public bool canDelete()</li>
  * 		<li>public bool canEdit()</li>
  * 		<li>public bool canSort()</li>
+ * 		<li>public string parentId()</li>
  * 		<li>public MenuItem parentItem()</li>
  * 		<li></li>
- * 		<li>public static add(string id, string parentObjectId, string parentObjectName, string cssClass, bool canAdd, bool canDelete, bool canEdit, bool canSort, string targetContainerId, function onAdd)</li>
- * 		<li>public void deleteListItem(string itemId)</li>
- * 		<li>public void moveListItem(string itemId, int numSteps)</li>
- * 		<li>public void reload()</li>
- * 		<li></li>
+ * 		<li>[AJAX] public static add(string id, string parentObjectId, string parentObjectName, string cssClass, bool canAdd, bool canDelete, bool canEdit, bool canSort, string targetContainerId, function onAdd)</li>
+ * 		<li>[AJAX] public void deleteListItem(string itemId)</li>
+ * 		<li>[AJAX] public void moveListItem(string itemId, int numSteps)</li>
  * 		<li>[VIRTUAL] public void onAddClicked()</li>
  * 		<li>[VIRTUAL] public void onDeleteListItem(string itemId)</li>
  * 		<li>[VIRTUAL] public void onEditClicked(string itemId)</li>
  * 		<li>[VIRTUAL] public void onMoveListItem(string itemId, int numSteps)</li>
  * 		<li>[VIRTUAL] public void onReload()</li>
+ * 		<li>[AJAX] public void reload()</li>
  * 	</ul>
  * 
  * 

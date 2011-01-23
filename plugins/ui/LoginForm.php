@@ -38,7 +38,6 @@
  * 	<ul>
  * 		<li>[AJAX] public void add(string id, string redirectUrl, bool autoRedirect, string targetContainerId, function onAdd())</li>
  * 		<li>[AJAX] public void submit()</li>
- * 		<li>public void reset()</li>
  * 		<li></li>
  * 		<li>[VIRTUAL] public void onSubmit(bool loginResult, string exception)</li>
  * 	</ul>

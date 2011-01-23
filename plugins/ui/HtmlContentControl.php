@@ -33,11 +33,10 @@
  * This UI plugin has the following JavaScript functionality:
  * 
  * 	<ul>
- * 		<li>[AJAX] public void add(string id, mixed objectOrId, string objectName, bool embedForm, string targetContainerId, function onAdd())</li>
+ * 		<li>[AJAX] public void add(string id, mixed objectId, string objectName, bool embedForm, string targetContainerId, function onAdd())</li>
+ * 		<li>[VIRTUAL] public void onSubmit(HtmlContent obj)</li>
  * 		<li>[AJAX] public void setObject(HtmlContent object)</li>
  * 		<li>[AJAX] public void submit()</li>
- * 		<li></li>
- * 		<li>[VIRTUAL] public void onSubmit(HtmlContent obj)</li>
  * 	</ul>
  * 
  * 
