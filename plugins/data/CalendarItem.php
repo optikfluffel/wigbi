@@ -34,6 +34,7 @@ class CalendarItem extends WigbiDataPlugin
 	public $_title = "__50";
 	public $_startDateTime = "__DATETIME";
 	public $_endDateTime = "__DATETIME";
+	public $_fullDay = true;
 	public $_description = "__TEXT";
 	
 	
@@ -43,10 +44,11 @@ class CalendarItem extends WigbiDataPlugin
 	}
 	
 	
-	public function description($value = null) { $this->getSet("_description"); }
-	public function endDateTime($value = null) { $this->getSet("_endDateTime"); }
-	public function startDateTime($value = null) { $this->getSet("_startDateTime"); }
-	public function title($value = null) { $this->getSet("_title"); }
+	public function description($value = null) { return $this->getSet("_description", $value); }
+	public function endDateTime($value = null) { return $this->getSet("_endDateTime", $value); }
+	public function fullDay($value = null) { return $this->getSet("_fullDay", $value); }
+	public function startDateTime($value = null) { return $this->getSet("_startDateTime", $value); }
+	public function title($value = null) { return $this->getSet("_title", $value); }
 	
 	
 	public function validate()
