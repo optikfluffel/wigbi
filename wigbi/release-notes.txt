@@ -7,11 +7,11 @@ GitHub - http://www.github.com/danielsaidi/wigbi
 
 
 ************************
-Wigbi 1.0.2 [2011-01-20]
+Wigbi 1.0.2 [2011-01-27]
 ************************
 
 This new release features some handy additions and some important changes. A
-change that is important to note is the View class, which has been stripped.
+change that is important to note is that the View class has been stripped.
 
 Most important to notice is that all View::add methods (except View::addView)
 have been removed. They made the View class really messy and I regret adding
@@ -31,6 +31,9 @@ examples of these two changes.
 
 Wigbi now embeds the startup JavaScript code in a CDATA comment, which means
 that the code no longer affects HTML validation.
+
+Finally, the RuntimeBuild.obfuscate parameter can be removed from the config
+file. It is no longer used.
  
 
 
