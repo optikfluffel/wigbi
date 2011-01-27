@@ -80,7 +80,7 @@ class YouTubePlayer extends WigbiUIPlugin
 			</object>
 		
 			<script type="text/javascript">
-				var <?print $id ?> = new YouTubePlayer("<?print $id ?>", "<?php print $redirectUrl; ?>");
+				var <?print $id ?> = new YouTubePlayer("<?print $id ?>");
 			</script>
 			
 		<?php return $plugin->endPlugin();
