@@ -7,6 +7,25 @@ GitHub - http://www.github.com/danielsaidi/wigbi
 
 
 ************************
+Wigbi 1.0.3 [2011-02-XX]
+************************
+
+The Wigbi 1.0.3 release features one drastic data plugin change, and several
+small adjustments.
+
+First of all, the WigbiDataPlugin base class has once again has the two date
+variables _createdByDateTime and _lastUpdatedDateTime. This means that these
+variables does not have to be added to any descendents of the class. A minor
+drawback with this approach, is that two extra columns are required for each
+data plugin. On the other hand, all changes are automatically tracked, so it
+is not all bad :)
+
+Furthermore, all data plugins templates now use the new getSet method, which
+makes them a LOT smaller. Older data plugin versions still work, though.  
+
+
+
+************************
 Wigbi 1.0.2 [2011-01-27]
 ************************
 
