@@ -29,7 +29,6 @@ function NewsControl(id)
 	this.setObject = function(obj)
 	{
 		_this.getElement("title").html(obj.title());
-		_this.getElement("introduction").html(obj.introduction());
 		_this.getElement("content").html(obj.content());
 				
 		this.getElement("idInput").val(obj.id());
@@ -44,7 +43,6 @@ function NewsControl(id)
 		var obj = new News();
 		obj.load(_this.getElement("idInput").val(), function() {
 			obj.title(_this.getElement("titleInput").val());
-			obj.introduction(_this.getElement("introductionInput").val());
 			obj.content(_this.getElement("contentInput").val());
 			try { obj.content(tinyMCE.get(_this.getElement("contentInput").attr("id")).getContent()); }
 			catch(e) { }
