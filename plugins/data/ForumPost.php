@@ -19,12 +19,8 @@
 /**
  * The Wigbi.Plugins.Data.ForumPost class.
  * 
- * This class represents a general forum post, which can be added to
- * a forum or a forum thread.
- * 
- * The createdById, forumId and forumThreadId properties can be used
- * as object ID references to make a forum post fully traceable even
- * when it is retrieved without the data lists of its owner objects.
+ * This class represents a general forum post that can be added to a
+ * certain forum thread.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -32,7 +28,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class ForumPost extends WigbiDataPlugin
 {
@@ -40,8 +36,6 @@ class ForumPost extends WigbiDataPlugin
 	 * @ignore
 	 */
 	public $_createdById = "__GUID";
-	public $_createdDateTime = "__DATETIME";
-	public $_lastUpdatedDateTime = "__DATETIME";
 	public $_forumThreadId = "__GUID";
 	public $_content = "__TEXT";
 	/**#@-*/
@@ -53,48 +47,18 @@ class ForumPost extends WigbiDataPlugin
 	}
 	
 	
-	public function content($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_content = func_get_arg(0);
-		return $this->_content;
-	}
-
-	public function createdById($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_createdById = func_get_arg(0);
-		return $this->_createdById;
-	}
-	
-	public function createdDateTime()
-	{
-		return $this->_createdDateTime;
-	}
-
-	public function forumThreadId($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_forumThreadId = func_get_arg(0);
-		return $this->_forumThreadId;
-	}
-	
-	public function lastUpdatedDateTime()
-	{
-		return $this->_lastUpdatedDateTime;
-	}
+	public function content($value = null) { return $this->getSet("_content", $value); }
+	public function createdById($value = null) { return $this->getSet("_createdById", $value); }
+	public function forumThreadId($value = null) { return $this->getSet("_forumThreadId", $value); }
 	
 	
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require that content is defined
 		if (!trim($this->content()))
 			array_push($errorList, "content_required");
-			
-		//Return error list
+
 		return $errorList;
 	}
 }

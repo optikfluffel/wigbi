@@ -19,20 +19,21 @@
 /**
  * The Wigbi.Plugins.Data.MenuItem class.
  * 
- * This class represents a menu item, that can be used to link to an
+ * This class represents a menu item that can be used to link to any
  * internal or external URL.
  * 
- * A menu item can either be a root menu item that has no parent, or
- * be the child of another menu item. Sub menu items are stored in a
- * synced data list.
+ * A menu item can either be a root menu item without a parent, or a
+ * child that belong to another menu item. Sub menu items are stored
+ * in synced data lists.
  * 
- * 
- * DATA LISTS ********************
- * 
- * The class has the following data lists: 
- * 
+ * Data lists:
  * 	<ul>
  * 		<li>subMenuItems (MenuItem) - synced</li>
+ * 	</ul>
+ * 
+ * AJAX functionality:
+ * 	<ul>
+ * 		<li>public static void addMenuItem(string url, string text, string tooltip, string name, function onAddMenuItem(bool success))</li>
  * 	</ul>
  * 
  * 
@@ -41,7 +42,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.2
+ * @version			1.0.3
  */
 class MenuItem extends WigbiDataPlugin
 {
@@ -116,6 +117,13 @@ class MenuItem extends WigbiDataPlugin
 		return true;
 	}
 	
+	/**
+	 * Validate the object.
+	 * 
+	 * @access	public
+	 * 
+	 * @return	array	Error list; empty if valid.
+	 */
 	public function validate()
 	{
 		$errorList = array();

@@ -19,9 +19,8 @@
 /**
  * The Wigbi.Plugins.Data.Country class.
  * 
- * This class represents a country, with a name, a language code and
- * a lat/long position. The class also has a city data list to which
- * City instances can be added.
+ * This class represents a generak country, with just a name as well
+ * as language code and name definitions.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -29,7 +28,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class Country extends WigbiDataPlugin
 {
@@ -37,9 +36,8 @@ class Country extends WigbiDataPlugin
 	 * @ignore
 	 */
 	public $_name = "__50";
-	public $_latitude = 0.0;
-	public $_longitude = 0.0;
 	public $_languageCode = "__10";
+	public $_languageName = "__25";
 	/**#@-*/
 	
 	
@@ -49,45 +47,18 @@ class Country extends WigbiDataPlugin
 	}
 	
 
-	public function languageCode($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_languageCode = func_get_arg(0);
-		return $this->_languageCode;
-	}
-	
-	public function latitude($value = 0.0)
-	{
-		if (func_num_args() != 0)
-			$this->_latitude = func_get_arg(0);
-		return $this->_latitude;
-	}
+	public function languageCode($value = null) { return $this->getSet("_languageCode", $value); }
+	public function languageName($value = null) { return $this->getSet("_languageName", $value); }
+	public function name($value = null) { return $this->getSet("_name", $value); }
 
-	public function longitude($value = 0.0)
-	{
-		if (func_num_args() != 0)
-			$this->_longitude = func_get_arg(0);
-		return $this->_longitude;
-	}
-
-	public function name($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_name = func_get_arg(0);
-		return $this->_name;
-	}
-	
 	
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
-			
-		//Require that a name is defined
+
 		if (!trim($this->name()))
 			array_push($errorList, "name_required");
 
-		//Return error list
 		return $errorList;
 	}
 }

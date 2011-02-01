@@ -26,32 +26,22 @@
  * been rated and will recalculate its average score each time it is
  * rated. It is not possible to extract any additional info from it.  
  * 
- * Sometimes, however, additional info is required, e.g. when a user
- * should be able to see what rating he/she has provided. To be able
- * to extract such information, make the rating non-anonymous. After
- * that, the createdBy parameter MUST be set when executing the rate
- * and unrate methods. It can be an IP address, an ID or whatever.
+ * To be able to extract detailed information, make it non-anonymous.
+ * If a rating is non-anonymous, the createdBy parameter MUST be set
+ * when executing the rate and unrate methods. It can be an ID or an
+ * IP address...or whatever.
  * 
  * A rating can also be given a name, which can identify whatever is
  * being rated. This makes it really easy to bind a rating object to
  * another object without having to use a data list.
  * 
- * 
- * DATA LISTS ********************
- * 
- * The class has the following data lists: 
- * 
+ * Data lists:
  * 	<ul>
  * 		<li>ratings (Rating) - synced</li>
  * 	</ul>
  * 
- * 
- * JAVASCRIPT ********************
- * 
- * The class has the following AJAX functions, besides the ones that
- * are provided by the WigbiDataPlugin JavaScript base class:
- * 
- *	<ul>
+ * AJAX functionality:
+ * 	<ul>
  * 		<li>public void getRatingValue(string createdBy, function onGetRatingValue(float result))</li>
  * 		<li>public void rate(double rating, string createdBy, function onRate())</li>
  * 		<li>public void unrate(string createdBy, function onUnrate())</li>
@@ -63,7 +53,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class Rating extends WigbiDataPlugin
 {
@@ -92,55 +82,14 @@ class Rating extends WigbiDataPlugin
 	}
 	
 	
-	public function average()
-	{
-		return $this->_average;
-	}
-	
-	public function anonymous($value = true)
-	{
-		if (func_num_args() != 0)
-			$this->_anonymous = func_get_arg(0);
-		return $this->_anonymous;
-	}
-	
-	public function createdBy($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_createdBy = func_get_arg(0);
-		return $this->_createdBy;
-	}
-	
-	public function max($value = 5.0)
-	{
-		if (func_num_args() != 0)
-			$this->_max = func_get_arg(0);
-		return $this->_max;
-	}
-	
-	public function min($value = 1.0)
-	{
-		if (func_num_args() != 0)
-			$this->_min = func_get_arg(0);
-		return $this->_min;
-	}
-	
-	public function name($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_name = func_get_arg(0);
-		return $this->_name;
-	}
-	
-	public function numRatings()
-	{
-		return $this->_numRatings;
-	}
-	
-	public function parentId()
-	{
-		return $this->_parentId;
-	}
+	public function average($value = null) { return $this->_average; }
+	public function anonymous($value = null) { return $this->getSet("_anonymous", $value); }
+	public function createdBy($value = null) { return $this->getSet("_createdBy", $value); }
+	public function max($value = null) { return $this->getSet("_max", $value); }
+	public function min($value = null) { return $this->getSet("_min", $value); }
+	public function name($value = null) { return $this->getSet("_name", $value); }
+	public function numRatings($value = null) { return $this->_numRatings; }
+	public function parentId($value = null) { return $this->_parentId; }
 	
 	
 	/**
@@ -308,14 +257,11 @@ class Rating extends WigbiDataPlugin
 	 */
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//The min rating must not exceed the max one
 		if ($this->min() > $this->max())
 			array_push($errorList, "min_tooLarge");
-			
-		//Return error list
+
 		return $errorList;
 	}
 }

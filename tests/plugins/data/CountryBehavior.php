@@ -30,9 +30,8 @@ class CountryBehavior extends UnitTestCase
 		$this->assertEqual($this->country->collectionName(), "Countries");
 		
 		$this->assertEqual($this->country->name(), "__50");
-		$this->assertEqual($this->country->latitude(), 0.0);
-		$this->assertEqual($this->country->longitude(), 0.0);
 		$this->assertEqual($this->country->languageCode(), "__10");
+		$this->assertEqual($this->country->languageName(), "__25");
 	}
 	
 	function test_constructor_objectShouldAutoReset()
@@ -41,28 +40,26 @@ class CountryBehavior extends UnitTestCase
 		$this->assertEqual($this->country->collectionName(), "Countries");
 		
 		$this->assertEqual($this->country->name(), "");
-		$this->assertEqual($this->country->latitude(), 0.0);
-		$this->assertEqual($this->country->longitude(), 0.0);
 		$this->assertEqual($this->country->languageCode(), "");
+		$this->assertEqual($this->country->languageName(), "");
 	}
 			
 	
     
 	function test_properties_shouldBePersisted()
 	{
-		$this->country->name("name");
-		$this->country->latitude(1.1);
-		$this->country->longitude(2.2);
-		$this->country->languageCode("sv-se");
+		$this->country->name("Sverige");
+		$this->country->languageCode("sv");
+		$this->country->languageName("Svenska");
+		
 		$this->country->save();
 		
 		$tmpObj = new Country();
 		$tmpObj->load($this->country->id());
 		
-		$this->assertEqual($tmpObj->name(), "name");
-		$this->assertEqual($tmpObj->latitude(), 1.1);
-		$this->assertEqual($tmpObj->longitude(), 2.2);
-		$this->assertEqual($tmpObj->languageCode(), "sv-se");
+		$this->assertEqual($tmpObj->name(), "Sverige");
+		$this->assertEqual($tmpObj->languageCode(), "sv");
+		$this->assertEqual($tmpObj->languageName(), "Svenska");
 	}
 	
 	

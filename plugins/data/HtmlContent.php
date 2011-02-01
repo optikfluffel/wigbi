@@ -28,7 +28,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class HtmlContent extends WigbiDataPlugin
 {
@@ -36,8 +36,6 @@ class HtmlContent extends WigbiDataPlugin
 	 * @ignore
 	 */
 	public $_name = "__50";
-	public $_createdDateTime = "__DATETIME";
-	public $_lastUpdatedDateTime = "__DATETIME";
 	public $_content = "__TEXT";
 	/**#@-*/
 	
@@ -47,42 +45,17 @@ class HtmlContent extends WigbiDataPlugin
 		parent::__construct();
 	}
 	
-	
-	public function content($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_content = func_get_arg(0);
-		return $this->_content;
-	}
-	
-	public function createdDateTime()
-	{
-		return $this->_createdDateTime;
-	}
-	
-	public function lastUpdatedDateTime()
-	{
-		return $this->_lastUpdatedDateTime;
-	}
-
-	public function name($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_name = func_get_arg(0);
-		return $this->_name;
-	}
+	public function content($value = null) { return $this->getSet("_content", $value); }
+	public function name($value = null) { return $this->getSet("_name", $value); }
 	
 	
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
-		
-		//Require that a name is defined
+
 		if (!trim($this->name()))
 			array_push($errorList, "name_required");
-			
-		//Return error list
+
 		return $errorList;
 	}
 }

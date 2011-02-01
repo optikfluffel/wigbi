@@ -27,7 +27,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.2
+ * @version			1.0.3
  */
 class CalendarItem extends WigbiDataPlugin
 {

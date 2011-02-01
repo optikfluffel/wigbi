@@ -23,21 +23,12 @@
  * can be added. E-mail messages can then be sent to all subscribers
  * by using the sendMail(...) method.
  * 
- * 
- * DATA LISTS ********************
- * 
- * The class has the following data lists: 
- * 
+ * Data lists:
  * 	<ul>
  * 		<li>subscribers (NewsletterSubscriber) - synced</li>
  * 	</ul>
  * 
- * 
- * JAVASCRIPT ********************
- * 
- * The class has the following AJAX functions, besides the ones that
- * are provided by the WigbiDataPlugin JavaScript base class:
- * 
+ * AJAX functionality:
  *	<ul>
  * 		<li>public void addSubscriber(string email, function onAddSubscriber())</li>
  * 		<li>public void removeSubscriber(string email, function onRemoveSubscriber())</li>
@@ -50,7 +41,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class Newsletter extends WigbiDataPlugin
 {
@@ -74,19 +65,8 @@ class Newsletter extends WigbiDataPlugin
 	}
 	
 	
-	public function fromEmail($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_fromEmail = func_get_arg(0);
-		return $this->_fromEmail;
-	}
-	
-	public function name($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_name = func_get_arg(0);
-		return $this->_name;
-	}
+	public function fromEmail($value = null) { return $this->getSet("_fromEmail", $value); }
+	public function name($value = null) { return $this->getSet("_name", $value); }
 	
 	
 	/**
@@ -94,7 +74,7 @@ class Newsletter extends WigbiDataPlugin
 	 * 
 	 * @access	public
 	 * 
-	 * @param	string	$email	The e-mail address to add to the subscriber list.
+	 * @param		string	$email	The e-mail address to add to the subscriber list.
 	 * @return	bool			Whether or not the operation succeeded.
 	 */
 	public function addSubscriber($email)
@@ -132,8 +112,8 @@ class Newsletter extends WigbiDataPlugin
 	 * 
 	 * @access	public
 	 * 
-	 * @param	string	$email	The e-mail address to remove from the subscriber list.
-	 * @return	bool			Whether or not the operation succeeded.
+	 * @param		string	$email	The e-mail address to remove from the subscriber list.
+	 * @return	bool						Whether or not the operation succeeded.
 	 */
 	public function removeSubscriber($email)
 	{
@@ -160,9 +140,9 @@ class Newsletter extends WigbiDataPlugin
 	 * 
 	 * @access	public
 	 * 
-	 * @param	string	$subject	The e-mail subject.
-	 * @param	string	$mailBody	The e-mail message.
-	 * @return	bool				Whether or not the operation succeeded.
+	 * @param		string	$subject	The e-mail subject.
+	 * @param		string	$mailBody	The e-mail message.
+	 * @return	bool							Whether or not the operation succeeded.
 	 */
 	public function sendEmail($subject, $mailBody)
 	{	
@@ -214,16 +194,13 @@ class Newsletter extends WigbiDataPlugin
 	 */
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require a valid e-mail address
 		if (!trim($this->fromEmail()))
 			array_push($errorList, "fromEmail_required");
 		else if (!ValidationHandler::isEmail($this->fromEmail()))
 			array_push($errorList, "fromEmail_invalid");
-			
-		//Return error list
+
 		return $errorList;
 	}
 }

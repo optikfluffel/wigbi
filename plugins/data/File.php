@@ -19,11 +19,11 @@
 /**
  * The Wigbi.Plugins.Data.File class.
  * 
- * This class represents a general file with extended properties for
- * name and description.
+ * This class represents a general file, with extended properties to
+ * be able to specify name and description.
  * 
- * The file url is synced, which means that the file that the object
- * points to will be deleted together with the object.
+ * The file url is synced, which means that the file will be deleted
+ * together with the object.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -31,7 +31,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class File extends WigbiDataPlugin
 {
@@ -50,38 +50,18 @@ class File extends WigbiDataPlugin
 	}
 	
 	
-	public function description($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_description = func_get_arg(0);
-		return $this->_description;
-	}
-	
-	public function fileName($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_fileName = func_get_arg(0);
-		return $this->_fileName;
-	}
-	
-	public function fileUrl($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_fileUrl = func_get_arg(0);
-		return $this->_fileUrl;
-	}
+	public function description($value = null) { return $this->getSet("_description", $value); }
+	public function fileName($value = null) { return $this->getSet("_fileName", $value); }
+	public function fileUrl($value = null) { return $this->getSet("_fileUrl", $value); }
 	
 	
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require that a file URL is defined
 		if (!trim($this->fileUrl()))
 			array_push($errorList, "fileUrl_required");
 			
-		//Return error list
 		return $errorList;
 	}
 }

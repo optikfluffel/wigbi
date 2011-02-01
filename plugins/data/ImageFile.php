@@ -19,8 +19,8 @@
 /**
  * The Wigbi.Plugins.Data.ImageFile class.
  * 
- * This class represents a general image file with a set of extended
- * properties for name, description, dimensions, author etc.
+ * This class represents a general image file, with properties to be
+ * able to specify name, description, dimensions, author etc.
  * 
  * The file url is synced, which means that the file that the object
  * points to will be deleted together with the object.
@@ -31,7 +31,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class ImageFile extends WigbiDataPlugin
 {
@@ -53,65 +53,26 @@ class ImageFile extends WigbiDataPlugin
 	}
 	
 	
-	public function author($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_author = func_get_arg(0);
-		return $this->_author;
-	}
-	
-	public function description($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_description = func_get_arg(0);
-		return $this->_description;
-	}
-	
-	public function fileName($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_fileName = func_get_arg(0);
-		return $this->_fileName;
-	}
-	
-	public function fileUrl($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_fileUrl = func_get_arg(0);
-		return $this->_fileUrl;
-	}
-	
-	public function height($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_height = func_get_arg(0);
-		return $this->_height;
-	}
-	
-	public function width($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_width = func_get_arg(0);
-		return $this->_width;
-	}
+	public function author($value = null) { return $this->getSet("_author", $value); }
+	public function description($value = null) { return $this->getSet("_description", $value); }
+	public function fileName($value = null) { return $this->getSet("_fileName", $value); }
+	public function fileUrl($value = null) { return $this->getSet("_fileUrl", $value); }
+	public function height($value = null) { return $this->getSet("_height", $value); }
+	public function width($value = null) { return $this->getSet("_width", $value); }
 	
 	
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require that a file URL is defined
 		if (!trim($this->fileUrl()))
 			array_push($errorList, "fileUrl_required");
 			
-		//Require positive width/height
 		if ($this->width() < 0)
 			array_push($errorList, "width_negative");
 		if ($this->height() < 0)
 			array_push($errorList, "height_negative");
-			
-		//Return error list
+
 		return $errorList;
 	}
 }

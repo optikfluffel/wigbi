@@ -19,8 +19,8 @@
 /**
  * The Wigbi.Plugins.Data.News class.
  * 
- * This class represents a general news item, which simply is a date
- * marked text with an optional title.
+ * This class represents a general news item that defines a title as
+ * well as a textual content.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -28,7 +28,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.2
+ * @version			1.0.3
  */
 class News extends WigbiDataPlugin
 {
@@ -37,7 +37,6 @@ class News extends WigbiDataPlugin
 	 */
 	public $_createdDateTime = "__DATETIME";
 	public $_title = "__50";
-	public $_introduction = "__200";
 	public $_content = "__TEXT";
 	/**#@-*/
 	
@@ -47,10 +46,10 @@ class News extends WigbiDataPlugin
 		$this->collectionName("News");
 		parent::__construct();
 	}
+	
 
 	public function content($value = null) { return $this->getSet("_content", $value); }
 	public function createdDateTime() { return $this->_createdDateTime; }
-	public function introduction($value = null) { return $this->getSet("_introduction", $value); }
 	public function title($value = null) { return $this->getSet("_title", $value); }
 	
 	

@@ -20,7 +20,7 @@
  * The Wigbi.Plugins.Data.Location class.
  * 
  * This class represents general location with a name, a description
- * as well as a lat/long position.
+ * as well as a latitute and longitude.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -28,7 +28,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class Location extends WigbiDataPlugin
 {
@@ -48,41 +48,16 @@ class Location extends WigbiDataPlugin
 	}
 	
 	
-	public function description($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_description = func_get_arg(0);
-		return $this->_description;
-	}
-
-	public function latitude($value = 0.0)
-	{
-		if (func_num_args() != 0)
-			$this->_latitude = func_get_arg(0);
-		return $this->_latitude;
-	}
-
-	public function longitude($value = 0.0)
-	{
-		if (func_num_args() != 0)
-			$this->_longitude = func_get_arg(0);
-		return $this->_longitude;
-	}
-
-	public function name($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_name = func_get_arg(0);
-		return $this->_name;
-	}
+	public function description($value = null) { return $this->getSet("_description", $value); }
+	public function latitude($value = null) { return $this->getSet("_latitude", $value); }
+	public function longitude($value = null) { return $this->getSet("_longitude", $value); }
+	public function name($value = null) { return $this->getSet("_name", $value); }
 	
 	
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
-			
-		//Return error list
+
 		return $errorList;
 	}
 }

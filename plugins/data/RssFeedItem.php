@@ -21,13 +21,7 @@
  * 
  * This class represents a general RSS 2.0 item that can be added to
  * any RSS 2.0 feeds. It will most probably be used with the RssFeed
- * data plugin class and kept in the synced "items" list. 
- * 
- * The rssFeedId property can also be used as an object reference to
- * provide fully traceable RSS feed items.
- * 
- * Note that this class only specifies the most basic elements of an
- * RSS 2.0 item. Further elements can be added manually.
+ * data plugin and kept in the synced "items" list.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -35,7 +29,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class RssFeedItem extends WigbiDataPlugin
 {
@@ -48,8 +42,6 @@ class RssFeedItem extends WigbiDataPlugin
 	public $_author = "__50";
 	public $_category = "__50";
 	public $_source = "__50";
-	
-	public $_createdDateTime = "__DATETIME";
 	public $_rssFeedId = "__GUID";
 	/**#@-*/
 	
@@ -60,59 +52,13 @@ class RssFeedItem extends WigbiDataPlugin
 	}
 	
 	
-	public function author($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_author = func_get_arg(0);
-		return $this->_author;
-	}
-
-	public function category($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_category = func_get_arg(0);
-		return $this->_category;
-	}
-	
-	public function createdDateTime()
-	{
-		return $this->_createdDateTime;
-	}
-
-	public function description($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_description = func_get_arg(0);
-		return $this->_description;
-	}
-
-	public function link($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_link = func_get_arg(0);
-		return $this->_link;
-	}
-
-	public function rssFeedId($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_rssFeedId = func_get_arg(0);
-		return $this->_rssFeedId;
-	}
-
-	public function source($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_source = func_get_arg(0);
-		return $this->_source;
-	}
-
-	public function title($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_title = func_get_arg(0);
-		return $this->_title;
-	}
+	public function author($value = null) { return $this->getSet("_author", $value); }
+	public function category($value = null) { return $this->getSet("_category", $value); }
+	public function description($value = null) { return $this->getSet("_description", $value); }
+	public function link($value = null) { return $this->getSet("_link", $value); }
+	public function rssFeedId($value = null) { return $this->getSet("_rssFeedId", $value); }
+	public function source($value = null) { return $this->getSet("_source", $value); }
+	public function title($value = null) { return $this->getSet("_title", $value); }
 	
 	
 	/**
@@ -145,16 +91,13 @@ class RssFeedItem extends WigbiDataPlugin
 	 */
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require a title and a description
 		if (!trim($this->title()))
 			array_push($errorList, "title_required");
 		if (!trim($this->description()))
 			array_push($errorList, "description_required");
-			
-		//Return error list
+
 		return $errorList;
 	}
 }

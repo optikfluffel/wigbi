@@ -19,17 +19,8 @@
 /**
  * The Wigbi.Plugins.Data.GuestbookEntry class.
  * 
- * This class represents a guestbook entry that can be applied to an
- * object of any kind, although it most probably will be used to let
- * two persons to communicate. 
- * 
- * The easiest way to connect a guestbok entry to another Wigbi data
- * plugin class is to add a synced data list to the target class and
- * add the entry to the list. This will make sure that the guestbook
- * entry is deleted together with the object. 
- * 
- * The senderId and receiverId properties can also be used as object
- * references to provide fully traceable guestbook entries.
+ * This class represents a guestbook entry. It can be applied to any
+ * kind of objects, but will most probably be used by the User class.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -37,7 +28,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class GuestbookEntry extends WigbiDataPlugin
 {
@@ -46,7 +37,6 @@ class GuestbookEntry extends WigbiDataPlugin
 	 */
 	public $_senderId = "__GUID";
 	public $_receiverId = "__GUID";
-	public $_createdDateTime = "__DATETIME";
 	public $_text = "__TEXT";
 	/**#@-*/
 	
@@ -57,43 +47,18 @@ class GuestbookEntry extends WigbiDataPlugin
 	}
 	
 	
-	public function createdDateTime()
-	{
-		return $this->_createdDateTime;
-	}
-
-	public function receiverId($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_receiverId = func_get_arg(0);
-		return $this->_receiverId;
-	}
-
-	public function senderId($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_senderId = func_get_arg(0);
-		return $this->_senderId;
-	}
-
-	public function text($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_text = func_get_arg(0);
-		return $this->_text;
-	}
+	public function receiverId($value = null) { return $this->getSet("_receiverId", $value); }
+	public function senderId($value = null) { return $this->getSet("_senderId", $value); }
+	public function text($value = null) { return $this->getSet("_text", $value); }
 	
 	
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require that a text is defined
 		if (!trim($this->text()))
 			array_push($errorList, "text_required");
 			
-		//Return error list
 		return $errorList;
 	}
 }

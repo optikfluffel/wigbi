@@ -20,9 +20,7 @@
  * The Wigbi.Plugins.Data.City class.
  * 
  * This class represents a city, with a name and a lat/long position.
- *
- * The countryId property can also be used as an object reference to
- * provide fully traceable cities.
+ * A city can also be set to belong to a country.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -30,7 +28,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 
 class City extends WigbiDataPlugin
@@ -51,45 +49,19 @@ class City extends WigbiDataPlugin
 	}
 	
 	
-	public function countryId($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_countryId = func_get_arg(0);
-		return $this->_countryId;
-	}
-	
-	public function latitude($value = 0.0)
-	{
-		if (func_num_args() != 0)
-			$this->_latitude = func_get_arg(0);
-		return $this->_latitude;
-	}
-
-	public function longitude($value = 0.0)
-	{
-		if (func_num_args() != 0)
-			$this->_longitude = func_get_arg(0);
-		return $this->_longitude;
-	}
-
-	public function name($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_name = func_get_arg(0);
-		return $this->_name;
-	}
+	public function countryId($value = null) { return $this->getSet("_countryId", $value); }
+	public function latitude($value = null) { return $this->getSet("_latitude", $value); }
+	public function longitude($value = null) { return $this->getSet("_longitude", $value); }
+	public function name($value = null) { return $this->getSet("_name", $value); }
 	
 	
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 			
-		//Require that a name is defined
 		if (!trim($this->name()))
 			array_push($errorList, "name_required");
 
-		//Return error list
 		return $errorList;
 	}
 }

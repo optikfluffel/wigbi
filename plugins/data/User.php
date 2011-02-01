@@ -28,13 +28,9 @@
  * 
  * The class defines some data lists, but they are disabled to avoid
  * unnecessary database tables. Just uncomment them to use them, but
- * make sure that you have added the required plugin classes first.
+ * make sure that you have added the required data plugins first.
  * 
- * 
- * DATA LISTS ********************
- * 
- * The class has the following data lists: 
- * 
+ * Data lists:
  * 	<ul>
  * 		<li>files (File) - synced/disabled</li>
  * 		<li>friends (User) - non-synced/disabled</li>
@@ -42,12 +38,7 @@
  * 		<li>images (ImageFile) - synced/disabled</li>
  * 	</ul>
  * 
- * 
- * JAVASCRIPT ********************
- * 
- * The class has the following AJAX functions, besides the ones that
- * are provided by the WigbiDataPlugin JavaScript base class:
- * 
+ * AJAX functionality:
  *	<ul>
  * 		<li>public static void getCurrentUser(function onGetCurrentUser(User result))</li>
  * 		<li>public void isLoggedIn(function onIsLoggedIn(bool result))</li>
@@ -61,7 +52,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class User extends WigbiDataPlugin
 {
@@ -93,47 +84,18 @@ class User extends WigbiDataPlugin
 	}
 	
 	
-	public function email($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_email = func_get_arg(0);
-		return $this->_email;
-	}
 	
-	public function firstName($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_firstName = func_get_arg(0);
-		return $this->_firstName;
-	}
-	
-	public function isAdmin($value = false)
-	{
-		if (func_num_args() != 0)
-			$this->_isAdmin = func_get_arg(0);
-		return $this->_isAdmin;
-	}
-	
-	public function lastName($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_lastName = func_get_arg(0);
-		return $this->_lastName;
-	}
-	
-	public function password($value = "")
+	public function email($value = null) { return $this->getSet("_email", $value); }
+	public function firstName($value = null) { return $this->getSet("_firstName", $value); }
+	public function isAdmin($value = null) { return $this->getSet("_isAdmin", $value); }
+	public function lastName($value = null) { return $this->getSet("_lastName", $value); }
+	public function password($value = null)
 	{
 		if (func_num_args() != 0)
 			$this->_password = (strlen(func_get_arg(0)) < 40) ? sha1(func_get_arg(0)) : func_get_arg(0); 
 		return $this->_password;
 	}
-
-	public function userName($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_userName = func_get_arg(0);
-		return $this->_userName;
-	}
+	public function userName($value = null) { return $this->getSet("_userName", $value); }
 	
 		
 	/**
@@ -245,18 +207,14 @@ class User extends WigbiDataPlugin
 	 */
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require a user name
 		if (!trim($this->userName()))
 			array_push($errorList, "userName_required");
 		
-		//Require a valid e-mail address if one is defined
 		if ($this->email() && !ValidationHandler::isEmail($this->email()))
 			array_push($errorList, "email_invalid");
-			
-		//Return error list
+
 		return $errorList;
 	}
 }

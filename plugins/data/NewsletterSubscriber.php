@@ -22,16 +22,13 @@
  * This class represents a newsletter subscriber, which is really no
  * more than an e-mail address.
  *
- * The newsletterId property can also be used as an object reference
- * to provide fully traceable newsletter subscribers.
- *
  *
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
  * @copyright		Copyright © 2009-2011, Daniel Saidi
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class NewsletterSubscriber extends WigbiDataPlugin
 {
@@ -49,33 +46,19 @@ class NewsletterSubscriber extends WigbiDataPlugin
 	}
 
 
-	public function email($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_email = func_get_arg(0);
-		return $this->_email;
-	}
-
-	public function newsletterId($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_newsletterId = func_get_arg(0);
-		return $this->_newsletterId;
-	}
+	public function email($value = null) { return $this->getSet("_email", $value); }
+	public function newsletterId($value = null) { return $this->getSet("_newsletterId", $value); }
 
 
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 
-		//Require a valid e-mail address
 		if (!trim($this->email()))
 			array_push($errorList, "email_required");
 		else if (!ValidationHandler::isEmail($this->email()))
 			array_push($errorList, "email_invalid");
-			
-		//Return error list
+
 		return $errorList;
 	}
 }

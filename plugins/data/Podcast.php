@@ -22,14 +22,7 @@
  * This class represents a podcast feed, to which podcast feed items
  * can be added.
  * 
- * Note that this class specifies basic podcast feed elements. It is
- * possible to add further elements manually.
- * 
- * 
- * DATA LISTS ********************
- * 
- * The class has the following data lists: 
- * 
+ * Data lists:
  * 	<ul>
  * 		<li>items (PodcastItem) - synced</li>
  * 	</ul>
@@ -40,7 +33,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class Podcast extends WigbiDataPlugin
 {
@@ -57,8 +50,6 @@ class Podcast extends WigbiDataPlugin
 	public $_smallImageUrl = "__100";
 	public $_largeImageUrl = "__100";
 	public $_explicit = false;
-	
-	public $_createdDateTime = "__DATETIME";
 	/**#@-*/
 	
 	
@@ -70,80 +61,16 @@ class Podcast extends WigbiDataPlugin
 	}
 	
 	
-	public function author($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_author = func_get_arg(0);
-		return $this->_author;
-	}
-	
-	public function category($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_category = func_get_arg(0);
-		return $this->_category;
-	}
-	
-	public function copyright($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_copyright = func_get_arg(0);
-		return $this->_copyright;
-	}
-	
-	public function createdDateTime()
-	{
-		return $this->_createdDateTime;
-	}
-
-	public function description($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_description = func_get_arg(0);
-		return $this->_description;
-	}
-
-	public function explicit($value = false)
-	{
-		if (func_num_args() != 0)
-			$this->_explicit = func_get_arg(0);
-		return $this->_explicit;
-	}
-	
-	public function largeImageUrl($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_largeImageUrl = func_get_arg(0);
-		return $this->_largeImageUrl;
-	}
-
-	public function link($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_link = func_get_arg(0);
-		return $this->_link;
-	}
-
-	public function smallImageUrl($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_smallImageUrl = func_get_arg(0);
-		return $this->_smallImageUrl;
-	}
-	
-	public function title($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_title = func_get_arg(0);
-		return $this->_title;
-	}
-
-	public function ttl($value = 60)
-	{
-		if (func_num_args() != 0)
-			$this->_ttl = func_get_arg(0);
-		return $this->_ttl;
-	}
+	public function author($value = null) { return $this->getSet("_author", $value); }
+	public function category($value = null) { return $this->getSet("_category", $value); }
+	public function copyright($value = null) { return $this->getSet("_copyright", $value); }
+	public function description($value = null) { return $this->getSet("_description", $value); }
+	public function explicit($value = null) { return $this->getSet("_explicit", $value); }
+	public function largeImageUrl($value = null) { return $this->getSet("_largeImageUrl", $value); }
+	public function link($value = null) { return $this->getSet("_link", $value); }
+	public function smallImageUrl($value = null) { return $this->getSet("_smallImageUrl", $value); }
+	public function title($value = null) { return $this->getSet("_title", $value); }
+	public function ttl($value = null) { return $this->getSet("_ttl", $value); }
 	
 	
 	/**
@@ -191,7 +118,7 @@ class Podcast extends WigbiDataPlugin
 	</itunes:image>
 	
 	<guid>" . $this->id() . "</guid>
-	<pubDate>" . date("D, d M Y, H:i:s", strtotime($this->createdDateTime())) . " GMT</pubDate>
+	<pubDate>" . date("D, d M Y, H:i:s", strtotime($this->lastUpdatedDateTime())) . " GMT</pubDate>
 </channel>";
 		
 		$items = $this->getListItems("items", 0, $maxCount);
@@ -213,16 +140,13 @@ class Podcast extends WigbiDataPlugin
 	 */
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require a title and a description
 		if (!trim($this->title()))
 			array_push($errorList, "title_required");
 		if (!trim($this->description()))
 			array_push($errorList, "description_required");
 			
-		//Return error list
 		return $errorList;
 	}
 }

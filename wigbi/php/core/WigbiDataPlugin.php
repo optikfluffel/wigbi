@@ -49,13 +49,6 @@
  * Wigbi will set all database table columns, except ID, to NULL. If
  * this is not wanted, change the columns manually afterwards. Wigbi
  * will only ADD tables and columns, never delete them.
- * 
- * Wigbi will automatically set the value of the following variables,
- * if they exist when a data plugin instance is saved:
- * <ul>
- * 	<li>_createdDateTime - __DATETIME</li>
- * 	<li>_lastUpdatedDateTime - __DATETIME</li>
- * </ul>
  *  
  * 
  * VARIABLE TYPES AND DEFAULT VALUE ******************
@@ -145,6 +138,8 @@ abstract class WigbiDataPlugin
 	private $_collectionName;
 	
 	public $_id = "__GUID";
+	public $_createdDateTime = "__DATETIME";
+	public $_lastUpdatedDateTime = "__DATETIME";
 	/**#@-*/
 
 
@@ -247,6 +242,18 @@ abstract class WigbiDataPlugin
 	}
 	
 	/**
+	 * Get the date and time when the object was first saved.
+	 * 
+	 * This property is automatically set when the object is saved
+	 * for the first time.
+	 * 
+	 * @access	public
+	 * 
+	 * @return	string	The object ID.
+	 */
+	public function createdDateTime() { return $this->_createdDateTime; }
+	
+	/**
 	 * Get all database variables for the object.
 	 * 
 	 * This function returns all class variables that will be saved
@@ -254,10 +261,7 @@ abstract class WigbiDataPlugin
 	 * 
 	 * @return	array	All database variables for the object.
 	 */
-	public function databaseVariables()
-	{
-		return WigbiDataPluginUtil::getPublicVariables($this);
-	}
+	public function databaseVariables() { return WigbiDataPluginUtil::getPublicVariables($this); }
 	
 	/**
 	 * Get all database variables for the base class.
@@ -291,16 +295,25 @@ abstract class WigbiDataPlugin
 	/**
 	 * Get the object ID.
 	 * 
-	 * This property is set when the object is saved.
+	 * This property is automatically set when the object is saved
+	 * for the first time.
 	 * 
 	 * @access	public
 	 * 
 	 * @return	string	The object ID.
 	 */
-	public function id()
-	{
-		return $this->_id;
-	}
+	public function id() { return $this->_id; }
+	
+	/**
+	 * Get the date and time when the object was last saved.
+	 * 
+	 * This property is automatically set each time the object is saved.
+	 * 
+	 * @access	public
+	 * 
+	 * @return	string	The object ID.
+	 */
+	public function lastUpdatedDateTime() { return $this->_lastUpdatedDateTime; }
 	
 	/**
 	 * Get all data lists that have been registered for the class.
@@ -309,20 +322,14 @@ abstract class WigbiDataPlugin
 	 * 
 	 * @return	array	All data lists that have been registered for the class.
 	 */
-	public function lists()
-	{
-		return $this->_lists;
-	}
+	public function lists() { return $this->_lists; }
 	
 	/**
 	 * Get all public variables for the object. 
 	 * 
 	 * @return	array	All public variables for the object.
 	 */
-	public function publicVariables()
-	{
-		return WigbiDataPluginUtil::getPublicVariables($this);
-	}
+	public function publicVariables() { return WigbiDataPluginUtil::getPublicVariables($this); }
 	
 	
 	

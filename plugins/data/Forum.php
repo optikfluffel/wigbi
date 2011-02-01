@@ -19,31 +19,16 @@
 /**
  * The Wigbi.Plugins.Data.Forum class.
  * 
- * This class represents a general forum that can contain both forum
- * threads as well as forum posts.
+ * This class represents a general forum to which forum threads can
+ * be added. The threads can then be populated with forum posts.
  * 
- * The createdById property can be used as an object ID reference to
- * make a forum fully traceable even when it is not loaded through a
- * data list that belongs one if its owner objects.
- * 
- * 
- * DATA LISTS ********************
- * 
- * The class has the following data lists: 
- * 
+ * Data lists:
  * 	<ul>
- * 		<li>posts (ForumPost) - synced</li>
  * 		<li>threads (ForumThread) - synced</li>
  * 	</ul>
  * 
- * 
- * JAVASCRIPT ********************
- * 
- * The class has the following AJAX functions, besides the ones that
- * are provided by the WigbiDataPlugin JavaScript base class:
- * 
+ * AJAX functionality:
  * 	<ul>
- * 		<li>public void addPost(string content, string createdById, function onAddPost(bool result))</li>
  * 		<li>public void addThread(string name, string description, string createdById, function onAddThread(bool result))</li>
  * 	</ul>
  * 
@@ -53,7 +38,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class Forum extends WigbiDataPlugin
 {
@@ -61,8 +46,6 @@ class Forum extends WigbiDataPlugin
 	 * @ignore
 	 */
 	public $_createdById = "__GUID";
-	public $_createdDateTime = "__DATETIME";
-	public $_lastUpdatedDateTime = "__DATETIME";
 	public $_name = "__50";
 	public $_description = "__TEXT";
 	/**#@-*/
@@ -78,38 +61,9 @@ class Forum extends WigbiDataPlugin
 	}
 	
 	
-	public function createdById($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_createdById = func_get_arg(0);
-		return $this->_createdById;
-	}
-	
-	public function createdDateTime()
-	{
-		return $this->_createdDateTime;
-	}
-
-	
-	public function description($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_description = func_get_arg(0);
-		return $this->_description;
-	}
-	
-	public function lastUpdatedDateTime()
-	{
-		return $this->_lastUpdatedDateTime;
-	}
-	
-	
-	public function name($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_name = func_get_arg(0);
-		return $this->_name;
-	}
+	public function createdById($value = null) { return $this->getSet("_createdById", $value); }
+	public function description($value = null) { return $this->getSet("_description", $value); }
+	public function name($value = null) { return $this->getSet("_name", $value); }
 	
 	
 	/**
@@ -117,10 +71,10 @@ class Forum extends WigbiDataPlugin
 	 * 
 	 * @access	public
 	 * 
-	 * @param	string	$name			The name of the thread.
+	 * @param	string	$name					The name of the thread.
 	 * @param	string	$description	The thread description; default blank.
 	 * @param	string	$createdById	The ID of the creator; default blank.
-	 * @return	bool					Whether or not the operation succeeded.
+	 * @return	bool								Whether or not the operation succeeded.
 	 */
 	public function addThread($name, $description = "", $createdById = "")
 	{
@@ -155,14 +109,11 @@ class Forum extends WigbiDataPlugin
 	 */
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require that name is defined
 		if (!trim($this->name()))
 			array_push($errorList, "name_required");
-			
-		//Return error list
+
 		return $errorList;
 	}
 }

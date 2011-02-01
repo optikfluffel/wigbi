@@ -20,22 +20,12 @@
  * The Wigbi.Plugins.Data.Message class.
  * 
  * This class represents a general message, that can be sent between
- * two objects, which will probably be users. However, the class can
- * be used for any kind of objects.
+ * two objects.
  * 
- * The easiest way to connect a message to another Wigbi data plugin
- * class is to add a synced data list to the data plugin and add the
- * message to that list. This makes sure that the message is deleted
- * together with the object to which it belongs.
- * 
- * Since messages will most probably be between objects, it may be a
- * good idea to add it to an "inbox" for the receiver object and add
- * a copy to an "outbox" for the sender object. By doing so, the two
- * objects have a copy each. If one message is deleted, the other is
- * still available to its owner.
- * 
- * The senderId and receiverId properties can also be used as object
- * reference to provide fully traceable messages.
+ * If messages are sent between two objects, it may be convenient to
+ * add the message to an inbox for the recipient and also add a copy
+ * to an outbox for the recipient. This way, each object has its own
+ * copy of the message.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -43,7 +33,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	Plugins.Data
- * @version			1.0.0
+ * @version			1.0.3
  */
 class Message extends WigbiDataPlugin
 {
@@ -52,7 +42,6 @@ class Message extends WigbiDataPlugin
 	 */
 	public $_senderId = "__GUID";
 	public $_receiverId = "__GUID";
-	public $_createdDateTime = "__DATETIME";
 	public $_subject = "__50";
 	public $_text = "__TEXT";
 	public $_isRead = false;
@@ -65,59 +54,22 @@ class Message extends WigbiDataPlugin
 	}
 	
 	
-	public function createdDateTime()
-	{
-		return $this->_createdDateTime;
-	}
-	
-	public function isRead($value = true)
-	{
-		if (func_num_args() != 0)
-			$this->_isRead = func_get_arg(0);
-		return $this->_isRead;
-	}
-	
-	public function receiverId($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_receiverId = func_get_arg(0);
-		return $this->_receiverId;
-	}
-	
-	public function senderId($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_senderId = func_get_arg(0);
-		return $this->_senderId;
-	}
-
-	public function subject($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_subject = func_get_arg(0);
-		return $this->_subject;
-	}
-
-	public function text($value = "")
-	{
-		if (func_num_args() != 0)
-			$this->_text = func_get_arg(0);
-		return $this->_text;
-	}
+	public function isRead($value = null) { return $this->getSet("_isRead", $value); }
+	public function receiverId($value = null) { return $this->getSet("_receiverId", $value); }
+	public function senderId($value = null) { return $this->getSet("_senderId", $value); }
+	public function subject($value = null) { return $this->getSet("_subject", $value); }
+	public function text($value = null) { return $this->getSet("_text", $value); }
 	
 	
 	public function validate()
 	{
-		//Init error list
 		$errorList = array();
 		
-		//Require that a subject and a text is defined
 		if (!trim($this->subject()))
 			array_push($errorList, "subject_required");
 		if (!trim($this->text()))
 			array_push($errorList, "text_required");
-			
-		//Return error list
+
 		return $errorList;
 	}
 }
