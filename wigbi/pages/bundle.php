@@ -80,12 +80,7 @@ foreach ($elements as $element)
 	//If the element is a file, just add it
 	else
 		array_push($files, $element);
-}
-
-//Define cache variables
-$cache = true;
-$cacheFolder = dirname(__FILE__) . '/cache';
-$cacheFile = "";
+} 
 
 //Determine last modification dates
 $lastmodified = 0;
@@ -120,45 +115,7 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && stripslashes($_SERVER['HTTP_IF_NONE
 	header("HTTP/1.0 304 Not Modified");
 	header('Content-Length: 0');
 	exit;
-} 
-
-//Handle caching
-/*if ($cache) 
-{
-	//Determine supported compression method
-	$gzip = strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip');
-	$deflate = strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'deflate');
-
-	//Determine used compression method
-	$encoding = $gzip ? 'gzip' : ($deflate ? 'deflate' : 'none');
-
-	//Check for buggy versions of Internet Explorer
-	if (!strstr($_SERVER['HTTP_USER_AGENT'], 'Opera') && preg_match('/^Mozilla\/4\.0 \(compatible; MSIE ([0-9]\.[0-9])/i', $_SERVER['HTTP_USER_AGENT'], $matches))
-	{
-		$version = floatval($matches[1]);
-		if ($version < 6 || ($version == 6 && !strstr($_SERVER['HTTP_USER_AGENT'], 'EV1')))
-			$encoding = 'none';
-	}
-	
-	//Try the cache first to see if the combined files were already generated
-	$cacheFile = 'cache-' . $hash . '.' . ($encoding != 'none' ? '.' . $encoding : '');
-	
-	//If the file exists, read it
-	if (file_exists($cacheFolder . '/' . $cacheFile))
-	{
-		if ($fp = fopen($cacheFolder . '/' . $cacheFile, 'rb'))
-		{
-			if ($encoding != 'none')
-				header ("Content-Encoding: " . $encoding);
-			header ("Content-Type: text/" . $contentType);
-			header ("Content-Length: " . filesize($cacheFolder . '/' . $cacheFile));
-			fpassthru($fp);
-			fclose($fp);
-			exit;
-		}
-	}
-}*/
-
+}
 
 //Init the resulting, displayed content
 $contents = '';
@@ -223,12 +180,4 @@ else
 {
 	header ('Content-Length: ' . strlen($contents));
 	echo $contents;
-}
-
-//Store cache, if any
-if ($cache && file_exists($cacheFile))
-{
-	$fp = fopen($cacheFile);
-	fwrite($fp, $contents);
-	fclose($fp);
-}
+} 

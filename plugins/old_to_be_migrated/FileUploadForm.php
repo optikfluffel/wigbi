@@ -339,9 +339,9 @@ FileUploadForm.submitDone = function(frameId)
 	 * 
 	 * @param	string	$controlId		The unique control ID.
 	 * @param	string	$uploadFolder	The application relative upload folder.
-	 * @param	string	$fileTag		The tag to add to each uploaded file; default blank.
-	 * @param	int		$numUploads		The number of file uploads to support; default 1.
-	 * @param	int		$maxFileSize	The maximum supported file upload size; default 100000000 bytes.
+	 * @param	string	$fileTag			The tag to add to each uploaded file; default blank.
+	 * @param	int			$numUploads		The number of file uploads to support; default 1.
+	 * @param	int			$maxFileSize	The maximum supported file upload size; default 100000000 bytes.
 	 */
 	public static function add($controlId, $uploadFolder,  $fileTag = "", $numUploads = 1, $maxFileSize = 100000000)
 	{
