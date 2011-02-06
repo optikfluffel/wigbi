@@ -121,9 +121,11 @@ class WigbiDataPluginBehavior extends UnitTestCase
 		$obj = new MyDatabaseClass();
 		$variables = $obj->databaseVariables();
 
-		$this->assertEqual(sizeof($variables), 12);
+		$this->assertEqual(sizeof($variables), 14);
 
 		$this->assertTrue(in_array("_id", $variables));
+		$this->assertTrue(in_array("_createdDateTime", $variables));
+		$this->assertTrue(in_array("_lastUpdatedDateTime", $variables));
 		
 		$this->assertTrue(in_array("_name", $variables));
 		$this->assertTrue(in_array("_age", $variables));
@@ -146,8 +148,11 @@ class WigbiDataPluginBehavior extends UnitTestCase
 		$obj = new MyDatabaseClass();
 		$variables = $obj->databaseVariables_base();
 
-		$this->assertEqual(sizeof($variables), 1);
+		$this->assertEqual(sizeof($variables), 3);
+		
 		$this->assertTrue(in_array("_id", $variables));
+		$this->assertTrue(in_array("_createdDateTime", $variables));
+		$this->assertTrue(in_array("_lastUpdatedDateTime", $variables));
 	}
 	
 	function test_databaseVariables_self_shouldReturnAllPublicClassVariables()
@@ -192,9 +197,11 @@ class WigbiDataPluginBehavior extends UnitTestCase
 		$obj = new MyDatabaseClass();
 		$variables = $obj->publicVariables();
 
-		$this->assertEqual(sizeof($variables), 12);
+		$this->assertEqual(sizeof($variables), 14);
 
 		$this->assertTrue(in_array("_id", $variables));
+		$this->assertTrue(in_array("_createdDateTime", $variables));
+		$this->assertTrue(in_array("_lastUpdatedDateTime", $variables));
 
 		$this->assertTrue(in_array("_name", $variables));
 		$this->assertTrue(in_array("_age", $variables));
