@@ -25,11 +25,13 @@
 				<hr />
 				<div class="columns wide-left fc">
 					<div class="left">
-						<?php View::addView("~/wigbi/pages/index-wigbi/cache-handler.php"); ?>
-						<hr/>
-						<?php View::addView("~/wigbi/pages/index-wigbi/ini-handler.php"); ?>
-						<hr/>
-						<p class="ingress large">More will follow... :)</p>
+						<?php if (Wigbi::isStarted()) { ?>
+							<?php View::addView("~/wigbi/pages/index-wigbi/cache-handler.php"); ?>
+							<?php View::addView("~/wigbi/pages/index-wigbi/ini-handler.php"); ?>
+							<p class="ingress large">More will follow... :)</p>
+						<?php } else { ?>
+							Start Wigbi to display some demos.
+						<?php } ?>
 					</div>
 					<div class="right">
 						<?php View::addView("~/wigbi/pages/index-wigbi/data-plugins.php"); ?>
@@ -44,8 +46,7 @@
 			<div class="box-top"></div>
 			<div class="box">
 				© 2009-2011 <a href="http://www.saidi.se" class="em">Daniel Saidi</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-				v. <a href="http://www.wigbi.com" class="em">Wigbi 1.0.1</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-				Page looks great thanks to <a href="http://parsley.se/" class="em">Kristoffer Gustafsson</a>
+				v. <a href="http://www.wigbi.com" class="em">Wigbi <?php print Wigbi::version(); ?></a>
 			</div>
 			<div class="box-bottom"></div>
 		</div>

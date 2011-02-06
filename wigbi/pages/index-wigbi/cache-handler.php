@@ -13,3 +13,4 @@
 	<button onclick="Wigbi.cacheHandler().set('cache-data', 'fewafewawa', 10, function(){ alert('Data has been cached. Press OK to reload the page.'); location.href = '<?php print View::viewData("start-page"); ?>'; });">Cache with AJAX</button>
 </p>
 <div>You can cache any serializable data, as well as any output content.</div>
+<hr/>

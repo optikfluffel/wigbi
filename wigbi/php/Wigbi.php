@@ -62,7 +62,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	PHP
- * @version			1.0.0
+ * @version			1.0.3
  * 
  * @static
  */
@@ -71,7 +71,7 @@ class Wigbi
 	/**#@+
 	 * @ignore
 	 */
-	private static $_version = "1.0.2";
+	private static $_version = "1.0.3";
 	
 	private static $_cacheHandler;
 	private static $_configFile;
@@ -686,7 +686,7 @@ class Wigbi
 		$mySQL_password = Wigbi::configuration("password", "mySQL");
 		
 		//If RTB is enabled and data plugins are added, Wigbi will try to create the database
-		if (Wigbi::configuration("enabled", "runtimeBuild"))
+		if ($mySQL_host && Wigbi::configuration("enabled", "runtimeBuild"))
 		{
 			//Connect to the database server, if any, abort if failed
 			Wigbi::$_dbHandler = new DatabaseHandler($mySQL_host, null, $mySQL_uid, $mySQL_password);
@@ -701,7 +701,7 @@ class Wigbi
 			Wigbi::$_dbHandler->disconnect();
 		} 
 		
-		//Connect to the database using the Wigbi database, if any, abort if failed
+		//Connect to the database using the Wigbi database, if any
 		Wigbi::$_dbHandler = new DatabaseHandler($mySQL_host, $mySQL_dbName, $mySQL_uid, $mySQL_password);
 		if ($mySQL_host && !Wigbi::$_dbHandler->connect())
 			throw new Exception("Wigbi could not establish a connection to the database " . $mySQL_dbName . ". Make sure that it exists and that the mySQL information in the Wigbi configuration file is valid.");
