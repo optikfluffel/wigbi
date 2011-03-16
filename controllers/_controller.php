@@ -16,13 +16,13 @@ MasterPage::closeContentArea();
 //Pass handling on to the controller
 require(Controller::name() . "Controller.php");
 
-//Stop Wigbi
-MasterPage::openContentArea("wigbi-stop");
-Wigbi::stop();
-MasterPage::closeContentArea();
-
 //If the resulting view uses a master poge, build it
 if (MasterPage::filePath())
 	MasterPage::build();
+	
+//Stop Wigbi (will never be displayed)
+MasterPage::openContentArea("wigbi-stop");
+Wigbi::stop();
+MasterPage::closeContentArea();
 
 ?>
