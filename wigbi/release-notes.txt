@@ -6,8 +6,35 @@ For further information, see http://www.wigbi.com or the project web site at
 GitHub - http://www.github.com/danielsaidi/wigbi
 
 
+
 ************************
-Wigbi 1.0.3 [2011-02-XX]
+Wigbi 1.1.0 [2011-03-16]
+************************
+
+Yes, I take a biig leap and upgrade the version to 1.1.0. In this release, I
+have added an MVC template that features a controller, one view and a master
+page. Hopefully, this setup will help you get started a bit quicker than the
+old index-wigbi.php page.
+
+IMPORTANT: Instead of the index-wigbi.php page, Wigbi now comes with a brand
+new file called REMOVE_THE_FILENAME.htaccess. Just remove the file name (yes,
+just like the file name told you) to make it into an .htaccess file. This is
+the file that will be responsible for the MVC routing.
+
+Also...the MasterPage class has changed quiite a bit compared to Wigbi 1.0.3. 
+Since the View class can be used to push data to views, variable handling in
+the master page class is no more. Furthermore, the file path must now be set
+separately and not when calling build. Finally, all the content area related
+methods are now removed to openContentArea, closeContentArea and getContent.
+
+In short, it is a lot easier to start Wigbi in 1.1.0. No starting / stopping
+must be added to the master page, or any page at all. It is all happening in
+the controller start point. 
+
+
+
+************************
+Wigbi 1.0.3 [2011-02-06]
 ************************
 
 The Wigbi 1.0.3 release features one drastic data plugin change and a couple

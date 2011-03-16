@@ -20,15 +20,12 @@
 /**
  * The Wigbi.PHP.Wigbi class.
  * 
- * This is the most central class in the Wigbi framework. It is used
- * to start and stop Wigbi and provides central functions/properties.
- * Two important properties are serverRoot and webRoot, which points
- * out the root folder for the executing FILE and PAGE.
+ * This class is used to start and stop Wigbi and also features many
+ * central functions and properties, for instance serverRoot/webRoot.
  * 
  * The class has default instances for all available handler classes.
- * It inits them when Wigbi is started, using the configuration file.
- * To make Wigbi use a different config file, set the configFile(..)
- * to the path you want to use before starting Wigbi.
+ * These default instances are initialized with the wigbi/config.ini
+ * file, so modify that file to change the default Wigbi behavior.
  * 
  * 
  * INCLUDE, START AND STOP WIGBI ************
@@ -50,11 +47,10 @@
  * a single file, which can be automatically obfuscated as well.  
  * 
  * Use the application.runtimeBuild configuration file key to enable
- * or disable RTB. During development, RTB is really handy, since it
- * ensures that all plugins are properly handled, without any manual
- * work. However, RTB should be disabled when the system is live, to
- * make Wigbi more lightweight. For live systems, only enable RTB to
- * sync the system when so is needed.
+ * or disable RTB. For development, RTB is handy since it makes sure
+ * that plugins are properly handled, without any manual work. Still,
+ * make sure to disable RTB when the system is live, and only enable
+ * it when changes have to be synced.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -62,7 +58,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	PHP
- * @version			1.0.3
+ * @version			1.1.0
  * 
  * @static
  */
@@ -71,7 +67,7 @@ class Wigbi
 	/**#@+
 	 * @ignore
 	 */
-	private static $_version = "1.0.3";
+	private static $_version = "1.1.0";
 	
 	private static $_cacheHandler;
 	private static $_configFile;

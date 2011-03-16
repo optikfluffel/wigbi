@@ -429,7 +429,7 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_version_ShouldReturnCorrectValue()
 	{
-		$this->assertEqual(Wigbi::version(), "1.0.2");
+		$this->assertEqual(Wigbi::version(), "1.1.0");
 	}
 
 	function test_wigbiFolder_shouldReturnCorrectPath()

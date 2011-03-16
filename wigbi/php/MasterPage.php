@@ -48,7 +48,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	PHP
- * @version			1.0.0
+ * @version			1.1.0
  * 
  * @static
  */
@@ -56,10 +56,10 @@ class MasterPage
 {	
 	/**#@+
 	 * @ignore
-	 */
+	 */ 
 	private static $_contentAreas = array();
 	private static $_currentContentArea;
-	private static $_variables = array();
+	private static $_filePath;
 	/**#@-*/
 	
 	
@@ -78,31 +78,33 @@ class MasterPage
 	}
 	
 	/**
-	 * Get all the variables that have been set so far. 
+	 * Get/set the poath to the master page file.
 	 * 
 	 * @access	public
 	 * @static
 	 * 
-	 * @return	array	The value of the variables property.
+	 * @param	string	$newValue	Optional set value; default null.
 	 */
-	public static function variables()
+	public static function filePath($newValue = null)
 	{
-		return MasterPage::$_variables;
+		if (func_num_args() > 0)
+			MasterPage::$_filePath = func_get_arg(0);
+		return MasterPage::$_filePath;
 	}
 	
 	
 	
 	/**
-	 * Build the master page, using a certain template file.
+	 * Build the master page, using the file path to require the master page file.
 	 * 
 	 * @access	public
 	 * @static
 	 * 
-	 * @param	string	$templateFile	The relative path to the master page template file.
+	 * @param	string	$templateFile	Optional file path; default null.
 	 */
-	public static function build($templateFile)
+	public static function build()
 	{
-		require_once $templateFile;
+		require_once surl(MasterPage::$_filePath);
 	}
 	
 	/**
@@ -111,7 +113,7 @@ class MasterPage
 	 * @access	public
 	 * @static
 	 */	
-	public static function close()
+	public static function closeContentArea()
 	{
 		MasterPage::$_contentAreas[MasterPage::$_currentContentArea] = ob_get_clean();
 	}
@@ -124,7 +126,7 @@ class MasterPage
 	 * 
 	 * @param	string	$contentAreaName	The name of the content area.
 	 */
-  public static function content($contentAreaName)
+  public static function getContent($contentAreaName)
   {
   	if (array_key_exists($contentAreaName, MasterPage::$_contentAreas))
   		return MasterPage::$_contentAreas[$contentAreaName];
@@ -142,29 +144,11 @@ class MasterPage
 	 * 
 	 * @param	string	$contentAreaName	The name of the content area.
 	 */
-	public static function open($contentAreaName)
+	public static function openContentArea($contentAreaName)
 	{
 		MasterPage::$_currentContentArea = $contentAreaName;
 		ob_start();
   }
-	
-	/**
-	 * Get/set the value of a certain master page variable.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @param	string	$name			The variable name.
-	 * @param	string	$newValue	Optional set value; default null.
-	 */
-	public static function variable($name, $newValue = null)
-	{
-		if (func_num_args() > 1)
-			MasterPage::$_variables[$name] = func_get_arg(1);
-		if (array_key_exists($name, MasterPage::$_variables))
-			return MasterPage::$_variables[$name];
-		return "";
-	}
 }
 
 ?>

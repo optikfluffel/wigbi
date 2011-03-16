@@ -14,79 +14,71 @@ class MasterPageBehavior extends UnitTestCase
 		$this->assertEqual(gettype(MasterPage::contentAreas()), "array");
 	}
 	
-	function test_variables_shouldReturnCorrectType()
+	function test_filePath_shouldGetSetVariable()
 	{
-		$this->assertEqual(gettype(MasterPage::variables()), "array");
+		$this->assertEqual(MasterPage::filePath(), "");
+				
+		MasterPage::filePath("foo");
+		
+		$this->assertEqual(MasterPage::filePath(), "foo");
 	}
 	
 	
 	
-	function test_build_shouldExposeAllContentAreasAndVariables()
+	function test_build_shouldExposeAllContentAreas()
 	{
-		MasterPage::open("content1");
+		MasterPage::openContentArea("content1");
 		print "foo";
-		MasterPage::close();
-		MasterPage::open("content2");
+		MasterPage::closeContentArea();
+		MasterPage::openContentArea("content2");
 		print "bar";
-		MasterPage::close();
-		
-		MasterPage::variable("variable1", true);
-		MasterPage::variable("variable2", "name");
-		MasterPage::variable("variable3", 1.0);
+		MasterPage::closeContentArea();
 		
 		ob_start();
-		MasterPage::build(Wigbi::serverRoot() . "tests/resources/master.php");
+		MasterPage::filePath(Wigbi::serverRoot() . "tests/resources/master.php");
+		MasterPage::build();
 		$data = ob_get_clean();
 		
-		$this->assertEqual($data, "foo" . "bar" . true . "name" . 1.0);
+		$this->assertEqual($data, "foobar");
 	}
 	
-	function test_close_shouldEndOutputBuffering()
+	function test_closeContentArea_shouldEndOutputBuffering()
 	{
 		ob_start();
 		print "foo";
-		MasterPage::close();
+		MasterPage::closeContentArea();
 		$data = ob_get_clean();
 		
 		$this->assertEqual($data, "");
 	}
 	
-	function test_content_shouldReturnEmptyStringForNonDefinedContentArea()
+	function test_getContent_shouldReturnEmptyStringForNonDefinedContentArea()
 	{
-		$this->assertEqual(MasterPage::content("nonDefinedContentArea"), "");
+		$this->assertEqual(MasterPage::getContent("nonDefinedContentArea"), "");
 	}
 	
-	function test_content_shouldReturnEmptyStringForNonClosedContentArea()
+	function test_getContent_shouldReturnEmptyStringForNonClosedContentArea()
 	{
-		MasterPage::open("myContent");
-		$this->assertEqual(MasterPage::content("myContent"), "");
+		MasterPage::openContentArea("myContent");
+		$this->assertEqual(MasterPage::getContent("myContent"), "");
 	}
 	
-	function test_content_shouldReturnCorrectStringForClosedContentArea()
+	function test_getContent_shouldReturnCorrectStringForClosedContentArea()
 	{
-		MasterPage::open("myContent");
+		MasterPage::openContentArea("myContent");
 		print "foo";
-		MasterPage::close();
+		MasterPage::closeContentArea();
 		
-		$this->assertEqual(MasterPage::content("myContent"), "foo");
+		$this->assertEqual(MasterPage::getContent("myContent"), "foo");
 	}
 	
-	function test_open_shouldStartOutputBuffering()
+	function test_openContentArea_shouldStartOutputBuffering()
 	{
-		MasterPage::open("myData", 10);
+		MasterPage::openContentArea("myData", 10);
 		print "foo";
 		$data = ob_get_clean();
 		
 		$this->assertEqual($data, "foo");
-	}
-	
-	function test_variable_shouldGetSetVariable()
-	{
-		$this->assertEqual(MasterPage::variable("myVariable"), "");
-				
-		MasterPage::variable("myVariable", "foo");
-		
-		$this->assertEqual(MasterPage::variable("myVariable"), "foo");
 	}
 }
 
