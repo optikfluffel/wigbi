@@ -3,15 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" >
 	<head>
 		<?php print MasterPage::getContent("wigbi-start"); ?>
-		<link rel="stylesheet" type="text/css" href="wigbi/bundle/css:wigbi/css" />
-		<link rel="stylesheet" type="text/css" href="wigbi/bundle/css:wigbi/css/index-wigbi" />
+		<link rel="stylesheet" type="text/css" href="<?php pwurl("~/wigbi/bundle/css:wigbi/css") ?>" />
+		<link rel="stylesheet" type="text/css" href="<?php pwurl("~/wigbi/bundle/css:wigbi/css/index-wigbi") ?>" />
 	</head>
 	
 	<body>
 		<div id="main">
 			<div id="main-header">
 				<div id="main-logo">
-					<img src="wigbi/img/logo.png" alt="Wigbi logo" />
+					<img src="<?php pwurl("~/wigbi/img/logo.png") ?>" alt="Wigbi logo" />
 				</div>
 			</div>
 			

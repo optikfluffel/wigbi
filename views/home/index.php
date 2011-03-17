@@ -6,7 +6,6 @@
 	<div class="columns wide-left fc">
 		<div class="left">
 			<?php if (Wigbi::isStarted()) { ?>
-				<?php View::addView("~/wigbi/pages/index-wigbi/cache-handler.php"); ?>
 				<?php View::addView("~/wigbi/pages/index-wigbi/ini-handler.php"); ?>
 				<p class="ingress large">More will follow... :)</p>
 			<?php } else { ?>
