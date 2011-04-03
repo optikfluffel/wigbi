@@ -58,7 +58,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	PHP
- * @version			1.1.0
+ * @version			1.1.1
  * 
  * @static
  */
@@ -67,7 +67,7 @@ class Wigbi
 	/**#@+
 	 * @ignore
 	 */
-	private static $_version = "1.1.0";
+	private static $_version = "1.1.1";
 	
 	private static $_cacheHandler;
 	private static $_configFile;
