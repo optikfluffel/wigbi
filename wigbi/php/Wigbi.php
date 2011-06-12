@@ -21,7 +21,8 @@
  * The Wigbi.PHP.Wigbi class.
  * 
  * This class is used to start and stop Wigbi and also features many
- * central functions and properties, for instance serverRoot/webRoot.
+ * central functions and properties, like the Wigbi AJAX pipeline as
+ * well as the handy server and web root properties.
  * 
  * The class has default instances for all available handler classes.
  * These default instances are initialized with the wigbi/config.ini
@@ -30,9 +31,9 @@
  * 
  * INCLUDE, START AND STOP WIGBI ************
  * 
- * To include the entire Wigbi framework, include wigbi/wigbi.php at
- * the very beginning of the page. This will include all PHP classes
- * in the Wigbi framework and enable session handling.
+ * To use Wigbi, first include wigbi/wigbi.php at the very beginning
+ * of the page. This will include all PHP classes and enable session
+ * handling. Then, start Wigbi to get everything else up and running.
  * 
  * To start Wigbi, execute the Wigbi::start function in the head tag.
  * To stop Wigbi, execute the Wigbi::stop function when Wigbi is not
@@ -58,7 +59,7 @@
  * @link				http://www.wigbi.com
  * @package			Wigbi
  * @subpackage	PHP
- * @version			1.1.2
+ * @version			1.2.0
  * 
  * @static
  */
@@ -67,7 +68,7 @@ class Wigbi
 	/**#@+
 	 * @ignore
 	 */
-	private static $_version = "1.1.2";
+	private static $_version = "1.2.0";
 	
 	private static $_cacheHandler;
 	private static $_configFile;
@@ -283,8 +284,8 @@ class Wigbi
 	 */
 	public static function isAjaxPostback()
 	{
-		if (array_key_exists("wigbi_asyncPostBack", $_POST))
-			return $_POST["wigbi_asyncPostBack"] ? true : false;
+		if (array_key_exists("HTTP_X_REQUESTED_WITH", $_SERVER))
+			return $_SERVER['HTTP_X_REQUESTED_WITH'] =='XMLHttpRequest';
 		return false;
 	}
 	
@@ -870,7 +871,14 @@ class Wigbi
 			$functionName = $data->functionName;
 			$functionParameters = $data->functionParameters ? $data->functionParameters : array();
 			$functionParameters_handled = array();
-			
+
+/*
+			array_key_exists(@className, )
+			//Abort if class is not handled
+			if ()
+			Wigbi::dataPluginClasses()
+*/
+
 			//Modify web root, if needed
 			Wigbi::$_webRoot = $webRoot ? $webRoot : Wigbi::$_webRoot;
 			
