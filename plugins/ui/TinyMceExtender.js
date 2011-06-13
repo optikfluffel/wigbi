@@ -40,7 +40,7 @@ TinyMceExtender.add = function()
 	var width = "100%"; 
 	
 	$().ready(function() {
-		$('textarea .wysiwyg.simple').tinymce({
+		$('textarea.wysiwyg.simple').tinymce({
 			script_url : TinyMceExtender.scriptFile,
 			content_css : TinyMceExtender.cssFile,
 
@@ -80,7 +80,7 @@ TinyMceExtender.add = function()
 			template_replace_values : replaceValues
 		});
 		
-		$('textarea .wysiwyg.advanced').tinymce({
+		$('textarea.wysiwyg.advanced').tinymce({
 			script_url : TinyMceExtender.scriptFile,
 			content_css : TinyMceExtender.cssFile,
 

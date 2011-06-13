@@ -16,10 +16,11 @@ bad stuff, since any class method can be executed.
 
 Therefore, this new version features improved AJAX security, to prevent AJAX
 manipulation. The AJAX data that is passed between the client and the server
-has been cleaned up a bit as well, which means that less data is sent.
+has been cleaned up a bit as well, so that less data is sent.
 
-So, the new Wigbi version is a lot safer and...maybe...a tiiiiiny bit faster
-when doing all that AJAX stuff that you love. 
+I have also fixed two invalid DOM selectors in the TinyMceExtender. The ones
+in the old version had an incorrect space in them, which caused textareas to
+not be converted into WYSIWYG editors.
 
 
 
