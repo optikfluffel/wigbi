@@ -114,6 +114,17 @@ class WigbiBehavior extends UnitTestCase
 	}
 	
 	
+	function fakeAsyncPostBack()
+	{
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = "XMLHttpRequest";
+	}
+	
+	function unfakeAsyncPostBack()
+	{
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = null;
+	}
+	
+	
 
 	function test_systemFoldersAndFilesShouldExist()
 	{
@@ -276,18 +287,13 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(Wigbi::generateHtml(true));
 	}
 	
-	function test_isAjaxPostBack_shouldReturnFalseForNoData()
+	function test_isAjaxPostBack_shouldReturnTrueForXMLHttpRequestServerData()
 	{
-		$this->assertFalse(Wigbi::isAjaxPostBack());
-	}
-	
-	function test_isAjaxPostBack_shouldReturnTrueForData()
-	{
-		$_POST["wigbi_asyncPostBack"] = 1;
+		$this->fakeAsyncPostBack();
 		
 		$this->assertTrue(Wigbi::isAjaxPostBack());
 		
-		$_POST["wigbi_asyncPostBack"] = null;
+		$this->unfakeAsyncPostBack();
 		
 		$this->assertFalse(Wigbi::isAjaxPostBack());
 		
@@ -429,7 +435,7 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_version_ShouldReturnCorrectValue()
 	{
-		$this->assertEqual(Wigbi::version(), "1.1.0");
+		$this->assertEqual(Wigbi::version(), "1.2.0");
 	}
 
 	function test_wigbiFolder_shouldReturnCorrectPath()
@@ -462,7 +468,7 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_shouldHandleAjaxConfiguration()
 	{
-		$_POST["wigbi_asyncPostBack"] = 1;
+		$this->fakeAsyncPostBack();
 		$_POST["wigbi_asyncPostBackData"] = json_encode($this->ajaxData);
 
 		$this->setConfigFile("resources/config_minimal.ini");
@@ -470,6 +476,7 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertEqual(Wigbi::configFile(), Wigbi::serverRoot() . $this->ajaxData["configFile"]);
 		
 		$this->resetConfigFile();
+		$this->unfakeAsyncPostBack();
 	}
 	
 	function test_start_shouldStartConfigurationAndFailIfNeitherConfigFileExists()
@@ -703,7 +710,7 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_shouldhandleAjaxPostBack()
 	{
-		$_POST["wigbi_asyncPostBack"] = 1;
+		$this->fakeAsyncPostBack();
 		
 		$data = array();
 		$data["configFile"] = null;
@@ -719,6 +726,8 @@ class WigbiBehavior extends UnitTestCase
 		json_decode(ob_get_clean());
 		
 		$this->assertEqual(Wigbi::webRoot(), "bar");
+		
+		$this->unfakeAsyncPostBack();
 	}
 	
 	function test_start_handleAjaxPostBack_shouldReturnNullForIsNotPostback()
@@ -785,7 +794,7 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_handleAjaxPostBack_shouldHandleStaticMethodWithParameters()
 	{
-		$_POST["wigbi_asyncPostBack"] = 1;
+		$this->fakeAsyncPostBack();
 		
 		$data = array();
 		$data["configFile"] = null;
@@ -808,11 +817,13 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertEqual($result[3], true);
 		$this->assertEqual($result[4], array("apa", 1, 2.5, true));
 		$this->assertNull($exception);
+		
+		$this->unfakeAsyncPostBack();
 	}
 	
 	function test_start_handleAjaxPostBack_shouldHandleStaticMethodWithoutParameters()
 	{
-		$_POST["wigbi_asyncPostBack"] = 1;
+		$this->fakeAsyncPostBack();
 		
 		$data = array();
 		$data["configFile"] = null;
@@ -831,11 +842,13 @@ class WigbiBehavior extends UnitTestCase
 		
 		$this->assertEqual($result, "foo bar");
 		$this->assertEqual($exception, null);
+		
+		$this->unfakeAsyncPostBack();
 	}
 	
 	function test_start_handleAjaxPostBack_shouldHandleNonStaticMethodWithParameters()
 	{
-		$_POST["wigbi_asyncPostBack"] = 1;
+		$this->fakeAsyncPostBack();
 		
 		$obj = new WigbiAsyncTestClass();
 		$obj->name = "Object name";
@@ -862,11 +875,13 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertEqual($result[4], true);
 		$this->assertEqual($result[5], array("apa", 1, 2.5, true));
 		$this->assertEqual($exception, null);
+		
+		$this->unfakeAsyncPostBack();
 	}
 	
 	function test_start_handleAjaxPostBack_shouldHandleNonStaticMethodWithoutParameters()
 	{
-		$_POST["wigbi_asyncPostBack"] = 1;
+		$this->fakeAsyncPostBack();
 		
 		$obj = new WigbiAsyncTestClass();
 		$obj->name = "Object name";
@@ -888,6 +903,8 @@ class WigbiBehavior extends UnitTestCase
 		
 		$this->assertEqual($result, $obj->name);
 		$this->assertEqual($exception, null);
+		
+		$this->unfakeAsyncPostBack();
 	}
 	
 	function test_start_shouldNotGenerateHtmlIfGenerateHtmlIsFalse()
@@ -951,8 +968,9 @@ class WigbiBehavior extends UnitTestCase
 	
 	function test_start_handleAjaxConfiguration_shouldSetConfigFile()
 	{
+		$this->fakeAsyncPostBack();
+		
 		$oldConfigFile = Wigbi::configFile();
-		$_POST["wigbi_asyncPostBack"] = 1;
 		$data = array();
 		$data["configFile"] = "foo";
 		$_POST["wigbi_asyncPostBackData"] = json_encode($data);
@@ -962,6 +980,7 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertEqual(Wigbi::configFile(), "../foo");
 		
 		$this->stopWigbi();
+		$this->fakeAsyncPostBack();
 	}
 	
 	function test_start_handleAjaxConfiguration_shouldIgnoreEmptyConfigFile()
