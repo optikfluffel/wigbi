@@ -1,7 +1,7 @@
 Wigbi
 =====
 
-Author: Daniel Saidi [daniel.saidi@gmail.com]
+Author: Daniel Saidi  [daniel.saidi@gmail.com]
 
 Wigbi is a minimalistic, open source PHP/JavaScript framework that
 helps you create web sites and web-based applications. It is quick
