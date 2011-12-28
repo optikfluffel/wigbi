@@ -1,0 +1,13 @@
+<Files config.ini>
+order deny,allow
+deny from all
+</Files> 
+
+Options -Indexes
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteRule ^bundle/css:(.*)	pages/bundle.php?type=css&elements=$1			[NC]
+RewriteRule ^bundle/js:(.*)		pages/bundle.php?type=js&elements=$1			[NC]
+RewriteRule ^postBack.php$		pages/postBack.php								[NC]
+RewriteRule ^wizard.php/?$		pages/wizard.php								[NC]

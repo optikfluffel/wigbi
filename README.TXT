@@ -14,8 +14,8 @@ A complete Wigbi release contains the following folders and files:
 	* plugins/		Fully working, basic Wigbi data and UI plugins
 		
 	* controllers/	A controller base class and default controller
-	* views/		A default index view and a shared master page
-	* REMOVE_FILE_NAME.htaccess   .htaccess file used for routing			//AUTO-GENERATE???
+	* views/		A default index view and a default master page
+	* REMOVE_FILE_NAME.htaccess   .htaccess file, used for routing
 
 The Wigbi unit tests are not part of the release bundle. Grab them
 by forking the source code at http://github.com/danielsaidi/wigbi
@@ -27,66 +27,50 @@ Getting started
 If you are using Wigbi for the first time, you should start off by
 having a look at the short video that is up at wigbi.com.
 
+Wigbi does not need the controllers and views folders to work, but
+they are a big convenience. First of all, the home index view is a
+getting started view by default. It will show you what you have to
+do to get Wigbi up and running. So, if you are new to using Wigbi,
+at least save them until you know how to get Wigbi to work.
 
+With this said, all you have to do to get Wigbi to work is:
 
+	1.	Rename REMOVE_FILE_NAME.htaccess to .htaccess
+		This will enable the default Wigbi routing. Edit this file
+		to modify how Wigbi routes requests.
+	
+	2.	Navigate to the application root in a browser
+		With the .htaccess file renamed and Wigbi routing in place,
+		you should be taken to the controllers/homeController. The
+		controller should load the views/home/index.php view.
+		
+	3.	Follow the instructions
+		If Wigbi is not properly configured, you should see a help
+		instruction that tells you what to do. It will (basically)
+		tell you to:
 
+		* open wigbi/config.ini
+		* enter a value for application.name
+		* enter a value for application.clientRoot  (the root URL)
 
-
-
-
-
-
-Wigbi only requires the MVC related folders and files (controllers,
-views and REMOVE_FILE_NAME.htaccess) if the Wigbi application will
-use the default routing 
-
-
-but since the home view
-that is included in the release by default helps you configure the
-framework, you should use it at least the first time you set it up.
-
-So, first rename REMOVE_FILE_NAME.htaccess to .htaccess. This file
-will then enable basic URL rewriting for the Wigbi MVC engine. The
-file may become hidden when you remove the file name, but you have
-knowledge about how to access hidden files, I am sure ;)
-
-If you use Wigbi out of the box, renaming the .htaccess file makes
-it possible to visit the root folder in your browser (even when it
-has no default page) which displays a page that checks if Wigbi is
-properly configured.
-
-If Wigbi is NOT properly setup (which it will not be from scratch),
-you will receive some instructions on how to set it up correctly.
-
-All you have to do is to:
-	* open wigbi/config.ini	 (auto-generated when Wigbi is started)
-	* enter a value for application.name		(a name of your choice)
-	* enter a value for application.webRoot (the web site root URL)
-
-If you use data plugins, you also need to enter the four DB config
-parameters, which tells Wigbi how to connect to the database where
-the data plugins will be persisted.   
+		If you use data plugins, you must enter the four DB config
+		parameters, which tells Wigbi how to connect to a database,
+		where the data plugins will be persisted.   
 
 That's it! If you reload the page, it should not throw any more of
-these annoying exceptions. The start page is simple, but I will do
-some more work on it...in due time :)
+these annoying exceptions.
 
 
 IMPORTANT
 =========
 
-In Wigbi 1.1.2, I have created a separate wigbi/.htaccess file for
-Wigbi sites that will run on servers that has magic quotes enabled.
-In these cases, replace .htaccess with NO_MAGIC_QUOTES.htaccess to
-make Wigbi disable magic quotes, which otherwise will mess up data
-that is sent through the Wigbi AJAX pipeline.
+In Wigbi 1.1.2, I added a separate .htaccess file for servers that
+has no support for magic quotes. Before this, Wigbi would not work
+for such servers.
 
-Earlier, Wigbi could not be used on servers that did not have this
-magic quote feature installed, since attempting to disable it made
-Wigbi crash. The magic quote disabling line had to be deleted from
-the .htaccess file for Wigbi to work.
-
-With this new setup, you only have to use the line if you need it.
+If your server does not support magic quotes, replace the original
+wigbi/.htaccess file with the NO_MAGIC_QUOTES.htaccess file in the
+wigbi/assets/htaccess/ folder.
 
 
 Contact & downloads
