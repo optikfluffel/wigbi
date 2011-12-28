@@ -1,0 +1,10 @@
+Options -Indexes
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^([a-zA-Z0-9_\-]+)$						controllers/_controller.php?controller=$1&action=index	[NC,L,QSA]
+RewriteRule ^([a-zA-Z0-9_\-]+)/([a-zA-Z0-9_\-]+)$	controllers/_controller.php?controller=$1&action=$2		[NC,L,QSA]
+RewriteRule ^$										home/index												[NC,L,QSA]
