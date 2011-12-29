@@ -27,6 +27,7 @@ $a = new CacheBaseBehavior();
 $a = new FileCacheBehavior();
 $a = new MemoryCacheBehavior();
 
+$a = new FileConfigurationBehavior();
 $a = new IniFileReaderBehavior();
 
 $a = new MasterPageBehavior();

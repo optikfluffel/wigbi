@@ -23,14 +23,16 @@
  */
 class FileConfiguration implements IConfiguration
 {
+	private $_data;
+	
+	
 	/**
-	 * Create an instance of the class.
-	 * 
 	 * @param	string				$filePath	The path to the config file that is to be parsed, if any.
 	 * @param	IConfigFileReader	$fileReader	The file reader that should be used to read the config file.
 	 */
 	public function __construct($filePath, $fileReader)
 	{
+		$this->_data = $fileReader->readFile($filePath);
 	}
 	
 

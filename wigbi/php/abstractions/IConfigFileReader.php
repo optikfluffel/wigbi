@@ -26,7 +26,10 @@ interface IConfigFileReader
 	/**
 	 * Read the content of a file.
 	 * 
-	 * @return	mixed	Config array if the file could be parsed, otherwise false;
+	 * This method must return a dictionary where the elements are
+	 * either string values or sub-dictionaries.
+	 * 
+	 * @return	mixed	Config dictionary if the file could be parsed, otherwise false;
 	 */
 	function readFile($path);
 }
