@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi.PHP.ICache interface file.
+ * The Wigbi ICache interface file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi.PHP.ICache interface.
+ * The Wigbi ICache interface.
  * 
  * This interface can be implemented by any class that can be used
  * to handle cached data.
@@ -24,6 +24,14 @@
 interface ICache
 {
 	/**
+	 * Clear a certain cache key.
+	 * 
+	 * @param	string	$key	The cache key.
+	 * @return	bool			Whether or not the operation succeeded.
+	 */
+	function clear($key);
+	
+	/**
 	 * Retrieve data from the cache.
 	 * 
 	 * @param	string	$key		The cache key to retrieve.
@@ -31,7 +39,6 @@ interface ICache
 	 * @return	mixed				Cached data or fallback value.
 	 */
 	function get($key, $fallback = null);
-	
 	
 	/**
 	 * Cache any serializable data. 

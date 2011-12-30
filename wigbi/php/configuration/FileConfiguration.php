@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi.PHP.FileBasedConfiguration class file.
+ * The Wigbi FileBasedConfiguration class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi.PHP.FileBasedConfiguration class.
+ * The Wigbi FileBasedConfiguration class.
  * 
  * This class can be used to access configuration data that can be
  * retrieved from a file.

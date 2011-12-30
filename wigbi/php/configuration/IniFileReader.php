@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi.PHP.IniFileReader class file.
+ * The Wigbi IniFileReader class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi.PHP.IniFileReader class.
+ * The Wigbi IniFileReader class.
  * 
  * This class can be used to parse an ini config file and load all
  * sections parameters within it.

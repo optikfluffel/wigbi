@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi.PHP.IConfiguration interface file.
+ * The Wigbi IConfiguration interface file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi.PHP.IConfiguration interface.
+ * The Wigbi IConfiguration interface.
  * 
  * This interface can be implemented by any class that can be used
  * as a configuration handler.

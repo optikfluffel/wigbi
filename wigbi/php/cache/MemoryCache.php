@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi.PHP.MemoryCache class file.
+ * The Wigbi MemoryCache class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi.PHP.MemoryCache class.
+ * The Wigbi MemoryCache class.
  * 
  * This class can be used to cache data in memory. It supports all
  * kind of serializable data.

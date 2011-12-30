@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi.PHP.CacheBase class file.
+ * The Wigbi CacheBase class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi.PHP.CacheBase class.
+ * The Wigbi CacheBase class.
  * 
  * This class provides base functionality for the cache classes in
  * this package.
@@ -23,6 +23,18 @@
  */
 class CacheBase
 {
+	/**
+	 * Clear a certain cache key.
+	 * 
+	 * @param	string	$key	The cache key.
+	 * @return	bool			Whether or not the operation succeeded.
+	 */
+	function clear($key)
+	{
+		$this->set($key, null, 0);
+		return $this->get($key) == null;
+	}
+	
 	/**
 	 * Create a time stamp string to be appended to the cached data.
 	 * 

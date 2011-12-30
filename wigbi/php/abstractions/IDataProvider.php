@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi.PHP.IDataProvider interface file.
+ * The Wigbi IDataProvider interface file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi.PHP.IDataProvider interface.
+ * The Wigbi IDataProvider interface.
  * 
  * This interface can be implemented by any data provider that can
  * provide data from a data source.
