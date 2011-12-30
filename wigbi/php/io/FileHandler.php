@@ -22,27 +22,7 @@
  * @version			2.0.0
  */
 class FileHandler implements IFileHandler
-{
-	/**
-	 * Open an already existing file and fill it with some content.
-	 * 
-	 * @return	bool	Whether or not the operation succeeded.
-	 */
-	public function append($path, $content)
-	{
-		
-	}
-	
-	/**
-	 * Create a file and fill it with some content.
-	 * 
-	 * @return	bool	Whether or not the operation succeeded.
-	 */
-	public function create($path, $content)
-	{
-		
-	}
-	
+{	
 	/**
 	 * Delete a certain file.
 	 * 
@@ -50,7 +30,7 @@ class FileHandler implements IFileHandler
 	 */
 	public function delete($path)
 	{
-		
+		return unlink($path);
 	}
 	
 	/**
@@ -60,7 +40,19 @@ class FileHandler implements IFileHandler
 	 */
 	public function read($path) 
 	{
-		
+		return file_get_contents($path);
+	}
+	
+	/**
+	 * Write content to file.
+	 * 
+	 * @return	bool	Whether or not the operation succeeded.
+	 */
+	public function write($path, $mode, $content)
+	{  
+		$file = fopen($path, $mode) or die ("FileHandler.append - Error opening $path");
+		fwrite($file, $content);
+		fclose($file);
 	}
 }
 

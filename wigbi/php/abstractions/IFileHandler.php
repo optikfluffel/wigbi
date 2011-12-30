@@ -22,21 +22,7 @@
  * @version			2.0.0
  */
 interface IFileHandler
-{
-	/**
-	 * Open an already existing file and fill it with some content.
-	 * 
-	 * @return	bool	Whether or not the operation succeeded.
-	 */
-	function append($path, $content);
-	
-	/**
-	 * Create a file and fill it with some content.
-	 * 
-	 * @return	bool	Whether or not the operation succeeded.
-	 */
-	function create($path, $content);
-	
+{	
 	/**
 	 * Delete a certain file.
 	 * 
@@ -50,6 +36,13 @@ interface IFileHandler
 	 * @return	string	The content of the file.
 	 */
 	function read($path);
+	
+	/**
+	 * Write content to file.
+	 * 
+	 * @return	bool	Whether or not the operation succeeded.
+	 */
+	function write($path, $mode, $content);
 }
 
 ?>
