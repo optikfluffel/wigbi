@@ -2,24 +2,40 @@
 
 require("../wigbi/wigbi.php");
 require("tools/SimpleTest_1_1/autorun.php");
+
+
+function __autoload($className)
+{
+	global $wigbi_php_folders;
+
+	foreach ($wigbi_php_folders as $folder)
+	{
+		$testFolder = "php/$folder/";
 		
-function __autoload($class_name) {
-	$classesDir = array (
-		'php/',
-		'php/cache/',
-		'php/configuration/',
-		'php/core/',
-		'php/data/',
-		'php/ui/'
-	);
-	
-    foreach ($classesDir as $directory) {
-        if (file_exists($directory . $class_name . '.php')) {
-                require_once ($directory . $class_name . '.php');
-                return;
-        }
-    }
+		if (file_exists($testFolder . $className . '.php'))
+        {
+            require_once ($testFolder . $className . '.php');
+            return;
+        } 
+	}
 }
+
+
+/*
+foreach ($wigbi_php_folders as $folder)
+{
+	$test_folder = "php/$folder";
+	
+	if (!is_dir($test_folder))
+		continue;
+	
+	foreach (glob($test_folder . "/*.php") as $file)
+	{
+		print $file . "<br/>";
+		require_once($file);
+	}
+}*/
+
 
 $a = new WigbiBehavior();
 

@@ -18,7 +18,7 @@
  * @copyright		Copyright © 2009-2011, Daniel Saidi
  * @link			http://www.wigbi.com
  * @package			Wigbi
- * @subpackage		PHP.Abstractions
+ * @subpackage		PHP.Data
  * @version			2.0.0
  */
 interface IDataProvider

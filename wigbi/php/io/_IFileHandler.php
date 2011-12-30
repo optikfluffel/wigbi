@@ -18,7 +18,7 @@
  * @copyright		Copyright © 2009-2012, Daniel Saidi
  * @link			http://www.wigbi.com
  * @package			Wigbi
- * @subpackage		PHP.Abstractions
+ * @subpackage		PHP.IO
  * @version			2.0.0
  */
 interface IFileHandler
