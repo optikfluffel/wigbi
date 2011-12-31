@@ -11,11 +11,11 @@ function __autoload($className)
 
 	foreach ($wigbi_php_folders as $folder)
 	{
-		$testFolder = "php/$folder/";
+		$classFile = "php/$folder/$className.php";
 		
-		if (file_exists($testFolder . $className . '.php'))
+		if (file_exists($classFile))
         {
-            require_once ($testFolder . $className . '.php');
+            require_once ($classFile);
             return;
         } 
 	}
@@ -24,9 +24,7 @@ function __autoload($className)
 //Create and run all unit test classes 
 foreach ($wigbi_php_folders as $folder)
 {
-	$testFolder = "php/$folder";
-	
-	foreach (glob("$testFolder/*.php") as $file)
+	foreach (glob("php/$folder/*.php") as $file)
 	{
 		$className = basename(str_replace(".php", "", basename($file)));
 		eval("new " . $className . "();");

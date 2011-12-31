@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi.PHP.Wigbi class file.
+ * The Wigbi class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi.PHP.Wigbi class.
+ * The Wigbi class.
  * 
  * This static class is the main class in the Wigbi framework. The
  * class is used to start and stop Wigbi and also contains methods
