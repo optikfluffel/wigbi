@@ -35,9 +35,7 @@ foreach ($wigbi_php_folders as $folder)
 
 
 
-/*interface Int { function test(); }
-class MyInt1 implements Int { public function test() { return 1; } }
-class MyInt2 implements Int { public function test() { return 2; } }
+/*
 
 class Container {
 	public static function getInstance($type)

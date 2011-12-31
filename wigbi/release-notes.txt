@@ -17,6 +17,7 @@ Wigbi 2.0.0 [2012-xx-xx]
 * Wigbi config file not settable
 * Wigbi.wigbiRoot => Wigbi.serverWigbiRoot
 * + Wigbi.clientWigbiRoot
+* ICache - no begin/end cache...just set
 
 
 
