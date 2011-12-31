@@ -4,6 +4,7 @@ require("../wigbi/wigbi.php");
 require("tools/SimpleTest_1_1/autorun.php");
 
 
+//Load classes outside of test context (so that they are executed in this path)
 function __autoload($className)
 {
 	global $wigbi_php_folders;
@@ -20,33 +21,20 @@ function __autoload($className)
 	}
 }
 
-
-/*
+//Create and run all unit test classes 
 foreach ($wigbi_php_folders as $folder)
 {
-	$test_folder = "php/$folder";
+	$testFolder = "php/$folder";
 	
-	if (!is_dir($test_folder))
-		continue;
-	
-	foreach (glob($test_folder . "/*.php") as $file)
+	foreach (glob("$testFolder/*.php") as $file)
 	{
-		print $file . "<br/>";
-		require_once($file);
+		$className = basename(str_replace(".php", "", basename($file)));
+		eval("new " . $className . "();");
 	}
-}*/
+		 
+}
 
 
-$a = new WigbiBehavior();
-
-$a = new CacheBaseBehavior();
-$a = new FileCacheBehavior();
-$a = new MemoryCacheBehavior();
-
-$a = new FileConfigurationBehavior();
-$a = new IniFileReaderBehavior();
-
-$a = new MasterPageBehavior();
 
 
 /*interface Int { function test(); }
