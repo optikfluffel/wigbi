@@ -34,6 +34,16 @@ class FileHandler implements IFileHandler
 	}
 	
 	/**
+	 * Check if a certain file exists.
+	 * 
+	 * @return	bool	Whether or not the file exists.
+	 */
+	function exists($path)
+	{
+		return file_exists($path);
+	}
+	
+	/**
 	 * Read the content of a certain file.
 	 * 
 	 * @return	string	The content of the file.

@@ -29,21 +29,46 @@ class CacheBase
 	 * @param	string	$key	The cache key.
 	 * @return	bool			Whether or not the operation succeeded.
 	 */
-	function clear($key)
+	public function clear($key)
 	{
 		$this->set($key, null, 0);
 		return $this->get($key) == null;
 	}
 	
 	/**
+	 * Create a serialized cache data string that can be cached.
+	 * 
+	 * @param	mixed	$data		The data to embed.
+	 * @param	int		$minutes	The expiration time, in minutes.
+	 * @return	string				The resulting cache data.
+	 */
+	public function createCacheData($data, $minutes)
+	{
+		$item = new CacheItem($data, $this->createTimeStamp($minutes));
+		
+		return serialize($item);
+	}
+	
+	/**
 	 * Create a time stamp string to be appended to the cached data.
 	 * 
-	 * @param	int		$expires	The expiration time, in minutes.
+	 * @param	int		$minutes	The expiration time, in minutes.
 	 * @return	string				The resulting time stamp string.
 	 */
-	public function createTimeStamp($expires)
+	public function createTimeStamp($minutes)
 	{
-		return date("YmdHis", mktime(date("H"), date("i") + $expires, date("s"), date("m"), date("d"), date("Y")));
+		return date("YmdHis", mktime(date("H"), date("i") + $minutes, date("s"), date("m"), date("d"), date("Y")));
+	}
+	
+	/**
+	 * Parse a serialized cache string to a corresponding cache item.
+	 * 
+	 * @param	string		$data	The serialized data to parse.
+	 * @return	CacheItem			The resulting, parsed cache item.
+	 */
+	public function parseCacheData($data)
+	{
+		return unserialize($data);
 	}
 	
 	/**

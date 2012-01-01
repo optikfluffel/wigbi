@@ -23,24 +23,20 @@
  */
 class FileCache extends CacheBase implements ICache
 {
+	private $_cacheFolder;
+	private $_fileHandler;
+	
+	
 	/**
-	 * @param	string	$cacheFolder	The path to the cache folder.
+	 * @param	string			$cacheFolder	The path to the cache folder.
+	 * @param	IFileHandler	$fileHandler	The IFileHandler to use for file operations.
 	 */
-	public function __construct($cacheFolder)
+	public function __construct($cacheFolder, $fileHandler)
 	{
 		$this->_cacheFolder = $cacheFolder;
+		$this->_fileHandler = $fileHandler;
 	}
 	
-	
-	/**
-	 * The path to the folder in which cache files will be stored.
-	 * 
-	 * @return	string
-	 */
-	public function cacheFolder()
-	{
-		return $this->_cacheFolder;
-	}
 	
 	/**
 	 * Retrieve data from the cache.
@@ -62,7 +58,7 @@ class FileCache extends CacheBase implements ICache
 	 */
 	public function getFilePath($key)
 	{
-		return $this->cacheFolder() . "/cache_" . $key;
+		return $this->_cacheFolder . "/cache_" . $key;
 	}
 	
 	/**
@@ -70,10 +66,10 @@ class FileCache extends CacheBase implements ICache
 	 * 
 	 * @param	string	$key		The cache key to set.
 	 * @param	mixed	$data		The data that is to be cached.
-	 * @param	int		$expires	The expiration time, in minutes.
+	 * @param	int		$minutes	The expiration time, in minutes.
 	 * @return	bool				Whether or not the operation succeeded.
 	 */
-	public function set($key, $data, $expires = 10)
+	public function set($key, $data, $minutes = 10)
 	{
 		
 	}

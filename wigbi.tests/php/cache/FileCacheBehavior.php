@@ -2,25 +2,23 @@
 
 	class FileCacheBehavior extends UnitTestCase
 	{
-		private $_cache;
+		private $_cacheItem;
 		
 		
 		function setUp()
 		{
-			$this->_cache = new FileCache("foo");
+			Mock::generate('IFileHandler');
+			$this->_fileHandler = new MockIFileHandler();
+			
+			$this->_cache = new FileCache("foo", $this->_fileHandler);
 		}
 		
 		function tearDown() { }
 		
 		
-		public function test_constructor_shouldSetCacheFolder()
-		{
-			$this->assertEqual($this->_cache->cacheFolder(), "foo");
-		}
-		
-		
 		public function test_clear_shouldClearExistingKey()
 		{
+			//$connection->returns('query', 37);
 			//TODO: Requires abstract file handler
 		}
 		

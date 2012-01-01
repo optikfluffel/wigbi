@@ -43,10 +43,10 @@ class MemoryCache extends CacheBase implements ICache
 	 * 
 	 * @param	string	$key		The cache key.
 	 * @param	mixed	$data		The data that is to be cached.
-	 * @param	int		$expires	The expiration time, in minutes.
+	 * @param	int		$minutes	The expiration time, in minutes.
 	 * @return	bool				Whether or not the operation succeeded.
 	 */
-	public function set($key, $data, $expires = 10)
+	public function set($key, $data, $minutes = 10)
 	{
 		
 	}
