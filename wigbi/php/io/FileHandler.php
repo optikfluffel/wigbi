@@ -10,8 +10,7 @@
 /**
  * The Wigbi FileHandler class.
  * 
- * This class can be used to handle files. Since it implements the
- * IFileHandler interface it can easily be replaced or mocked away.
+ * This class can be used to handle files in the file system.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
