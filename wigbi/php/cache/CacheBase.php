@@ -26,13 +26,11 @@ class CacheBase
 	/**
 	 * Clear a certain cache key.
 	 * 
-	 * @param	string	$key	The cache key.
-	 * @return	bool			Whether or not the operation succeeded.
+	 * @param	string	$key	The cache key to clear.
 	 */
 	public function clear($key)
 	{
 		$this->set($key, null, 0);
-		return $this->get($key) == null;
 	}
 	
 	/**
@@ -57,7 +55,7 @@ class CacheBase
 	 */
 	public function createTimeStamp($minutes)
 	{
-		return date("YmdHis", mktime(date("H"), date("i") + $minutes, date("s"), date("m"), date("d"), date("Y")));
+		return mktime(date("H"), date("i") + $minutes, date("s"), date("m"), date("d"), date("Y"));
 	}
 	
 	/**
@@ -69,17 +67,6 @@ class CacheBase
 	public function parseCacheData($data)
 	{
 		return unserialize($data);
-	}
-	
-	/**
-	 * Parse a time stamp string and retrieve the remaining minutes.
-	 * 
-	 * @param	string	$timeStamp	The time stamp string to parse.
-	 * @return	time				The resulting time stamp, false if parsing failed.
-	 */
-	public function parseTimeStamp($timeStamp)
-	{
-		return strtotime($timeStamp);
 	}
 }
 
