@@ -30,7 +30,7 @@ class CacheBase
 	 */
 	public function clear($key)
 	{
-		$this->set($key, null, 0);
+		$this->set($key, null, -10);
 	}
 	
 	/**

@@ -23,7 +23,6 @@
 			
 			$time = $this->_cache->createTimeStamp($minutes);
 			$data = serialize(new CacheItem("cached data", $time));
-			$item = new CacheItem("cached data", $time);
 			$this->_fileHandler->returns('read', $data);
 		}
 		
@@ -37,13 +36,13 @@
 			$this->_cache->clear("bar");
 		}
 		
-		public function test_get_shouldReturnNullForNonExistingFile()
+		public function test_get_shouldReturnFallbackForNonExistingFile()
 		{
 			$this->_fileHandler->expectCallCount("read", 0);
 			
-			$data = $this->_cache->get("bar");
+			$data = $this->_cache->get("bar", 42);
 			
-			$this->assertNull($data);
+			$this->assertEqual($data, 42);
 		}
 		
 		public function test_get_shouldAttemptToReadExistingFile()
@@ -54,24 +53,25 @@
 			$this->_cache->get("bar");
 		}
 		
-		public function test_get_shouldDeleteExpiredFile()
+		public function test_get_shouldDeleteExpiredDataAndReturnFallback()
 		{
 			$this->setUpCacheFile(-10);
 			$this->_fileHandler->expectOnce("read", array("foo/cache_bar"));
 			$this->_fileHandler->expectOnce("delete", array("foo/cache_bar"));
 			
-			$this->_cache->get("bar");
+			$data = $this->_cache->get("bar", 42);
+			
+			$this->assertEqual($data, 42);
 		}
 		
-		public function test_get_shouldReturnDeserializedCacheItem()
+		public function test_get_shouldReturnExistingKeyValue()
 		{
 			$this->setUpCacheFile(10);
 			$time = $this->_cache->createTimeStamp(10);
 			
 			$result = $this->_cache->get("bar");
 			
-			$this->assertEqual($result->data(), "cached data");
-			$this->assertEqual($result->expires(), $time);
+			$this->assertEqual($result, "cached data");
 		}
 		
 		public function test_getFilePath_shouldReturnCorrectPath()

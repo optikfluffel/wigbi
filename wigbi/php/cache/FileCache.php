@@ -53,16 +53,16 @@ class FileCache extends CacheBase implements ICache
 		$path = $this->getFilePath($key);
 		
 		if (!$this->_fileHandler->exists($path))
-			return null;
+			return $fallback;
 		
-		$fileData = $this->_fileHandler->read($path);
-		$cacheItem = $this->parseCacheData($fileData);
+		$data = $this->_fileHandler->read($path);
+		$item = $this->parseCacheData($data);
 		
-		if (!$cacheItem->expired())
-			return $cacheItem;
+		if (!$item->expired())
+			return $item->data();
 		
 		$this->_fileHandler->delete($path);
-		return null;
+		return $fallback;
 	}
 	
 	/**
@@ -82,7 +82,6 @@ class FileCache extends CacheBase implements ICache
 	 * @param	string	$key		The cache key to set.
 	 * @param	mixed	$data		The data that is to be cached.
 	 * @param	int		$minutes	The expiration time, in minutes.
-	 * @return	bool				Whether or not the operation succeeded.
 	 */
 	public function set($key, $data, $minutes = 10)
 	{
