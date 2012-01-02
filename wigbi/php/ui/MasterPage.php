@@ -10,13 +10,13 @@
 /**
  * The Wigbi MasterPage class.
  * 
- * This static class can be used to define page templates that can
- * be used by several pages. The master page defines content areas
- * that can be populated by each page, using open(...) and close().
+ * This class can be used to setup page templates that can be used
+ * by several pages. Master page defines content areas that can be
+ * populated by each page that uses it, using open(..) and close().
  * 
- * A page that uses a master page must NOT generate content out of
- * an open/close pair, since such content will be displayed at the
- * very top of the page.  
+ * Pages that use a master page must NOT generate content out of a
+ * content area, since this will cause the content to be displayed
+ * at the very top of the page.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -28,7 +28,21 @@
  */
 class MasterPage
 {
+	private static $_contentAreas = array();
+	private static $_currentContent;
+	private static $_filePath;
 	
+	/**
+	 * Get/set the poath to the master page file.
+	 * 
+	 * @param	string	$newValue	Optional set value.
+	 */
+	public static function filePath($newValue = null)
+	{
+		if (func_num_args() > 0)
+			MasterPage::$_filePath = func_get_arg(0);
+		return MasterPage::$_filePath;
+	}
 }
 
 ?>

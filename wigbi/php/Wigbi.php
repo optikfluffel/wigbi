@@ -63,7 +63,7 @@ class Wigbi
 	 */
 	public static function configFile()
 	{
-		return Wigbi::serverWigbiRoot() . "config.ini";
+		return Wigbi::serverRoot("wigbi/config.ini");
 	}
 	
 	/**
@@ -73,7 +73,7 @@ class Wigbi
 	 */
 	public static function configFileTemplate()
 	{
-		return Wigbi::serverWigbiRoot() . "assets/config_template.ini";
+		return Wigbi::serverRoot("wigbi/assets/config_template.ini");
 	}
 	
 	/**
@@ -83,35 +83,29 @@ class Wigbi
 	 */
 	public static function dataPluginFolder()
 	{
-		return Wigbi::serverWigbiRoot() . "plugins/data/";
+		return Wigbi::serverRoot("wigbi/plugins/data/");
 	}
 	
 	/**
 	 * Get the application root path for the server.
 	 * 
-	 * @return	string
-	 */
-	public static function serverRoot()
-	{
-		if (isset(Wigbi::$_serverRoot))
-			return Wigbi::$_serverRoot;
-		
-		$root = "";
-		while(!is_dir($root . "wigbi/"))
-			$root = "../" . $root;
-		Wigbi::$_serverRoot = $root;
-						
-		return Wigbi::$_serverRoot;
-	}
-	
-	/**
-	 * Get the wigbi root path for the server.
+	 * If the optional path argument is set, it is appended to the
+	 * application root path.
 	 * 
 	 * @return	string
+	 * @param	string	$path	Optional path to add to the server root.
 	 */
-	public static function serverWigbiRoot()
+	public static function serverRoot($path = null)
 	{
-		return Wigbi::serverRoot() . "wigbi/";
+		if (!isset(Wigbi::$_serverRoot))
+		{
+			$root = "";
+			while(!is_dir($root . "wigbi/"))
+				$root = "../" . $root;
+			Wigbi::$_serverRoot = $root;
+		}
+						
+		return Wigbi::$_serverRoot . $path;
 	}
 	
 	/**
@@ -121,7 +115,7 @@ class Wigbi
 	 */
 	public static function uiPluginFolder()
 	{
-		return Wigbi::serverWigbiRoot() . "plugins/ui/";
+		return Wigbi::serverRoot("wigbi/plugins/ui/");
 	}
 	
 	/**

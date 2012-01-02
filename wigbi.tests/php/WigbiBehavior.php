@@ -22,9 +22,9 @@
 			$this->assertEqual(Wigbi::serverRoot(), "../");
 		}
 		
-		public function test_serverWigbiRoot_shouldBeRelativeToTestPage()
+		public function test_serverRoot_shouldAppendOptionalPath()
 		{
-			$this->assertEqual(Wigbi::serverWigbiRoot(), "../wigbi/");
+			$this->assertEqual(Wigbi::serverRoot("wigbi/"), "../wigbi/");
 		}
 		
 		public function test_uiPluginsFolder_shouldBeRelativeToTestPage()
