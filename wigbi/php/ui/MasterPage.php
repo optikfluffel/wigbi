@@ -29,11 +29,53 @@
 class MasterPage
 {
 	private static $_contentAreas = array();
-	private static $_currentContent;
+	private static $_currentContentArea;
 	private static $_filePath;
 	
 	/**
-	 * Get/set the poath to the master page file.
+	 * Close the last opened content area.
+	 * 
+	 * @return	string	The resulting content of the content area.
+	 */	
+	public static function close()
+	{
+		return MasterPage::content(MasterPage::$_currentContentArea, ob_get_clean());
+	}
+	
+	
+	/**
+	 * Build the master page.
+	 */
+	public static function build()
+	{
+		require_once MasterPage::$_filePath;
+	}
+	
+	/**
+	 * Get/set the content of a certain content area.
+	 * 
+	 * Instead of using open and close, this method can be used to
+	 * instantly populate a content area.
+	 * 
+	 * @param	string	$contentAreaName	The name of the content area.
+	 * @param	string	$value				Optional set value.
+	 * @return	string						The content of the content area.
+	 */
+	public static function content($contentArea, $value = null)
+	{
+		if (func_num_args() > 1)
+			MasterPage::$_contentAreas[$contentArea] = $value;
+		
+		if (array_key_exists($contentArea, MasterPage::$_contentAreas))
+			return MasterPage::$_contentAreas[$contentArea];
+		return null;
+	}
+	
+	/**
+	 * Get/set the path to the master page file.
+	 * 
+	 * This function can be called anytime before build, but it is
+	 * convenient to define it topmost in the page.
 	 * 
 	 * @param	string	$newValue	Optional set value.
 	 */
@@ -42,6 +84,22 @@ class MasterPage
 		if (func_num_args() > 0)
 			MasterPage::$_filePath = func_get_arg(0);
 		return MasterPage::$_filePath;
+	}
+	
+	
+	/**
+	 * Open a certain content area for writing.
+	 * 
+	 * Content can be added to the area either with print, echo or
+	 * by ending the php tag, adding the content, and then finally
+	 * re-opening the php tag.
+	 * 
+	 * @param	string	$contentArea	The name of the content area to populate.
+	 */
+	public static function open($contentArea)
+	{
+		MasterPage::$_currentContentArea = $contentArea;
+		ob_start();
 	}
 }
 

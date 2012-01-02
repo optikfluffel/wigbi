@@ -89,21 +89,15 @@ class Wigbi
 	/**
 	 * Get the application root path for the server.
 	 * 
-	 * If the optional path argument is set, it is appended to the
-	 * application root path.
+	 * If the path argument is set, it will be appended at the end
+	 * of the application root path.
 	 * 
 	 * @return	string
 	 * @param	string	$path	Optional path to add to the server root.
 	 */
 	public static function serverRoot($path = null)
 	{
-		if (!isset(Wigbi::$_serverRoot))
-		{
-			$root = "";
-			while(!is_dir($root . "wigbi/"))
-				$root = "../" . $root;
-			Wigbi::$_serverRoot = $root;
-		}
+		Wigbi::calculateServerRoot();
 						
 		return Wigbi::$_serverRoot . $path;
 	}
@@ -126,6 +120,21 @@ class Wigbi
 	public static function version()
 	{
 		return Wigbi::$_version;
+	}
+	
+	
+	/**
+	 * Calculate the application root path for the server.
+	 */
+	private static function calculateServerRoot()
+	{
+		if (isset(Wigbi::$_serverRoot))
+			return;
+		
+		$root = "";
+		while(!is_dir($root . "wigbi/"))
+			$root = "../" . $root;
+		Wigbi::$_serverRoot = $root;
 	}
 }
 
