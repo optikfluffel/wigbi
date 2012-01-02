@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Wigbi.PHP.UI.MasterPage class file.
+ * Wigbi MasterPage class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi.PHP.UI.MasterPage class.
+ * The Wigbi MasterPage class.
  * 
  * This static class can be used to define page templates that can
  * be used by several pages. The master page defines content areas

@@ -34,7 +34,7 @@ interface ICache
 	 * Retrieve data from the cache.
 	 * 
 	 * @param	string	$key		The cache key to retrieve.
-	 * @param	mixed	$fallback	Fallback value, if any.
+	 * @param	mixed	$fallback	The value to return if no cached value exists.
 	 * @return	mixed				Cached data or fallback value.
 	 */
 	function get($key, $fallback = null);

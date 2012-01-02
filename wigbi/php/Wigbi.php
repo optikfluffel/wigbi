@@ -45,6 +45,8 @@
  * @package			Wigbi
  * @subpackage		PHP
  * @version			2.0.0
+ * 
+ * @static
  */
 class Wigbi
 {
