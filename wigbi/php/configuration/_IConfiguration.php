@@ -23,6 +23,7 @@
  */
 interface IConfiguration
 {
+	
 	/**
 	 * Get a certain configuration key value.
 	 * 

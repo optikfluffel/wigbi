@@ -37,6 +37,20 @@ class FileConfiguration implements IConfiguration
 	
 
 	/**
+	 * Get the currently loaded configuration data.
+	 * 
+	 * The data structure depends on if the data contains sections. 
+	 * 
+	 * @return	array
+	 */
+	public function data()
+	{
+		if ($this->_data)
+			return $this->_data;
+		return array();
+	}
+	
+	/**
 	 * Get a certain configuration key value.
 	 * 
 	 * @param	string	$key		The configuration key to retrieve.
@@ -45,6 +59,14 @@ class FileConfiguration implements IConfiguration
 	 */
 	public function get($key, $section = "")
 	{
+		//Get the correct section to work with
+		$data = $this->_data;
+		if (isset($data[$section]))
+			$data = $data[$section];
+		
+		//Either return match or null
+		if (isset($data[$key]))
+			return $data[$key];
 		return null;
 	}
 }
