@@ -25,6 +25,24 @@
 interface IContext
 {
 	/**
+	 * Get the value of a certain key in the $_COOKIE array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	function cookie($key, $fallback = null);
+	
+	/**
+	 * Get the value of a certain key in the $_ENV array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	function env($key, $fallback = null);
+	
+	/**
 	 * Get the value of a certain key in the $_GET array.
 	 * 
 	 * @param	string	$key		The key to retrieve.
@@ -41,6 +59,24 @@ interface IContext
 	 * @return	mixed
 	 */
 	function post($key, $fallback = null);
+	
+	/**
+	 * Get the value of a certain key in the $_REQUEST array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	function request($key, $fallback = null);
+	
+	/**
+	 * Get the value of a certain key in the $_SESSION array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	function session($key, $fallback = null);
 }
 
 ?>

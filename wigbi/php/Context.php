@@ -27,6 +27,51 @@ class Context implements IContext
 	
 	
 	/**
+	 * Get the value of a certain key in an array.
+	 */
+	private static function getArrayKey($array, $key, $fallback = null)
+	{
+		return array_key_exists($key, $array) ? $array[$key] : $fallback;
+	}
+	
+	
+	/**
+	 * Get the value of a certain key in the $_COOKIE array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	public function cookie($key, $fallback = null)
+	{
+		return Context::getArrayKey($_COOKIE, $key, $fallback);
+	}
+	
+	/**
+	 * Get the value of a certain key in the $_ENV array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	public function env($key, $fallback = null)
+	{
+		return Context::getArrayKey($_ENV, $key, $fallback);
+	}
+	
+	/**
+	 * Get the value of a certain key in the $_FILES array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	public function files($key, $fallback = null)
+	{
+		return Context::getArrayKey($_FILES, $key, $fallback);
+	}
+	
+	/**
 	 * Get the value of a certain key in the $_GET array.
 	 * 
 	 * @param	string	$key		The key to retrieve.
@@ -35,7 +80,7 @@ class Context implements IContext
 	 */
 	public function get($key, $fallback = null)
 	{
-		return array_key_exists($key, $_GET) ? $_GET[$key] : $fallback;
+		return Context::getArrayKey($_GET, $key, $fallback);
 	}
 	
 	/**
@@ -59,7 +104,43 @@ class Context implements IContext
 	 */
 	public function post($key, $fallback = null)
 	{
-		return array_key_exists($key, $_POST) ? $_POST[$key] : $fallback;
+		return Context::getArrayKey($_POST, $key, $fallback);
+	}
+	
+	/**
+	 * Get the value of a certain key in the $_REQUEST array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	public function request($key, $fallback = null)
+	{
+		return Context::getArrayKey($_REQUEST, $key, $fallback);
+	}
+	
+	/**
+	 * Get the value of a certain key in the $_SERVER array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	public function server($key, $fallback = null)
+	{
+		return Context::getArrayKey($_SERVER, $key, $fallback);
+	}
+	
+	/**
+	 * Get the value of a certain key in the $_SESSION array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	public function session($key, $fallback = null)
+	{
+		return Context::getArrayKey($_SESSION, $key, $fallback);
 	}
 }
 
