@@ -27,13 +27,13 @@ class UrlValidator implements IValidator
 	
 	
 	/**
-	 * Validate a certain object.
+	 * Check if a string is a valid URL.
 	 * 
 	 * @return	bool
 	 */
-	public function isValid($obj)
+	public function isValid($str)
 	{
-		return preg_match(UrlValidator::$expression, $obj);
+		return preg_match(UrlValidator::$expression, $str);
 	}
 }
 
