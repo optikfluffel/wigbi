@@ -83,11 +83,9 @@ IMPORTANT
 
 Wigbi 1.1.2 added a NO_MAGIC_QUOTES.htaccess file for servers that
 has no support for magic quotes. Before this, Wigbi would not work
-for such servers.
-
-If your server does not support magic quotes, replace the original
-wigbi/.htaccess file with the NO_MAGIC_QUOTES.htaccess file in the
-wigbi folder.
+for such servers. If your server does not support magic quotes, do
+replace the wigbi/.htaccess file with the NO_MAGIC_QUOTES.htaccess
+file in the wigbi folder.
 
 
 Contact & downloads
