@@ -11,9 +11,9 @@ other frameworks and extended with plugins and your own classes.
 Contact and resources
 ---------------------
 
-Author:		Daniel Saidi  [daniel.saidi@gmail.com]
-Site:		http://www.wigbi.com
-Project:	http://www.github.com/danielsaidi/wigbi
+	Author:		Daniel Saidi  [daniel.saidi@gmail.com]
+	Site:		http://www.wigbi.com
+	Project:	http://www.github.com/danielsaidi/wigbi
 
 
 Downloading Wigbi
