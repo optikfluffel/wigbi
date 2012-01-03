@@ -10,8 +10,8 @@
 /**
  * The Wigbi FileBasedConfiguration class.
  * 
- * This class can be used to access configuration data that can be
- * retrieved from a file.
+ * This class can be used to handle configuration data that can be
+ * loaded from a file.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -21,7 +21,7 @@
  * @subpackage		PHP.Configuration
  * @version			2.0.0
  */
-class FileConfiguration implements IConfiguration
+class FileBasedConfiguration implements IConfiguration
 {
 	private $_data;
 	
@@ -57,7 +57,7 @@ class FileConfiguration implements IConfiguration
 	 * @param	string	$section	The configuration section, if any.
 	 * @return	string
 	 */
-	public function get($key, $section = "")
+	public function get($key, $section = null)
 	{
 		//Get the correct section to work with
 		$data = $this->_data;

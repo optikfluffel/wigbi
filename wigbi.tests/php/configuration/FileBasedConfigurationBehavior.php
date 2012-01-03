@@ -1,6 +1,6 @@
 <?php
 
-	class FileConfigurationBehavior extends UnitTestCase
+	class FileBasedConfigurationBehavior extends UnitTestCase
 	{
 		private $_fileReader;
 		private $_config;
@@ -17,7 +17,7 @@
 			$this->_fileReader = new MockIConfigFileReader();
 			$this->_fileReader->returns('readFile', $this->_data);
 			
-			$this->_config = new FileConfiguration("foo", $this->_fileReader);
+			$this->_config = new FileBasedConfiguration("foo", $this->_fileReader);
 		}
 		
 		function setUpSectionData()
@@ -32,7 +32,7 @@
 			$this->_fileReader = new MockIConfigFileReader();
 			$this->_fileReader->returns('readFile', $this->_data);
 			
-			$this->_config = new FileConfiguration("foo", $this->_fileReader);
+			$this->_config = new FileBasedConfiguration("foo", $this->_fileReader);
 		}
 		
 		function tearDown() { }
@@ -49,6 +49,12 @@
 			$data = $this->_config->data();
 			
 			$this->assertEqual($data, $this->_data);
+		}
+		
+		public function test_get_shouldReturnNullForNonExistingData()
+		{
+			$this->assertNull($this->_config->get("foobar"));
+			$this->assertNull($this->_config->get("foobar", "barfoo"));
 		}
 		
 		public function test_get_shouldReturnNonSectionData()

@@ -1,17 +1,17 @@
 <?php
 
 /**
- * The Wigbi IConfiguration interface file.
+ * The Wigbi ITranslator interface file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi IConfiguration interface.
+ * The Wigbi ITranslator interface.
  * 
  * This interface can be implemented by any class that can be used
- * as a configuration handler.
+ * to translage language keys.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -21,17 +21,16 @@
  * @subpackage		PHP.Configuration
  * @version			2.0.0
  */
-interface IConfiguration
+interface ITranslator
 {
-	
 	/**
-	 * Get a certain configuration key value.
+	 * Translate a certain language key.
 	 * 
-	 * @param	string	$key		The configuration key to retrieve.
-	 * @param	string	$section	The configuration section, if any.
+	 * @param	string	$key		The language key to translate.
+	 * @param	string	$section	The language section, if any.
 	 * @return	string
 	 */
-	function get($key, $section = null);
+	function translate($key, $section = null);
 }
 
 ?>
