@@ -13,7 +13,6 @@
 		function tearDown() { }
 		
 		
-		
 		public function test_isValid_shouldReturnFalseForNonExistingUrl()
 		{
 			$this->assertFalse($this->_validator->isValid("htp://www.saidi.se"));
