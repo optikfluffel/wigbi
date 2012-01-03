@@ -38,11 +38,12 @@ Getting started
 If you use Wigbi for the first time, you should start with looking
 at the short video that is up at wigbi.com.
 
-Wigbi does not need the controllers and views folders to work, but
-they are a big convenience. Until you get the hang of how Wigbi is
-working, use them as a reference.
+Wigbi doesn't need the .htaccess file nor the controllers or views
+folders, but they are a big convenience. Until you get the hang of
+how to use Wigbi, look at how they are used to setup Wigbi.
 
-With this said, all you have to do to get Wigbi to work is:
+With this said, all you have to do to get Wigbi to work (using the
+files and folders mentioned above) is to:
 
 	1.	Download and unzip the latest Wigbi release. Place it in a
 		folder that you can navigate to in a browser. 
