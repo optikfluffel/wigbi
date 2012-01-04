@@ -13,9 +13,18 @@
 		function tearDown() { } 
 		
 		
-		public function test_build_shouldRequireFilePath()
+		public function test_build_shouldAbortForNonSetFilePath()
 		{
-			//TODO: Mock require code
+			ob_start();
+			MasterPage::build();
+			$result = ob_get_clean();
+			
+			$this->assertEqual($result, "");
+		}
+		
+		public function test_build_shouldAbortForSetFilePath()
+		{
+			//TODO
 		}
 		
 		public function test_content_shouldGetSetValue()
