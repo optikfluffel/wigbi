@@ -5,28 +5,35 @@
  * that the start output is printed inside the resulting HEAD tag.
  */
 
+//Get query string values passed by routing
+$controllerName = Context::get("controller");
+$action = Context::get("action");
+
+
 //Include Wigbi
 include "../wigbi/wigbi.php";
 
-//Setup the controller context
-Controller::currentAction(Context::get("action"));
 
-//Start Wigbi
-MasterPage::openContentArea("wigbi-start");
-	try { Wigbi::start(); }
-	catch(Exception $e) { View::viewData("wigbi-error", $e); }
-MasterPage::closeContentArea();
+//Start Wigbi (this MUST be added to the HEAD tag)
+MasterPage::open("wigbi-start");
+	//try { Wigbi::start(); }
+	//catch(Exception $e) { View::viewData("wigbi-error", $e); }
+MasterPage::close();
 
-//Pass handling on to the controller
-require(Context::get("controller") . "Controller.php");
 
-//If the resulting view uses a master poge, build it
-if (MasterPage::filePath())
-	MasterPage::build();
+//Initialize the controller (query string-based)
+require($controllerName . "Controller.php");
+eval ('$controller = new ' . $controllerName . '();');
+$controller->action($actionName);
+
 	
-//Stop Wigbi (will never be displayed)
-MasterPage::openContentArea("wigbi-stop");
-Wigbi::stop();
-MasterPage::closeContentArea();
+//Stop Wigbi (this does not have to be displayed)
+MasterPage::open("wigbi-stop");
+	//Wigbi::stop();
+MasterPage::close();
+
+
+//Build the master page (aborts if not needed)
+MasterPage::build();
 
 ?>

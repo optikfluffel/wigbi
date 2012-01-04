@@ -13,9 +13,9 @@
 		function tearDown() { }
 		
 		
-		public function test_executeAction_shouldReturnActionResult()
+		public function test_action_shouldCallActionAndReturnResult()
 		{
-			$result = $this->_controller->executeAction("Action");
+			$result = $this->_controller->action("TestAction");
 			
 			$this->assertEqual($result, "foo");
 		}
@@ -24,7 +24,7 @@
 
 	class TestController extends Controller
 	{
-		public function Action()
+		public function TestAction()
 		{
 			return "foo";
 		}

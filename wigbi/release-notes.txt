@@ -18,7 +18,7 @@ Wigbi 2.0.0 [2012-xx-xx]
 * Wigbi.wigbiRoot => Wigbi.serverWigbiRoot
 * + Wigbi.clientWigbiRoot
 * ICache - no begin/end cache...just set
-
+* No logging...for now. Is it needed?
 
 
 

@@ -24,14 +24,14 @@
 interface IController
 {
 	/**
-	 * Execute a certain action.
+	 * Call a certain controller action.
 	 * 
 	 * The action name must represent a method that is defined for
 	 * the executing controller.
 	 * 
-	 * @return	mixed
+	 * @return	mixed	Action result.
 	 */
-	function executeAction($actionName);
+	function action($actionName);
 }
 
 ?>
