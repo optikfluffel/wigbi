@@ -24,12 +24,12 @@
 abstract class Controller implements IController
 {
 	/**
-	 * Call a certain action.
+	 * Call a certain action and return the result.
 	 * 
 	 * The action name must represent a method that is defined for
 	 * the executing controller.
 	 * 
-	 * @return	mixed	Action result.
+	 * @return	mixed
 	 */
 	function action($actionName)
 	{

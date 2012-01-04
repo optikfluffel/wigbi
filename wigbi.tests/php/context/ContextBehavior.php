@@ -7,7 +7,7 @@
 		
 		function setUp()
 		{
-			$this->_context = Context::instance();
+			$this->_context = Context::current();
 		}
 		
 		function tearDown() { } 

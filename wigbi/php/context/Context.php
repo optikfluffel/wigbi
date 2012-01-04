@@ -27,11 +27,15 @@ class Context implements IContext
 	
 	
 	/**
-	 * Get the value of a certain key in an array.
+	 * Get the default instance of the class.
+	 * 
+	 * @return	IContext
 	 */
-	private static function getArrayKey($array, $key, $fallback = null)
+	public static function current()
 	{
-		return array_key_exists($key, $array) ? $array[$key] : $fallback;
+		if (Context::$_instance == null)
+			Context::$_instance = new Context();
+		return Context::$_instance;
 	}
 	
 	
@@ -84,18 +88,6 @@ class Context implements IContext
 	}
 	
 	/**
-	 * Get the default instance of the class.
-	 * 
-	 * @return	Context
-	 */
-	public static function instance()
-	{
-		if (Context::$_instance == null)
-			Context::$_instance = new Context();
-		return Context::$_instance;
-	}
-	
-	/**
 	 * Get the value of a certain key in the $_POST array.
 	 * 
 	 * @param	string	$key		The key to retrieve.
@@ -141,6 +133,15 @@ class Context implements IContext
 	public function session($key, $fallback = null)
 	{
 		return Context::getArrayKey($_SESSION, $key, $fallback);
+	}
+	
+	
+	/**
+	 * Get the value of a certain key in an array.
+	 */
+	private static function getArrayKey($array, $key, $fallback = null)
+	{
+		return array_key_exists($key, $array) ? $array[$key] : $fallback;
 	}
 }
 
