@@ -21,7 +21,7 @@
  * @subpackage		PHP.IO
  * @version			2.0.0
  */
-interface IFileIncluder
+class FileIncluder implements IFileIncluder
 {	
 	/**
 	 * Include a certain file.
