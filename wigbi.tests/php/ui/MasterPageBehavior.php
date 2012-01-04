@@ -7,6 +7,9 @@
 		
 		function setUp()
 		{
+			Mock::generate('IFileIncluder');
+			$this->_fileIncluder = new MockIFileIncluder();
+			
 			$this->_master = new MasterPage();
 		}
 		
@@ -24,7 +27,17 @@
 		
 		public function test_build_shouldAbortForSetFilePath()
 		{
-			//TODO
+			MasterPage::filePath("foo");
+			MasterPage::fileIncluder($this->_fileIncluder);
+			
+			$this->_fileIncluder->expectOnce("requireFile", array("foo"));
+			
+			ob_start();
+			MasterPage::build();
+			$result = ob_get_clean();
+			
+			MasterPage::filePath(null);
+			$includer = MasterPage::fileIncluder(null);
 		}
 		
 		public function test_content_shouldGetSetValue()
@@ -34,6 +47,24 @@
 			MasterPage::content("foo", "bar");
 			
 			$this->assertEqual(MasterPage::content("foo"), "bar");
+		}
+		
+		public function test_fileIncluder_shouldUseFileIncluderByDefault()
+		{
+			$includer = MasterPage::fileIncluder();
+			
+			$this->assertEqual(get_class(MasterPage::fileIncluder()), "FileIncluder");
+		}
+		
+		public function test_fileIncluder_shouldUseCustomClassAndResetOnNull()
+		{
+			$includer = MasterPage::fileIncluder($this->_fileIncluder);
+			
+			$this->assertEqual(get_class(MasterPage::fileIncluder()), "MockIFileIncluder");
+			
+			$includer = MasterPage::fileIncluder(null);
+			
+			$this->assertEqual(get_class(MasterPage::fileIncluder()), "FileIncluder");
 		}
 		
 		public function test_filePath_shouldGetSetValue()

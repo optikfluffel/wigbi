@@ -31,6 +31,7 @@ class MasterPage
 	private static $_contentAreas = array();
 	private static $_currentContentArea;
 	private static $_filePath;
+	private static $_fileIncluder;
 	
 	/**
 	 * Close the last opened content area.
@@ -51,7 +52,7 @@ class MasterPage
 		if (!MasterPage::$_filePath)
 			return;
 		
-		require MasterPage::$_filePath;
+		MasterPage::$_fileIncluder->requireFile(MasterPage::$_filePath);
 	}
 	
 	/**
@@ -75,6 +76,24 @@ class MasterPage
 	}
 	
 	/**
+	 * Get/set the file includer used to the master page file.
+	 * 
+	 * If no file includer is set, a FileIncluder instance is used.
+	 * 
+	 * @param	IFileIncluder	$newIncluder	Optional set value.
+	 */
+	public static function fileIncluder($newIncluder = null)
+	{
+		if (func_num_args() > 0)
+			MasterPage::$_fileIncluder = func_get_arg(0);
+		
+		if (!MasterPage::$_fileIncluder)
+		 	MasterPage::$_fileIncluder = new FileIncluder();
+		
+		return MasterPage::$_fileIncluder;
+	}
+	
+	/**
 	 * Get/set the path to the master page file.
 	 * 
 	 * This function can be called anytime before build, but it is
@@ -88,7 +107,6 @@ class MasterPage
 			MasterPage::$_filePath = func_get_arg(0);
 		return MasterPage::$_filePath;
 	}
-	
 	
 	/**
 	 * Open a certain content area for writing.
