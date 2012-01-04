@@ -48,7 +48,10 @@ class MasterPage
 	 */
 	public static function build()
 	{
-		require_once MasterPage::$_filePath;
+		if (!MasterPage::$_filePath)
+			return;
+		
+		require MasterPage::$_filePath;
 	}
 	
 	/**
