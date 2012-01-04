@@ -9,8 +9,6 @@
 		{
 			Mock::generate('IFileIncluder');
 			$this->_fileIncluder = new MockIFileIncluder();
-			
-			$this->_master = new MasterPage();
 		}
 		
 		function tearDown() { } 

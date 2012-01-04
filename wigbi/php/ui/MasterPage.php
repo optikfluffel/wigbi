@@ -76,7 +76,7 @@ class MasterPage
 	}
 	
 	/**
-	 * Get/set the file includer used to the master page file.
+	 * Get/set the file includer used to require the master page file.
 	 * 
 	 * If no file includer is set, a FileIncluder instance is used.
 	 * 

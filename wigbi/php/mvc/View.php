@@ -31,6 +31,29 @@
  */
 abstract class View implements IController
 {
+	private static $_fileIncluder;
+	
+	
+	/**
+	 * Get/set the file includer used to require view files.
+	 * 
+	 * If no file includer is set, a FileIncluder instance is used.
+	 * 
+	 * @param	IFileIncluder	$newIncluder	Optional set value.
+	 */
+	public static function fileIncluder($newIncluder = null)
+	{
+		if (func_num_args() > 0)
+			View::$_fileIncluder = func_get_arg(0);
+		
+		if (!View::$_fileIncluder)
+		 	View::$_fileIncluder = new FileIncluder();
+		
+		return View::$_fileIncluder;
+	}
+	
+	
+	
 	/**
 	 * Add a view to the page or to the current view.
 	 * 
