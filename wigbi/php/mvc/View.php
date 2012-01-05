@@ -16,10 +16,10 @@
  * Use the add method to add a new view to the page. It can either
  * be a root view or a view that is embedded into another one. The
  * view can be passed a model, which can then be accessed with the
- * model method by that particular view only.
+ * model method, by that particular view only.
  * 
  * The View class also has a viewData method, which can be used to
- * provide data to all views.
+ * feed data to all views.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -29,10 +29,27 @@
  * @subpackage		PHP.MVC
  * @version			2.0.0
  */
-abstract class View implements IController
+class View 
 {
 	private static $_fileIncluder;
+	private static $_models = array();
+	private static $_viewData = array();
 	
+	
+	/**
+	 * Add a view to the page or current view.
+	 * 
+	 * @param	string	$path		The path to the view file.
+	 * @param	string	$mmodel		Optional view model.
+	 */
+	public static function add($path, $model = null)
+	{
+		array_push(View::$_models, $model);
+		
+		View::fileIncluder()->requireFile($path);
+		
+		array_pop(View::$_models);
+	}
 	
 	/**
 	 * Get/set the file includer used to require view files.
@@ -52,23 +69,30 @@ abstract class View implements IController
 		return View::$_fileIncluder;
 	}
 	
-	
-	
 	/**
-	 * Add a view to the page or to the current view.
+	 * Get the currently available view model.
 	 * 
-	 * @param	string	$path	The path to the view file.
-	 * @param	string	$model	Optional view model.
+	 * @return	string 		The current view model.
 	 */
-	/*public static function addView($viewPath, $model = null)
+	public static function model()
 	{
-		array_push(View::$_outerModels, View::$_model);
+		$size = sizeof(View::$_models);
 		
-		View::$_model = $model;
-		require surl($viewPath);
-		
-		View::$_model = array_pop(View::$_outerModels);
-	}*/
+		return ($size == 0) ? null : View::$_models[$size-1];
+	}
+	/**
+	 * Get/set custom view data.
+	 * 
+	 * @param	string	$key	View data key to get/set.
+	 * @param	string	$value	Optional set value.
+	 * @return	mixed			The value of the view data.
+	 */
+	public function viewData($key, $value = "")
+	{
+		if (func_num_args() > 1)
+			View::$_viewData[$key] = $value;
+		return array_key_exists($key, View::$_viewData) ? View::$_viewData[$key] : null;
+	}
 }
 
 ?>
