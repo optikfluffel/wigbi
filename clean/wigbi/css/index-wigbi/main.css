@@ -1,0 +1,12 @@
+#main { margin: 0 auto -100px; width: 900px; }
+#main-header { overflow: hidden; position: relative; height: 100px; }
+#main-logo, #main-menu { position: absolute; }
+
+#main-logo { top: 20px; left: 0px; }
+
+#main-menu { right: 0px; top: -15px; }
+#main-menu li { margin-left: 7px; width: 110px; text-align: center; }
+#main-menu li .box { padding: 20px 0px 3px 0px; }
+#main-menu li.selected .box { padding-top: 40px; }
+
+#main-body { background: white; padding: 20px; padding-top: 30px; }

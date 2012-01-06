@@ -1,0 +1,1 @@
+<?php TinyMceExtender::add(Wigbi::webRoot() . "resources/tiny_mce/tiny_mce.js", Wigbi::webRoot() . "resources/tiny_mce/jquery.tinymce.js", Wigbi::webRoot() . "tests/resources/_tinyMce.css"); ?>

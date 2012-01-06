@@ -1,0 +1,8 @@
+.hide		{ display: none; }
+
+div.invalid, input.invalid, p.invalid { border: solid #ee2222 1px !important; background: #ffaead; }
+div.valid, input.valid, p.valid { border: solid #bbccaa 1px !important; background: #ddeecc; }
+div.invalid, p.invalid, div.valid, p.valid { padding: 5px; margin-bottom: 10px; }
+
+span.invalid { color: #ee2222; text-decoration: underline; }
+span.valid { color: #bbccaa; text-decoration: underline; }

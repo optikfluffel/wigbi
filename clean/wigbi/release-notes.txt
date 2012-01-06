@@ -1,0 +1,216 @@
+*******************
+WIGBI RELEASE NOTES
+*******************
+
+For further information, see http://www.wigbi.com or the project web site at
+GitHub - http://www.github.com/danielsaidi/wigbi
+
+
+
+************************
+Wigbi 1.2.1 [2011-xx-xx]
+************************
+
+I have fixed a bug in the wigbi/pages/bundle page. The bug caused the header
+content type to be set to text/js insteawd of text/javascript.
+
+
+
+************************
+Wigbi 1.2.0 [2011-05-20]
+************************
+
+The Wigbi AJAX pipeline is really convenient, but could expose the system to
+bad stuff, since any class method can be executed.
+
+Therefore, this new version features improved AJAX security, to prevent AJAX
+manipulation. The AJAX data that is passed between the client and the server
+has been cleaned up a bit as well, so that less data is sent.
+
+I have also fixed two invalid DOM selectors in the TinyMceExtender. The ones
+in the old version had an incorrect space in them, which caused textareas to
+not be converted into WYSIWYG editors.
+
+
+
+************************
+Wigbi 1.1.3 [2011-05-20]
+************************
+
+In Wigbi 1.1.2, magic quotes were removed in the incorrect file! This caused
+all AJAX requests to fail for PHP installations with magic quotes enabled.
+
+If you downloaded Wigbi 1.1.2, replace it with Wigbi 1.1.3 at once. Oh, this
+version has a correct version number as well...which 1.1.2 had not. :/
+
+
+
+************************
+Wigbi 1.1.2 [2011-05-08]
+************************
+
+This release contains an additional wigbi/NO_MAGIIC_QUOTES.htaccess file, in
+which magic quotes have been removed. If your PHP installation does not have
+magic quotes. Use this file instead.
+
+
+
+************************
+Wigbi 1.1.1 [2011-03-18]
+************************
+
+This release contains a hotfix for issue Regexp hotfix for the htaccess root
+file, which chopped off any provided query string variables.
+
+
+
+************************
+Wigbi 1.1.0 [2011-03-16]
+************************
+
+In this release, I added an MVC template with one controller, one view and a
+master page. Hopefully, this setup will help you get started a bit quicker.
+
+IMPORTANT: Instead of the index-wigbi.php page, Wigbi now comes with a brand
+new file called REMOVE_THE_FILENAME.htaccess. Just remove the file name (yes,
+just like the file name told you) to make it into an .htaccess file. This is
+the file that will be responsible for the MVC routing.
+
+Also...the MasterPage class has changed quiite a bit compared to Wigbi 1.0.3. 
+Since the View class can be used to push data to views, variable handling in
+the master page class is no more. Furthermore, the file path must now be set
+separately and not when calling build. Finally, all the content area related
+methods are now removed to openContentArea, closeContentArea and getContent.
+
+In short, it is a lot easier to start Wigbi in 1.1.0. No starting / stopping
+must be added to the master page, or any page at all. It is all happening in
+the controller start point. 
+
+
+
+************************
+Wigbi 1.0.3 [2011-02-06]
+************************
+
+The Wigbi 1.0.3 release features one drastic data plugin change and a couple
+of small adjustments.
+
+First of all, the WigbiDataPlugin base class has once again has the two date
+variables _createdByDateTime and _lastUpdatedDateTime. This means that these
+variables does not have to be added to any descendents of the class. A minor
+drawback with this approach, is that two extra columns are required for each
+data plugin. On the other hand, all changes are automatically tracked.
+
+Furthermore, all data plugins templates now use the new getSet method, which
+makes them a LOT smaller. Older data plugin versions still work, though.
+
+The database handling exception that was thrown if RTB was enabled without a
+database connection has been fixed.  
+
+
+
+************************
+Wigbi 1.0.2 [2011-01-27]
+************************
+
+This new release features some handy additions and some important changes. A
+change that is important to note is that the View class has been stripped.
+
+Most important to notice is that all View::add methods (except View::addView)
+have been removed. They made the View class really messy and I regret adding
+them there in the first place. Due to this, all UI plugins have been changed
+to not use these methods. When upgrading to Wigbi 1.0.2, old UI plugins must
+be modified not to use the removed methods.
+
+Another big change is that all of the view/edit UI plugins (e.g. NewsControl
+and NewsForm) have been merged into one single control. Furthermore, they do
+not add a serialized version of the object to a hidden textarea, but add the
+ID of the managed object into a hidden field instead.
+
+The WigbiDataUiPlugin class has a really handy addition. The getSet() method
+will make he property section of all data plugins a lot smaller. Also, it is
+verified that the constructor can use parameters. See the MenuItem class for
+examples of these two changes.
+
+Wigbi now embeds the startup JavaScript code in a CDATA comment, which means
+that the code no longer affects HTML validation.
+
+Finally, the RuntimeBuild.obfuscate parameter can be removed from the config
+file. It is no longer used.
+ 
+
+
+************************
+Wigbi 1.0.1 [2011-01-14]
+************************
+
+This release features major plugin adjustments. For instance, the two bundle
+files that were previously created by Wigbi are no longer generated. Instead,
+Wigbi creates one per data plugin and uses the .js file of each UI plugin. A
+Wigbi 1.0.0 app MUST remove these bundle files to ensure that no classes are
+conflicting. 
+
+The auto-generated data plugin class files are no longer commented, which is
+meant to make them easier to read. Future versions will probably feature far
+better compression as well. For instance, get/set props will probably have a
+convenient method that make each property into just one row.
+
+Besides being able to specifiy additional CSS and JavaScript paths that will
+automatically be added when Wigbi is started, the Wigbi config file contains
+a key for PHP paths as well. This makes it even easier than before to extend
+Wigbi with your own functionality.
+
+The 1.0.1 release also features two new UI plugins for working with the menu
+item data plugin. The list will probably be generalized in future versions.
+
+From this version on, unit tests are not added to the release bundle. To get
+hold of the unit test bundle, fork the source code on GitHub.  
+
+
+
+************************
+Wigbi 1.0.0 [2011-01-01]
+************************
+
+Wigbi 1.0.0 is a complete rewrite of previous Wigbi versions. New developers
+are adviced to check out the documentation, demos and tutorials on wigbi.com.
+The release feature major changes, of which only some are listed down below.
+
+The Wigbi configuration file has been completely rewritten and uses real ini
+sections. Older configuration files will not work with Wigbi 1.0.
+
+Wigbi no longer features bundled classes. All the source code is provided as
+is, which simplifies modifications and bug fixes in an already running Wigbi
+instance. The two wigbi/php/wigbi and wigbi/js/wigbi folders are now removed
+as well. The Wigbi classes are added directly in wigbi/php and wigbi/js. 
+
+Wigbi no longer creates bundled JavaScript files for the data and UI plugins.
+UI plugins already have a JavaScript file, so generating file for them is no
+longer necessary. For data plugins, Wigbi now generates one file per plugin.
+The obfuscate option has been removed from the configuration file since it's
+no longer used by Wigbi. For now, the JavaScriptPacker tool is still bundled
+with Wigbi, though. It may be removed in future versions.
+
+It is now possible to change the value of the Wigbi::configFile(..) property
+to make Wigbi use another configuration file when starting up. However, note
+that the property is currently not set for the JS Wigbi class, since the PHP
+property is relative and the JavaScript property must be app relative. It is
+important that you change the Wigbi._ajaxConfigFile variable as well for now.
+
+Some Wigbi classes that were previously static have now been made non-static
+to make it possible to create custom instances. However, the Wigbi class has
+default instances of these classes that are setup with the Wigbi config file.
+
+All property methods have been modified. Instead of x()/setX(..), properties
+now take an optional set parameter if they are settabl...just like jQuery :) 
+
+Wigbi now features a quite basic MVC engine which is inspired by ASP.NET MVC.
+This makes it even easier to separate functionality from content.
+
+The WigbiUIPlugin base class has been simplified compared to the old one. It
+contains a few help methods and must still be inherited.
+
+
+***********************************************************************
+This file was created 2011-01-01. Previous releases notes are left out.
+***********************************************************************

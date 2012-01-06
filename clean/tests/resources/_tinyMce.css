@@ -1,0 +1,20 @@
+@import url(../main.css);
+@import url(../elements.css);
+@import url(../classes.css);
+
+
+/* **************************************************
+ * This file is used to override certain CSS settings
+ * for Tiny MCE text areas. The file has a _ in front
+ * of the name so that it will be included before all
+ * the other .css files, and thus not affect the page.
+ * It also imports all other .ss files so that it may
+ * make use of all style sheets in the text area.
+ ************************************************* */
+
+html, body
+{
+	background-color: #FFFFFF;
+	background-image: none;
+	margin: 5px !important;
+}

@@ -1,0 +1,19 @@
+body,h1,h2,h3,h4,p,table,td,th,ul,ol,textarea,input { font-family: "Trebuchet MS",Verdana,Helvetica,Arial,sans-serif; }
+body { font-size: 0.625em; }
+
+h1 { font-size: 1.6em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.4em; }
+
+#main-menu li, p.ingress { font-family: georgia,"times new Roman",serif; font-style: italic; }
+p.ingress.large { font-size: 1.3em; line-height: 1.4em; }
+#main-menu li { font-size: 1.6em; }
+#main-menu li > .box { font-size: 1em; }
+
+#main-body { font-size: 1.6em; }
+
+.box { font-size: 1.5em; }
+
+/*
+
+/*.box>div, .box>span, .box>ul { font-size: 1.4em; }*/

@@ -1,0 +1,9 @@
+html, body { margin: 0px; padding: 0px; background: url(../../img/bg-lines.gif) repeat; color: #222; }
+
+a { color: black; text-decoration: none; }
+a img { border: none; }
+a.em { text-decoration: underline; font-style: italic; }
+
+hr { margin:25px 0px; height:3px; border:none; background: url(../../img/ul-clean-bg.png) bottom repeat-x; }
+
+p.ingress { margin-top: 0px; }
