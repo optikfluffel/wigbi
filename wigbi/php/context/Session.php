@@ -1,17 +1,18 @@
 <?php
 
 /**
- * The Wigbi ISession interface file.
+ * The Wigbi Session class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi ISession interface.
+ * The Wigbi Session class.
  * 
- * This interface can be implemented by any class that can be used
- * to handle session data.
+ * This class can be used to handle session-based data. It handles
+ * all kinds of serializable data, but should be used with care. A
+ * session-based system is less secure and more difficult to scale.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -21,14 +22,17 @@
  * @subpackage		PHP.Web
  * @version			2.0.0
  */
-interface ISession
+class Session implements IContext
 {
 	/**
 	 * Clear a certain session key.
 	 * 
 	 * @param	string	$key	The session key.
 	 */
-	function clear($key);
+	function clear($key)
+	{
+		unset($_SESSION[$key]);
+	}
 	
 	/**
 	 * Retrieve a certain session key.
@@ -37,12 +41,18 @@ interface ISession
 	 * @param	mixed	$fallback	The value to return if no session value exists.
 	 * @return	mixed
 	 */
-	function get($key, $fallback = null);
+	function get($key, $fallback = null)
+	{
+		return isset($_SESSION[$key]) ? unserialize($_SESSION[$key]) : $fallback;
+	}
 	
 	/**
 	 * Set they value of a certain session key.
 	 */
-	function set($key, $value);
+	function set($key, $value)
+	{
+		$_SESSION[$key] = serialize($value);
+	}
 }
 
 ?>

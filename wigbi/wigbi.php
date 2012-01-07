@@ -4,7 +4,7 @@
 session_start();
 
 //Define global wigbi variables
-$wigbi_php_folders = array("tools", "cache", "core", "configuration", "data", "i18n", "io", "mvc", "ui", "validation", "web", "");
+$wigbi_php_folders = array("tools", "cache", "context", "core", "configuration", "data", "i18n", "io", "mvc", "ui", "validation", "");
 
 //Find wigbi root folder
 $wigbi_root = "";

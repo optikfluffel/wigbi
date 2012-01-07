@@ -124,22 +124,6 @@
 			
 			$this->assertNull($this->_context->server("foo"));
 		}
-		
-		public function test_session_shouldReturnFallbackForMissingKey()
-		{
-			$this->assertEqual($this->_context->session("foo", 42), 42);
-		}
-		
-		public function test_session_shouldReturnExistingKeyValue()
-		{
-			$this->assertNull($this->_context->session("foo"));
-			
-			$_SESSION["foo"] = "bar";
-			$this->assertEqual($this->_context->session("foo"), "bar");
-			unset($_SESSION["foo"]);
-			
-			$this->assertNull($this->_context->session("foo"));
-		}
 	}
 
 ?>

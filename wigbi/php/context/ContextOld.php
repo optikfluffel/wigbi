@@ -21,7 +21,7 @@
  * @subpackage		PHP
  * @version			2.0.0
  */
-class Context implements IContext
+class Context implements IContextOld
 {
 	private static $_instance;
 	

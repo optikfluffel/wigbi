@@ -22,7 +22,7 @@
  * @subpackage		PHP
  * @version			2.0.0
  */
-interface IContext
+interface IContextOld
 {
 	/**
 	 * Get the value of a certain key in the $_COOKIE array.
@@ -69,14 +69,6 @@ interface IContext
 	 */
 	function request($key, $fallback = null);
 	
-	/**
-	 * Get the value of a certain key in the $_SESSION array.
-	 * 
-	 * @param	string	$key		The key to retrieve.
-	 * @param	mixed	$fallback	The value to return if the key does not exist.
-	 * @return	mixed
-	 */
-	function session($key, $fallback = null);
 }
 
 ?>
