@@ -16,11 +16,13 @@ ob_start();
 
 foreach ($wigbi_php_folders as $folder)
 {
+	//Include interfaces and root classes first
 	foreach(glob($wigbi_root . "wigbi/php/$folder/_*.php") as $file)
 	{
 		require_once($file);
 	}
 	
+	//Include all other files afterwards
 	foreach(glob($wigbi_root . "wigbi/php/$folder/*.php") as $file)
 	{
 		require_once($file);

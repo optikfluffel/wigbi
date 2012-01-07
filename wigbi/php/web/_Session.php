@@ -43,7 +43,7 @@ class Session implements ISession
 	 */
 	function get($key, $fallback = null)
 	{
-		return array_key_exists($key, $_SESSION) ? unserialize($_SESSION[$key]) : $fallback;
+		return isset($_SESSION[$key]) ? unserialize($_SESSION[$key]) : $fallback;
 	}
 	
 	/**
