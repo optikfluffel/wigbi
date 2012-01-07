@@ -29,7 +29,7 @@
 class ApplicationSession extends Session
 {
 	/**
-	 * @param	string			$applicationName	The name of the application.
+	 * @param	string	$applicationName	The name of the application.
 	 */
 	public function __construct($applicationName)
 	{
