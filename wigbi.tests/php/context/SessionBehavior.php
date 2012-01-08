@@ -61,6 +61,20 @@
 			$this->assertEqual($data->data(), "foo");
 			$this->assertEqual($data->expires(), "bar");
 		}
+		
+		public function test_set_dataShouldOnlyBeAvailableToSPecificApp()
+		{
+			$session1 = new Session("foo");
+			$session2 = new Session("bar");
+			
+			$session1->set("foo", "bar");
+			$session2->set("bar", "foo");
+			
+			$this->assertEqual($session1->get("foo"), "bar");
+			$this->assertEqual($session1->get("bar"), null);
+			$this->assertEqual($session2->get("foo"), null);
+			$this->assertEqual($session2->get("bar"), "foo");
+		}
 	}
 
 ?>

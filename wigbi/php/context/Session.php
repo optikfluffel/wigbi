@@ -24,14 +24,26 @@
  */
 class Session implements IContext
 {
+	private $_prefix;
+	
+	
+	/**
+	 * @param	string	$prefix		The prefix to add to each key name.
+	 */
+	public function __construct($prefix = "")
+	{
+		$this->_prefix = $prefix;
+	}
+	
+	
 	/**
 	 * Clear a certain session key.
 	 * 
 	 * @param	string	$key	The key to clear.
 	 */
-	function clear($key)
+	public function clear($key)
 	{
-		unset($_SESSION[$key]);
+		unset($_SESSION[$this->getKey($key)]);
 	}
 	
 	/**
@@ -41,17 +53,25 @@ class Session implements IContext
 	 * @param	mixed	$fallback	The value to return if the key does not exist.
 	 * @return	mixed
 	 */
-	function get($key, $fallback = null)
+	public function get($key, $fallback = null)
 	{
-		return isset($_SESSION[$key]) ? unserialize($_SESSION[$key]) : $fallback;
+		return isset($_SESSION[$this->getKey($key)]) ? unserialize($_SESSION[$this->getKey($key)]) : $fallback;
+	}
+	
+	/**
+	 * Get the key to use to access the 
+	 */
+	private function getKey($key)
+	{
+		return $this->_prefix . $key;
 	}
 	
 	/**
 	 * Set they value of a certain session key.
 	 */
-	function set($key, $value)
+	public function set($key, $value)
 	{
-		$_SESSION[$key] = serialize($value);
+		$_SESSION[$this->getKey($key)] = serialize($value);
 	}
 }
 

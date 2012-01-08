@@ -23,14 +23,26 @@
  */
 class Cookie implements ICookie
 {
+	private $_prefix;
+	
+	
+	/**
+	 * @param	string	$prefix		The prefix to add to each key name.
+	 */
+	public function __construct($prefix = "")
+	{
+		$this->_prefix = $prefix;
+	}
+	
+	
 	/**
 	 * Clear a certain cookie key.
 	 * 
 	 * @param	string	$key	The key to clear.
 	 */
-	function clear($key)
+	public function clear($key)
 	{
-		unset($_COOKIE[$key]);
+		unset($_COOKIE[$this->getKey($key)]);
 	}
 	
 	/**
@@ -40,18 +52,27 @@ class Cookie implements ICookie
 	 * @param	mixed	$fallback	The value to return if the key does not exist.
 	 * @return	mixed
 	 */
-	function get($key, $fallback = null)
+	public function get($key, $fallback = null)
 	{
+		$key = $this->getKey($key);
 		return isset($_COOKIE[$key]) ? $_COOKIE[$key] : $fallback;
+	}
+	
+	/**
+	 * Get the key to use to access the 
+	 */
+	private function getKey($key)
+	{
+		return $this->_prefix . $key;
 	}
 	
 	/**
 	 * Set they value of a certain cookie key.
 	 */
-	function set($key, $value, $expire = 0, $path = "/", $domain = "", $secure = false, $httponly = false)
+	public function set($key, $value, $expire = 0, $path = "/", $domain = "", $secure = false, $httponly = false)
 	{
-		$_COOKIE[$key] = $value;
-		setcookie ($key, $value, $expire, $path, $domain, $secure, $httponly);
+		$_COOKIE[$this->getKey($key)] = $value;
+		setcookie ($this->_prefix . $key, $value, $expire, $path, $domain, $secure, $httponly);
 	}
 }
 
