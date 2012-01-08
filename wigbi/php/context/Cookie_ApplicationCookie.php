@@ -1,21 +1,20 @@
 <?php
 
 /**
- * The Wigbi ApplicationSession class file.
+ * The Wigbi ApplicationCookie class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi ApplicationSession class.
+ * The Wigbi ApplicationCookie class.
  * 
- * This class can be used to handle session-based data. It handles
- * all kinds of serializable data, but should be used with care. A
- * session-based system is less secure and more difficult to scale.
+ * This class can be used to handle cookie-based data. It persists
+ * data directly to the cookie, without any serialization.
  * 
  * All this class does is to add the application name as prefix to
- * the session key to ensure that this data is separated for a set
+ * the cookie key, to ensure that this data is separated for a set
  * of applications running on the same server.
  * 
  * 
@@ -26,7 +25,7 @@
  * @subpackage		PHP.Web
  * @version			2.0.0
  */
-class ApplicationSession extends Session
+class ApplicationCookie extends Cookie
 {
 	/**
 	 * @param	string	$applicationName	The name of the application.
@@ -38,7 +37,7 @@ class ApplicationSession extends Session
 	
 	
 	/**
-	 * Clear a certain session key.
+	 * Clear a certain cookie key.
 	 * 
 	 * @param	string	$key	The key to clear.
 	 */
@@ -48,7 +47,7 @@ class ApplicationSession extends Session
 	}
 	
 	/**
-	 * Retrieve a certain session key.
+	 * Retrieve a certain cookie key.
 	 * 
 	 * @param	string	$key		The key to retrieve.
 	 * @param	mixed	$fallback	The value to return if the key does not exist.
@@ -60,7 +59,7 @@ class ApplicationSession extends Session
 	}
 	
 	/**
-	 * Set they value of a certain session key.
+	 * Set they value of a certain cookie key.
 	 */
 	function set($key, $value)
 	{
