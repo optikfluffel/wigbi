@@ -1,18 +1,17 @@
 <?php
 
 /**
- * The Wigbi Session class file.
+ * The Wigbi Cookies class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi Session class.
+ * The Wigbi Cookies class.
  * 
- * This class can be used to handle session-based data. It handles
- * all kinds of serializable data, but should be used with care. A
- * session-based system is less secure and more difficult to scale.
+ * This class can be used to handle cookie-based data. It persists
+ * data directly to the cookie, without any serialization.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -22,20 +21,20 @@
  * @subpackage		PHP.Web
  * @version			2.0.0
  */
-class Session implements IContext
+class Cookie implements ICookie
 {
 	/**
-	 * Clear a certain session key.
+	 * Clear a certain cookie key.
 	 * 
 	 * @param	string	$key	The key to clear.
 	 */
 	function clear($key)
 	{
-		unset($_SESSION[$key]);
+		unset($_COOKIE[$key]);
 	}
 	
 	/**
-	 * Retrieve a certain session key.
+	 * Retrieve a certain cookie key.
 	 * 
 	 * @param	string	$key		The key to retrieve.
 	 * @param	mixed	$fallback	The value to return if the key does not exist.
@@ -43,15 +42,16 @@ class Session implements IContext
 	 */
 	function get($key, $fallback = null)
 	{
-		return isset($_SESSION[$key]) ? unserialize($_SESSION[$key]) : $fallback;
+		return isset($_COOKIE[$key]) ? $_COOKIE[$key] : $fallback;
 	}
 	
 	/**
-	 * Set they value of a certain session key.
+	 * Set they value of a certain cookie key.
 	 */
-	function set($key, $value)
+	function set($key, $value, $expire = 0, $path = "/", $domain = "", $secure = false, $httponly = false)
 	{
-		$_SESSION[$key] = serialize($value);
+		$_COOKIE[$key] = $value;
+		setcookie ($key, $value, $expire, $path, $domain, $secure, $httponly);
 	}
 }
 

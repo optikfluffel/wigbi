@@ -40,7 +40,7 @@ class ApplicationSession extends Session
 	/**
 	 * Clear a certain session key.
 	 * 
-	 * @param	string	$key	The session key.
+	 * @param	string	$key	The key to clear.
 	 */
 	function clear($key)
 	{
@@ -50,7 +50,7 @@ class ApplicationSession extends Session
 	/**
 	 * Retrieve a certain session key.
 	 * 
-	 * @param	string	$key		The session key name.
+	 * @param	string	$key		The key to retrieve.
 	 * @param	mixed	$fallback	The value to return if no session value exists.
 	 * @return	mixed
 	 */

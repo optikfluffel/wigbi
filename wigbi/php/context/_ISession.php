@@ -1,17 +1,17 @@
 <?php
 
 /**
- * The Wigbi IGetContext interface file.
+ * The Wigbi ISession interface file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi IGetContext interface.
+ * The Wigbi ISession interface.
  * 
  * This interface can be implemented by any class that can be used
- * to retrieve contextual data by key.
+ * to retrieve and set session-based data by key.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -21,16 +21,28 @@
  * @subpackage		PHP.Web
  * @version			2.0.0
  */
-interface IGetContext
+interface IContext
 {
 	/**
-	 * Retrieve a certain context key.
+	 * Clear a certain session key.
 	 * 
-	 * @param	string	$key		The context key name.
-	 * @param	mixed	$fallback	The value to return if the context key does not exist.
+	 * @param	string	$key	The key to clear.
+	 */
+	function clear($key);
+	
+	/**
+	 * Retrieve a certain session key.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
 	 * @return	mixed
 	 */
 	function get($key, $fallback = null);
+	
+	/**
+	 * Set they value of a certain session key.
+	 */
+	function set($key, $value);
 }
 
 ?>

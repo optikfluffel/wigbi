@@ -13,21 +13,6 @@
 		function tearDown() { } 
 		
 		
-		public function test_cookie_shouldReturnFallbackForMissingKey()
-		{
-			$this->assertEqual($this->_context->cookie("foo", 42), 42);
-		}
-		
-		public function test_cookie_shouldReturnExistingKeyValue()
-		{
-			$this->assertNull($this->_context->cookie("foo"));
-			
-			$_COOKIE["foo"] = "bar";
-			$this->assertEqual($this->_context->cookie("foo"), "bar");
-			unset($_COOKIE["foo"]);
-			
-			$this->assertNull($this->_context->cookie("foo"));
-		}
 		
 		public function test_env_shouldReturnFallbackForMissingKey()
 		{

@@ -124,19 +124,6 @@ class Context implements IContextOld
 	}
 	
 	/**
-	 * Get the value of a certain key in the $_SESSION array.
-	 * 
-	 * @param	string	$key		The key to retrieve.
-	 * @param	mixed	$fallback	The value to return if the key does not exist.
-	 * @return	mixed
-	 */
-	public function session($key, $fallback = null)
-	{
-		return Context::getArrayKey($_SESSION, $key, $fallback);
-	}
-	
-	
-	/**
 	 * Get the value of a certain key in an array.
 	 */
 	private static function getArrayKey($array, $key, $fallback = null)

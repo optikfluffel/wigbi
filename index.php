@@ -1,4 +1,8 @@
-<?php include("wigbi/wigbi.php"); ?>
+<?php include("wigbi/wigbi.php"); 
 
-<?php
+$a = new Cookie();
+//print $a->get("foo");
+//$a->set("foo", "bar");
+
+
 ?>
