@@ -42,7 +42,7 @@ interface ICookie
 	/**
 	 * Set they value of a certain cookie key.
 	 */
-	function set($key, $value);
+	function set($key, $value, $expire = 0, $path = "/", $domain = "", $secure = false, $httponly = false);
 }
 
 ?>

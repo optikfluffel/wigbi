@@ -11,8 +11,8 @@
  * The Wigbi IContext class.
  * 
  * This interface can be implemented by any class that can be used
- * to handle cached various context related arrays, such as $_GET,
- * $_POST, $_COOKIES etc.
+ * to handle cached various context related read-only arrays, such
+ * as $_ENV, $_GET, $_POST and $_REQUEST.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -22,17 +22,8 @@
  * @subpackage		PHP
  * @version			2.0.0
  */
-interface IContextOld
+interface IContext
 {
-	/**
-	 * Get the value of a certain key in the $_COOKIE array.
-	 * 
-	 * @param	string	$key		The key to retrieve.
-	 * @param	mixed	$fallback	The value to return if the key does not exist.
-	 * @return	mixed
-	 */
-	function cookie($key, $fallback = null);
-	
 	/**
 	 * Get the value of a certain key in the $_ENV array.
 	 * 
@@ -41,6 +32,15 @@ interface IContextOld
 	 * @return	mixed
 	 */
 	function env($key, $fallback = null);
+	
+	/**
+	 * Get the value of a certain key in the $_FILES array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	function files($key, $fallback = null);
 	
 	/**
 	 * Get the value of a certain key in the $_GET array.
@@ -69,6 +69,14 @@ interface IContextOld
 	 */
 	function request($key, $fallback = null);
 	
+	/**
+	 * Get the value of a certain key in the $_SERVER array.
+	 * 
+	 * @param	string	$key		The key to retrieve.
+	 * @param	mixed	$fallback	The value to return if the key does not exist.
+	 * @return	mixed
+	 */
+	function server($key, $fallback = null);
 }
 
 ?>

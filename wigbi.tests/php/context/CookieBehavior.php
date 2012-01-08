@@ -2,9 +2,6 @@
 
 	class CookieBehavior extends UnitTestCase
 	{
-		/*
-		 * TODO: Headers are sent, by...?
-		 
 		private $_cookie;
 		
 		
@@ -12,6 +9,11 @@
 		{
 			$this->_cookie = new Cookie();
 		}
+		
+		
+		/*
+		 * TODO: Headers are sent, by...?
+		 
 		
 		function tearDown()
 		{
@@ -77,7 +79,7 @@
 			$this->assertEqual($cookie1->get("bar"), null);
 			$this->assertEqual($cookie2->get("foo"), null);
 			$this->assertEqual($cookie2->get("bar"), "foo");
-		}
+		}*/
 	}
 
 ?>

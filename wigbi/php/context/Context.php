@@ -11,7 +11,7 @@
  * The Wigbi Context class.
  * 
  * This class can be used to handle various context related arrays,
- * like $_GET, $_POST, $_COOKIES etc.
+ * like $_ENV, $_GET, $_POST and $_REQUEST.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -21,7 +21,7 @@
  * @subpackage		PHP
  * @version			2.0.0
  */
-class Context implements IContextOld
+class Context implements IContext
 {
 	private static $_instance;
 	
@@ -38,18 +38,6 @@ class Context implements IContextOld
 		return Context::$_instance;
 	}
 	
-	
-	/**
-	 * Get the value of a certain key in the $_COOKIE array.
-	 * 
-	 * @param	string	$key		The key to retrieve.
-	 * @param	mixed	$fallback	The value to return if the key does not exist.
-	 * @return	mixed
-	 */
-	public function cookie($key, $fallback = null)
-	{
-		return Context::getArrayKey($_COOKIE, $key, $fallback);
-	}
 	
 	/**
 	 * Get the value of a certain key in the $_ENV array.
@@ -122,6 +110,7 @@ class Context implements IContextOld
 	{
 		return Context::getArrayKey($_SERVER, $key, $fallback);
 	}
+	
 	
 	/**
 	 * Get the value of a certain key in an array.

@@ -1,8 +1,11 @@
 <?php include("wigbi/wigbi.php"); 
 
-$a = new ApplicationCookie("faaaa");
-print $a->get("foo");
-//$a->set("foo", "bar");
 
+			$cookie1 = new Cookie("foo");
+			$cookie2 = new Cookie("bar");
+			
+			$cookie1->set("foo", "bar");
+			$cookie2->set("bar", "foo");
+			
 
 ?>
