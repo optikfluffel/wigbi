@@ -18,7 +18,7 @@
  * @copyright		Copyright © 2009-2012, Daniel Saidi
  * @link			http://www.wigbi.com
  * @package			Wigbi
- * @subpackage		PHP.Web
+ * @subpackage		PHP.Context
  * @version			2.0.0
  */
 class Cookie implements ICookie

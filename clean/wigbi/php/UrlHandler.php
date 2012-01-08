@@ -93,8 +93,17 @@ class UrlHandler
 	 */
 	public static function currentUrl()
 	{
-		$port = UrlHandler::currentPort() ? ":" . UrlHandler::currentPort() : "";
-		return UrlHandler::currentProtocol() . "://" . $_SERVER['SERVER_NAME'] . $port . $_SERVER['REQUEST_URI'];
+		$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
+		$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0, strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
+
+		$server = $_SERVER['SERVER_NAME'];
+		
+		$port = ($_SERVER["SERVER_PORT"] == "80" && $ignorePort80) ? "" : ($_SERVER["SERVER_PORT"]);
+		$port = $port ? ":" . $port : "";
+		
+		$path = $_SERVER['REQUEST_URI'];
+		
+		return $protocol . "://" . $server . $port . $path;
 	}
 	
 	

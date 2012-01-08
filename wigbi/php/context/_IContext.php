@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi IContext class file.
+ * The Wigbi IContext interface file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi IContext class.
+ * The Wigbi IContext interface.
  * 
  * This interface can be implemented by any class that can be used
  * to handle cached various context related read-only arrays, such
@@ -19,7 +19,7 @@
  * @copyright		Copyright © 2009-2012, Daniel Saidi
  * @link			http://www.wigbi.com
  * @package			Wigbi
- * @subpackage		PHP
+ * @subpackage		PHP.Context
  * @version			2.0.0
  */
 interface IContext
