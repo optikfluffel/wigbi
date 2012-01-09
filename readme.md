@@ -22,9 +22,13 @@ Downloading Wigbi
 You can either download Wigbi from the web or project site. A full
 release contains the following files and folders:
 
+Mandatory:
 	* wigbi/		All folders/files that are needed to use Wigbi
+	
+Optional plugin samples:
 	* plugins/		Fully working, basic Wigbi data and UI plugins
 
+Optional MVC components:
 	* controllers/	A controller base class and default controller
 	* views/		A default index view and a default master page
 	* REMOVE_FILE_NAME.htaccess   .htaccess stub, used for routing
