@@ -22,11 +22,11 @@ Downloading Wigbi
 You can either download Wigbi from the web or project site. A full
 release contains the following files and folders:
 
-**Mandatory** - this folder is the only thing you absolutely need:
+**Mandatory** - this folder is the only one required to run Wigbi:
 
 	* wigbi/		All folders/files that are needed to use Wigbi
 	
-**Optional** - these files can be dropped into wigbi/plugins if needed:
+**Optional** - these plugin files can be added to wigbi/plugins:
 
 	* plugins/		Fully working, basic Wigbi data and UI plugins
 
