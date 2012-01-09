@@ -22,7 +22,7 @@ Downloading Wigbi
 You can either download Wigbi from the web or project site. A full
 release contains the following files and folders:
 
-**Mandatory** - the wigbi folder is the only required folder:
+**Mandatory** - this folder is the only thing you absolutely need:
 
 	* wigbi/		All folders/files that are needed to use Wigbi
 	
