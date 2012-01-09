@@ -24,7 +24,7 @@
 class Url implements IUrl
 {
 	private static $_current;
-	
+	private $_data;
 	
 	
 	/**
@@ -32,12 +32,10 @@ class Url implements IUrl
 	 * 
 	 * @param	string	$url	The url string to parse.
 	 */
-	public function __construct($str = "")
+	public function __construct($url = "")
 	{
-		$data = parse_url($url);
+		$this->_data = parse_url($url);
 	}
-	
-	
 	
 	
 	/**
@@ -48,17 +46,110 @@ class Url implements IUrl
 	public static function current()
 	{
 		if (Url::$_current == null)
-			Url::$_current = new Url(Url::currentString());
+			Url::$_current = new Url(Url::getCurrentString());
 		return Url::$_current;
 	}
 	
+	
+	/**
+	 * Get the url scheme, e.g. http.
+	 * 
+	 * @return	string
+	 */
+	function scheme()
+	{
+		return $this->getArrayElement("scheme");		
+	}
+	
+	/**
+	 * Get the user part of the url, if any.
+	 * 
+	 * @return	string
+	 */
+	function user()
+	{
+		return $this->getArrayElement("user");
+	}
+	
+	/**
+	 * Get the password part of the url, if any.
+	 * 
+	 * @return	string
+	 */
+	function password()
+	{
+		return $this->getArrayElement("pass");
+	}
+	
+	/**
+	 * Get the url host, e.g. localhost.
+	 * 
+	 * @return	string
+	 */
+	function host()
+	{
+		return $this->getArrayElement("host");
+	}
+	
+	/**
+	 * Get the port part of the url, if any.
+	 * 
+	 * @return	string
+	 */
+	function port()
+	{
+		return $this->getArrayElement("port");
+	}
+	
+	/**
+	 * Get the absolute url path.
+	 * 
+	 * @return	string
+	 */
+	function path()
+	{
+		return $this->getArrayElement("path");
+	}
+	
+	/**
+	 * Get the query part of the url, if any.
+	 * 
+	 * @return	string
+	 */
+	function query()
+	{
+		return $this->getArrayElement("query");		
+	}
+	
+	/**
+	 * Get the anchor part of the url, if any.
+	 * 
+	 * @return	string
+	 */
+	function fragment()
+	{
+		return $this->getArrayElement("fragment");		
+	}
+	
+	
+	/**
+	 * Get a certain data array element.
+	 * 
+	 * @return	string
+	 */
+	private function getArrayElement($key)
+	{
+		if (array_key_exists($key, $this->_data))
+			return $this->_data[$key];
+		return null;
+	}
 	
 	/**
 	 * Get the current url path.
 	 * 
 	 * @return	string
 	 */
-	public static function currentString()
+	private static function getCurrentString()
 	{
 		$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
 		$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0, strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;

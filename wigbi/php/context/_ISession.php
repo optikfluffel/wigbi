@@ -21,7 +21,7 @@
  * @subpackage		PHP.Context
  * @version			2.0.0
  */
-interface IContext
+interface ISession
 {
 	/**
 	 * Clear a certain session key.

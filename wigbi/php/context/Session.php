@@ -22,7 +22,7 @@
  * @subpackage		PHP.Context
  * @version			2.0.0
  */
-class Session implements IContext
+class Session implements ISession
 {
 	private $_prefix;
 	

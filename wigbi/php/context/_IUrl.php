@@ -24,11 +24,25 @@
 interface IUrl
 {
 	/**
-	 * Get the anchor part of the url, if any.
+	 * Get the url scheme, e.g. http.
 	 * 
 	 * @return	string
 	 */
-	function fragment();
+	function scheme();
+	
+	/**
+	 * Get the user part of the url, if any.
+	 * 
+	 * @return	string
+	 */
+	function user();
+	
+	/**
+	 * Get the password part of the url, if any.
+	 * 
+	 * @return	string
+	 */
+	function password();
 	
 	/**
 	 * Get the url host, e.g. localhost.
@@ -38,11 +52,11 @@ interface IUrl
 	function host();
 	
 	/**
-	 * Get the url password, if any.
+	 * Get the port part of the url, if any.
 	 * 
 	 * @return	string
 	 */
-	function password();
+	function port();
 	
 	/**
 	 * Get the absolute url path.
@@ -59,18 +73,11 @@ interface IUrl
 	function query();
 	
 	/**
-	 * Get the url scheme, e.g. http.
+	 * Get the anchor part of the url, if any.
 	 * 
 	 * @return	string
 	 */
-	function scheme();
-	
-	/**
-	 * Get the url user, if any.
-	 * 
-	 * @return	string
-	 */
-	function user();
+	function fragment();
 }
 
 ?>
