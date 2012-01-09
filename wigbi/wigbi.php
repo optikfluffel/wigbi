@@ -31,4 +31,13 @@ foreach ($wigbi_php_folders as $folder)
 	
 ob_get_clean();
 
+
+
+//return str_replace("~/", Wigbi::webRoot(), $url);
+//return str_replace("~/", Wigbi::serverRoot(), $url);
+/*function psurl($url) { print UrlHandler::parseServerUrl($url); }
+function pwurl($url) { print UrlHandler::parseWebUrl($url); }
+function surl($url) { return UrlHandler::parseServerUrl($url); }
+function wurl($url) { return UrlHandler::parseWebUrl($url); }*/
+
 ?>
