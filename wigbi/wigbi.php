@@ -4,7 +4,7 @@
 session_start();
 
 //Define global wigbi variables
-$wigbi_php_folders = array("tools", "cache", "context", "core", "configuration", "data", "i18n", "io", "mvc", "ui", "validation", "");
+$wigbi_php_folders = array("tools", "cache", "context", "core", "configuration", "data", "i18n", "io", "log", "mvc", "ui", "validation", "");
 
 //Find wigbi root folder
 $wigbi_root = "";
@@ -32,7 +32,7 @@ foreach ($wigbi_php_folders as $folder)
 ob_get_clean();
 
 
-
+//TODO:
 //return str_replace("~/", Wigbi::webRoot(), $url);
 //return str_replace("~/", Wigbi::serverRoot(), $url);
 /*function psurl($url) { print UrlHandler::parseServerUrl($url); }
