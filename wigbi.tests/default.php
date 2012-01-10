@@ -1,6 +1,6 @@
 <?php
 
-$wigbi_bootstrapper = "wigbi.tests/wigbi.bootstrap.php";
+$wigbi_bootstrapper = "wigbi.tests/wigbi.tests.bootstrap.php";
 
 require("../wigbi/wigbi.php");
 require("tools/SimpleTest_1_1/autorun.php");
