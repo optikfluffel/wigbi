@@ -68,16 +68,6 @@ class Wigbi
 	/* Property methods ****************************/
 	
 	/**
-	 * Get the path to the Wigbi data plugin folder.
-	 * 
-	 * @return	string
-	 */
-	public static function dataPluginFolder()
-	{
-		return Wigbi::serverRoot("wigbi/plugins/data/");
-	}
-	
-	/**
 	 * Get all Wigbi global variables in an associative array.
 	 * 
 	 * @return	array
@@ -99,19 +89,8 @@ class Wigbi
 	 */
 	public static function serverRoot($path = null)
 	{
-		Wigbi::calculateServerRoot();
-						
-		return Wigbi::$_serverRoot . $path;
-	}
-	
-	/**
-	 * Get the path to the Wigbi UI plugin folder.
-	 * 
-	 * @return	string
-	 */
-	public static function uiPluginFolder()
-	{
-		return Wigbi::serverRoot("wigbi/plugins/ui/");
+		global $wigbi_globals;
+		return $wigbi_globals["root"] . $path;
 	}
 	
 	/**

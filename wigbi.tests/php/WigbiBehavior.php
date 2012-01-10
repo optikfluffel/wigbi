@@ -13,11 +13,6 @@
 			$this->assertEqual($globals["ui_plugins_folder"], "../wigbi/plugins/ui/");
 		}
 		
-		public function test_dataPluginsFolder_shouldBeRelativeToTestPage()
-		{
-			$this->assertEqual(Wigbi::dataPluginFolder(), "../wigbi/plugins/data/");
-		}
-		
 		public function test_serverRoot_shouldBeRelativeToTestPage()
 		{
 			$this->assertEqual(Wigbi::serverRoot(), "../");
@@ -26,11 +21,6 @@
 		public function test_serverRoot_shouldAppendOptionalPath()
 		{
 			$this->assertEqual(Wigbi::serverRoot("wigbi/"), "../wigbi/");
-		}
-		
-		public function test_uiPluginsFolder_shouldBeRelativeToTestPage()
-		{
-			$this->assertEqual(Wigbi::uiPluginFolder(), "../wigbi/plugins/ui/");
 		}
 		
 		public function test_version_shouldBeTwoZeroX()
