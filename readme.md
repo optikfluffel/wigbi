@@ -22,15 +22,9 @@ Downloading Wigbi
 You can either download Wigbi from the web or project site. A full
 release contains the following files and folders:
 
-**Mandatory** - this folder is the only one required to run Wigbi:
-
 	* wigbi/		All folders/files that are needed to use Wigbi
 	
-**Optional** - these plugin files can be added to wigbi/plugins:
-
 	* plugins/		Fully working, basic Wigbi data and UI plugins
-
-**Optional** - these files will help you get started with Wigbi MVC:
 
 	* controllers/	A controller base class and default controller
 	* views/		A default index view and a default master page
