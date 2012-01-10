@@ -61,11 +61,22 @@ class Wigbi
 {
 	private static $_version = "2.0.0";
 	
-	private static $_serverRoot;
+	private static $_configuration;
 	
 	
+	/**
+	 * Get/set the Wigbi configuration.
+	 * 
+	 * @param	IConfiguration	$config		Optional set value.
+	 * @return	IConfiguration
+	 */
+	public static function configuration($config = null)
+	{
+		if (func_num_args() > 0)
+			Wigbi::$_configuration = func_get_arg(0);
+		return Wigbi::$_configuration;
+	}
 	
-	/* Property methods ****************************/
 	
 	/**
 	 * Get all Wigbi global variables in an associative array.
@@ -105,29 +116,6 @@ class Wigbi
 	
 	
 	
-	/* Application instance properties *************/
-	
-	
-	
-	
-	
-	
-	
-	/* Private utility methods *********************/
-	
-	/**
-	 * Calculate the application root path for the server.
-	 */
-	private static function calculateServerRoot()
-	{
-		if (isset(Wigbi::$_serverRoot))
-			return;
-		
-		$root = "";
-		while(!is_dir($root . "wigbi/"))
-			$root = "../" . $root;
-		Wigbi::$_serverRoot = $root;
-	}
 }
 
 ?>

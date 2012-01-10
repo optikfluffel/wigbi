@@ -37,39 +37,6 @@ class Wigbi
 		return Wigbi::$_cacheHandler;
 	}
 	
-	/**
-	 * Get the Wigbi configuration object.
-	 * 
-	 * This object is initialized when Wigbi is started and uses the
-	 * configFile() property to parse a Wigbi configuration INI file.
-	 * 
-	 * This property can either return the IniHandler object (do not
-	 * use any parameters) as well a single configuration key.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @param		string	$parameter	Optional parameter to retrieve; default blank.
-	 * @param		string	$section		Optional parameter section; default blank.
-	 * @return	mixed								The config IniHandler if no parameters, or a config parameter if parameters.
-	 */
-	public static function configuration($parameter = "", $section = "")
-	{
-		switch (func_num_args())
-		{
-			case 0:
-				return Wigbi::$_configuration;
-				
-			case 1:
-				$parameter = func_get_arg(0);
-				return Wigbi::$_configuration->get($parameter);
-				
-			case 2:
-				$parameter = func_get_arg(0);
-				$section = func_get_arg(1);
-				return Wigbi::$_configuration->get($parameter, $section);
-		}
-	}
 	
 	/**
 	 * Get the CSS paths that are handled by Wigbi.

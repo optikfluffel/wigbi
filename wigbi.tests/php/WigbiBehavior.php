@@ -13,6 +13,11 @@
 			$this->assertEqual($globals["ui_plugins_folder"], "../wigbi/plugins/ui/");
 		}
 		
+		public function test_bootstrap_shouldSetupAllClasses()
+		{
+			$this->assertEqual(Wigbi::configuration(), "foo");
+		}
+		
 		public function test_serverRoot_shouldBeRelativeToTestPage()
 		{
 			$this->assertEqual(Wigbi::serverRoot(), "../");

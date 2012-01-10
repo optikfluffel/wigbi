@@ -52,11 +52,12 @@ class View
 	}
 	
 	/**
-	 * Get/set the file includer used to require view files.
+	 * Get/set the file includer that is used to load view files.
 	 * 
-	 * If no file includer is set, a FileIncluder instance is used.
+	 * If no file includer is set, a FileIncluder is used by default.
 	 * 
 	 * @param	IFileIncluder	$newIncluder	Optional set value.
+	 * @return	IFileIncluder
 	 */
 	public static function fileIncluder($newIncluder = null)
 	{
