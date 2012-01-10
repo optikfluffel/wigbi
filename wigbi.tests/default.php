@@ -4,27 +4,6 @@ $wigbi_bootstrapper = "wigbi.tests/wigbi.bootstrap.php";
 
 require("../wigbi/wigbi.php");
 require("tools/SimpleTest_1_1/autorun.php");
-
-
-//Load classes outside of test context (so that they are executed in this path)
-function __autoload($className)
-{
-	global $wigbi_globals;
-	foreach ($wigbi_globals["php_folders"] as $folder)
-	{
-		$classFile = "php/$folder/$className.php";
-		if (file_exists($classFile))
-            require_once($classFile);
-	}
-}
-
-//Create and run all unit test classes 
-foreach ($wigbi_globals["php_folders"] as $folder)
-{
-	foreach (glob("php/$folder/*.php") as $file)
-	{
-		eval("new " . basename(str_replace(".php", "", basename($file))) . "();");
-	}
-}	
+require($wigbi_globals["root"] . "wigbi.tests/wigbi.tests.include.php");	
 
 ?>

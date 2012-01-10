@@ -20,8 +20,7 @@
  * 
  * Wigbi provides static instances for working with cache, logging
  * etc. These are defined in wigbi/wigbi.bootstrap.php, and can be
- * replaced with other implementations if needed. This can only be
- * done before Wigbi is started. 
+ * replaced with other implementations if needed.
  * 
  * 
  * INCLUDE, START AND STOP WIGBI ************
