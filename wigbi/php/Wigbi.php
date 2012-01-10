@@ -14,6 +14,14 @@
  * class is used to start and stop Wigbi and also contains methods
  * and properties that are central to the Wigbi framework.
  * 
+ * Global variables that are defined by Wigbi can be accessed with
+ * the static globals method. These variables are only meant to be
+ * used by Wigbi and are defined in wigbi/wigbi.globals.php.
+ * 
+ * Wigbi provides static instances for working with cache, logging
+ * etc. These are defined in wigbi/wigbi.bootstrap.php, and can be
+ * replaced with other implementations if needed.
+ * 
  * 
  * INCLUDE, START AND STOP WIGBI ************
  * 
@@ -22,9 +30,8 @@
  * that it can be started.
  * 
  * To start Wigbi, call Wigbi::start() in the head tag of the page.
- * This will init Wigbi classes, open database connections etc. To
- * stop Wigbi, call Wigbi::stop() when Wigbi is not needed anymore,
- * e.g. at the end of the page.
+ * This will start Wigbi, open data connections etc. To stop Wigbi,
+ * just call Wigbi::stop() when Wigbi is not needed anymore.
  * 
  *
  * WIGBI RUNTIME BUILD (RTB) ***************
@@ -33,10 +40,12 @@
  * the system in sync. It syncs the database with all data plugins,
  * regenerates plugin JavaScript files etc.  
  * 
- * To enable RTB, set application.runtimeBuild in the Wigbi config
- * file to 1. RTB can be enabled during development, but should be
- * disabled live, since it is a rather heavy operation. For a live
- * system, only enable RTB when changes have to be synced.
+ * To enable RTB, set the application.runtimeBuild variable in the
+ * Wigbi config file to 1.
+ * 
+ * RTB can be enabled during development to keep Wigbi in constant,
+ * but should be disabled live, since it is a heavy operation. For
+ * live systems, only enable RTB to sync any changes.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -56,25 +65,7 @@ class Wigbi
 	
 	
 	
-	/**
-	 * Get the path to the Wigbi configuration file.
-	 * 
-	 * @return	string
-	 */
-	public static function configFile()
-	{
-		return Wigbi::serverRoot("wigbi/config.ini");
-	}
-	
-	/**
-	 * Get the path to the Wigbi configuration template.
-	 * 
-	 * @return	string
-	 */
-	public static function configFileTemplate()
-	{
-		return Wigbi::serverRoot("wigbi/assets/config_template.ini");
-	}
+	/* Property methods ****************************/
 	
 	/**
 	 * Get the path to the Wigbi data plugin folder.
@@ -84,6 +75,26 @@ class Wigbi
 	public static function dataPluginFolder()
 	{
 		return Wigbi::serverRoot("wigbi/plugins/data/");
+	}
+	
+	/**
+	 * Get the path to the Wigbi data plugin folder.
+	 * 
+	 * @return	string
+	 */
+	public static function globals()
+	{
+		$result = array();
+		
+		global $wigbi_root;
+		global $wigbi_config_file;
+		global $wigbi_php_folders;
+		
+		$result["root"] = $wigbi_root;
+		$result["config_file"] = $wigbi_config_file;
+		$result["php_folders"] = $wigbi_php_folders; 
+		
+		return $result;
 	}
 	
 	/**
@@ -122,6 +133,17 @@ class Wigbi
 		return Wigbi::$_version;
 	}
 	
+	
+	
+	/* Application instance properties *************/
+	
+	
+	
+	
+	
+	
+	
+	/* Private utility methods *********************/
 	
 	/**
 	 * Calculate the application root path for the server.

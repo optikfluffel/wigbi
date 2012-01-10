@@ -19,6 +19,7 @@ Wigbi 2.0.0 [2012-xx-xx]
 * + Wigbi.clientWigbiRoot
 * ICache - no begin/end cache...just set
 * Logging made so much simpler!
+* No data plugin lists
 
 
 

@@ -1,68 +1,5 @@
 <?php
 
-/**
- * The Wigbi.PHP.Wigbi class file.
- * 
- * Wigbi is free software. You can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *  
- * Wigbi is distributed in the hope that it will be useful, but WITH
- * NO WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
- * License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with Wigbi. If not, see <http://www.gnu.org/licenses/>.
- */
-
-/**
- * The Wigbi.PHP.Wigbi class.
- * 
- * This class is used to start and stop Wigbi and also features many
- * central functions and properties, like the Wigbi AJAX pipeline as
- * well as the handy server and web root properties.
- * 
- * The class has default instances for all available handler classes.
- * These default instances are initialized with the wigbi/config.ini
- * file, so modify that file to change the default Wigbi behavior.
- * 
- * 
- * INCLUDE, START AND STOP WIGBI ************
- * 
- * To use Wigbi, first include wigbi/wigbi.php at the very beginning
- * of the page. This will include all PHP classes and enable session
- * handling. Then, start Wigbi to get everything else up and running.
- * 
- * To start Wigbi, execute the Wigbi::start function in the head tag.
- * To stop Wigbi, execute the Wigbi::stop function when Wigbi is not
- * needed anymore, e.g. at the end of the page.
- * 
- *
- * WIGBI RUNTIME BUILD (RTB) ***************
- * 
- * Runtime Build - RTB - is a Wigbi feature that automatically keeps
- * the system in constant sync. It syncs the database with all added
- * data plugins and bundles all data/ui plugin JavaScript classes in
- * a single file, which can be automatically obfuscated as well.  
- * 
- * Use the application.runtimeBuild configuration file key to enable
- * or disable RTB. For development, RTB is handy since it makes sure
- * that plugins are properly handled, without any manual work. Still,
- * make sure to disable RTB when the system is live, and only enable
- * it when changes have to be synced.
- * 
- * 
- * @author			Daniel Saidi <daniel.saidi@gmail.com>
- * @copyright		Copyright © 2009-2011, Daniel Saidi
- * @link				http://www.wigbi.com
- * @package			Wigbi
- * @subpackage	PHP
- * @version			1.2.0
- * 
- * @static
- */
 class Wigbi
 {
 	private static $_cacheHandler;
@@ -479,23 +416,6 @@ class Wigbi
 	}
 	
 	
-	
-	
-	
-	/**
-	 * This function returns anything that is provided to it.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	mixed	The value to return.
-	 */
-	public static function ping($object, $throwException = false)
-	{
-		if ($throwException)
-			throw new Exception('ERROR!');
-		return $object;
-	}
 	
 	/**
 	 * Start Wigbi.
