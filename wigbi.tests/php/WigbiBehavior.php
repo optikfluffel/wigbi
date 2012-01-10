@@ -6,18 +6,11 @@
 		{
 			$globals = Wigbi::globals();
 			
-			global $wigbi_root;
-			$this->assertEqual($wigbi_root, "../");
 			$this->assertEqual($globals["root"], "../");
-			
-			global $wigbi_config_file;
-			$this->assertEqual($wigbi_config_file, "../wigbi/config.ini");
 			$this->assertEqual($globals["config_file"], "../wigbi/config.ini");
-			
-			global $wigbi_php_folders;
-			$arr = array("tools", "cache", "context", "core", "configuration", "data", "i18n", "io", "log", "mvc", "ui", "validation", "");
-			$this->assertEqual($wigbi_php_folders, $arr);
-			$this->assertEqual($globals["php_folders"], $arr);
+			$this->assertEqual($globals["php_folders"], array("tools", "cache", "context", "core", "configuration", "data", "i18n", "io", "log", "mvc", "ui", "validation", ""));
+			$this->assertEqual($globals["data_plugins_folder"], "../wigbi/plugins/data/");
+			$this->assertEqual($globals["ui_plugins_folder"], "../wigbi/plugins/ui/");
 		}
 		
 		public function test_dataPluginsFolder_shouldBeRelativeToTestPage()

@@ -1,5 +1,7 @@
 <?php
 
+$wigbi_bootstrapper = "wigbi.tests/wigbi.bootstrap.php";
+
 require("../wigbi/wigbi.php");
 require("tools/SimpleTest_1_1/autorun.php");
 
@@ -7,61 +9,22 @@ require("tools/SimpleTest_1_1/autorun.php");
 //Load classes outside of test context (so that they are executed in this path)
 function __autoload($className)
 {
-	global $wigbi_php_folders;
-
-	foreach ($wigbi_php_folders as $folder)
+	global $wigbi_globals;
+	foreach ($wigbi_globals["php_folders"] as $folder)
 	{
 		$classFile = "php/$folder/$className.php";
-		
 		if (file_exists($classFile))
-        {
-            require_once ($classFile);
-            return;
-        } 
+            require_once($classFile);
 	}
 }
 
 //Create and run all unit test classes 
-foreach ($wigbi_php_folders as $folder)
+foreach ($wigbi_globals["php_folders"] as $folder)
 {
 	foreach (glob("php/$folder/*.php") as $file)
 	{
-		$className = basename(str_replace(".php", "", basename($file)));
-		eval("new " . $className . "();");
+		eval("new " . basename(str_replace(".php", "", basename($file))) . "();");
 	}
-		 
-}
-
-
-
-
-/*
-
-class Container {
-	public static function getInstance($type)
-	{
-		switch ($type)
-		{
-			case "Int":
-				return new MyInt1();
-		}
-	}
-}
-
-$b = new Int();
-$a = Container::getInstance($b);
-print $a->test();*/
-
-
-/*
-public function testPushAndPop()
-		{
-			Mock::generate('Int');
-			$a = new MockInt();
-			$a->test();	
-			
-			$a->expectCallCount("test", 1);
-	  }*/
-
+}	
 
 ?>

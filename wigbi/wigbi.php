@@ -5,10 +5,14 @@ $wigbi_root = "";
 while(!is_dir($wigbi_root . "wigbi/"))
 	$wigbi_root = "../" . $wigbi_root;
 
-
+//Define global variables
 require($wigbi_root . "wigbi/wigbi.globals.php");
+
+//Include all classes required to start Wigbi
 require($wigbi_root . "wigbi/wigbi.include.php");
-require($wigbi_root . "wigbi/wigbi.bootstrap.php");
+
+//Bootstrap Wigbi (this file can be replaced by setting $wigbi_bootstrapper)
+require($wigbi_bootstrapper ? $wigbi_root . $wigbi_bootstrapper : $wigbi_root . "wigbi/wigbi.bootstrap.php");
 
 
 

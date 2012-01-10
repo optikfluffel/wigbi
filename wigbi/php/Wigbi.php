@@ -20,7 +20,8 @@
  * 
  * Wigbi provides static instances for working with cache, logging
  * etc. These are defined in wigbi/wigbi.bootstrap.php, and can be
- * replaced with other implementations if needed.
+ * replaced with other implementations if needed. This can only be
+ * done before Wigbi is started. 
  * 
  * 
  * INCLUDE, START AND STOP WIGBI ************
@@ -78,23 +79,14 @@ class Wigbi
 	}
 	
 	/**
-	 * Get the path to the Wigbi data plugin folder.
+	 * Get all Wigbi global variables in an associative array.
 	 * 
-	 * @return	string
+	 * @return	array
 	 */
 	public static function globals()
 	{
-		$result = array();
-		
-		global $wigbi_root;
-		global $wigbi_config_file;
-		global $wigbi_php_folders;
-		
-		$result["root"] = $wigbi_root;
-		$result["config_file"] = $wigbi_config_file;
-		$result["php_folders"] = $wigbi_php_folders; 
-		
-		return $result;
+		global $wigbi_globals;
+		return $wigbi_globals;
 	}
 	
 	/**
