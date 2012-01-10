@@ -1,6 +1,6 @@
 <?php
 
-//By default, first configure Wigbi using a dommy configuration
+//By default, first configure Wigbi using a dummy configuration
 $config = "foo";
 Wigbi::configuration($config);
 
