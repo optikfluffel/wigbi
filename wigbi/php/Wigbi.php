@@ -65,7 +65,42 @@ class Wigbi
 	
 	private static $_cache;
 	private static $_configuration;
+	private static $_translator;
 	
+	
+	
+	// Properties ********************
+	
+	/**
+	 * All Wigbi global variables, in an associative array.
+	 * 
+	 * @return	array
+	 */
+	public static function globals()
+	{
+		global $wigbi_globals;
+		return $wigbi_globals;
+	}
+	
+	/**
+	 * @return	bool
+	 */
+	public static function isStarted()
+	{
+		return Wigbi::$_isStarted;
+	}
+	
+	/**
+	 * @return	string
+	 */
+	public static function version()
+	{
+		return Wigbi::$_version;
+	}
+	
+	
+	
+	// Bootstrap implementations *****
 	
 	/**
 	 * @param	ICache		$cache		Optional set value.
@@ -90,23 +125,19 @@ class Wigbi
 	}
 	
 	/**
-	 * All Wigbi global variables, in an associative array.
-	 * 
-	 * @return	array
+	 * @param	ITranslator		$translator		Optional set value.
+	 * @return	ITranslator
 	 */
-	public static function globals()
+	public static function translator($translator = null)
 	{
-		global $wigbi_globals;
-		return $wigbi_globals;
+		if (func_num_args() > 0)
+			Wigbi::$_translator = func_get_arg(0);
+		return Wigbi::$_translator;
 	}
 	
-	/**
-	 * @return	bool
-	 */
-	public static function isStarted()
-	{
-		return Wigbi::$_isStarted;
-	}
+	
+	
+	// Wigbi functionality ***********
 	
 	/**
 	 * Get the application root path for the server.
@@ -122,17 +153,6 @@ class Wigbi
 		global $wigbi_globals;
 		return $wigbi_globals["root"] . $path;
 	}
-	
-	/**
-	 * @return	string
-	 */
-	public static function version()
-	{
-		return Wigbi::$_version;
-	}
-	
-	
-	
 	
 	/**
 	 * Start Wigbi.
