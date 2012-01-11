@@ -5,11 +5,7 @@ class Wigbi
 	private static $_cssPaths;
 	private static $_dbHandler;
 	private static $_generateHtml = true;
-	private static $_isStarted;
 	private static $_jsPaths;
-	private static $_languageFile;
-	private static $_languageHandler;
-	private static $_logHandler;
 	private static $_phpPaths;
 	//private static $_serverRoot;
 	private static $_sessionHandler;
@@ -122,18 +118,6 @@ class Wigbi
 		return false;
 	}
 	
-	/**
-	 * Get whether or not Wigbi is started.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	bool	Whether or not Wigbi is started.
-	 */
-	public static function isStarted()
-	{
-		return Wigbi::$_isStarted;
-	}
 	
 	/**
 	 * Get the JavaScript paths that are handled by Wigbi.
@@ -168,22 +152,6 @@ class Wigbi
 			array_push(Wigbi::$_jsPaths, trim($path));
 			
 		return Wigbi::$_jsPaths;
-	}
-	
-	/**
-	 * Get the default Wigbi LogHandler object.
-	 * 
-	 * This object is initialized when Wigbi is started and uses the
-	 * logHandler section in the Wigbi configuration file.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	LogHandler	The default Wigbi LogHandler object.
-	 */
-	public static function logHandler()
-	{
-		return Wigbi::$_logHandler;
 	}
 	
 	/**
