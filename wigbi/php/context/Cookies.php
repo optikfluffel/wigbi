@@ -21,7 +21,7 @@
  * @subpackage		PHP.Context
  * @version			2.0.0
  */
-class Cookie implements ICookie
+class Cookies implements ICookies
 {
 	private $_prefix;
 	

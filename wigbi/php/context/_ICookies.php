@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi ICookie interface file.
+ * The Wigbi ICookies interface file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi ICookie interface.
+ * The Wigbi ICookies interface.
  * 
  * This interface can be implemented by any class that can be used
  * to retrieve and set cookie-based data by key.
@@ -21,7 +21,7 @@
  * @subpackage		PHP.Context
  * @version			2.0.0
  */
-interface ICookie
+interface ICookies
 {
 	/**
 	 * Clear a certain cookie key.

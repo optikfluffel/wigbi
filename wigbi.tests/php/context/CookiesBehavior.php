@@ -1,13 +1,13 @@
 <?php
 
-	class CookieBehavior extends UnitTestCase
+	class CookiesBehavior extends UnitTestCase
 	{
-		private $_cookie;
+		private $_cookies;
 		
 		
 		function setUp()
 		{
-			$this->_cookie = new Cookie();
+			$this->_cookies = new Cookies();
 		}
 		
 		
