@@ -39,7 +39,7 @@
  * @subpackage		PHP.i18n
  * @version			2.0.0
  */
-class FileBasedTranslator extends FileBasedConfiguration implements ITranslator
+class FileBasedTranslator extends ArrayBasedTranslator implements ITranslator
 {
 	/**
 	 * @param	string				$filePath			The path to the language file that is to be parsed, if any.
@@ -47,37 +47,8 @@ class FileBasedTranslator extends FileBasedConfiguration implements ITranslator
 	 */
 	public function __construct($filePath, $configFileReader)
 	{
-		parent::__construct($filePath, $configFileReader);
-	}
-	
-	
-	
-	/**
-	 * Translate a certain language key.
-	 * 
-	 * @param	string	$key		The language key to translate.
-	 * @param	string	$section	The language section, if any.
-	 * @return	string
-	 */
-	public function translate($key, $section = null)
-	{
-		//Remove term from left to right until a translation is found
-		$keys = explode("_", $key);
-		while (sizeof($keys) > 0)
-		{
-			//Load the current key from the parent class
-			$tmpKey = implode("_", $keys);
-			$translation = parent::get($tmpKey, $section);
-			
-			//Return the translation, if any
-			if ($translation)
-				return $translation;
-				
-			//Remove the leftmost word and continue
-			array_shift($keys);
-		}
-		
-		return "[$key]";
+		$data = $configFileReader->readFile($filePath);
+		parent::__construct($data);
 	}
 }
 

@@ -21,53 +21,16 @@
  * @subpackage		PHP.Configuration
  * @version			2.0.0
  */
-class FileBasedConfiguration implements IConfiguration
+class FileBasedConfiguration extends ArrayBasedConfiguration implements IConfiguration
 {
-	private $_data;
-	
-	
 	/**
-	 * @param	string				$filePath	The path to the config file that is to be parsed, if any.
-	 * @param	IConfigFileReader	$fileReader	The file reader that should be used to read the config file.
+	 * @param	string				$filePath			The path to the config file that is to be parsed, if any.
+	 * @param	IConfigFileReader	$configFileReader	The file reader that should be used to read the config file.
 	 */
-	public function __construct($filePath, $fileReader)
+	public function __construct($filePath, $configFileReader)
 	{
-		$this->_data = $fileReader->readFile($filePath);
-	}
-	
-
-	/**
-	 * Get the currently loaded configuration data.
-	 * 
-	 * The data structure depends on if the data contains sections. 
-	 * 
-	 * @return	array
-	 */
-	public function data()
-	{
-		if ($this->_data)
-			return $this->_data;
-		return array();
-	}
-	
-	/**
-	 * Get a certain configuration key value.
-	 * 
-	 * @param	string	$key		The configuration key to retrieve.
-	 * @param	string	$section	The configuration section, if any.
-	 * @return	string
-	 */
-	public function get($key, $section = null)
-	{
-		//Get the correct section to work with
-		$data = $this->_data;
-		if (isset($data[$section]))
-			$data = $data[$section];
-		
-		//Either return match or null
-		if (isset($data[$key]))
-			return $data[$key];
-		return null;
+		$data = $configFileReader->readFile($filePath);
+		parent::__construct($data);
 	}
 }
 
