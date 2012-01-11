@@ -36,6 +36,11 @@
 			$this->assertEqual(Wigbi::cache()->get("foo"), "bar");
 		}
 		
+		public function test_bootstrap_shouldSetupLogger()
+		{
+			$this->assertEqual(get_class(Wigbi::logger()), "NonLogger");
+		}
+		
 		public function test_bootstrap_shouldSetupTranslator()
 		{
 			$this->assertEqual(Wigbi::translator()->translate("translates_hierarchical_name", "application"), "application");
