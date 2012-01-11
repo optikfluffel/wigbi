@@ -300,18 +300,6 @@ class WigbiBehavior extends UnitTestCase
 		array_pop($_POST);
 	}
 	
-	function test_isStarted_shouldReturnFalseWhenStopped()
-	{
-		Wigbi::stop();
-		
-		$this->assertFalse(Wigbi::isStarted());
-	}
-
-	function test_isStarted_shouldReturnTrueWhenStarted()
-	{
-		$this->assertTrue(Wigbi::isStarted());
-	}
-	
 	function test_jsPaths_shouldReturnDefaultValueIfWigbiIsStopped()
 	{
 		$this->stopWigbi();
@@ -334,19 +322,6 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertEqual(Wigbi::jsPaths(), array("wigbi/js/core", "wigbi/js", "wigbi/plugins/data", "wigbi/plugins/ui", "bar", "foo"));
 		
 		$this->resetConfigFile();
-	}
-	
-	function test_languageFile_shouldGetSetValue()
-	{
-		$this->assertEqual(Wigbi::languageFile(), "");
-		$this->assertEqual(Wigbi::languageFile("foo"), "foo");
-		$this->assertEqual(Wigbi::languageFile(), "foo");
-		$this->assertEqual(Wigbi::languageFile(""), "");
-	}
-	
-	function test_languageHandler_shouldReturnCorrectClass()
-	{
-		$this->assertEqual(get_class(Wigbi::languageHandler()), "LanguageHandler");
 	}
 	
 	function test_logHandler_shouldReturnCorrectClass()
@@ -432,11 +407,6 @@ class WigbiBehavior extends UnitTestCase
 	{
 		$this->assertEqual(Wigbi::uiPluginFolder(), Wigbi::wigbiFolder() . "plugins/ui/");
 	}
-	
-	function test_version_ShouldReturnCorrectValue()
-	{
-		$this->assertEqual(Wigbi::version(), "1.2.0");
-	}
 
 	function test_wigbiFolder_shouldReturnCorrectPath()
 	{
@@ -450,21 +420,6 @@ class WigbiBehavior extends UnitTestCase
 
 
 
-	function test_ping_shouldReturnProvidedValue()
-	{
-		$this->assertEqual(Wigbi::ping("foo bar"), "foo bar");
-		$this->assertEqual(Wigbi::ping(1), 1);
-		$this->assertEqual(Wigbi::ping(1.5), 1.5);
-		$this->assertEqual(Wigbi::ping(true), true);
-		$this->assertEqual(Wigbi::ping(array("foo bar", 1, 1.5, true)), array("foo bar", 1, 1.5, true));
-	}
-
-	function test_ping_shouldThrowExceptionForInvalidComparison()
-	{
-		$this->expectException( new Exception("ERROR!") );
-		
-		Wigbi::ping("foo bar", true);
-	}
 	
 	function test_start_shouldHandleAjaxConfiguration()
 	{
@@ -477,52 +432,6 @@ class WigbiBehavior extends UnitTestCase
 		
 		$this->resetConfigFile();
 		$this->unfakeAsyncPostBack();
-	}
-	
-	function test_start_shouldStartConfigurationAndFailIfNeitherConfigFileExists()
-	{
-		//TODO: A bit risky to test this with the live system
-	}
-	
-	function test_start_shouldStartConfigurationAndFailIfConfigFileDoesNotExistAndCannotBeCreated()
-	{
-		//TODO: A bit risky to test this with the live system
-	}
-	
-	function test_start_shouldStartConfigurationAndCreateConfigFileIfNoneExists()
-	{
-		//TODO: A bit risky to test this with the live system
-	}
-	
-	function test_start_shouldStartConfigurationAndFailForInvalidConfigurationFile()
-	{
-		$this->expectException(new Exception("The Wigbi configuration file resources/config_invalid.ini could not be parsed. Wigbi must be able to parse this file to proceed."));
-		$this->setConfigFile("resources/config_invalid.ini");
-	}
-	
-	function test_start_shouldStartConfigurationAndFailForMissingApplicationNameParameter()
-	{
-		$this->expectException(new Exception('The application.name key in the Wigbi configuration file must have a value, e.g. "My Application".'));
-		$this->setConfigFile("resources/config_noName.ini");
-	}
-
-	function test_start_shouldStartConfigurationAndFailForMissingWebRootParameter()
-	{
-		$this->expectException(new Exception('The application.webRoot key in the Wigbi configuration file must have a value, e.g. /myApp/ if the site is located in http://localhost/myApp/.'));
-		$this->setConfigFile("resources/config_noWebRoot.ini");
-	}
-
-	function test_start_shouldStartCacheHandlerWithoutConfigValue()
-	{
-		$this->setConfigFile("resources/config_minimal.ini");
-		$this->assertEqual(Wigbi::cacheHandler()->cacheFolder(), Wigbi::serverRoot("../"));
-		
-		$this->resetConfigFile();
-	}
-
-	function test_start_shouldStartCacheHandlerWithConfigValue()
-	{
-		$this->assertEqual(Wigbi::cacheHandler()->cacheFolder(), Wigbi::serverRoot() . Wigbi::configuration("folder", "cacheHandler"));
 	}
 	
 	function test_start_shouldStartInactiveDatabaseHandlerWithRtbDisabled()
@@ -602,31 +511,6 @@ class WigbiBehavior extends UnitTestCase
 		$this->expectException(new Exception("The default language file ../wigbi/content/lang/nonexisting.ini could not be parsed."));
 		
 		$this->setConfigFile("resources/config_invalidLanguageFile.ini");
-	}
-	
-	function test_start_shouldStartLanguageHandlerWithoutConfigFileValue()
-	{
-		$this->setConfigFile("resources/config_minimal.ini");
-		
-		$this->assertEqual(Wigbi::languageHandler()->filePath(), "");
-		
-		$this->resetConfigFile();
-	}
-	
-	function test_start_shouldStartLanguageHandlerWithConfigFileValue()
-	{
-		$this->assertEqual(Wigbi::languageHandler()->filePath(), Wigbi::wigbiFolder() . "lang/english.ini");
-	}
-	
-	function test_start_shouldStartLanguageHandlerWithVariableValue()
-	{
-		$langFile = Wigbi::wigbiFolder() . "lang/swedish.ini";
-		Wigbi::languageFile($langFile);
-		$this->resetWigbi();
-		
-		$this->assertEqual(Wigbi::languageHandler()->filePath(), $langFile);
-		
-		Wigbi::languageFile("");
 	}
 	
 	function test_start_shouldStartLogHandlerWithoutAnyHandlers()
@@ -951,16 +835,6 @@ class WigbiBehavior extends UnitTestCase
 		$this->assertTrue(strpos($result, "<script type=\"text/javascript\">//<![CDATA["));
 	}
 
-	function test_start_shouldStartWigbi()
-	{
-		ob_start();
-		Wigbi::stop();
-		Wigbi::start();
-		$result = ob_get_clean();
-		
-		$this->assertTrue(Wigbi::isStarted());
-	}
-	
 	function test_start_handleAjaxConfiguration_shouldReturnNullForIsNotPostback()
 	{
 		$this->assertNull(MyWigbiWrapper::test_start_handleAjaxConfiguration());

@@ -171,48 +171,6 @@ class Wigbi
 	}
 	
 	/**
-	 * Get/set a custom language file to use during startup.
-	 * 
-	 * Use this property to provide Wigbi with a custom language ini
-	 * file that will be used instead of the language file specified
-	 * in the Wigbi configuration file.
-	 * 
-	 * Remember to set this property before starting Wigbi, since it
-	 * is applied during startup.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @param		string	$value	Optional set value.
-	 * @return	string					A custom language file to use during startup.
-	 */
-	public function languageFile($value = true)
-	{
-		if(func_num_args() != 0)
-			Wigbi::$_languageFile = func_get_arg(0);
-		return Wigbi::$_languageFile;
-	}
-	
-	/**
-	 * Get the default Wigbi LanguageHandler object.
-	 * 
-	 * This object is initialized when Wigbi is started and uses the
-	 * languageHandler section in the Wigbi configuration file.
-	 * 
-	 * To make the handler use a different file than the one that is
-	 * set in the config file, use the languageFile(...) property.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	LanguageHandler	The default Wigbi LanguageHandler object.
-	 */
-	public static function languageHandler()
-	{
-		return Wigbi::$_languageHandler;
-	}
-	
-	/**
 	 * Get the default Wigbi LogHandler object.
 	 * 
 	 * This object is initialized when Wigbi is started and uses the
