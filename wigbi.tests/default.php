@@ -7,5 +7,6 @@ require("../wigbi/wigbi.php");
 require($wigbi_globals["root"] . "wigbi.tests/wigbi.tests.include.php");
 
 SimpleTest::ignore('CookieBehavior');
+SimpleTest::ignore('UrlExistsValidatorBehavior');
 
 ?>
