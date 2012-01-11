@@ -64,9 +64,6 @@
 		}
 		
 		
-		
-		
-		
 		public function test_serverRoot_shouldBeRelativeToTestPage()
 		{
 			$this->assertEqual(Wigbi::serverRoot(), "../");
@@ -108,7 +105,6 @@
 			
 			$this->assertTrue(Wigbi::isStarted());
 		}
-		
 		
 		public function test_stop_shouldDisableStartedMode()
 		{
