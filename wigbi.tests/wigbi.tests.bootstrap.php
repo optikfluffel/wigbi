@@ -1,8 +1,11 @@
 <?php
 
+$wigbi_test_config = array();
+$wigbi_test_config["application"] = array();
+$wigbi_test_config["application"]["name"] = "application";
+
 //By default, first configure Wigbi using a dummy configuration
-$config = "foo";
-Wigbi::configuration($config);
+Wigbi::configuration($wigbi_test_config);
 
 
 
