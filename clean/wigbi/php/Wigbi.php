@@ -408,34 +408,6 @@ class Wigbi
 	}
 	
 	/**
-	 * Start the Wigbi configuration IniHandler instance.
-	 */
-	private static function start_configuration()
-	{
-		//Reset web root
-		Wigbi::$_webRoot = null;
-		
-		//Abort if neither file exists
-		if (!file_exists(Wigbi::configFile()) && !file_exists(Wigbi::configFile_default()))
-			throw new Exception("Neither " . Wigbi::configFile() . " nor " . Wigbi::configFile_default() . " exist. Wigbi requires any such (valid) configuration file to start.");
-			
-		//Create the config file if it does not exist
-		if (!file_exists(Wigbi::configFile()) && !copy(Wigbi::configFile_default(), Wigbi::configFile()))
-				throw new Exception(Wigbi::configFile_default() . " could not be copied to " . Wigbi::configFile() . ". Copy the file manually or make sure that Wigbi is allowed to create the file.");
-		
-		//Try to parse the configuration file
-		Wigbi::$_configuration = new IniHandler();
-		if (!Wigbi::$_configuration->parseFile(Wigbi::configFile()))
-			throw new Exception("The Wigbi configuration file " . Wigbi::configFile() . " could not be parsed. Wigbi must be able to parse this file to proceed.");
-		
-		//Abort if mandatory parameters are missing
-		if (!Wigbi::configuration("name", "application"))
-			throw new Exception('The application.name key in the Wigbi configuration file must have a value, e.g. "My Application".');
-		if (!Wigbi::configuration("webRoot", "application"))
-			throw new Exception('The application.webRoot key in the Wigbi configuration file must have a value, e.g. /myApp/ if the site is located in http://localhost/myApp/.');
-	}
-	
-	/**
 	 * Start the Wigbi DatabaseHandler instance.
 	 */
 	private static function start_databaseHandler()

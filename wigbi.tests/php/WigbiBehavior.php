@@ -2,6 +2,21 @@
 
 	class WigbiBehavior extends UnitTestCase
 	{
+		private $_config;
+		
+		
+		function setUp()
+		{
+			$this->_config = Wigbi::configuration();
+		}
+		
+		function tearDown()
+		{
+			Wigbi::configuration($this->_config);
+		}
+		
+		
+		
 		public function test_globals_shouldBeCorrect()
 		{
 			$globals = Wigbi::globals();
@@ -25,6 +40,8 @@
 			$this->assertEqual(Wigbi::configuration()->get("webRoot", "application"), "/wigbi_dev/");
 			
 			$this->assertEqual(Wigbi::configuration()->get("folder", "cache"), "/cache/");
+			
+			//$this->assertEqual(Wigbi::translator()->get("file", "lang"), "/lang/se.ini");
 		}
 		
 		public function test_bootstrap_shouldSetupCache()
@@ -54,7 +71,6 @@
 		
 		public function test_start_shouldAbortForMissingApplicationName()
 		{
-			$config = Wigbi::configuration();
 			Wigbi::configuration(new ArrayBasedConfiguration(array()));
 			
 			$message = "";
@@ -62,14 +78,11 @@
 			catch(exception $e) { $message = $e->getMessage(); }
 			
 			$this->assertEqual($message, "The application.name key in the Wigbi config file must have a value, e.g. \"My Application\".");
-			
-			Wigbi::configuration($config);
 		}
 		
 		public function test_start_shouldAbortForMissingWebRootPath()
 		{
 			$data = array("application" => array("name" => "foo"));
-			$config = Wigbi::configuration();
 			Wigbi::configuration(new ArrayBasedConfiguration($data));
 			
 			$message = "";
@@ -77,8 +90,6 @@
 			catch(exception $e) { $message = $e->getMessage(); }
 			
 			$this->assertEqual($message, "The application.webRoot key in the Wigbi config file must have a value, e.g. \"/myApp/\" if the site is located in http://localhost/myApp/.");
-			
-			Wigbi::configuration($config);
 		}
 		
 		public function test_start_shouldEnableStartedMode()
