@@ -12,7 +12,7 @@ require($wigbi_root . "wigbi/wigbi.globals.php");
 require($wigbi_root . "wigbi/wigbi.include.php");
 
 //Bootstrap Wigbi (this file can be replaced by setting $wigbi_bootstrapper)
-require($wigbi_bootstrapper ? $wigbi_root . $wigbi_bootstrapper : $wigbi_root . "wigbi/wigbi.bootstrap.php");
+require(isset($wigbi_bootstrapper) ? $wigbi_root . $wigbi_bootstrapper : $wigbi_root . "wigbi/wigbi.bootstrap.php");
 
 
 
