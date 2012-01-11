@@ -11,7 +11,8 @@
  * The Wigbi MemoryCache class.
  * 
  * This class can be used to cache data in memory. It supports all
- * kind of serializable data.
+ * kind of serializable data, but should only be used in very(!!!)
+ * simple scenarios, since it is cleaned after each request.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>

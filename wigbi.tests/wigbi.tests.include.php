@@ -1,6 +1,9 @@
 <?php
 
-//Load classes outside of test context (so that they are executed in this path)
+//Include test framework
+require("tools/SimpleTest_1_1/autorun.php");
+
+//Define autoload search paths
 function __autoload($className)
 {
 	global $wigbi_globals;

@@ -54,8 +54,6 @@
  * @package			Wigbi
  * @subpackage		PHP
  * @version			2.0.0
- * 
- * @static
  */
 class Wigbi
 {
@@ -76,7 +74,6 @@ class Wigbi
 			Wigbi::$_configuration = func_get_arg(0);
 		return Wigbi::$_configuration;
 	}
-	
 	
 	/**
 	 * Get all Wigbi global variables in an associative array.
@@ -113,9 +110,6 @@ class Wigbi
 	{
 		return Wigbi::$_version;
 	}
-	
-	
-	
 }
 
 ?>
