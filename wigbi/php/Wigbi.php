@@ -29,9 +29,12 @@
  * the page. This will include all PHP classes and setup Wigbi, so
  * that it can be started.
  * 
- * To start Wigbi, call Wigbi::start() in the head tag of the page.
- * This will start Wigbi, open data connections etc. To stop Wigbi,
- * just call Wigbi::stop() when Wigbi is not needed anymore.
+ * To start Wigbi, call Wigbi::start() in the HEAD tag of the page.
+ * This will start Wigbi, open data connections etc. and will also
+ * output all content that has to be added to the HEAD tag.
+ * 
+ * To stop Wigbi, just call Wigbi::stop() when Wigbi is not needed
+ * anymore. This will shut down data connections etc.
  * 
  *
  * WIGBI RUNTIME BUILD (RTB) ***************
@@ -58,6 +61,7 @@
 class Wigbi
 {
 	private static $_version = "2.0.0";
+	private static $_isStarted = false;
 	
 	private static $_cache;
 	private static $_configuration;
@@ -101,6 +105,16 @@ class Wigbi
 	}
 	
 	/**
+	 * Get whether or not Wigbi is started.
+	 * 
+	 * @return	boot
+	 */
+	public static function isStarted()
+	{
+		return Wigbi::$_isStarted;
+	}
+	
+	/**
 	 * Get the application root path for the server.
 	 * 
 	 * If the path argument is set, it will be appended at the end
@@ -123,6 +137,31 @@ class Wigbi
 	public static function version()
 	{
 		return Wigbi::$_version;
+	}
+	
+	
+	
+	
+	/**
+	 * Start Wigbi.
+	 * 
+	 * This method must be executed in the HEAD tag if Wigbi is to
+	 * be used on a web site, where HTML is returned to the client.
+	 */
+	public static function start()
+	{
+		Wigbi::$_isStarted = true;
+	}
+	
+	/**
+	 * Stop Wigbi.
+	 * 
+	 * This method can be executed when Wigbi is no longer needed.
+	 * It does not output anything.
+	 */
+	public static function stop()
+	{
+		Wigbi::$_isStarted = false;
 	}
 }
 

@@ -34,6 +34,7 @@
 			$this->assertEqual(Wigbi::cache()->get("foo"), "bar");
 		}
 		
+		
 		public function test_serverRoot_shouldBeRelativeToTestPage()
 		{
 			$this->assertEqual(Wigbi::serverRoot(), "../");
@@ -47,6 +48,23 @@
 		public function test_version_shouldBeTwoZeroX()
 		{
 			$this->assertEqual(substr(Wigbi::version(), 0, 3), "2.0");
+		}
+		
+		
+		
+		public function test_start_stop_shouldToggleIsStarted()
+		{
+			Wigbi::start();
+			
+			$this->assertTrue(Wigbi::isStarted());
+			
+			Wigbi::stop();
+			
+			$this->assertFalse(Wigbi::isStarted());
+			
+			Wigbi::start();
+			
+			$this->assertTrue(Wigbi::isStarted());
 		}
 		
 	}

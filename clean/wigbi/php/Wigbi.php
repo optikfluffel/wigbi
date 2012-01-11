@@ -2,9 +2,6 @@
 
 class Wigbi
 {
-	private static $_cacheHandler;
-	private static $_configFile;
-	private static $_configuration;
 	private static $_cssPaths;
 	private static $_dbHandler;
 	private static $_generateHtml = true;
@@ -20,23 +17,6 @@ class Wigbi
 	/**#@-*/
 	
 
-	/**
-	 * Get/set the default Wigbi CacheHandler instance.
-	 * 
-	 * This object is initialized when Wigbi is started, using the
-	 * cacheHandler section in the Wigbi config file.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @param		CacheHandler	$value	Optional set value.
-	 * @return	CacheHandler					The default Wigbi CacheHandler object.
-	 */
-	public static function cacheHandler()
-	{
-		return Wigbi::$_cacheHandler;
-	}
-	
 	
 	/**
 	 * Get the CSS paths that are handled by Wigbi.
@@ -416,7 +396,7 @@ class Wigbi
 		Wigbi::start_generateHtml();
 		
 		//Set Wigbi to started
-		Wigbi::$_isStarted = true;
+		//Wigbi::$_isStarted = true;
 	}
 	
 	/**
