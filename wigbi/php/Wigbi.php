@@ -68,8 +68,6 @@ class Wigbi
 	
 	
 	/**
-	 * Get/set the Wigbi cache implementation.
-	 * 
 	 * @param	ICache		$cache		Optional set value.
 	 * @return	ICache
 	 */
@@ -81,8 +79,6 @@ class Wigbi
 	}
 	
 	/**
-	 * Get/set the Wigbi configuration.
-	 * 
 	 * @param	IConfiguration	$config		Optional set value.
 	 * @return	IConfiguration
 	 */
@@ -94,7 +90,7 @@ class Wigbi
 	}
 	
 	/**
-	 * Get all Wigbi global variables in an associative array.
+	 * All Wigbi global variables, in an associative array.
 	 * 
 	 * @return	array
 	 */
@@ -105,9 +101,7 @@ class Wigbi
 	}
 	
 	/**
-	 * Get whether or not Wigbi is started.
-	 * 
-	 * @return	boot
+	 * @return	bool
 	 */
 	public static function isStarted()
 	{
@@ -130,8 +124,6 @@ class Wigbi
 	}
 	
 	/**
-	 * Get the version of the currently used Wigbi release.
-	 * 
 	 * @return	string
 	 */
 	public static function version()
@@ -150,6 +142,12 @@ class Wigbi
 	 */
 	public static function start()
 	{
+		//Abort if Wigbi is started with invalid configuration
+		if (!Wigbi::configuration()->get("name", "application"))
+			throw new Exception('The application.name key in the Wigbi config file must have a value, e.g. "My Application".');
+		if (!Wigbi::configuration()->get("webRoot", "application"))
+			throw new Exception('The application.webRoot key in the Wigbi config file must have a value, e.g. "/myApp/" if the site is located in http://localhost/myApp/.');
+		
 		Wigbi::$_isStarted = true;
 	}
 	

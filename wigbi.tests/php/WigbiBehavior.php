@@ -52,19 +52,53 @@
 		
 		
 		
-		public function test_start_stop_shouldToggleIsStarted()
+		public function test_start_shouldAbortForMissingApplicationName()
 		{
+			$config = Wigbi::configuration();
+			Wigbi::configuration(new ArrayBasedConfiguration(array()));
+			
+			$message = "";
+			try{ Wigbi::start(); }
+			catch(exception $e) { $message = $e->getMessage(); }
+			
+			$this->assertEqual($message, "The application.name key in the Wigbi config file must have a value, e.g. \"My Application\".");
+			
+			Wigbi::configuration($config);
+		}
+		
+		public function test_start_shouldAbortForMissingWebRootPath()
+		{
+			$data = array("application" => array("name" => "foo"));
+			$config = Wigbi::configuration();
+			Wigbi::configuration(new ArrayBasedConfiguration($data));
+			
+			$message = "";
+			try{ Wigbi::start(); }
+			catch(exception $e) { $message = $e->getMessage(); }
+			
+			$this->assertEqual($message, "The application.webRoot key in the Wigbi config file must have a value, e.g. \"/myApp/\" if the site is located in http://localhost/myApp/.");
+			
+			Wigbi::configuration($config);
+		}
+		
+		public function test_start_shouldEnableStartedMode()
+		{
+			Wigbi::start();
+			Wigbi::stop();
 			Wigbi::start();
 			
 			$this->assertTrue(Wigbi::isStarted());
-			
+		}
+		
+		
+		public function test_stop_shouldDisableStartedMode()
+		{
+			Wigbi::stop();
+			Wigbi::start();
+			Wigbi::start();
 			Wigbi::stop();
 			
 			$this->assertFalse(Wigbi::isStarted());
-			
-			Wigbi::start();
-			
-			$this->assertTrue(Wigbi::isStarted());
 		}
 		
 	}
