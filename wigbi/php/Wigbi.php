@@ -59,8 +59,22 @@ class Wigbi
 {
 	private static $_version = "2.0.0";
 	
+	private static $_cache;
 	private static $_configuration;
 	
+	
+	/**
+	 * Get/set the Wigbi cache implementation.
+	 * 
+	 * @param	ICache		$cache		Optional set value.
+	 * @return	ICache
+	 */
+	public static function cache($cache = null)
+	{
+		if (func_num_args() > 0)
+			Wigbi::$_cache = func_get_arg(0);
+		return Wigbi::$_cache;
+	}
 	
 	/**
 	 * Get/set the Wigbi configuration.

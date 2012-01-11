@@ -19,10 +19,19 @@
 			$this->assertEqual(Wigbi::configuration(), new ArrayBasedConfiguration($wigbi_test_config));
 		}
 		
-		public function test_bootstrap_shouldSetupTestConfig()
+		public function test_bootstrap_shouldSetupConfiguration()
 		{
 			$this->assertEqual(Wigbi::configuration()->get("name", "application"), "application");
 			$this->assertEqual(Wigbi::configuration()->get("webRoot", "application"), "/wigbi_dev/");
+			
+			$this->assertEqual(Wigbi::configuration()->get("folder", "cache"), "/cache/");
+		}
+		
+		public function test_bootstrap_shouldSetupCache()
+		{
+			Wigbi::cache()->set("foo", "bar");
+			
+			$this->assertEqual(Wigbi::cache()->get("foo"), "bar");
 		}
 		
 		public function test_serverRoot_shouldBeRelativeToTestPage()
