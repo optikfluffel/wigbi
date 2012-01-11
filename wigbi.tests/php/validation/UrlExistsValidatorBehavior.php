@@ -15,12 +15,12 @@
 		
 		public function test_isValid_shouldReturnFalseForNonExistingUrl()
 		{
-			$this->assertFalse($this->_validator->isValid("htp://www.saidi.se"));
+			$this->assertFalse($this->_validator->isValid("htp://localhost:8888"));
 		}
 		
 		public function test_isValid_shouldReturnTrueForValidValues()
 		{
-			$this->assertTrue($this->_validator->isValid("http://www.saidi.se"));
+			$this->assertTrue($this->_validator->isValid("http://localhost:8888"));
 		}
 	}
 

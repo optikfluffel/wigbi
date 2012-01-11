@@ -17,7 +17,8 @@ foreach ($wigbi_globals["php_folders"] as $folder)
 {
 	foreach (glob("php/$folder/*.php") as $file)
 	{
-		eval("new " . basename(str_replace(".php", "", basename($file))) . "();");
+		$fileName = basename(str_replace(".php", "", basename($file)));
+		eval("new " . $fileName . "();");
 	}
 }
 
