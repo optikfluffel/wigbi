@@ -28,19 +28,19 @@
 class ErrorLog implements ILogger
 {
 	private $_destination;
-	private $_headers;
+	private $_extra_headers;
 	private $_types;
 	
 	/**
 	 * @param	array[ErrorLogType]	$types			How the logger should log its messages.
 	 * @param	string				$destination	The e-mail address or file to send messages to.
-	 * @param	string				$headers		Extra headers that will be added to any e-mails being sent.
+	 * @param	string				$extra_headers	Extra headers that will be added to any e-mails being sent.
 	 */
-	public function __construct($types, $destination = "", $headers = "")
+	public function __construct($types, $destination = "", $extra_headers = "")
 	{
 		$this->_types = $types;
 		$this->_destination = $destination;
-		$this->_headers = $headers;
+		$this->_extra_headers = $extra_headers;
 	}
 	
 	
@@ -59,9 +59,9 @@ class ErrorLog implements ILogger
 	 * 
 	 * @return	string
 	 */
-	function headers()
+	function extra_headers()
 	{
-		return $this->_headers;
+		return $this->_extra_headers;
 	}
 	
 	/**
@@ -73,7 +73,7 @@ class ErrorLog implements ILogger
 	function log($message, $severity)
 	{
 		foreach ($this->types() as $type)
-			error_log($message, $type, $this->destination(), $this->headers());
+			error_log($message, $type, $this->destination(), $this->extra_headers());
 	}
 	
 	/**

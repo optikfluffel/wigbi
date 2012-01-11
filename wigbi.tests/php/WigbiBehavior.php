@@ -27,10 +27,6 @@
 		{
 			$this->assertEqual(Wigbi::configuration()->get("name", "application"), "application");
 			$this->assertEqual(Wigbi::configuration()->get("webRoot", "application"), "/wigbi_dev/");
-			
-			$this->assertEqual(Wigbi::configuration()->get("folder", "cache"), "/cache/");
-			
-			$this->assertEqual(Wigbi::configuration()->get("file", "language"), "/lang/en.ini");
 		}
 		
 		public function test_bootstrap_shouldSetupCache()
@@ -42,7 +38,7 @@
 		
 		public function test_bootstrap_shouldSetupTranslator()
 		{
-			$this->assertEqual(Wigbi::translator()->translate("translates_hierarchical_file", "language"), "/lang/en.ini");
+			$this->assertEqual(Wigbi::translator()->translate("translates_hierarchical_name", "application"), "application");
 		}
 		
 		

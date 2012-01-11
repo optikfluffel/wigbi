@@ -65,6 +65,7 @@ class Wigbi
 	
 	private static $_cache;
 	private static $_configuration;
+	private static $_logger;
 	private static $_translator;
 	
 	
@@ -122,6 +123,17 @@ class Wigbi
 		if (func_num_args() > 0)
 			Wigbi::$_configuration = func_get_arg(0);
 		return Wigbi::$_configuration;
+	}
+	
+	/**
+	 * @param	ILogger		$logger		Optional set value.
+	 * @return	ILogger
+	 */
+	public static function logger($logger = null)
+	{
+		if (func_num_args() > 0)
+			Wigbi::$_logger = func_get_arg(0);
+		return Wigbi::$_logger;
 	}
 	
 	/**

@@ -2,5 +2,7 @@
 
 print json_encode(Wigbi::configuration()->data());
 
+Wigbi::logger()->log("foo", 1);
+
 
 ?>

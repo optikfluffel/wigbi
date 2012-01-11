@@ -17,7 +17,7 @@
 		{
 			$this->assertEqual($this->_errorLog->types(), array(ErrorLogType::email(), ErrorLogType::sapi()));
 			$this->assertEqual($this->_errorLog->destination(), "foo@bar.se");
-			$this->assertEqual($this->_errorLog->headers(), "foo=bar");
+			$this->assertEqual($this->_errorLog->extra_headers(), "foo=bar");
 		}
 	}
 
