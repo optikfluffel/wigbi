@@ -8,7 +8,6 @@ class Wigbi
 	private static $_jsPaths;
 	private static $_phpPaths;
 	//private static $_serverRoot;
-	private static $_sessionHandler;
 	private static $_webRoot;
 	/**#@-*/
 	
@@ -209,22 +208,6 @@ class Wigbi
 	}
 	
 	/**
-	 * Get the default Wigbi SessionHandler object.
-	 * 
-	 * This object is initialized when Wigbi is started and uses the
-	 * application name from the Wigbi configuration file.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	SessionHandler	The default Wigbi SessionHandler object.
-	 */
-	public static function sessionHandler()
-	{
-		return Wigbi::$_sessionHandler;
-	}
-	
-	/**
 	 * Get the names of all UI plugins that are added to the application.
 	 * 
 	 * @access	public
@@ -306,11 +289,7 @@ class Wigbi
 		Wigbi::start_php();
 		
 		//Start the various handlers, then init plugins
-		Wigbi::start_cacheHandler();
 		Wigbi::start_databaseHandler();
-		Wigbi::start_languageHandler();
-		Wigbi::start_logHandler();
-		Wigbi::start_sessionHandler();
 		
 		//Init plugins
 		Wigbi::start_dataPlugins();
@@ -323,14 +302,6 @@ class Wigbi
 		
 		//Set Wigbi to started
 		//Wigbi::$_isStarted = true;
-	}
-	
-	/**
-	 * Start the Wigbi CacheHandler instance.
-	 */
-	private static function start_cacheHandler()
-	{
-		Wigbi::$_cacheHandler = new CacheHandler(Wigbi::serverRoot() . Wigbi::configuration("folder", "cacheHandler"));
 	}
 	
 	/**
@@ -587,49 +558,6 @@ class Wigbi
 	}
 	
 	/**
-	 * Start the Wigbi LanguageHandler instance.
-	 */
-	private static function start_languageHandler()
-	{
-		//Use custom language file, or configuration file if none is set
-		$langFile = Wigbi::languageFile();
-		if (!$langFile && Wigbi::configuration("file", "languageHandler"))
-			$langFile = Wigbi::serverRoot() . Wigbi::configuration("file", "languageHandler"); 
-		
-		//Initialize the default LanguageHandler instance
-		Wigbi::$_languageHandler = new LanguageHandler();
-		if ($langFile && !Wigbi::$_languageHandler->parseFile($langFile))
-			throw new Exception("The default language file " . $langFile . " could not be parsed.");
-	}
-	
-	/**
-	 * Start the Wigbi LogHandler instance.
-	 */
-	private static function start_logHandler()
-	{
-		//Initialize the default LogHandler instance
-		Wigbi::$_logHandler = new LogHandler(Wigbi::configuration("name", "application"));
-		
-		//Parse configuration parameters
-		if (Wigbi::configuration("handlers", "logHandler"))
-		{
-			foreach (explode(",", Wigbi::configuration("handlers", "logHandler")) as $handler)
-			{
-				$priorities = Wigbi::configuration($handler . ".priorities", "logHandler");
-				$priorities = $priorities ? explode(",", $priorities) : array();
-				$display = Wigbi::configuration($handler . ".display", "logHandler");
-				$file = Wigbi::configuration($handler . ".file", "logHandler");
-				$firebug = Wigbi::configuration($handler . ".firebug", "logHandler");
-				$mailaddresses = Wigbi::configuration($handler . ".mailaddresses", "logHandler");
-				$syslog = Wigbi::configuration($handler . ".syslog", "logHandler");
-				$window = Wigbi::configuration($handler . ".window", "logHandler");
-				
-				Wigbi::$_logHandler->addHandler($priorities, $display, $file, $firebug, $mailaddresses, $syslog, $window);
-			}
-		}
-	}
-	
-	/**
 	 * Start the Wigbi PHP layer.
 	 */
 	private static function start_php()
@@ -644,15 +572,6 @@ class Wigbi
 			if (is_file($path))
 					require_once($path);
 		}
-	}
-	
-	/**
-	 * Start the Wigbi SessionHandler instance.
-	 */
-	private static function start_sessionHandler()
-	{
-		//Initialize the default SessionHandler instance
-		Wigbi::$_sessionHandler = new SessionHandler(Wigbi::configuration("name", "application"));
 	}
 	
 	/**
@@ -680,7 +599,7 @@ class Wigbi
 		Wigbi::$_phpPaths = null;
 		Wigbi::$_sessionHandler = null;
 		
-		Wigbi::$_isStarted = false;
+		//Wigbi::$_isStarted = false;
 	}
 }
 
