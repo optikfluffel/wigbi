@@ -7,10 +7,11 @@ $wigbi_test_config["application"]["name"] = "application";
 $wigbi_test_config["application"]["webRoot"] = "/wigbi_dev/";
 
 Wigbi::configuration(new ArrayBasedConfiguration($wigbi_test_config));
-Wigbi::cache(new MemoryCache());
-Wigbi::translator(new ArrayBasedTranslator($wigbi_test_config));
 
-$wigbi_test_logger = new NonLogger();
-Wigbi::logger($wigbi_test_logger);
+Wigbi::cache(new MemoryCache());
+Wigbi::cookies(new Cookies("application"));
+Wigbi::logger(new NonLogger());
+Wigbi::session(new Session("application"));
+Wigbi::translator(new ArrayBasedTranslator($wigbi_test_config));
 
 ?>

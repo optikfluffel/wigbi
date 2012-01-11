@@ -36,9 +36,19 @@
 			$this->assertEqual(Wigbi::cache()->get("foo"), "bar");
 		}
 		
+		public function test_bootstrap_shouldSetupCookies()
+		{
+			$this->assertEqual(get_class(Wigbi::cookies()), "Cookies");
+		}
+		
 		public function test_bootstrap_shouldSetupLogger()
 		{
 			$this->assertEqual(get_class(Wigbi::logger()), "NonLogger");
+		}
+		
+		public function test_bootstrap_shouldSetupSession()
+		{
+			$this->assertEqual(get_class(Wigbi::session()), "Session");
 		}
 		
 		public function test_bootstrap_shouldSetupTranslator()

@@ -65,7 +65,9 @@ class Wigbi
 	
 	private static $_cache;
 	private static $_configuration;
+	private static $_cookies;
 	private static $_logger;
+	private static $_session;
 	private static $_translator;
 	
 	
@@ -104,7 +106,7 @@ class Wigbi
 	// Bootstrap implementations *****
 	
 	/**
-	 * @param	ICache		$cache		Optional set value.
+	 * @param	ICache			$cache		Optional set value.
 	 * @return	ICache
 	 */
 	public static function cache($cache = null)
@@ -126,6 +128,17 @@ class Wigbi
 	}
 	
 	/**
+	 * @param	ICookies		$cookies	Optional set value.
+	 * @return	ICookies
+	 */
+	public static function cookies($cookies = null)
+	{
+		if (func_num_args() > 0)
+			Wigbi::$_cookies = func_get_arg(0);
+		return Wigbi::$_cookies;
+	}
+	
+	/**
 	 * @param	ILogger		$logger		Optional set value.
 	 * @return	ILogger
 	 */
@@ -134,6 +147,17 @@ class Wigbi
 		if (func_num_args() > 0)
 			Wigbi::$_logger = func_get_arg(0);
 		return Wigbi::$_logger;
+	}
+	
+	/**
+	 * @param	ISession		$session	Optional set value.
+	 * @return	ISession
+	 */
+	public static function session($session = null)
+	{
+		if (func_num_args() > 0)
+			Wigbi::$_session = func_get_arg(0);
+		return Wigbi::$_session;
 	}
 	
 	/**
