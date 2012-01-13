@@ -50,15 +50,27 @@ class ArrayBasedConfiguration implements IConfiguration
 	/**
 	 * Get a certain configuration key value.
 	 * 
-	 * @param	string	$key		The configuration key to retrieve.
+	 * If this method is called with one parameter, it will define
+	 * the key and NOT the section. With two parameters, the first
+	 * one will define the section and the section the key.
+	 * 
 	 * @param	string	$section	The configuration section, if any.
+	 * @param	string	$key		The configuration key to retrieve.
 	 * @return	string
 	 */
-	public function get($key, $section = null)
+	public function get($section, $key = null)
 	{
+		//Flip key and section of only one param is provided
+		if (func_num_args() == 1)
+		{
+			$tmp = $section;
+			$section = $key;
+			$key = $tmp; 
+		}
+		
 		//Get the correct section to work with
 		$data = $this->_data;
-		if (isset($data[$section]))
+		if ($section != null && isset($data[$section]))
 			$data = $data[$section];
 		
 		//Either return match or null

@@ -199,9 +199,9 @@ class Wigbi
 	public static function start()
 	{
 		//Abort if Wigbi is started with invalid configuration
-		if (!Wigbi::configuration()->get("name", "application"))
+		if (!Wigbi::configuration()->get("application", "name"))
 			throw new Exception('The application.name key in the Wigbi config file must have a value, e.g. "My Application".');
-		if (!Wigbi::configuration()->get("webRoot", "application"))
+		if (!Wigbi::configuration()->get("application", "webRoot"))
 			throw new Exception('The application.webRoot key in the Wigbi config file must have a value, e.g. "/myApp/" if the site is located in http://localhost/myApp/.');
 		
 		Wigbi::$_isStarted = true;

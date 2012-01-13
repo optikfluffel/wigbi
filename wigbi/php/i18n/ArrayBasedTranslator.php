@@ -55,19 +55,31 @@ class ArrayBasedTranslator extends ArrayBasedConfiguration implements ITranslato
 	/**
 	 * Translate a certain language key.
 	 * 
-	 * @param	string	$key		The language key to translate.
-	 * @param	string	$section	The language section, if any.
+	 * If this method is called with one parameter, it will define
+	 * the key and NOT the section. With two parameters, the first
+	 * one will define the section and the section the key.
+	 * 
+	 * @param	string	$section	The configuration section, if any.
+	 * @param	string	$key		The configuration key to retrieve.
 	 * @return	string
 	 */
-	public function translate($key, $section = null)
+	public function translate($section, $key = null)
 	{
+		//Flip key and section of only one param is provided
+		if (func_num_args() == 1)
+		{
+			$tmp = $section;
+			$section = $key;
+			$key = $tmp; 
+		}
+		
 		//Remove term from left to right until a translation is found
 		$keys = explode("_", $key);
 		while (sizeof($keys) > 0)
 		{
 			//Load the current key from the parent class
 			$tmpKey = implode("_", $keys);
-			$translation = parent::get($tmpKey, $section);
+			$translation = parent::get($section, $tmpKey);
 			
 			//Return the translation, if any
 			if ($translation)

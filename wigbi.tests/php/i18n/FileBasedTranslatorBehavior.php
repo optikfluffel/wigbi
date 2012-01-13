@@ -10,17 +10,31 @@
 		function setUp()
 		{
 			$this->_data = array();
-			$this->_data["foo"] = "bar";
-			$this->_data["specific_middle_general"] = "Specific";
-			$this->_data["middle_general"] = "Middle";
-			$this->_data["general"] = "General"; 
-			$this->_data["bar"] = "General"; 
+			$this->_data["key1"] = "value1";
+			$this->_data["key2"] = "value2";
+			$this->_data["hierarchy_key2"] = "value3"; 
 			
+			$this->setupConfiguration();
+		}
+		
+		function setUpConfiguration()
+		{
 			Mock::generate('IConfigFileReader');
 			$this->_fileReader = new MockIConfigFileReader();
 			$this->_fileReader->returns('readFile', $this->_data);
 			
 			$this->_translator = new FileBasedTranslator("foo", $this->_fileReader);
+		}
+		
+		function setUpSectionData()
+		{
+			$this->_data["section1"] = array();
+			$this->_data["section2"] = array();
+			$this->_data["section1"]["key1"] = "value1"; 
+			$this->_data["section2"]["key2"] = "value2";  
+			$this->_data["section2"]["hierarchy_key2"] = "value3";  
+			
+			$this->setupConfiguration();
 		}
 		
 		function tearDown() { }
@@ -32,27 +46,49 @@
 		}
 		
 		
-		
-		public function test_translate_shouldReturnDefaultValueForNonExistingTranslation()
+		public function test_data_shouldReturnParsedFileContent()
 		{
-			$this->assertEqual($this->_translator->translate("foobar"), "[foobar]");
+			$data = $this->_translator->data();
+			
+			$this->assertEqual($data, $this->_data);
 		}
 		
-		public function test_translate_shouldTranslateNonHierarchicalKey()
+		public function test_translate_shouldReturnBracketKeyForNonExistingNonSectionData()
 		{
-			$this->assertEqual($this->_translator->translate("foo"), "bar");
+			$this->assertEqual($this->_translator->translate("nonkey"), "[nonkey]");
 		}
 		
-		public function test_translate_shouldTranslateNonHierarchicalKeys()
+		public function test_translate_shouldReturnNullForNonExistingSectionData()
 		{
-			$this->assertEqual($this->_translator->translate("specific_middle_general"), "Specific");
-			$this->assertEqual($this->_translator->translate("middle_general"), "Middle");
-			$this->assertEqual($this->_translator->translate("general"), "General");
+			$this->assertEqual($this->_translator->translate("section1", "nonkey"), "[nonkey]");
 		}
 		
-		public function test_translate_shouldFindGeneralTranslationTranslateNonHierarchicalKeys()
+		public function test_translate_shouldReturnNonHierarchicalNonSectionData()
 		{
-			$this->assertEqual($this->_translator->translate("foo_bar_general"), "General");
+			$this->assertEqual($this->_translator->translate("key1"), "value1");
+			$this->assertEqual($this->_translator->translate("key2"), "value2");
+		}
+		
+		public function test_translate_shouldReturnHierarchicalNonSectionData()
+		{
+			$this->assertEqual($this->_translator->translate("nonexisting_hier_key2"), "value2");
+			$this->assertEqual($this->_translator->translate("existing_hierarchy_key2"), "value3");
+		}
+		
+		public function test_translate_shouldReturnNonHierarchicalSectionData()
+		{
+			$this->setUpSectionData();
+			
+			$this->assertEqual($this->_translator->translate("section1", "key1"), "value1");
+			$this->assertEqual($this->_translator->translate("section2", "key2"), "value2");
+		}
+		
+		public function test_translate_shouldReturnHierarchicalSectionData()
+		{
+			$this->setUpSectionData();
+			
+			$this->assertEqual($this->_translator->translate("section2", "nonexisting_hier_key2"), "value2");
+			$this->assertEqual($this->_translator->translate("section2", "existing_hierarchy_key2"), "value3");
 		}
 	}
 

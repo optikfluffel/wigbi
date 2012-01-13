@@ -23,15 +23,18 @@
  */
 interface IConfiguration
 {
-	
 	/**
 	 * Get a certain configuration key value.
 	 * 
-	 * @param	string	$key		The configuration key to retrieve.
+	 * If this method is called with one parameter, it will define
+	 * the key and NOT the section. With two parameters, the first
+	 * one will define the section and the section the key.
+	 * 
 	 * @param	string	$section	The configuration section, if any.
+	 * @param	string	$key		The configuration key to retrieve.
 	 * @return	string
 	 */
-	function get($key, $section = null);
+	function get($section, $key = null);
 }
 
 ?>

@@ -25,8 +25,8 @@
 		
 		public function test_bootstrap_shouldSetupConfiguration()
 		{
-			$this->assertEqual(Wigbi::configuration()->get("name", "application"), "application");
-			$this->assertEqual(Wigbi::configuration()->get("webRoot", "application"), "/wigbi_dev/");
+			$this->assertEqual(Wigbi::configuration()->get("application", "name"), "application");
+			$this->assertEqual(Wigbi::configuration()->get("application", "webRoot"), "/wigbi_dev/");
 		}
 		
 		public function test_bootstrap_shouldSetupCache()
@@ -53,7 +53,7 @@
 		
 		public function test_bootstrap_shouldSetupTranslator()
 		{
-			$this->assertEqual(Wigbi::translator()->translate("translates_hierarchical_name", "application"), "application");
+			$this->assertEqual(Wigbi::translator()->translate("application", "translates_hierarchical_name"), "application");
 		}
 		
 		

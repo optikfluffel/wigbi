@@ -10,9 +10,14 @@
 		function setUp()
 		{
 			$this->_data = array();
-			$this->_data["foo"] = "bar"; 
-			$this->_data["bar"] = "foo"; 
+			$this->_data["key1"] = "value1"; 
+			$this->_data["key2"] = "value2"; 
 			
+			$this->setupConfiguration();
+		}
+		
+		function setUpConfiguration()
+		{
 			Mock::generate('IConfigFileReader');
 			$this->_fileReader = new MockIConfigFileReader();
 			$this->_fileReader->returns('readFile', $this->_data);
@@ -22,17 +27,12 @@
 		
 		function setUpSectionData()
 		{
-			$this->_data = array();
 			$this->_data["section1"] = array();
 			$this->_data["section2"] = array();
-			$this->_data["section1"]["foo"] = "bar"; 
-			$this->_data["section2"]["bar"] = "foo"; 
+			$this->_data["section1"]["key1"] = "value1"; 
+			$this->_data["section2"]["key2"] = "value2";  
 			
-			Mock::generate('IConfigFileReader');
-			$this->_fileReader = new MockIConfigFileReader();
-			$this->_fileReader->returns('readFile', $this->_data);
-			
-			$this->_config = new FileBasedConfiguration("foo", $this->_fileReader);
+			$this->setupConfiguration();
 		}
 		
 		function tearDown() { }
@@ -51,26 +51,29 @@
 			$this->assertEqual($data, $this->_data);
 		}
 		
-		public function test_get_shouldReturnNullForNonExistingData()
+		public function test_get_shouldReturnNullForNonExistingNonSectionData()
 		{
-			$this->assertNull($this->_config->get("foobar"));
-			$this->assertNull($this->_config->get("foobar", "barfoo"));
+			$this->assertNull($this->_config->get("nonkey"));
+		}
+		
+		public function test_get_shouldReturnNullForNonExistingSectionData()
+		{
+			$this->assertNull($this->_config->get("section1", "nonkey"));
 		}
 		
 		public function test_get_shouldReturnNonSectionData()
 		{
-			$this->assertEqual($this->_config->get("foo"), "bar");
-			$this->assertEqual($this->_config->get("bar"), "foo");
+			$this->assertEqual($this->_config->get("key1"), "value1");
+			$this->assertEqual($this->_config->get("key2"), "value2");
 		}
 		
 		public function test_get_shouldReturnSectionData()
 		{
 			$this->setUpSectionData();
 			
-			$this->assertEqual($this->_config->get("foo", "section1"), "bar");
-			$this->assertEqual($this->_config->get("bar", "section2"), "foo");
+			$this->assertEqual($this->_config->get("section1", "key1"), "value1");
+			$this->assertEqual($this->_config->get("section2", "key2"), "value2");
 		}
-			
 	}
 
 ?>

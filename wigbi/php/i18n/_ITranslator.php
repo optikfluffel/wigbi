@@ -26,11 +26,15 @@ interface ITranslator
 	/**
 	 * Translate a certain language key.
 	 * 
-	 * @param	string	$key		The language key to translate.
-	 * @param	string	$section	The language section, if any.
+	 * If this method is called with one parameter, it will define
+	 * the key and NOT the section. With two parameters, the first
+	 * one will define the section and the section the key.
+	 * 
+	 * @param	string	$section	The configuration section, if any.
+	 * @param	string	$key		The configuration key to retrieve.
 	 * @return	string
 	 */
-	function translate($key, $section = null);
+	function translate($section, $key = null);
 }
 
 ?>
