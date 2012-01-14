@@ -10,8 +10,8 @@
 /**
  * The Wigbi FileIncluder class.
  * 
- * This class can be used to to include and require files, e.g. in
- * test contexts, where it can be mocked
+ * This class can be used to include and require files. Since it's
+ * implementing IFileIncluder, it can be mocked in test contexts.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
