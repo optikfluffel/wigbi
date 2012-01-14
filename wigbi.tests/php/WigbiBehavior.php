@@ -41,6 +41,11 @@
 			$this->assertEqual(get_class(Wigbi::cookies()), "Cookies");
 		}
 		
+		public function test_bootstrap_shouldSetupFileIncluder()
+		{
+			$this->assertEqual(get_class(Wigbi::fileIncluder()), "FakeFileIncluder");
+		}
+		
 		public function test_bootstrap_shouldSetupLogger()
 		{
 			$this->assertEqual(get_class(Wigbi::logger()), "NonLogger");
