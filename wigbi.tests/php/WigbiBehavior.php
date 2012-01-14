@@ -53,12 +53,14 @@
 		
 		public function test_bootstrap_shouldSetupSession()
 		{
-			$this->assertEqual(get_class(Wigbi::session()), "Session");
+			Wigbi::session()->set("foo", "bar");
+			
+			$this->assertEqual(Wigbi::session()->get("foo"), "bar");
 		}
 		
 		public function test_bootstrap_shouldSetupTranslator()
-		{
-			$this->assertEqual(Wigbi::translator()->translate("application", "translates_hierarchical_name"), "application");
+		{	
+			$this->assertEqual(Wigbi::translator()->translate("application", "name"), "application");
 		}
 		
 		
@@ -130,6 +132,8 @@
 			
 			$this->assertFalse(Wigbi::isStarted());
 		}
+		
+		
 		
 	}
 
