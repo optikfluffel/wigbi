@@ -188,6 +188,35 @@ class Wigbi
 	// Wigbi functionality ***********
 	
 	/**
+	 * Get the application root path for the client.
+	 * 
+	 * If the path argument is set, it will be appended at the end
+	 * of the application root path.
+	 * 
+	 * @return	string
+	 * @param	string	$path	Optional path to add to the client root.
+	 */
+	public static function clientRoot($path = null)
+	{
+		//Get the config value
+		$root = Wigbi::configuration()->get("application", "clientRoot");
+
+		//Get the absolute url with the root path removed
+		$url = Url::current()->path();
+		$url = ($root == "/") ? substr($url, 1) : str_replace($root, "", $url);
+		
+		//Add a ../ for each 
+        $result = "";
+        for ($i = 0; $i < strlen($url); $i++)
+            if ($url[$i] == '/')
+                $result .= "../";
+
+		//Return the resulting path and append any provided path
+        return $result . $path;
+	}
+	
+	
+	/**
 	 * Get the application root path for the server.
 	 * 
 	 * If the path argument is set, it will be appended at the end
@@ -213,8 +242,8 @@ class Wigbi
 		//Abort if Wigbi is started with invalid configuration
 		if (!Wigbi::configuration()->get("application", "name"))
 			throw new Exception('The application.name key in the Wigbi config file must have a value, e.g. "My Application".');
-		if (!Wigbi::configuration()->get("application", "webRoot"))
-			throw new Exception('The application.webRoot key in the Wigbi config file must have a value, e.g. "/myApp/" if the site is located in http://localhost/myApp/.');
+		if (!Wigbi::configuration()->get("application", "clientRoot"))
+			throw new Exception('The application.clientRoot key in the Wigbi config file must have a value, e.g. "/myApp/" if the site is located in http://localhost/myApp/.');
 		
 		Wigbi::$_isStarted = true;
 	}

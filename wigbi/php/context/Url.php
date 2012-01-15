@@ -52,6 +52,16 @@ class Url implements IUrl
 	
 	
 	/**
+	 * Get the raw url data.
+	 * 
+	 * @return	array
+	 */
+	function data()
+	{
+		return $this->_data;		
+	}
+	
+	/**
 	 * Get the url scheme, e.g. http.
 	 * 
 	 * @return	string

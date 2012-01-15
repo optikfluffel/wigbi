@@ -26,7 +26,7 @@
 		public function test_bootstrap_shouldSetupConfiguration()
 		{
 			$this->assertEqual(Wigbi::configuration()->get("application", "name"), "application");
-			$this->assertEqual(Wigbi::configuration()->get("application", "webRoot"), "/wigbi_dev/");
+			$this->assertEqual(Wigbi::configuration()->get("application", "clientRoot"), "/wigbi_dev/");
 		}
 		
 		public function test_bootstrap_shouldSetupCache()
@@ -81,6 +81,17 @@
 		}
 		
 		
+		
+		public function test_clientRoot_shouldBeRelativeToTestPage()
+		{
+			$this->assertEqual(Wigbi::clientRoot(), "../");
+		}
+		
+		public function test_clientRoot_shouldAppendOptionalPath()
+		{
+			$this->assertEqual(Wigbi::clientRoot("wigbi/"), "../wigbi/");
+		}
+		
 		public function test_serverRoot_shouldBeRelativeToTestPage()
 		{
 			$this->assertEqual(Wigbi::serverRoot(), "../");
@@ -111,7 +122,7 @@
 			try{ Wigbi::start(); }
 			catch(exception $e) { $message = $e->getMessage(); }
 			
-			$this->assertEqual($message, "The application.webRoot key in the Wigbi config file must have a value, e.g. \"/myApp/\" if the site is located in http://localhost/myApp/.");
+			$this->assertEqual($message, "The application.clientRoot key in the Wigbi config file must have a value, e.g. \"/myApp/\" if the site is located in http://localhost/myApp/.");
 		}
 		
 		public function test_start_shouldEnableStartedMode()
@@ -132,9 +143,6 @@
 			
 			$this->assertFalse(Wigbi::isStarted());
 		}
-		
-		
-		
 	}
 
 ?>
