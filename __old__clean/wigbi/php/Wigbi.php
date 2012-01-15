@@ -264,6 +264,8 @@ class Wigbi
 	 */
 	private static function start_generateHtml()
 	{
+		//Include all Wigbi classes!!!
+		
 		//Build the page's js code
 		$jsCode  = "Wigbi._webRoot = '" . Wigbi::webRoot() . "';";
 		$jsCode .= "Wigbi._dataPluginClasses = " . ((sizeof(Wigbi::dataPluginClasses()) == 0) ? "[];" : "['" . implode("','", Wigbi::dataPluginClasses()) . "'];");
