@@ -14,41 +14,6 @@ class Wigbi
 
 	
 	/**
-	 * Get the CSS paths that are handled by Wigbi.
-	 * 
-	 * Except the system folders the application.cssPaths configuration
-	 * value from the configuration file is also added to this array.
-	 * 
-	 * Note that the paths are application relative, since they will be
-	 * bundled with the Wigbi CSS bundler.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	array		The CSS paths that are handled by Wigbi.
-	 */
-	public function cssPaths()
-	{
-		if (Wigbi::$_cssPaths != null)
-			return Wigbi::$_cssPaths;
-		
-		Wigbi::$_cssPaths = array("wigbi/css");
-		
-		if (Wigbi::configuration() == null)
-				return Wigbi::$_cssPaths;
-				
-		$configPaths = trim(Wigbi::configuration("cssPaths", "application"));
-		if (!$configPaths)
-				return Wigbi::$_cssPaths;
-				
-		$configPaths = explode(",", $configPaths);
-		foreach ($configPaths as $path)
-			array_push(Wigbi::$_cssPaths, trim($path));
-			
-		return Wigbi::$_cssPaths;
-	}
-	
-	/**
 	 * Get the names of all data plugins that are added to the application.
 	 * 
 	 * @access	public
@@ -100,74 +65,6 @@ class Wigbi
 		if(func_num_args() != 0)
 			Wigbi::$_generateHtml = func_get_arg(0);
 		return Wigbi::$_generateHtml;
-	}
-	
-	
-	/**
-	 * Get the JavaScript paths that are handled by Wigbi.
-	 * 
-	 * Except the system folders, the application.jsPaths configuration
-	 * value from the configuration file is also added to this array.
-	 * 
-	 * Note that the paths are application relative, since they will be
-	 * bundled with the Wigbi JavaScript bundler.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	array		The JavaScript paths that are handled by Wigbi.
-	 */
-	public function jsPaths()
-	{
-		if (Wigbi::$_jsPaths != null)
-			return Wigbi::$_jsPaths;
-		
-		Wigbi::$_jsPaths = array("wigbi/js/core", "wigbi/js", "wigbi/plugins/data", "wigbi/plugins/ui");
-		
-		if (Wigbi::configuration() == null)
-				return Wigbi::$_jsPaths;
-				
-		$configPaths = trim(Wigbi::configuration("jsPaths", "application"));
-		if (!$configPaths)
-				return Wigbi::$_jsPaths;
-				
-		$configPaths = explode(",", $configPaths);
-		foreach ($configPaths as $path)
-			array_push(Wigbi::$_jsPaths, trim($path));
-			
-		return Wigbi::$_jsPaths;
-	}
-	
-	/**
-	 * Get the PHP paths that are handled by Wigbi.
-	 * 
-	 * Except the system folders the application.phpPaths configuration
-	 * value from the configuration file is also added to this array.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	array		The PHP paths that are handled by Wigbi.
-	 */
-	public function phpPaths()
-	{
-		if (Wigbi::$_phpPaths != null)
-			return Wigbi::$_phpPaths;
-		
-		Wigbi::$_phpPaths = array(Wigbi::wigbiFolder() . "php/core/", Wigbi::wigbiFolder() . "php/", Wigbi::wigbiFolder() . "plugins/data/", Wigbi::wigbiFolder() . "plugins/ui/");
-		
-		if (Wigbi::configuration() == null)
-				return Wigbi::$_phpPaths;
-				
-		$configPaths = trim(Wigbi::configuration("phpPaths", "application"));
-		if (!$configPaths)
-				return Wigbi::$_phpPaths;
-				
-		$configPaths = explode(",", $configPaths);
-		foreach ($configPaths as $path)
-			array_push(Wigbi::$_phpPaths, Wigbi::serverRoot() . trim($path));
-			
-		return Wigbi::$_phpPaths;
 	}
 	
 	/**

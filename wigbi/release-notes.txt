@@ -22,6 +22,7 @@ Wigbi 2.0.0 [2012-xx-xx]
 * No data plugin lists
 * No file bundling (javascript/css) - just plain includes
 * No config-based css/js file includes, just use the tools
+* No auto-generation of the config file
 
 
 

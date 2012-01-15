@@ -16,9 +16,6 @@ $wigbi_logging_headers = Wigbi::configuration()->get("logger_types", "extra_head
 $wigbi_logger = new SeverityLoggerDecorator(new ErrorLog($wigbi_logging_logger_types, $wigbi_logging_destination, $wigbi_logging_headers), $wigbi_logging_severities);
 Wigbi::logger($wigbi_logger);
 
-$wigbi_php_file_includer = new PhpFileIncluder();
-Wigbi::phpFileIncluder($wigbi_php_file_includer);
-
 $wigbi_session = new Session(Wigbi::configuration()->get("application", "name"));
 Wigbi::session($wigbi_session);
 

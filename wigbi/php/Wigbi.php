@@ -151,17 +151,6 @@ class Wigbi
 	}
 	
 	/**
-	 * @param	IPhpFileIncluder	$phpFileIncluder	Optional set value.
-	 * @return	IPhpFileIncluder
-	 */
-	public static function phpFileIncluder($fileIncluder = null)
-	{
-		if (func_num_args() > 0)
-			Wigbi::$_phpFileIncluder = func_get_arg(0);
-		return Wigbi::$_phpFileIncluder;
-	}
-	
-	/**
 	 * @param	ISession		$session	Optional set value.
 	 * @return	ISession
 	 */
