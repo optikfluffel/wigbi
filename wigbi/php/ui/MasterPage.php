@@ -52,7 +52,7 @@ class MasterPage
 		if (!MasterPage::$_filePath)
 			return;
 		
-		MasterPage::$_fileIncluder->requireFile(MasterPage::$_filePath);
+		MasterPage::$_fileIncluder->includeFile(MasterPage::$_filePath);
 	}
 	
 	/**
@@ -88,7 +88,7 @@ class MasterPage
 			MasterPage::$_fileIncluder = func_get_arg(0);
 		
 		if (!MasterPage::$_fileIncluder)
-		 	MasterPage::$_fileIncluder = new FileIncluder();
+		 	MasterPage::$_fileIncluder = new PhpFileIncluder();
 		
 		return MasterPage::$_fileIncluder;
 	}

@@ -20,6 +20,7 @@ Wigbi 2.0.0 [2012-xx-xx]
 * ICache - no begin/end cache...just set
 * Logging made so much simpler!
 * No data plugin lists
+* No file bundling (javascript/css) - just plain includes
 
 
 

@@ -7,8 +7,8 @@
 		
 		function setUp()
 		{
-			Mock::generate('IFileIncluder');
-			$this->_fileIncluder = new MockIFileIncluder();
+			Mock::generate('IPhpFileIncluder');
+			$this->_fileIncluder = new MockIPhpFileIncluder();
 		}
 		
 		function tearDown() { } 
@@ -28,7 +28,7 @@
 			MasterPage::filePath("foo");
 			MasterPage::fileIncluder($this->_fileIncluder);
 			
-			$this->_fileIncluder->expectOnce("requireFile", array("foo"));
+			$this->_fileIncluder->expectOnce("includeFile", array("foo"));
 			
 			ob_start();
 			MasterPage::build();
@@ -51,18 +51,18 @@
 		{
 			$includer = MasterPage::fileIncluder();
 			
-			$this->assertEqual(get_class(MasterPage::fileIncluder()), "FileIncluder");
+			$this->assertEqual(get_class(MasterPage::fileIncluder()), "PhpFileIncluder");
 		}
 		
 		public function test_fileIncluder_shouldUseCustomClassAndResetOnNull()
 		{
 			$includer = MasterPage::fileIncluder($this->_fileIncluder);
 			
-			$this->assertEqual(get_class(MasterPage::fileIncluder()), "MockIFileIncluder");
+			$this->assertEqual(get_class(MasterPage::fileIncluder()), "MockIPhpFileIncluder");
 			
 			$includer = MasterPage::fileIncluder(null);
 			
-			$this->assertEqual(get_class(MasterPage::fileIncluder()), "FileIncluder");
+			$this->assertEqual(get_class(MasterPage::fileIncluder()), "PhpFileIncluder");
 		}
 		
 		public function test_filePath_shouldGetSetValue()

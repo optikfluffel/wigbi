@@ -46,7 +46,7 @@ class View
 	{
 		array_push(View::$_models, $model);
 		
-		View::fileIncluder()->requireFile($path);
+		View::fileIncluder()->includeFile($path, false);
 		
 		array_pop(View::$_models);
 	}
@@ -65,7 +65,7 @@ class View
 			View::$_fileIncluder = func_get_arg(0);
 		
 		if (!View::$_fileIncluder)
-		 	View::$_fileIncluder = new FileIncluder();
+		 	View::$_fileIncluder = new PhpFileIncluder();
 		
 		return View::$_fileIncluder;
 	}

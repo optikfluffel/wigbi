@@ -11,7 +11,7 @@
  * The Wigbi IFileIncluder interface.
  * 
  * This interface can be implemented by any class that can be used
- * to include and require files in various ways.
+ * to include JavaScript files.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -21,17 +21,19 @@
  * @subpackage		PHP.IO
  * @version			2.0.0
  */
-interface IFileIncluder
+interface IJavaScriptFileIncluder
 {	
+	/**
+	 * Chech whether or not a 
+	 * 
+	 * @return 	bool
+	 */
+	function isApplicationRelative($path);
+	
 	/**
 	 * Include a certain file.
 	 */
-	function includeFile($path, $once = false);
-	
-	/**
-	 * Require a certain file.
-	 */
-	function requireFile($path, $once = false);
+	function includeFile($path);
 }
 
 ?>
