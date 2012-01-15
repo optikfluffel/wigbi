@@ -1,14 +1,15 @@
 <?php
 
-	class JavaScriptFileIncluderBehavior extends UnitTestCase
+	class ClientPathIncluderBaseBehavior extends UnitTestCase
 	{
 		private $_includer;
 		
 		
 		function setUp()
 		{
-			$this->_includer = new JavaScriptFileIncluder();
+			$this->_includer = new JavaScriptIncluder();
 		}
+		
 		
 		
 		public function test_isApplicationRelative_shouldReturnFalseForProtocol()
@@ -22,9 +23,9 @@
 			$this->assertFalse($this->_includer->isApplicationRelative("/foo.js"));
 		}
 		
-		public function test_isApplicationRelative_shouldReturnFalseForBackwardPath()
+		public function test_isApplicationRelative_shouldReturnTrueForRelativePath()
 		{
-			$this->assertFalse($this->_includer->isApplicationRelative("../foo.js"));
+			$this->assertTrue($this->_includer->isApplicationRelative("foo.js"));
 		}
 	}
 

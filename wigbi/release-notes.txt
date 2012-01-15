@@ -21,6 +21,7 @@ Wigbi 2.0.0 [2012-xx-xx]
 * Logging made so much simpler!
 * No data plugin lists
 * No file bundling (javascript/css) - just plain includes
+* No config-based css/js file includes, just use the tools
 
 
 
