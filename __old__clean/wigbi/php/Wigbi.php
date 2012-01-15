@@ -264,21 +264,6 @@ class Wigbi
 	 */
 	private static function start_generateHtml()
 	{
-		//Abort if async postback or if HTML is not to be rendered
-		if (!Wigbi::generateHtml() || Wigbi::isAjaxPostback())
-			return;
-		
-		//Add encoding tag and validation css
-		print "<meta http-equiv=\"Content-Type\" content=\"text/css; charset=UTF-8\" />";
-		
-		//Create CSS tag
-		$cssPaths	 = Wigbi::webRoot() . "wigbi/bundle/css:" . join(",", Wigbi::cssPaths());
-		print "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $cssPaths . "\" />";
-		 
-		//Create js tag
-		$jsPaths = Wigbi::webRoot() . "wigbi/bundle/js:" . join(",", Wigbi::jsPaths());
-		print "<script type=\"text/javascript\" src=\"" . $jsPaths . "\"></script>";
-		
 		//Build the page's js code
 		$jsCode  = "Wigbi._webRoot = '" . Wigbi::webRoot() . "';";
 		$jsCode .= "Wigbi._dataPluginClasses = " . ((sizeof(Wigbi::dataPluginClasses()) == 0) ? "[];" : "['" . implode("','", Wigbi::dataPluginClasses()) . "'];");
@@ -437,23 +422,6 @@ class Wigbi
 
 		//Return result
 		print json_encode(array($result, $exception));
-	}
-	
-	/**
-	 * Start the Wigbi PHP layer.
-	 */
-	private static function start_php()
-	{
-		//Include the entire php library, except already included wigbi.php
-		foreach (Wigbi::phpPaths() as $path)
-		{
-			if (is_dir($path))
-				foreach (glob($path . "/*.php") as $fileName)
-					require_once($fileName);
-			
-			if (is_file($path))
-					require_once($path);
-		}
 	}
 	
 	/**
