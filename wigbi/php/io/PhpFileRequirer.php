@@ -1,17 +1,17 @@
 <?php
 
 /**
- * The Wigbi IFileIncluder interface file.
+ * The Wigbi FileIncluder class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi IFileIncluder interface.
+ * The Wigbi FileIncluder class.
  * 
- * This interface can be implemented by any class that can be used
- * to include and require files in various ways.
+ * This class can be used to require PHP files, either each time a
+ * file is provided or just once per file.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -21,17 +21,17 @@
  * @subpackage		PHP.IO
  * @version			2.0.0
  */
-interface IFileIncluder
+class PhpFileRequirer implements IFileIncluder
 {	
 	/**
 	 * Include a certain file.
 	 */
-	function includeFile($path, $once = false);
-	
-	/**
-	 * Require a certain file.
-	 */
-	function requireFile($path, $once = false);
+	public function includeFile($path, $once = false)
+	{
+		if ($once)
+			return require_once($path);
+		return require($path);
+	}
 }
 
 ?>

@@ -102,21 +102,6 @@ class Wigbi
 		return Wigbi::$_generateHtml;
 	}
 	
-	/**
-	 * Get whether or not the current page state is asynchronous.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	bool	Whether or not the current page state is asynchronous.
-	 */
-	public static function isAjaxPostback()
-	{
-		if (array_key_exists("HTTP_X_REQUESTED_WITH", $_SERVER))
-			return $_SERVER['HTTP_X_REQUESTED_WITH'] =='XMLHttpRequest';
-		return false;
-	}
-	
 	
 	/**
 	 * Get the JavaScript paths that are handled by Wigbi.
