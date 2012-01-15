@@ -42,6 +42,9 @@ class JavaScriptFileIncluder implements IJavaScriptFileIncluder
 		if (substr($path, 0, 1) == "/")
 			return false;
 		
+		if (substr($path, 0, 3) == "../")
+			return false;
+		
 		return true;
 	}
 	
