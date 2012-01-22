@@ -38,13 +38,24 @@
 			$includer = MasterPage::fileIncluder(null);
 		}
 		
-		public function test_content_shouldGetSetValue()
+		public function test_content_shouldNotOutputForSet()
 		{
-			$this->assertNull(MasterPage::content("foo"));
+			ob_start();
+			MasterPage::content("foo", "bar");
+			$result = ob_get_clean();
 			
+			$this->assertEqual($result, "");
+		}
+		
+		public function test_content_shouldOutputForGet()
+		{
 			MasterPage::content("foo", "bar");
 			
-			$this->assertEqual(MasterPage::content("foo"), "bar");
+			ob_start();
+			MasterPage::content("foo");
+			$result = ob_get_clean();
+			
+			$this->assertEqual($result, "bar");
 		}
 		
 		public function test_fileIncluder_shouldUseFileIncluderByDefault()
@@ -78,7 +89,11 @@
 		{
 			MasterPage::open("content");
 			print "foo";
-			$result = MasterPage::close();
+			MasterPage::close();
+			
+			ob_start();
+			MasterPage::content("content");
+			$result = ob_get_clean();
 			
 			$this->assertEqual($result, "foo");
 		}
