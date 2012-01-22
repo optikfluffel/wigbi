@@ -38,24 +38,26 @@
 			$includer = MasterPage::fileIncluder(null);
 		}
 		
-		public function test_content_shouldNotOutputForSet()
+		public function test_setContent_shouldNotOutput()
 		{
 			ob_start();
-			MasterPage::content("foo", "bar");
+			MasterPage::setContent("foo", "bar");
 			$result = ob_get_clean();
 			
 			$this->assertEqual($result, "");
 		}
 		
-		public function test_content_shouldOutputForGet()
+		public function test_content_shouldOutput()
 		{
-			MasterPage::content("foo", "bar");
+			MasterPage::setContent("foo", "bar");
 			
 			ob_start();
 			MasterPage::content("foo");
 			$result = ob_get_clean();
 			
 			$this->assertEqual($result, "bar");
+			
+			MasterPage::setContent("foo", null);
 		}
 		
 		public function test_fileIncluder_shouldUseFileIncluderByDefault()

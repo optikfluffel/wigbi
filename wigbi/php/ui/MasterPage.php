@@ -40,7 +40,7 @@ class MasterPage
 	 */	
 	public static function close()
 	{
-		MasterPage::content(MasterPage::$_currentContentArea, ob_get_clean());
+		MasterPage::setContent(MasterPage::$_currentContentArea, ob_get_clean());
 	}
 	
 	
@@ -56,31 +56,16 @@ class MasterPage
 	}
 	
 	/**
-	 * Print or set the content of a certain content area.
-	 * 
-	 * Instead of using open and close, this method can be used to
-	 * instantly populate a content area.
+	 * Print the content of a certain content area.
 	 * 
 	 * Note that the method does not return a value. It prints the
 	 * value, since that is what how it is intended to be used.
 	 * 
-	 * Also note that the method will NOT print anything, if it is
-	 * used with a second set value.
-	 * 
 	 * @param	string	$contentAreaName	The name of the content area.
-	 * @param	string	$value				Optional set value.
 	 */
-	public static function content($contentArea, $value = null)
+	public static function content($contentArea)
 	{
-		if (func_num_args() > 1)
-		{
-			MasterPage::$_contentAreas[$contentArea] = $value;
-			return;
-		}
-		
-		
-		if (array_key_exists($contentArea, MasterPage::$_contentAreas))
-			print MasterPage::$_contentAreas[$contentArea];
+		print MasterPage::$_contentAreas[$contentArea];
 	}
 	
 	/**
@@ -129,6 +114,20 @@ class MasterPage
 	{
 		MasterPage::$_currentContentArea = $contentArea;
 		ob_start();
+	}
+	
+	/**
+	 * Set the content of a certain content area.
+	 * 
+	 * This method can be used to instantly populate content areas,
+	 * instead of using open and close.
+	 * 
+	 * @param	string	$contentAreaName	The name of the content area.
+	 * @param	string	$value				The content to populate the content area with.
+	 */
+	public static function setContent($contentArea, $value = null)
+	{
+		MasterPage::$_contentAreas[$contentArea] = $value;
 	}
 }
 
