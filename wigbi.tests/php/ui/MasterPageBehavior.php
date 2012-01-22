@@ -14,7 +14,7 @@
 		function tearDown() { } 
 		
 		
-		public function test_build_shouldAbortForNonSetFilePath()
+		public function test_build_shouldAbortForNonSetfile()
 		{
 			ob_start();
 			MasterPage::build();
@@ -23,9 +23,9 @@
 			$this->assertEqual($result, "");
 		}
 		
-		public function test_build_shouldAbortForSetFilePath()
+		public function test_build_shouldAbortForSetfile()
 		{
-			MasterPage::filePath("foo");
+			MasterPage::file("foo");
 			MasterPage::fileIncluder($this->_fileIncluder);
 			
 			$this->_fileIncluder->expectOnce("includeFile", array("foo"));
@@ -34,7 +34,7 @@
 			MasterPage::build();
 			$result = ob_get_clean();
 			
-			MasterPage::filePath(null);
+			MasterPage::file(null);
 			$includer = MasterPage::fileIncluder(null);
 		}
 		
@@ -65,13 +65,13 @@
 			$this->assertEqual(get_class(MasterPage::fileIncluder()), "PhpFileIncluder");
 		}
 		
-		public function test_filePath_shouldGetSetValue()
+		public function test_file_shouldGetSetValue()
 		{
-			$this->assertNull(MasterPage::filePath());
+			$this->assertNull(MasterPage::file());
 			
-			MasterPage::filePath("foo");
+			MasterPage::file("foo");
 			
-			$this->assertEqual(MasterPage::filePath(), "foo");
+			$this->assertEqual(MasterPage::file(), "foo");
 		}
 		
 		public function test_openClose_shouldPopulateContentArea()

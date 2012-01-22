@@ -30,7 +30,7 @@ class MasterPage
 {
 	private static $_contentAreas = array();
 	private static $_currentContentArea;
-	private static $_filePath;
+	private static $_file;
 	private static $_fileIncluder;
 	
 	/**
@@ -49,10 +49,10 @@ class MasterPage
 	 */
 	public static function build()
 	{
-		if (!MasterPage::$_filePath)
+		if (!MasterPage::$_file)
 			return;
 		
-		MasterPage::$_fileIncluder->includeFile(MasterPage::$_filePath);
+		MasterPage::fileIncluder()->includeFile(MasterPage::$_file);
 	}
 	
 	/**
@@ -76,6 +76,21 @@ class MasterPage
 	}
 	
 	/**
+	 * Get/set the path to the master page file.
+	 * 
+	 * This function can be called anytime before build, but it is
+	 * convenient to define it topmost in the page.
+	 * 
+	 * @param	string	$newValue	Optional set value.
+	 */
+	public static function file($newValue = null)
+	{
+		if (func_num_args() > 0)
+			MasterPage::$_file = func_get_arg(0);
+		return MasterPage::$_file;
+	}
+	
+	/**
 	 * Get/set the file includer used to require the master page file.
 	 * 
 	 * If no file includer is set, a FileIncluder instance is used.
@@ -91,21 +106,6 @@ class MasterPage
 		 	MasterPage::$_fileIncluder = new PhpFileIncluder();
 		
 		return MasterPage::$_fileIncluder;
-	}
-	
-	/**
-	 * Get/set the path to the master page file.
-	 * 
-	 * This function can be called anytime before build, but it is
-	 * convenient to define it topmost in the page.
-	 * 
-	 * @param	string	$newValue	Optional set value.
-	 */
-	public static function filePath($newValue = null)
-	{
-		if (func_num_args() > 0)
-			MasterPage::$_filePath = func_get_arg(0);
-		return MasterPage::$_filePath;
 	}
 	
 	/**
