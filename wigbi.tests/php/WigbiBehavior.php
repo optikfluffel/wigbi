@@ -29,35 +29,6 @@
 			$this->assertEqual(Wigbi::configuration()->get("application", "clientRoot"), "/wigbi_dev/");
 		}
 		
-		public function test_bootstrap_shouldSetupCache()
-		{
-			Wigbi::cache()->set("foo", "bar");
-			
-			$this->assertEqual(Wigbi::cache()->get("foo"), "bar");
-		}
-		
-		public function test_bootstrap_shouldSetupCookies()
-		{
-			$this->assertEqual(get_class(Wigbi::cookies()), "Cookies");
-		}
-		
-		public function test_bootstrap_shouldSetupLogger()
-		{
-			$this->assertEqual(get_class(Wigbi::logger()), "NonLogger");
-		}
-		
-		public function test_bootstrap_shouldSetupSession()
-		{
-			Wigbi::session()->set("foo", "bar");
-			
-			$this->assertEqual(Wigbi::session()->get("foo"), "bar");
-		}
-		
-		public function test_bootstrap_shouldSetupTranslator()
-		{	
-			$this->assertEqual(Wigbi::translator()->translate("application", "name"), "application");
-		}
-		
 		
 		public function test_globals_shouldBeCorrect()
 		{
@@ -70,7 +41,7 @@
 			$this->assertEqual($globals["ui_plugins_folder"], "../wigbi/plugins/ui/");
 		}
 		
-		public function test_version_shouldBeGreaterTwoMajor()
+		public function test_version_shouldBeGreaterThanTwoMajor()
 		{
 			$this->assertEqual(substr(Wigbi::version(), 0, 2), "2.");
 		}

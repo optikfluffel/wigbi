@@ -128,6 +128,17 @@ class Wigbi
 	}
 	
 	/**
+	 * @param	ICssIncluder	$includer	Optional set value.
+	 * @return	ICssIncluder
+	 */
+	public static function cssIncluder($includer = null)
+	{
+		if (func_num_args() > 0)
+			Wigbi::$_cssIncluder = func_get_arg(0);
+		return Wigbi::$_cssIncluder;
+	}
+	
+	/**
 	 * @param	ICookies		$cookies	Optional set value.
 	 * @return	ICookies
 	 */
@@ -188,7 +199,7 @@ class Wigbi
 	public static function clientRoot($path = null)
 	{	
 		//Return the path if it is not application relative
-		if ($path && Wigbi::pathIsRelative($path))
+		if ($path && !Wigbi::pathIsAppRelative($path))
 			return $path;
 			
 		//Get the config value
@@ -213,19 +224,19 @@ class Wigbi
 	 * 
 	 * @return 	bool
 	 */
-	private static function pathIsRelative($path)
+	private static function pathIsAppRelative($path)
 	{
 		$protocol = strstr($path, "://", true);
 		if (strlen($protocol) > 0)
-			return true;
+			return false;
 		
 		if (substr($path, 0, 1) == "/")
-			return true;
+			return false;
 		
 		if (substr($path, 0, 3) == "../")
-			return true;
+			return false;
 		
-		return false;
+		return true;
 	}
 	
 	/**
@@ -239,7 +250,7 @@ class Wigbi
 	 */
 	public static function serverRoot($path = null)
 	{
-		if ($path && Wigbi::pathIsRelative($path))
+		if ($path && !Wigbi::pathIsAppRelative($path))
 			return $path;
 		
 		global $wigbi_globals;

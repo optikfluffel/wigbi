@@ -3,6 +3,10 @@
 $wigbi_config = new FileBasedConfiguration($wigbi_globals["config_file"], new IniFileReader());
 Wigbi::configuration($wigbi_config);
 
+Wigbi::phpIncluder(new PhpIncluder());
+Wigbi::jsIncluder(new JavaScriptIncluder());
+Wigbi::cssIncluder(new CssIncluder());
+
 $wigbi_cache = new FileCache(Wigbi::configuration()->get("cache", "folder", "cache"), new FileSystem());
 Wigbi::cache($wigbi_cache);
 

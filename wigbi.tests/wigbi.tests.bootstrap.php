@@ -8,12 +8,11 @@ $wigbi_test_config["application"] = array();
 $wigbi_test_config["application"]["name"] = "application";
 $wigbi_test_config["application"]["clientRoot"] = "/wigbi_dev/";
 
-Wigbi::configuration(new ArrayBasedConfiguration($wigbi_test_config));
+$wigbi_test_config["include"] = array();
+$wigbi_test_config["include"]["php"] = "foo_php,bar_php,foobar_php";
+$wigbi_test_config["include"]["js"] = "foo_js,bar_js,foobar_js";
+$wigbi_test_config["include"]["css"] = "foo_css,bar_css,foobar_css";
 
-Wigbi::cache(new MemoryCache());
-Wigbi::cookies(new Cookies("application"));
-Wigbi::logger(new NonLogger());
-Wigbi::session(new Session("application"));
-Wigbi::translator(new ArrayBasedTranslator($wigbi_test_config));
+Wigbi::configuration(new ArrayBasedConfiguration($wigbi_test_config));
 
 ?>
