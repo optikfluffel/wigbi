@@ -48,6 +48,8 @@
 			$this->_fileSystem->returns("dirExists", true);
 			$this->_fileSystem->returns("glob", array("foo.css", "http://www.foo.bar/bar.css"));
 			
+			$this->_fileSystem->expect("glob", array("foobar/*.js"));
+			
 			ob_start();
 			$this->_includer->includePath("foobar");
 			$result = ob_get_clean();
