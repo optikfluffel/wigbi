@@ -325,11 +325,11 @@ class Wigbi
 	private static function start_include()
 	{	
 		foreach (explode(",", Wigbi::configuration()->get("include", "php")) as $path)
-			Wigbi::phpIncluder()->includePath(Wigbi::serverRoot($path));
+			Wigbi::phpIncluder()->requirePath(Wigbi::serverRoot($path), true);
 		foreach (explode(",", Wigbi::configuration()->get("include", "js")) as $path)
-			Wigbi::jsIncluder()->includePath(Wigbi::serverRoot($path));
+			Wigbi::jsIncluder()->includePath(Wigbi::clientRoot($path));
 		foreach (explode(",", Wigbi::configuration()->get("include", "css")) as $path)
-			Wigbi::cssIncluder()->includePath(Wigbi::serverRoot($path));
+			Wigbi::cssIncluder()->includePath(Wigbi::clientRoot($path));
 	}
 	
 	/**

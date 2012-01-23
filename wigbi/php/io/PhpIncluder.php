@@ -60,8 +60,12 @@ class PhpIncluder implements IPhpIncluder
 	 */
 	public function requirePath($path, $once = false)
 	{
+		if (is_dir($path))
+			return $this->includeFolder($path, $once);
+		
 		if ($once)
 			return require_once($path);
+		
 		return require($path);
 	}
 }
