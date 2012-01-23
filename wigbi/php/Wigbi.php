@@ -178,17 +178,22 @@ class Wigbi
 	/**
 	 * Get the application root path for the client.
 	 * 
-	 * If the path argument is set, it will be appended at the end
-	 * of the application root path.
+	 * This method will only handle paths that are relative and do
+	 * not start with e.g. http://, / or ../. If the path argument
+	 * is set, it is added at the end of the client root path.
 	 * 
 	 * @return	string
 	 * @param	string	$path	Optional path to add to the client root.
 	 */
 	public static function clientRoot($path = null)
-	{
+	{	
+		//Return the path if it is not application relative
+		if ($path && Wigbi::pathIsRelative($path))
+			return $path;
+			
 		//Get the config value
 		$root = Wigbi::configuration()->get("application", "clientRoot");
-
+		
 		//Get the absolute url with the root path removed
 		$url = Url::current()->path();
 		$url = ($root == "/") ? substr($url, 1) : str_replace($root, "", $url);
@@ -203,6 +208,25 @@ class Wigbi
         return $result . $path;
 	}
 	
+	/**
+	 * Chech whether or not a path is application relative. 
+	 * 
+	 * @return 	bool
+	 */
+	private static function pathIsRelative($path)
+	{
+		$protocol = strstr($path, "://", true);
+		if (strlen($protocol) > 0)
+			return true;
+		
+		if (substr($path, 0, 1) == "/")
+			return true;
+		
+		if (substr($path, 0, 3) == "../")
+			return true;
+		
+		return false;
+	}
 	
 	/**
 	 * Get the application root path for the server.
@@ -215,6 +239,9 @@ class Wigbi
 	 */
 	public static function serverRoot($path = null)
 	{
+		if ($path && Wigbi::pathIsRelative($path))
+			return $path;
+		
 		global $wigbi_globals;
 		return $wigbi_globals["root"] . $path;
 	}

@@ -76,6 +76,20 @@
 		}
 		
 		
+		public function test_clientRoot_shouldNotTransformGlobalPaths()
+		{
+			$this->assertEqual(Wigbi::clientRoot("http://www.foo.js"), "http://www.foo.js");
+		}
+
+		public function test_clientRoot_shouldNotAbsoluteGlobalPaths()
+		{
+			$this->assertEqual(Wigbi::clientRoot("/foo.js"), "/foo.js");
+		}
+
+		public function test_clientRoot_shouldNotTransformBackwardsPaths()
+		{
+			$this->assertEqual(Wigbi::clientRoot("../foo.js"), "../foo.js");
+		}
 		
 		public function test_clientRoot_shouldBeRelativeToTestPage()
 		{
@@ -85,6 +99,21 @@
 		public function test_clientRoot_shouldAppendOptionalPath()
 		{
 			$this->assertEqual(Wigbi::clientRoot("wigbi/"), "../wigbi/");
+		}
+		
+		public function test_serverRoot_shouldNotTransformGlobalPaths()
+		{
+			$this->assertEqual(Wigbi::serverRoot("http://www.foo.js"), "http://www.foo.js");
+		}
+
+		public function test_serverRoot_shouldNotAbsoluteGlobalPaths()
+		{
+			$this->assertEqual(Wigbi::serverRoot("/foo.js"), "/foo.js");
+		}
+
+		public function test_serverRoot_shouldNotTransformBackwardsPaths()
+		{
+			$this->assertEqual(Wigbi::serverRoot("../foo.js"), "../foo.js");
 		}
 		
 		public function test_serverRoot_shouldBeRelativeToTestPage()

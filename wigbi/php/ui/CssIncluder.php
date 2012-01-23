@@ -42,7 +42,6 @@ class CssIncluder extends ClientPathIncluderBase implements ICssIncluder
 	 */
 	public function includeFile($path)
 	{
-		$path = $this->adjustPath($path);
 		print "<link rel=\"stylesheet\" type=\"text/css\" href=\"$path\" />";
 	}
 }

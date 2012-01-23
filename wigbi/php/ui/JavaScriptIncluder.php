@@ -42,7 +42,6 @@ class JavaScriptIncluder extends ClientPathIncluderBase implements IJavaScriptIn
 	 */
 	public function includeFile($path)
 	{
-		$path = $this->adjustPath($path);
 		print "<script type=\"text/javascript\" src=\"$path\"></script>";
 	}
 }

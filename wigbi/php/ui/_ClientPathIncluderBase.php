@@ -42,18 +42,6 @@ abstract class ClientPathIncluderBase
 	
 	
 	/**
-	 * Apply the client root path to local, non-absolute paths.
-	 * 
-	 * @return 	string
-	 */
-	protected function adjustPath($path)
-	{
-		if ($this->pathIsApplicationRelative($path))
-			return Wigbi::clientRoot($path);
-		return $path;
-	}
-	
-	/**
 	 * Include all files in a certain directory.
 	 */
 	protected function includeDirectory($path)
@@ -76,23 +64,6 @@ abstract class ClientPathIncluderBase
 			return $this->includeDirectory($path);
 		
 		$this->includeFile($path);
-	}
-	
-	/**
-	 * Chech whether or not a path is application relative. 
-	 * 
-	 * @return 	bool
-	 */
-	public function pathIsApplicationRelative($path)
-	{
-		$protocol = strstr($path, "://", true);
-		if (strlen($protocol) > 0)
-			return false;
-		
-		if (substr($path, 0, 1) == "/")
-			return false;
-		
-		return true;
 	}
 }
 

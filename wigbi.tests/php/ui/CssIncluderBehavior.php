@@ -16,31 +16,13 @@
 		
 		
 		
-		public function test_includePath_shouldNotAddClientRootToProtocolPath()
-		{
-			ob_start();
-			$this->_includer->includePath("http://www.foo.com/bar.css");
-			$result = ob_get_clean();
-			
-			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.foo.com/bar.css\" />");
-		}
-		
-		public function test_includePath_shouldNotAddClientRootToAbsolutePath()
-		{
-			ob_start();
-			$this->_includer->includePath("/bar.css");
-			$result = ob_get_clean();
-			
-			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"/bar.css\" />");
-		}
-		
-		public function test_includePath_shouldAddClientRootPathToRelativePath()
+		public function test_includePath_shouldAddSingleFile()
 		{
 			ob_start();
 			$this->_includer->includePath("bar.css");
 			$result = ob_get_clean();
 			
-			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../bar.css\" />");
+			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"bar.css\" />");
 		}
 		
 		public function test_includePath_shouldAddAllFilesWithinDirectory()
@@ -54,7 +36,7 @@
 			$this->_includer->includePath("foobar");
 			$result = ob_get_clean();
 			
-			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../foo.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.foo.bar/bar.css\" />");
+			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"foo.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.foo.bar/bar.css\" />");
 		}
 	}
 
