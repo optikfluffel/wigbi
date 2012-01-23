@@ -59,6 +59,13 @@ interface IFileSystem
 	function fileExists($path);
 	
 	/**
+	 * Find pathnames matching a pattern.
+	 * 
+	 * @return	array	A list of matching paths.
+	 */
+	function glob($pattern, $flags = 0);
+	
+	/**
 	 * Read the content of a certain file.
 	 * 
 	 * @return	string	The content of the file.
