@@ -38,15 +38,6 @@
 			$includer = MasterPage::fileIncluder(null);
 		}
 		
-		public function test_setContent_shouldNotOutput()
-		{
-			ob_start();
-			MasterPage::setContent("foo", "bar");
-			$result = ob_get_clean();
-			
-			$this->assertEqual($result, "");
-		}
-		
 		public function test_content_shouldOutput()
 		{
 			MasterPage::setContent("foo", "bar");
@@ -98,6 +89,15 @@
 			$result = ob_get_clean();
 			
 			$this->assertEqual($result, "foo");
+		}
+		
+		public function test_setContent_shouldNotOutput()
+		{
+			ob_start();
+			MasterPage::setContent("foo", "bar");
+			$result = ob_get_clean();
+			
+			$this->assertEqual($result, "");
 		}
 	}
 

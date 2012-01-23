@@ -24,20 +24,17 @@
 class FileCache extends CacheBase implements ICache
 {
 	private $_cacheFolder;
-	private $_directoryHandler;
-	private $_fileHandler;
+	private $_fileSystem;
 	
 	
 	/**
 	 * @param	string			$cacheFolder		The path to the cache folder.
-	 * @param	IFileHandler	$directoryHandler	The IDirectoryHandler implementation to use for file operations.
-	 * @param	IFileHandler	$fileHandler		The IFileHandler implementation to use for file operations.
+	 * @param	IFileSystem		$fileSystem			The IFileSystem to use for file operations.
 	 */
-	public function __construct($cacheFolder, $directoryHandler, $fileHandler)
+	public function __construct($cacheFolder, $fileSystem)
 	{
 		$this->_cacheFolder = $cacheFolder;
-		$this->_directoryHandler = $directoryHandler;
-		$this->_fileHandler = $fileHandler;
+		$this->_fileSystem = $fileSystem;
 	}
 	
 	
@@ -52,16 +49,16 @@ class FileCache extends CacheBase implements ICache
 	{
 		$path = $this->getFilePath($key);
 		
-		if (!$this->_fileHandler->exists($path))
+		if (!$this->_fileSystem->fileExists($path))
 			return $fallback;
 		
-		$data = $this->_fileHandler->read($path);
+		$data = $this->_fileSystem->readFile($path);
 		$item = $this->parseCacheData($data);
 		
 		if (!$item->expired())
 			return $item->data();
 		
-		$this->_fileHandler->delete($path);
+		$this->_fileSystem->deleteFile($path);
 		return $fallback;
 	}
 	
@@ -85,13 +82,13 @@ class FileCache extends CacheBase implements ICache
 	 */
 	public function set($key, $data, $minutes = 10)
 	{
-		if (!$this->_directoryHandler->exists($this->_cacheFolder))
-			 $this->_directoryHandler->create($this->_cacheFolder);
+		if (!$this->_fileSystem->dirExists($this->_cacheFolder))
+			 $this->_fileSystem->createDir($this->_cacheFolder);
 	
 		$path = $this->getFilePath($key);
 		$data = $this->createCacheData($data, $minutes);
 		
-		$this->_fileHandler->write($path, "w", $data);
+		$this->_fileSystem->writeFile($path, "w", $data);
 	}
 }
 

@@ -3,7 +3,7 @@
 $wigbi_config = new FileBasedConfiguration($wigbi_globals["config_file"], new IniFileReader());
 Wigbi::configuration($wigbi_config);
 
-$wigbi_cache = new FileCache(Wigbi::configuration()->get("cache", "folder", "cache"), new DirectoryHandler(), new FileHandler());
+$wigbi_cache = new FileCache(Wigbi::configuration()->get("cache", "folder", "cache"), new FileSystem());
 Wigbi::cache($wigbi_cache);
 
 $wigbi_cookies = new Cookies(Wigbi::configuration()->get("application", "name"));

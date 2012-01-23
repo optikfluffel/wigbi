@@ -30,7 +30,7 @@ abstract class ClientPathIncluderBase
 	 */
 	protected function adjustPath($path)
 	{
-		if ($this->isApplicationRelative($path))
+		if ($this->pathIsApplicationRelative($path))
 			return Wigbi::clientRoot($path);
 		return $path;
 	}
@@ -40,7 +40,7 @@ abstract class ClientPathIncluderBase
 	 * 
 	 * @return 	bool
 	 */
-	public function isApplicationRelative($path)
+	public function pathIsApplicationRelative($path)
 	{
 		$protocol = strstr($path, "://", true);
 		if (strlen($protocol) > 0)

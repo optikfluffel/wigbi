@@ -12,20 +12,20 @@
 		
 		
 		
-		public function test_isApplicationRelative_shouldReturnFalseForProtocol()
+		public function test_pathIsApplicationRelative_shouldReturnFalseForProtocol()
 		{
-			$this->assertFalse($this->_includer->isApplicationRelative("http://www.foo.js"));
-			$this->assertFalse($this->_includer->isApplicationRelative("https://www.foo.js"));
+			$this->assertFalse($this->_includer->pathIsApplicationRelative("http://www.foo.js"));
+			$this->assertFalse($this->_includer->pathIsApplicationRelative("https://www.foo.js"));
 		}
 		
-		public function test_isApplicationRelative_shouldReturnFalseForAbsolutePath()
+		public function test_pathIsApplicationRelative_shouldReturnFalseForAbsolutePath()
 		{
-			$this->assertFalse($this->_includer->isApplicationRelative("/foo.js"));
+			$this->assertFalse($this->_includer->pathIsApplicationRelative("/foo.js"));
 		}
 		
-		public function test_isApplicationRelative_shouldReturnTrueForRelativePath()
+		public function test_pathIsApplicationRelative_shouldReturnTrueForRelativePath()
 		{
-			$this->assertTrue($this->_includer->isApplicationRelative("foo.js"));
+			$this->assertTrue($this->_includer->pathIsApplicationRelative("foo.js"));
 		}
 	}
 
