@@ -41,6 +41,18 @@
 			
 			$this->assertEqual($result, "<script type=\"text/javascript\" src=\"../bar.js\"></script>");
 		}
+		
+		public function test_includePath_shouldAddAllFilesWithinDirectory()
+		{
+			$this->_fileSystem->returns("dirExists", true);
+			$this->_fileSystem->returns("glob", array("foo.js", "bar.js"));
+			
+			ob_start();
+			$this->_includer->includePath("foobar");
+			$result = ob_get_clean();
+			
+			$this->assertEqual($result, "<script type=\"text/javascript\" src=\"../foo.js\"></script><script type=\"text/javascript\" src=\"../bar.js\"></script>");
+		}
 	}
 
 ?>

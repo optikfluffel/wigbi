@@ -56,20 +56,25 @@ abstract class ClientPathIncluderBase
 	/**
 	 * Include all files in a certain directory.
 	 */
-	public function includeDirectory($path)
+	protected function includeDirectory($path)
 	{
+		foreach ($this->_fileSystem->glob($path . "/*." . $this->_fileType) as $file)
+			$this->includeFile($file);
 	}
 	
 	/**
 	 * Include all files in a certain directory.
 	 */
-	abstract public function includeFile($path);
+	abstract protected function includeFile($path);
 	
 	/**
 	 * Include a certain path, either a file or a folder.
 	 */
 	public function includePath($path)
 	{
+		if ($this->_fileSystem->dirExists($path))
+			return $this->includeDirectory($path);
+		
 		$this->includeFile($path);
 	}
 	
