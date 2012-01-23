@@ -24,9 +24,9 @@
 interface IJavaScriptIncluder
 {
 	/**
-	 * Include a certain file.
+	 * Include a certain path.
 	 */
-	function includeFile($path);
+	function includePath($path);
 }
 
 ?>

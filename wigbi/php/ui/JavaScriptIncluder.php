@@ -14,9 +14,9 @@
  * adding a separate script tag for each file.
  * 
  * The class will automatically prefix local paths with the client
- * root, so it expects all local paths to application relative. It
- * will leave absolute (begins with /) and global (http, https etc)
- * paths just as they are, however.
+ * root, so it expects all local paths to be relative to the Wigbi
+ * application root. It leaves absolute (begins with /) and global
+ * (http, https etc) paths just as they are.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -27,7 +27,16 @@
  * @version			2.0.0
  */
 class JavaScriptIncluder extends ClientPathIncluderBase implements IJavaScriptIncluder
-{
+{ 
+	/**
+	 * @param	IFileSystem		$fileSystem		The IFileSystem to use for file system operations.
+	 */
+	public function __construct($fileSystem)
+	{
+		parent::__construct($fileSystem, "js");
+	}
+	
+	
 	/**
 	 * Include a certain file by outputting a script include tag.
 	 */

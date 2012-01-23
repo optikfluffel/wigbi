@@ -13,6 +13,9 @@
  * This base class can be inherited by classes that can be used to
  * include client paths, like JavaScript and CSS files.
  * 
+ * The class can handle both file and directory paths. If the path
+ * is a directory path, the class will include all files within it.
+ * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
  * @copyright		Copyright © 2009-2012, Daniel Saidi
@@ -23,6 +26,21 @@
  */
 abstract class ClientPathIncluderBase
 {
+	private $_fileSystem;
+	private $_fileType;
+	
+	 
+	/**
+	 * @param	IFileSystem		$fileSystem		The IFileSystem to use for file system operations.
+	 * @param	string			$fileType		The file extension to handle with the includer.
+	 */
+	public function __construct($fileSystem, $fileType)
+	{
+		$this->_fileSystem = $fileSystem;
+		$this->_fileType = $fileType;
+	}
+	
+	
 	/**
 	 * Apply the client root path to local, non-absolute paths.
 	 * 
@@ -33,6 +51,26 @@ abstract class ClientPathIncluderBase
 		if ($this->pathIsApplicationRelative($path))
 			return Wigbi::clientRoot($path);
 		return $path;
+	}
+	
+	/**
+	 * Include all files in a certain directory.
+	 */
+	public function includeDirectory($path)
+	{
+	}
+	
+	/**
+	 * Include all files in a certain directory.
+	 */
+	abstract public function includeFile($path);
+	
+	/**
+	 * Include a certain path, either a file or a folder.
+	 */
+	public function includePath($path)
+	{
+		$this->includeFile($path);
 	}
 	
 	/**

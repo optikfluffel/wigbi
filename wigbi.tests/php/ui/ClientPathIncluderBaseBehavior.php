@@ -3,13 +3,16 @@
 	class ClientPathIncluderBaseBehavior extends UnitTestCase
 	{
 		private $_includer;
+		private $_fileSystem;
 		
 		
 		function setUp()
 		{
-			$this->_includer = new JavaScriptIncluder();
+			Mock::generate('IFileSystem');
+			$this->_fileSystem = new MockIFileSystem();
+			
+			$this->_includer = new JavaScriptIncluder($this->_fileSystem);
 		}
-		
 		
 		
 		public function test_pathIsApplicationRelative_shouldReturnFalseForProtocol()
