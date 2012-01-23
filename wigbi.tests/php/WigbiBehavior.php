@@ -17,14 +17,11 @@
 		
 		
 		
-		public function test_bootstrap_shouldSetupAllClasses()
+		public function test_bootstrap_shouldSetupConfiguration()
 		{
 			global $wigbi_test_config;
 			$this->assertEqual(Wigbi::configuration(), new ArrayBasedConfiguration($wigbi_test_config));
-		}
-		
-		public function test_bootstrap_shouldSetupConfiguration()
-		{
+			
 			$this->assertEqual(Wigbi::configuration()->get("application", "name"), "application");
 			$this->assertEqual(Wigbi::configuration()->get("application", "clientRoot"), "/wigbi_dev/");
 		}

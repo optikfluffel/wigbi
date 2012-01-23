@@ -68,6 +68,7 @@ class Wigbi
 	private static $_cookies;
 	private static $_cssIncluder;
 	private static $_jsIncluder;
+	private static $_fileSystem;
 	private static $_logger;
 	private static $_phpIncluder;
 	private static $_session;
@@ -131,6 +132,17 @@ class Wigbi
 	}
 	
 	/**
+	 * @param	ICookies		$cookies	Optional set value.
+	 * @return	ICookies
+	 */
+	public static function cookies($cookies = null)
+	{
+		if (func_num_args() > 0)
+			Wigbi::$_cookies = func_get_arg(0);
+		return Wigbi::$_cookies;
+	}
+	
+	/**
 	 * @param	ICssIncluder	$includer	Optional set value.
 	 * @return	ICssIncluder
 	 */
@@ -142,14 +154,14 @@ class Wigbi
 	}
 	
 	/**
-	 * @param	ICookies		$cookies	Optional set value.
-	 * @return	ICookies
+	 * @param	IFileSystem	$fileSystem	Optional set value.
+	 * @return	IFileSystem
 	 */
-	public static function cookies($cookies = null)
+	public static function fileSystem($fileSystem = null)
 	{
 		if (func_num_args() > 0)
-			Wigbi::$_cookies = func_get_arg(0);
-		return Wigbi::$_cookies;
+			Wigbi::$_fileSystem = func_get_arg(0);
+		return Wigbi::$_fileSystem;
 	}
 	
 	/**
@@ -290,13 +302,31 @@ class Wigbi
 	 */
 	public static function start()
 	{
-		//Abort if Wigbi is started with invalid configuration
+		Wigbi::start_assert();
+		Wigbi::start_include();
+		
+		Wigbi::$_isStarted = true;
+	}
+	
+	/**
+	 * Crash if Wigbi is started with an invalid configuration
+	 */
+	private static function start_assert()
+	{
 		if (!Wigbi::configuration()->get("application", "name"))
 			throw new Exception('The application.name key in the Wigbi config file must have a value, e.g. "My Application".');
 		if (!Wigbi::configuration()->get("application", "clientRoot"))
 			throw new Exception('The application.clientRoot key in the Wigbi config file must have a value, e.g. "/myApp/" if the site is located in http://localhost/myApp/.');
-		
-		Wigbi::$_isStarted = true;
+	}
+	
+	/**
+	 * Include all php, js and css files that is specified in the configuration
+	 */
+	private static function start_include()
+	{
+		$php_paths = explode(",", Wigbi::configuration()->get("include", "php"));
+		$js_paths = explode(",", Wigbi::configuration()->get("include", "js"));
+		$css_paths = explode(",", Wigbi::configuration()->get("include", "css"));
 	}
 	
 	/**
