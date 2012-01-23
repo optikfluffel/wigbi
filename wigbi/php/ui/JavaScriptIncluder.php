@@ -14,9 +14,9 @@
  * adding a separate script tag for each file.
  * 
  * The class will automatically prefix local paths with the client
- * root, so it expects all local paths to be relative to the Wigbi
- * application root. It leaves absolute (begins with /) and global
- * (http, https etc) paths just as they are.
+ * root, so always provide it with application relative paths. The
+ * class leaves absolute (begin with /) and global (http, ftp etc)
+ * paths as they are.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>

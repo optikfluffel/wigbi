@@ -10,8 +10,8 @@
 /**
  * The Wigbi PhpFileIncluder class.
  * 
- * This class can be used to include PHP files and folders, either
- * once or each time a file is provided.
+ * This class can be used to include PHP files and folders. It can
+ * automatically include all PHP files in a certain folder.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -22,15 +22,37 @@
  * @version			2.0.0
  */
 class PhpFileIncluder implements IPhpFileIncluder
-{	
+{
 	/**
-	 * Include a certain file.
+	 * Include all files in a certain folder.
+	 */
+	private function includeFolder($path, $once = false)
+	{
+		foreach (glob($path . "/*.php") as $file)
+			$this->includePath($file, $once);
+	}
+	
+	/**
+	 * Include a certain path.
 	 */
 	public function includePath($path, $once = false)
 	{
+		if (is_dir($path))
+			return $this->includeFolder($path, $once);
+				
 		if ($once)
 			return include_once($path);
+		
 		return include($path);
+	}
+	
+	/**
+	 * Require all files in a certain folder.
+	 */
+	private function requireFolder($path, $once = false)
+	{
+		foreach (glob($path . "/*.php") as $file)
+			$this->requirePath($file, $once);
 	}
 	
 	/**
