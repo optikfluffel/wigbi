@@ -66,7 +66,10 @@ class Wigbi
 	private static $_cache;
 	private static $_configuration;
 	private static $_cookies;
+	private static $_cssIncluder;
+	private static $_jsIncluder;
 	private static $_logger;
+	private static $_phpIncluder;
 	private static $_session;
 	private static $_translator;
 	
@@ -150,6 +153,17 @@ class Wigbi
 	}
 	
 	/**
+	 * @param	IJavaScriptIncluder	$includer	Optional set value.
+	 * @return	IJavaScriptIncluder
+	 */
+	public static function jsIncluder($includer = null)
+	{
+		if (func_num_args() > 0)
+			Wigbi::$_jsIncluder = func_get_arg(0);
+		return Wigbi::$_jsIncluder;
+	}
+	
+	/**
 	 * @param	ILogger		$logger		Optional set value.
 	 * @return	ILogger
 	 */
@@ -158,6 +172,17 @@ class Wigbi
 		if (func_num_args() > 0)
 			Wigbi::$_logger = func_get_arg(0);
 		return Wigbi::$_logger;
+	}
+	
+	/**
+	 * @param	IPhpFileIncluder	$includer	Optional set value.
+	 * @return	IPhpFileIncluder
+	 */
+	public static function phpIncluder($includer = null)
+	{
+		if (func_num_args() > 0)
+			Wigbi::$_phpIncluder = func_get_arg(0);
+		return Wigbi::$_phpIncluder;
 	}
 	
 	/**

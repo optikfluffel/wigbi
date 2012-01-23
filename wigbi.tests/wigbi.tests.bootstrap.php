@@ -1,6 +1,8 @@
 <?php
 
 require("php/io/FakePhpFileIncluder.php");
+require("php/ui/FakeJavaScriptIncluder.php");
+require("php/ui/FakeCssIncluder.php");
 
 $wigbi_test_config = array();
 
@@ -14,5 +16,9 @@ $wigbi_test_config["include"]["js"] = "foo_js,bar_js,foobar_js";
 $wigbi_test_config["include"]["css"] = "foo_css,bar_css,foobar_css";
 
 Wigbi::configuration(new ArrayBasedConfiguration($wigbi_test_config));
+
+Wigbi::phpIncluder(new FakePhpFileIncluder());
+Wigbi::jsIncluder(new FakeJavaScriptIncluder());
+Wigbi::cssIncluder(new FakeCssIncluder());
 
 ?>
