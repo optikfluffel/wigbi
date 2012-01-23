@@ -3,15 +3,15 @@
 	class ViewBehavior extends UnitTestCase
 	{
 		private $_master;
-		private $_fileIncluder;
+		private $_phpIncluder;
 		
 		
 		function setUp()
 		{
-			Mock::generate('IPhpFileIncluder');
-			$this->_fileIncluder = new MockIPhpFileIncluder();
+			Mock::generate('IPhpIncluder');
+			$this->_phpIncluder = new MockIPhpIncluder();
 			
-			$includer = View::fileIncluder($this->_fileIncluder);
+			$includer = View::fileIncluder($this->_phpIncluder);
 		}
 		
 		function tearDown() { } 
@@ -40,28 +40,28 @@
 		
 		public function test_add_shouldRequireViewFile()
 		{
-			$this->_fileIncluder->expect("includePath", array("foo", false));
+			$this->_phpIncluder->expect("includePath", array("foo", false));
 			
 			$includer = View::add("foo", "bar");
 		}
 		
-		public function test_fileIncluder_shouldUseFileIncluderByDefault()
+		public function test_phpIncluder_shouldUseFileIncluderByDefault()
 		{
 			$includer = View::fileIncluder(null);
 			$includer = View::fileIncluder();
 			
-			$this->assertEqual(get_class(View::fileIncluder()), "PhpFileIncluder");
+			$this->assertEqual(get_class(View::fileIncluder()), "PhpIncluder");
 		}
 		
-		public function test_fileIncluder_shouldUseCustomClassAndResetOnNull()
+		public function test_phpIncluder_shouldUseCustomClassAndResetOnNull()
 		{
-			$includer = View::fileIncluder($this->_fileIncluder);
+			$includer = View::fileIncluder($this->_phpIncluder);
 			
-			$this->assertEqual(get_class(View::fileIncluder()), "MockIPhpFileIncluder");
+			$this->assertEqual(get_class(View::fileIncluder()), "MockIPhpIncluder");
 			
 			$includer = View::fileIncluder(null);
 			
-			$this->assertEqual(get_class(View::fileIncluder()), "PhpFileIncluder");
+			$this->assertEqual(get_class(View::fileIncluder()), "PhpIncluder");
 		}
 		
 		public function test_model_shouldReturnNullForNoData()

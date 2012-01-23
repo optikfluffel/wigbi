@@ -96,7 +96,7 @@ class MasterPage
 			MasterPage::$_fileIncluder = func_get_arg(0);
 		
 		if (!MasterPage::$_fileIncluder)
-		 	MasterPage::$_fileIncluder = new PhpFileIncluder();
+		 	MasterPage::$_fileIncluder = new PhpIncluder();
 		
 		return MasterPage::$_fileIncluder;
 	}

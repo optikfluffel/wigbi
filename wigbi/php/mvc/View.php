@@ -65,7 +65,7 @@ class View
 			View::$_fileIncluder = func_get_arg(0);
 		
 		if (!View::$_fileIncluder)
-		 	View::$_fileIncluder = new PhpFileIncluder();
+		 	View::$_fileIncluder = new PhpIncluder();
 		
 		return View::$_fileIncluder;
 	}

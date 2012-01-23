@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi PhpFileIncluder class file.
+ * The Wigbi PhpIncluder class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi PhpFileIncluder class.
+ * The Wigbi PhpIncluder class.
  * 
  * This class can be used to include PHP files and folders. It can
  * automatically include all PHP files in a certain folder.
@@ -21,7 +21,7 @@
  * @subpackage		PHP.IO
  * @version			2.0.0
  */
-class PhpFileIncluder implements IPhpFileIncluder
+class PhpIncluder implements IPhpIncluder
 {
 	/**
 	 * Include all files in a certain folder.

@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi IPhpFileIncluder interface file.
+ * The Wigbi IPhpIncluder interface file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi IPhpFileIncluder interface.
+ * The Wigbi IPhpIncluder interface.
  * 
  * This interface can be implemented by any class that can be used
  * to include and require PHP files.
@@ -21,7 +21,7 @@
  * @subpackage		PHP.IO
  * @version			2.0.0
  */
-interface IPhpFileIncluder
+interface IPhpIncluder
 {	
 	/**
 	 * Include a certain path.
