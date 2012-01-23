@@ -117,6 +117,45 @@
 			$this->assertEqual($message, "The application.clientRoot key in the Wigbi config file must have a value, e.g. \"/myApp/\" if the site is located in http://localhost/myApp/.");
 		}
 		
+		public function test_start_shouldIncludeAllPhpPathsWithServerRoot()
+		{
+			Mock::generate('IPhpIncluder');
+			$includer = new MockIPhpIncluder();
+			$includer->expectCallCount("includePath", 3);		//TODO: Did not get the expectOnce check to work
+			
+			Wigbi::phpIncluder($includer);
+			
+			Wigbi::start();
+			
+			Wigbi::phpIncluder(new FakePhpIncluder());
+		}
+		
+		public function test_start_shouldIncludeAllJsPathsWithClientRoot()
+		{
+			Mock::generate('IJavaScriptIncluder');
+			$includer = new MockIJavaScriptIncluder();
+			$includer->expectCallCount("includePath", 3);		//TODO: Did not get the expectOnce check to work
+			
+			Wigbi::jsIncluder($includer);
+			
+			Wigbi::start();
+			
+			Wigbi::jsIncluder(new FakeJavaScriptIncluder());
+		}
+		
+		public function test_start_shouldIncludeAllCssPathsWithClientRoot()
+		{
+			Mock::generate('ICssIncluder');
+			$includer = new MockICssIncluder();
+			$includer->expectCallCount("includePath", 3);		//TODO: Did not get the expectOnce check to work
+			
+			Wigbi::cssIncluder($includer);
+			
+			Wigbi::start();
+			
+			Wigbi::cssIncluder(new FakeCssIncluder());
+		}
+		
 		public function test_start_shouldEnableStartedMode()
 		{
 			Wigbi::start();

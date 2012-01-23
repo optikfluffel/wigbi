@@ -323,10 +323,13 @@ class Wigbi
 	 * Include all php, js and css files that is specified in the configuration
 	 */
 	private static function start_include()
-	{
-		$php_paths = explode(",", Wigbi::configuration()->get("include", "php"));
-		$js_paths = explode(",", Wigbi::configuration()->get("include", "js"));
-		$css_paths = explode(",", Wigbi::configuration()->get("include", "css"));
+	{	
+		foreach (explode(",", Wigbi::configuration()->get("include", "php")) as $path)
+			Wigbi::phpIncluder()->includePath(Wigbi::serverRoot($path));
+		foreach (explode(",", Wigbi::configuration()->get("include", "js")) as $path)
+			Wigbi::jsIncluder()->includePath(Wigbi::serverRoot($path));
+		foreach (explode(",", Wigbi::configuration()->get("include", "css")) as $path)
+			Wigbi::cssIncluder()->includePath(Wigbi::serverRoot($path));
 	}
 	
 	/**
