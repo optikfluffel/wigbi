@@ -13,11 +13,6 @@
  * This class can be used to include CSS files & folders by adding
  * a separate link tag for each file.
  * 
- * The class will automatically prefix local paths with the client
- * root, so always provide it with application relative paths. The
- * class leaves absolute (begin with /) and global (http, ftp etc)
- * paths as they are.
- * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
  * @copyright		Copyright © 2009-2012, Daniel Saidi
