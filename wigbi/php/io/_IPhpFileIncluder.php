@@ -11,7 +11,7 @@
  * The Wigbi IPhpFileIncluder interface.
  * 
  * This interface can be implemented by any class that can be used
- * to include and require PHP files and folders.
+ * to include and require PHP files.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
