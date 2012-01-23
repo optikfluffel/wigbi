@@ -21,7 +21,7 @@
  * @subpackage		PHP.IO
  * @version			2.0.0
  */
-class FileHandler implements IFileSystem
+class FileSystem implements IFileSystem
 {
 	/**
 	 * Create a certain directory.
