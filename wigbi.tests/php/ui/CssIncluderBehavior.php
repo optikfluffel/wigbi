@@ -48,7 +48,7 @@
 			$this->_fileSystem->returns("dirExists", true);
 			$this->_fileSystem->returns("glob", array("foo.css", "http://www.foo.bar/bar.css"));
 			
-			$this->_fileSystem->expect("glob", array("foobar/*.js"));
+			$this->_fileSystem->expect("glob", array("foobar/*.css"));
 			
 			ob_start();
 			$this->_includer->includePath("foobar");

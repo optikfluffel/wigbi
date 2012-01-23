@@ -11,7 +11,7 @@
  * The Wigbi IPhpFileIncluder interface.
  * 
  * This interface can be implemented by any class that can be used
- * to include and require PHP files.
+ * to include and require PHP files and folders.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -24,14 +24,14 @@
 interface IPhpFileIncluder
 {	
 	/**
-	 * Include a certain file.
+	 * Include a certain path.
 	 */
-	function includeFile($path, $once = false);
+	function includePath($path, $once = false);
 	
 	/**
 	 * Require a certain file.
 	 */
-	function requireFile($path, $once = false);
+	function requirePath($path, $once = false);
 }
 
 ?>

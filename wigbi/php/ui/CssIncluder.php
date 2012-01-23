@@ -10,8 +10,8 @@
 /**
  * The Wigbi CssIncluder class.
  * 
- * This class can be used to include JavaScript files / folders by
- * adding a separate script tag for each file.
+ * This class can be used to include CSS files & folders by adding
+ * a separate link tag for each file.
  * 
  * The class will automatically prefix local paths with the client
  * root, so it expects all local paths to be relative to the Wigbi

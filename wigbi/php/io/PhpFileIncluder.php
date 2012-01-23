@@ -10,7 +10,7 @@
 /**
  * The Wigbi PhpFileIncluder class.
  * 
- * This class can be used to include and require PHP files, either
+ * This class can be used to include PHP files and folders, either
  * once or each time a file is provided.
  * 
  * 
@@ -26,7 +26,7 @@ class PhpFileIncluder implements IPhpFileIncluder
 	/**
 	 * Include a certain file.
 	 */
-	public function includeFile($path, $once = false)
+	public function includePath($path, $once = false)
 	{
 		if ($once)
 			return include_once($path);
@@ -36,7 +36,7 @@ class PhpFileIncluder implements IPhpFileIncluder
 	/**
 	 * Require a certain file.
 	 */
-	public function requireFile($path, $once = false)
+	public function requirePath($path, $once = false)
 	{
 		if ($once)
 			return require_once($path);

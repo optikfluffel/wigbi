@@ -46,7 +46,7 @@ class View
 	{
 		array_push(View::$_models, $model);
 		
-		View::fileIncluder()->includeFile($path, false);
+		View::fileIncluder()->includePath($path, false);
 		
 		array_pop(View::$_models);
 	}

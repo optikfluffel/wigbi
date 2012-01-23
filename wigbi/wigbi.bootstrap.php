@@ -10,9 +10,9 @@ $wigbi_cookies = new Cookies(Wigbi::configuration()->get("application", "name"))
 Wigbi::cookies($wigbi_cookies);
 
 $wigbi_logging_logger_types = explode(",", Wigbi::configuration()->get("logging", "logger_types"));
-$wigbi_logging_severities = explode(",", Wigbi::configuration()->get("logger_types", "severities"));
-$wigbi_logging_destination = Wigbi::configuration()->get("logger_types", "destination");
-$wigbi_logging_headers = Wigbi::configuration()->get("logger_types", "extra_headers");
+$wigbi_logging_severities = explode(",", Wigbi::configuration()->get("logging", "severities"));
+$wigbi_logging_destination = Wigbi::configuration()->get("logging", "destination");
+$wigbi_logging_headers = Wigbi::configuration()->get("logging", "extra_headers");
 $wigbi_logger = new SeverityLoggerDecorator(new ErrorLog($wigbi_logging_logger_types, $wigbi_logging_destination, $wigbi_logging_headers), $wigbi_logging_severities);
 Wigbi::logger($wigbi_logger);
 

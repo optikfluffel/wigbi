@@ -28,7 +28,7 @@
 			MasterPage::file("foo");
 			MasterPage::fileIncluder($this->_fileIncluder);
 			
-			$this->_fileIncluder->expectOnce("includeFile", array("foo"));
+			$this->_fileIncluder->expectOnce("includePath", array("foo"));
 			
 			ob_start();
 			MasterPage::build();

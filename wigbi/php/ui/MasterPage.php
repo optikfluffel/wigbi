@@ -52,7 +52,7 @@ class MasterPage
 		if (!MasterPage::$_file)
 			return;
 		
-		MasterPage::fileIncluder()->includeFile(MasterPage::$_file);
+		MasterPage::fileIncluder()->includePath(MasterPage::$_file);
 	}
 	
 	/**

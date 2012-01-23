@@ -27,9 +27,9 @@
  */
 class FakePhpFileIncluder
 {
-	public function includeFile($path) {}
+	public function includePath($path) {}
 	
-	public function requireFile($path) {}
+	public function requirePath($path) {}
 }
 
 ?>

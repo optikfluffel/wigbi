@@ -3,6 +3,7 @@
 	class ViewBehavior extends UnitTestCase
 	{
 		private $_master;
+		private $_fileIncluder;
 		
 		
 		function setUp()
@@ -39,7 +40,7 @@
 		
 		public function test_add_shouldRequireViewFile()
 		{
-			$this->_fileIncluder->expect("includeFile", array("foo", false));
+			$this->_fileIncluder->expect("includePath", array("foo", false));
 			
 			$includer = View::add("foo", "bar");
 		}

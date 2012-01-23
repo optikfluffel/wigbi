@@ -67,7 +67,6 @@ class Wigbi
 	private static $_configuration;
 	private static $_cookies;
 	private static $_logger;
-	private static $_phpFileIncluder;
 	private static $_session;
 	private static $_translator;
 	

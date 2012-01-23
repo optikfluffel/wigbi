@@ -10,7 +10,7 @@
 /**
  * The Wigbi JavaScriptIncluder class.
  * 
- * This class can be used to include JavaScript files / folders by
+ * This class can be used to include JavaScript files & folders by
  * adding a separate script tag for each file.
  * 
  * The class will automatically prefix local paths with the client
