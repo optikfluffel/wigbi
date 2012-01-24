@@ -13,6 +13,9 @@
  * This class can be used to include JavaScript files & folders by
  * adding a separate script tag for each file.
  * 
+ * Since the class performs file system operations for directories,
+ * it requires that all local paths are application relative.
+ * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
  * @copyright		Copyright © 2009-2012, Daniel Saidi
@@ -37,6 +40,7 @@ class JavaScriptIncluder extends ClientPathIncluderBase implements IJavaScriptIn
 	 */
 	public function includeFile($path)
 	{
+		$path = Wigbi::clientRoot($path);
 		print "<script type=\"text/javascript\" src=\"$path\"></script>";
 	}
 }

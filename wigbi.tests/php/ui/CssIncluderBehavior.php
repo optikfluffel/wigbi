@@ -22,7 +22,7 @@
 			$this->_includer->includePath("bar.css");
 			$result = ob_get_clean();
 			
-			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"bar.css\" />");
+			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../bar.css\" />");
 		}
 		
 		public function test_includePath_shouldAddAllFilesWithinDirectory()
@@ -36,7 +36,7 @@
 			$this->_includer->includePath("foobar");
 			$result = ob_get_clean();
 			
-			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"foo.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.foo.bar/bar.css\" />");
+			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../foo.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.foo.bar/bar.css\" />");
 		}
 	}
 

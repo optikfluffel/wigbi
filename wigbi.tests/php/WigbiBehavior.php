@@ -121,7 +121,7 @@
 		{
 			Mock::generate('IPhpIncluder');
 			$includer = new MockIPhpIncluder();
-			$includer->expectCallCount("includePath", 3);		//TODO: Did not get the expectOnce check to work
+			$includer->expectCallCount("requirePath", 3);		//TODO: Did not get the expectOnce check to work
 			
 			Wigbi::phpIncluder($includer);
 			

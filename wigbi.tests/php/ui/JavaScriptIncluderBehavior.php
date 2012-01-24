@@ -21,7 +21,7 @@
 			$this->_includer->includePath("bar.js");
 			$result = ob_get_clean();
 			
-			$this->assertEqual($result, "<script type=\"text/javascript\" src=\"bar.js\"></script>");
+			$this->assertEqual($result, "<script type=\"text/javascript\" src=\"../bar.js\"></script>");
 		}
 		
 		public function test_includePath_shouldAddAllFilesWithinDirectory()
@@ -35,7 +35,7 @@
 			$this->_includer->includePath("foobar");
 			$result = ob_get_clean();
 			
-			$this->assertEqual($result, "<script type=\"text/javascript\" src=\"foo.js\"></script><script type=\"text/javascript\" src=\"http://www.foo.bar/bar.js\"></script>");
+			$this->assertEqual($result, "<script type=\"text/javascript\" src=\"../foo.js\"></script><script type=\"text/javascript\" src=\"http://www.foo.bar/bar.js\"></script>");
 		}
 	}
 
