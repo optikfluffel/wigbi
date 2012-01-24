@@ -10,11 +10,8 @@
 /**
  * The Wigbi CssIncluder class.
  * 
- * This class can be used to include CSS files & folders by adding
- * a separate link tag for each file.
- * 
- * Since the class performs file system operations for directories,
- * it requires that all local paths are application relative.
+ * This class can be used to include CSS files to the page. It can
+ * only handle single files and will add a link tag for every file.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -27,20 +24,10 @@
 class CssIncluder extends ClientPathIncluderBase implements ICssIncluder
 {
 	/**
-	 * @param	IFileSystem		$fileSystem		The IFileSystem to use for file system operations.
-	 */
-	public function __construct($fileSystem)
-	{
-		parent::__construct($fileSystem, "css");
-	}
-	
-	
-	/**
 	 * Include a certain file by outputting a script include tag.
 	 */
 	public function includeFile($path)
 	{
-		$path = Wigbi::clientRoot($path);
 		print "<link rel=\"stylesheet\" type=\"text/css\" href=\"$path\" />";
 	}
 }

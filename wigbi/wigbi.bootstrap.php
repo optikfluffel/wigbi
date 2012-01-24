@@ -11,9 +11,9 @@ Wigbi::cache($wigbi_cache);
 $wigbi_cookies = new Cookies(Wigbi::configuration()->get("application", "name"));
 Wigbi::cookies($wigbi_cookies);
 
-Wigbi::cssIncluder(new CssIncluder(new FileSystem()));
+Wigbi::cssIncluder(new CssIncluder());
 
-Wigbi::jsIncluder(new JavaScriptIncluder(new FileSystem()));
+Wigbi::jsIncluder(new JavaScriptIncluder());
 
 $wigbi_logging_logger_types = explode(",", Wigbi::configuration()->get("logging", "logger_types"));
 $wigbi_logging_severities = explode(",", Wigbi::configuration()->get("logging", "severities"));

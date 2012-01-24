@@ -11,7 +11,7 @@
  * The Wigbi IJavaScriptIncluder interface.
  * 
  * This interface can be implemented by any class that can be used
- * to include JavaScript files as well as entire folders.
+ * to include JavaScript files .
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>

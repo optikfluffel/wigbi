@@ -326,10 +326,6 @@ class Wigbi
 	{	
 		foreach (explode(",", Wigbi::configuration()->get("include", "php")) as $path)
 			Wigbi::phpIncluder()->requirePath(Wigbi::serverRoot($path), true);
-		foreach (explode(",", Wigbi::configuration()->get("include", "js")) as $path)
-			Wigbi::jsIncluder()->includePath(Wigbi::clientRoot($path));
-		foreach (explode(",", Wigbi::configuration()->get("include", "css")) as $path)
-			Wigbi::cssIncluder()->includePath(Wigbi::clientRoot($path));
 	}
 	
 	/**
