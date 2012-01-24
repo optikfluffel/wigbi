@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Wigbi JavaScript class file.
+ * Wigbi JavaScriptRunner class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi JavaScript class.
+ * The Wigbi JavaScriptRunner class.
  * 
  * This class can be used to execute JavaScript code with PHP. The
  * JS code is printed to the the page and executed once the client
@@ -25,13 +25,11 @@
 class JavaScript
 {
 	/**
-	 * Display a message in an alert box, using the alert function.
-	 * 
-	 * @param	string	$message	The message to alert.
+	 * Display a message in an alert box, using alert.
 	 */
-	public static function alert($message)
+	public static function alert($message, $addTags = true)
 	{
-		print "<script type=\"text/javascript\">alert('$message');</script>";	
+		JavaScript::run("alert('$message');", $addTags);	
 	}
 	
 	/**
@@ -39,17 +37,25 @@ class JavaScript
 	 * 
 	 * @param	string	$url	The url to redirect the client to.
 	 */
-	public static function redirect($url)
+	public static function redirect($url, $addTags = true)
 	{
-		print "<script type='text/javascript'>location.href='" . $url . "';</script>";
+		JavaScript::run("location.href=\"$url\";", $addTags);
 	}
 	
 	/**
-	 * Reload the current URL, using the location.reload function.
+	 * Reload the current URL, using location.reload.
 	 */
-	public static function reload()
+	public static function reload($addTags = true)
 	{
-		print "<script type='text/javascript'>location.reload();</script>";
+		JavaScript::run("location.reload();", $addTags);
+	}
+	
+	/**
+	 * Add a script to the page.
+	 */
+	public static function run($script, $addTags = true)
+	{
+		print $addTags ? "<script type=\"text/javascript\">$script</script>" : $script;	
 	}
 }
 
