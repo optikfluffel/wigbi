@@ -22,38 +22,36 @@
  * @subpackage		PHP.UI
  * @version			2.0.0
  */
-class JavaScript
+class JavaScriptRunner implements IJavaScriptRunner
 {
 	/**
 	 * Display a message in an alert box, using alert.
 	 */
-	public static function alert($message, $addTags = true)
+	public function alert($message, $addTags = true)
 	{
-		JavaScript::run("alert('$message');", $addTags);	
+		$this->run("alert('$message');", $addTags);	
 	}
 	
 	/**
 	 * Redirect the client to a certain URL, using location.href.
-	 * 
-	 * @param	string	$url	The url to redirect the client to.
 	 */
-	public static function redirect($url, $addTags = true)
+	public function redirect($url, $addTags = true)
 	{
-		JavaScript::run("location.href=\"$url\";", $addTags);
+		$this->run("location.href=\"$url\";", $addTags);
 	}
 	
 	/**
 	 * Reload the current URL, using location.reload.
 	 */
-	public static function reload($addTags = true)
+	public function reload($addTags = true)
 	{
-		JavaScript::run("location.reload();", $addTags);
+		$this->run("location.reload();", $addTags);
 	}
 	
 	/**
-	 * Add a script to the page.
+	 * Add a custom script to the page.
 	 */
-	public static function run($script, $addTags = true)
+	public function run($script, $addTags = true)
 	{
 		print $addTags ? "<script type=\"text/javascript\">$script</script>" : $script;	
 	}
