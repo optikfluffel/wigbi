@@ -21,13 +21,17 @@
  * @subpackage		PHP.UI
  * @version			2.0.0
  */
-class JavaScriptIncluder extends ClientPathIncluderBase implements IJavaScriptIncluder
+class JavaScriptIncluder implements IJavaScriptIncluder
 { 
 	/**
-	 * Include a certain file by outputting a script include tag.
+	 * Output a script tag to a certain JavaScript file path.
+	 * 
+	 * If a ~/ is used at the beginning of the path, it's replaced
+	 * with Wigbi::clientRoot().
 	 */
-	public function includeFile($path)
+	public function includePath($path)
 	{
+		$path = str_replace("~/", Wigbi::clientRoot(), $path);
 		print "<script type=\"text/javascript\" src=\"$path\"></script>";
 	}
 }

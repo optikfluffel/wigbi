@@ -24,6 +24,15 @@
 			
 			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"bar.css\" />");
 		}
+		
+		public function test_includePath_shouldReplaceTildeDashWithClientRoot()
+		{
+			ob_start();
+			$this->_includer->includePath("~/bar.css");
+			$result = ob_get_clean();
+			
+			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../bar.css\" />");
+		}
 	}
 
 ?>

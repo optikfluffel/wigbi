@@ -11,7 +11,7 @@
  * The Wigbi ICssIncluder interface.
  * 
  * This interface can be implemented by any class that can be used
- * to include CSS files as well as entire folders.
+ * to include CSS files to a HTML page.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -24,7 +24,7 @@
 interface ICssIncluder
 {
 	/**
-	 * Include a certain path.
+	 * Include a link tag to a certain path.
 	 */
 	function includePath($path);
 }

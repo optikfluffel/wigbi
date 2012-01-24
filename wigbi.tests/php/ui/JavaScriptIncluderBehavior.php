@@ -23,6 +23,15 @@
 			
 			$this->assertEqual($result, "<script type=\"text/javascript\" src=\"bar.js\"></script>");
 		}
+		
+		public function test_includePath_shouldReplaceTildeDashWithClientRoot()
+		{
+			ob_start();
+			$this->_includer->includePath("~/bar.js");
+			$result = ob_get_clean();
+			
+			$this->assertEqual($result, "<script type=\"text/javascript\" src=\"../bar.js\"></script>");
+		}
 	}
 
 ?>

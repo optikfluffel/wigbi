@@ -21,13 +21,17 @@
  * @subpackage		PHP.UI
  * @version			2.0.0
  */
-class CssIncluder extends ClientPathIncluderBase implements ICssIncluder
+class CssIncluder implements ICssIncluder
 {
 	/**
-	 * Include a certain file by outputting a script include tag.
+	 * Output a link tag to a certain CSS file path.
+	 * 
+	 * If a ~/ is used at the beginning of the path, it's replaced
+	 * with Wigbi::clientRoot().
 	 */
-	public function includeFile($path)
+	public function includePath($path)
 	{
+		$path = str_replace("~/", Wigbi::clientRoot(), $path);
 		print "<link rel=\"stylesheet\" type=\"text/css\" href=\"$path\" />";
 	}
 }
