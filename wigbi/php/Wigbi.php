@@ -66,9 +66,9 @@ class Wigbi
 	private static $_cache;
 	private static $_configuration;
 	private static $_cookies;
-	private static $_css;
-	private static $_js;
+	private static $_cssIncluder;
 	private static $_fileSystem;
+	private static $_jsIncluder;
 	private static $_logger;
 	private static $_phpIncluder;
 	private static $_session;
@@ -143,14 +143,14 @@ class Wigbi
 	}
 	
 	/**
-	 * @param	Icss	$includer	Optional set value.
-	 * @return	Icss
+	 * @param	ICssIncluder	$includer	Optional set value.
+	 * @return	ICssIncluder
 	 */
-	public static function css($includer = null)
+	public static function cssIncluder($includer = null)
 	{
 		if (func_num_args() > 0)
-			Wigbi::$_css = func_get_arg(0);
-		return Wigbi::$_css;
+			Wigbi::$_cssIncluder = func_get_arg(0);
+		return Wigbi::$_cssIncluder;
 	}
 	
 	/**
@@ -168,11 +168,11 @@ class Wigbi
 	 * @param	IJavaScriptIncluder	$includer	Optional set value.
 	 * @return	IJavaScriptIncluder
 	 */
-	public static function js($includer = null)
+	public static function jsIncluder($includer = null)
 	{
 		if (func_num_args() > 0)
-			Wigbi::$_js = func_get_arg(0);
-		return Wigbi::$_js;
+			Wigbi::$_jsIncluder = func_get_arg(0);
+		return Wigbi::$_jsIncluder;
 	}
 	
 	/**
