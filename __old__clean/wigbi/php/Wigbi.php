@@ -2,15 +2,8 @@
 
 class Wigbi
 {
-	private static $_cssPaths;
 	private static $_dbHandler;
 	private static $_generateHtml = true;
-	private static $_jsPaths;
-	private static $_phpPaths;
-	//private static $_serverRoot;
-	private static $_webRoot;
-	/**#@-*/
-	
 
 	
 	/**
@@ -128,8 +121,6 @@ class Wigbi
 		//Generate page output
 		Wigbi::start_generateHtml();
 		
-		//Set Wigbi to started
-		//Wigbi::$_isStarted = true;
 	}
 	
 	/**
