@@ -92,6 +92,36 @@
 			$this->assertFalse($result);
 		}
 		
+		public function test_query_shouldReturnTrueForNonRecordSetQuery()
+		{
+			$this->_connection->connect();
+			$result = $this->_connection->query("CREATE DATABASE wigbi_tests");
+			
+			$this->assertTrue($result);
+			
+			$this->_connection->query("DROP DATABASE wigbi_tests");
+		}
+		
+		public function test_query_shouldReturnAssociativeArrayCollectionForRecordSetQuery()
+		{
+			$this->_connection->connect();
+			$this->_connection->query("CREATE DATABASE wigbi_tests");
+			$this->_connection->selectDatabase("wigbi_tests");
+			$this->_connection->query("CREATE TABLE wigbi_table (id VARCHAR(40) NOT NULL, PRIMARY KEY(id))");
+			$this->_connection->query("INSERT INTO wigbi_table (id) VALUES ('first')");
+			$this->_connection->query("INSERT INTO wigbi_table (id) VALUES ('second')");
+			$this->_connection->query("INSERT INTO wigbi_table (id) VALUES ('third')");
+			
+			$result = $this->_connection->query("SELECT * FROM wigbi_table ORDER BY id");
+			
+			$this->assertEqual(sizeof($result), 3);
+			$this->assertEqual($result[0]["id"], "first");
+			$this->assertEqual($result[1]["id"], "second");
+			$this->assertEqual($result[2]["id"], "third");
+			
+			$this->_connection->query("DROP DATABASE wigbi_tests");
+		}
+		
 		public function test_selectDatabase_shouldFailForNoConnection()
 		{
 			$this->disableLogging();

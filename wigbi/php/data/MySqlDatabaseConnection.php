@@ -105,7 +105,17 @@ class MySqlDatabaseConnection
 	 */
 	public function query($query)
 	{
-		mysql_query($query, $this->_connection);
+		$result = mysql_query($query, $this->_connection);
+
+		if ($result and $result != 1)
+		{
+			$return = array();
+			while($recordset = mysql_fetch_assoc($result))
+				array_push($return, $recordset);
+			return $return;
+		}
+
+		return $result;
 	}
 	
 	/**
