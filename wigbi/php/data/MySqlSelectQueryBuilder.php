@@ -13,6 +13,14 @@
  * This class can be used to to build search queries, specifically
  * for a MySQL database.
  * 
+ * All methods except buildFor must return the query builder. This
+ * enables that methods can be chained after eachother, which will
+ * make composing the queries a lot simpler.
+ * 
+ * This class is only meant to be used for basic queries. If an IN
+ * or JOIN statement etc is needed, you are probably better off to
+ * write your own query builder. 
+ * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
  * @copyright		Copyright © 2009-2011, Daniel Saidi
@@ -24,6 +32,8 @@
 class MySqlSelectQueryBuilder implements IDatabaseSelectQueryBuilder
 {
 	private $_select;
+	private $_skip = 0;
+	private $_take = 10;
 	private $_where;
 	
 	
@@ -42,10 +52,10 @@ class MySqlSelectQueryBuilder implements IDatabaseSelectQueryBuilder
 	public function buildFor($tableName)
 	{
 		$result = "";
-		$result .= "SELECT ";
-		$result .= sizeof($this->_select) == 0 ? "*" : implode(",", $this->_select);
-		$result .= " FROM $tableName ";
-		$result .= sizeof($this->_where) == 0 ? "" : "WHERE " . implode(",", $this->_where);
+		$result .= sizeof($this->_select) == 0 ? "SELECT *" : "SELECT " . implode(",", $this->_select);
+		$result .= " FROM $tableName";
+		$result .= sizeof($this->_where) == 0 ? "" : " WHERE " . implode(",", $this->_where);
+		$result .= " LIMIT $this->_skip,$this->_take";
 		
 		return trim($result);
 	}
@@ -53,7 +63,8 @@ class MySqlSelectQueryBuilder implements IDatabaseSelectQueryBuilder
 	/**
 	 * Define which columns that are of interest.
 	 * 
-	 * @param	array	$list	A list of names to select.
+	 * @param	array	$list					A list of names to select, e.g. ["foo", "bar"].
+	 * @return	IDatabaseSelectQueryBuilder		The resulting query builder.
 	 */
 	public function select($list)
 	{
@@ -63,9 +74,34 @@ class MySqlSelectQueryBuilder implements IDatabaseSelectQueryBuilder
 	}
 	
 	/**
+	 * Define how many items to skip in the result.
+	 * 
+	 * @param	int		$skipCount
+	 * @return	IDatabaseSelectQueryBuilder		The resulting query builder.
+	 */
+	public function skip($skipCount)
+	{
+		$this->_skip = $skipCount;
+		return $this;
+	}
+	
+	/**
+	 * Define how many items to take, starting at the skip count.
+	 * 
+	 * @param	int		$takeCount
+	 * @return	IDatabaseSelectQueryBuilder		The resulting query builder.
+	 */
+	public function take($takeCount)
+	{
+		$this->_take = $takeCount;
+		return $this;
+	}
+	
+	/**
 	 * Define which columns that are of interest.
 	 * 
-	 * @param	array	$list	A list of names to select.
+	 * @param	array	$list					A list of filter conditions, e.g. ["foo=1", "bar=2"].
+	 * @return	IDatabaseSelectQueryBuilder		The resulting query builder.
 	 */
 	public function where($list)
 	{

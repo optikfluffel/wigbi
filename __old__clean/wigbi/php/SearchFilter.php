@@ -216,20 +216,6 @@ class SearchFilter
 	}
 	
 	/**
-	 * Set the paging of the search filter.
-	 * 
-	 * @access	public
-	 * 
-	 * @param	int	$skipCount	The number of rows to skip before retrieving.
-	 * @param	int	$maxCount		The maximum number of objects to retrieve.
-	 */
-	public function setPaging($skipCount, $maxCount)
-	{
-		$this->skipCount($skipCount);
-		$this->maxCount($maxCount);
-	}
-	
-	/**
 	 * Create a string out of the search filter.
 	 * 
 	 * Note that the search filter only defines HOW to search for items
