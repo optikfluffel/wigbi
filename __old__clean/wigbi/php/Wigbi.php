@@ -104,54 +104,7 @@ class Wigbi
 			array_push($result, str_replace(".php", "", basename($classFile)));
 		return $result;
 	}
-	
-	
-	
-	
-	
-	/**
-	 * Get the path to the application root folder for the PAGE.
-	 * 
-	 * The application root folder is where the wigbi folder exists.
-	 * 
-	 * @access	public
-	 * @static
-	 * 
-	 * @return	string	The path to the application root folder for the PAGE.
-	 */
-	public static function webRoot()
-	{
-		//Return any pre-set values
-		if (Wigbi::$_webRoot)
-			return Wigbi::$_webRoot;
 
-		//Retieve configuration value - return server root if none is set
-        $webRoot = Wigbi::configuration("webRoot", "application");
-		if (!$webRoot)
-			return "";
-			
-		//Add a / to the end of the path, if needed
-        if ($webRoot[strlen($webRoot) - 1] != '/')
-            $webRoot = $webRoot . "/";
-
-		//Get the "raw" url with the root path removed
-		$url = $_SERVER["REQUEST_URI"];
-		$url = ($webRoot == "/") ? substr($url, 1) : str_replace($webRoot, "", $url);
-		
-		//Add a ../ for each 
-        $result = "";
-        for ($i = 0; $i < strlen($url); $i++)
-        {
-            if ($url[$i] == '.' || $url[$i] == '?' || $url[$i] == '&' || $url[$i] == '#')
-                break;
-            if ($url[$i] == '/')
-                $result .= "../";
-        }
-
-		//Return the resulting path
-		Wigbi::$_webRoot = $result;
-        return $result;		
-	}
 	
 	
 	
@@ -163,13 +116,6 @@ class Wigbi
 	 */
 	public static function start()
 	{
-		//Handle async postback configuration
-		Wigbi::start_handleAjaxConfiguration();
-				
-		//Initialize configuration and PHP layer
-		Wigbi::start_configuration();
-		Wigbi::start_php();
-		
 		//Start the various handlers, then init plugins
 		Wigbi::start_databaseHandler();
 		

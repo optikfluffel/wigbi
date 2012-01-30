@@ -37,62 +37,6 @@
  */
 class DatabaseHandler
 {
-	/**#@+
-	 * @ignore
-	 */
-	private $_connection;
-	private $_dbName;
-	private $_host;
-	private $_password;
-	private $_userName;
-	/**#@-*/
-	
-
-	
-	/**
-	 * Create an instance of the class.
-	 * 
-	 * @access	public
-	 * 
-	 * @param	string	$host		The database host URL.
-	 * @param	string	$dbName		The name of the database to work with.
-	 * @param	string	$userName	The user name to use to login to the database.
-	 * @param	string	$password	The password to use to login to the database.
-	 */
-	public function __construct($host, $dbName, $userName, $password)
-	{
-		$this->_host = $host;
-		$this->_dbName = $dbName;
-		$this->_userName = $userName;
-		$this->_password = $password;
-	}
-	
-	
-	
-	/**
-	 * Get the name of the database to work with.
-	 * 
-	 * @access	public
-	 * 
-	 * @return	string	The name of the database to work with.
-	 */
-	public function dbName()
-	{
-		return $this->_dbName;
-	}
-	
-	/**
-	 * Get the database host URL.
-	 * 
-	 * @access	public
-	 * 
-	 * @return	string	The database host URL.
-	 */
-	public function host()
-	{
-		return $this->_host;
-	}
-	
 	/**
 	 * Get whether or not the handler is currently connected to a database.
 	 * 
@@ -130,34 +74,6 @@ class DatabaseHandler
 	}
 	
 	
-	
-	/**
-	 * Connect the handler to the specified database server.
-	 *
-	 * Note that this function will both attempt to connect to the
-	 * database server and select the database, if a name has been
-	 * specified. If any of these steps fail, false is returned.
-	 *  
-	 * @access	public
-	 * 
-	 * @return	bool	Whether or not a connection could be established.
-	 */
-	public function connect()
-	{
-		//Return false if a connection already exists
-		if ($this->isConnected())
-			return false;
-		
-		//Connect to the database server, abort if no result
-		$this->_connection = mysql_connect($this->host(), $this->userName(), $this->password(), true);
-		if (!$this->_connection)
-			return false;
-		
-		//Select database, if any, and return result
-		if ($this->dbName())
-			return mysql_select_db($this->dbName(), $this->_connection);
-		return true;
-	}
 	
 	/**
 	 * Check whether or not a certain database exists.
