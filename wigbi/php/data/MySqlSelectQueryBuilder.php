@@ -33,6 +33,7 @@ class MySqlSelectQueryBuilder implements IDatabaseSelectQueryBuilder
 {
 	private $_select;
 	private $_skip = 0;
+	private $_sort;
 	private $_take = 10;
 	private $_where;
 	
@@ -40,6 +41,7 @@ class MySqlSelectQueryBuilder implements IDatabaseSelectQueryBuilder
 	public function __construct()
 	{
 		$this->_select = array();
+		$this->_sort = array();
 		$this->_where = array();
 	}
 	
@@ -54,9 +56,10 @@ class MySqlSelectQueryBuilder implements IDatabaseSelectQueryBuilder
 		$result = "";
 		$result .= sizeof($this->_select) == 0 ? "SELECT *" : "SELECT " . implode(",", $this->_select);
 		$result .= " FROM $tableName";
-		$result .= sizeof($this->_where) == 0 ? "" : " WHERE " . implode(",", $this->_where);
+		$result .= sizeof($this->_where) == 0 ? "" : " WHERE " . implode(" AND ", $this->_where);
+		$result .= sizeof($this->_sort) == 0 ? "" : " ORDERBY " . implode(",", $this->_sort);
 		$result .= " LIMIT $this->_skip,$this->_take";
-		
+
 		return trim($result);
 	}
 	
@@ -70,6 +73,23 @@ class MySqlSelectQueryBuilder implements IDatabaseSelectQueryBuilder
 	{
 		foreach ($list as $select)
 			array_push($this->_select, $select);
+		return $this;
+	}
+	
+	/**
+	 * Define which columns to sort on.
+	 * 
+	 * 
+	 * @param	array	$columnName				The column to sort on.
+	 * @param	array	$descending			  	Give this arg a positive value to apply descending sort.
+	 * @return	IDatabaseSelectQueryBuilder		The resulting query builder.
+	 */
+	public function sort($columnName, $descending = 0)
+	{
+		$result = $columnName;
+		$result .= $descending ? " DESC" : "";
+		array_push($this->_sort, $result);
+		
 		return $this;
 	}
 	

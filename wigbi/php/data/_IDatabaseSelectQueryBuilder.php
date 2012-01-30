@@ -47,6 +47,16 @@ interface IDatabaseSelectQueryBuilder
 	function select($list);
 	
 	/**
+	 * Define which columns to sort on.
+	 * 
+	 * 
+	 * @param	array	$columnName				The column to sort on.
+	 * @param	array	$descending			  	Give this arg a positive value to apply descending sort.
+	 * @return	IDatabaseSelectQueryBuilder		The resulting query builder.
+	 */
+	function sort($columnName, $descending);
+	
+	/**
 	 * Define column filter conditions.
 	 * 
 	 * @param	array	$list					A list of filter conditions, e.g. ["foo=1", "bar=2"].
