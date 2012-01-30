@@ -20,7 +20,7 @@
  * @subpackage		PHP.Data
  * @version			2.0.0
  */
-class MySqlDatabaseConnection
+class MySqlDatabaseConnection implements IDatabaseConnection
 {
 	private $_connection;
 	private $_host;

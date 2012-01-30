@@ -28,7 +28,7 @@ interface IDatabaseConnection
 	 * 
 	 * @return	bool	Whether or not the operation was successful.
 	 */
-	function connect($host, $userName, $password);
+	function connect();
 	
 	/**
 	 * Check whether or not a certain database exists.
