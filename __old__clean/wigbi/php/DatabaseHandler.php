@@ -37,71 +37,8 @@
  */
 class DatabaseHandler
 {
-	/**
-	 * Get whether or not the handler is currently connected to a database.
-	 * 
-	 * @access	public
-	 * 
-	 * @return	bool	Whether or not the handler is currently connected to a database.
-	 */
-	public function isConnected()
-	{
-		return $this->_connection ? true : false;
-	}
-	
-	/**
-	 * Get password to use to login to the database.
-	 * 
-	 * @access	public
-	 * 
-	 * @return	string	The password to use to login to the database.
-	 */
-	public function password()
-	{
-		return $this->_password;
-	}
-	
-	/**
-	 * Get user name to use to login to the database.
-	 * 
-	 * @access	public
-	 * 
-	 * @return	string	The user name to use to login to the database.
-	 */
-	public function userName()
-	{
-		return $this->_userName;
-	}
 	
 	
-	
-	/**
-	 * Check whether or not a certain database exists.
-	 * 
-	 * @access	public
-	 * 
-	 * @param		string	The name of the database.
-	 * @return	bool		Whether or not sa certain database exists.
-	 */
-	public function databaseExists($name)
-	{
-		return mysql_select_db($name, $this->_connection);
-	}
-	
-	/**
-	 * Disconnect the handler any currently established connection.
-	 * 
-	 * @access	public
-	 * 
-	 * @return	bool	Whether or not the operation was successful.
-	 */
-	public function disconnect()
-	{
-		$result = mysql_close($this->_connection);
-		$this->_connection = null;
-		return $result;
-	}
-
 	/**
 	 * Move to the next row in a record set.
 	 * 

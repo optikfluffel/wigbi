@@ -58,8 +58,6 @@ class MySqlDatabaseConnection
 		if (!$this->_connection)
 			return false;
 		
-		$this->_isConnected = true;
-		
 		return $this->isConnected();
 	}
 	
@@ -70,7 +68,7 @@ class MySqlDatabaseConnection
 	 */
 	public function databaseExists($name)
 	{
-		
+		return mysql_select_db($name, $this->_connection);
 	}
 	
 	/**
@@ -78,9 +76,12 @@ class MySqlDatabaseConnection
 	 * 
 	 * @return	bool	Whether or not the operation was successful.
 	 */
-	function disconnect()
+	public function disconnect()
 	{
+		$result = mysql_close($this->_connection);
+		$this->_connection = null;
 		
+		return $this->isConnected();
 	}
 	
 	/**
@@ -88,7 +89,7 @@ class MySqlDatabaseConnection
 	 * 
 	 * @return	bool	Whether or not the data provider is currently connected.
 	 */
-	function isConnected()
+	public function isConnected()
 	{
 		return $this->_connection != null;
 	}
@@ -96,12 +97,15 @@ class MySqlDatabaseConnection
 	/**
 	 * Execute a query and return result, if any.
 	 * 
+	 * SELECT, SHOW, DESCRIBE, EXPLAIN queries return a result set.
+	 * INSERT, UPDATE, DELETE, DROP queries return a result boolean.
+	 * 
 	 * @param	string	$query	The query to execute.
 	 * @return	mixed			The query result, based on the type of query executed.
 	 */
-	function query($query)
+	public function query($query)
 	{
-		
+		mysql_query($query, $this->_connection);
 	}
 	
 	/**
@@ -109,9 +113,9 @@ class MySqlDatabaseConnection
 	 * 
 	 * @return	bool	Whether or not the database could be selected
 	 */
-	function selectDatabase($databaseName)
+	public function selectDatabase($databaseName)
 	{
-		
+		return mysql_select_db($databaseName, $this->_connection);
 	}
 	
 	/**
@@ -119,9 +123,12 @@ class MySqlDatabaseConnection
 	 * 
 	 * @return	bool
 	 */
-	function tableExists($tableName)
+	public function tableExists($tableName)
 	{
-		
+		$result = mysql_query("show tables like '" . $tableName . "'", $this->_connection);
+		if ($result)
+			$result = mysql_fetch_assoc($result);
+		return $result ? true : false;
 	}
 	
 	/**
@@ -129,7 +136,7 @@ class MySqlDatabaseConnection
 	 * 
 	 * @return	bool
 	 */
-	function tableColumnExists($tableName, $columnName)
+	public function tableColumnExists($tableName, $columnName)
 	{
 		
 	}
