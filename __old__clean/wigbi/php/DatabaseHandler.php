@@ -72,38 +72,6 @@ class DatabaseHandler
 		$this->_rs = mysql_query($query, $this->_connection);
 		return $this->_rs;
 	}
-	
-	/**
-	 * Check whether or not a certain table exists in the database.
-	 * 
-	 * @access	public
-	 * 
-	 * @param		string	$name	Table name.
-	 * @return	bool						Whether or not the table exists.
-	 */
-	public function tableExists($name)
-	{
-		$result = $this->query("show tables like '" . $name . "'");
-		return $this->getNextRow($result) ? true : false;
-	}
-	
-	/**
-	 * Check whether or not a certain table column exists in the database.
-	 * 
-	 * @access	public
-	 * 
-	 * @param		string	$tableName	Table name.
-	 * @param		string	$columnName	Column name.
-	 * @return	bool								Whether or not the column exists.
-	 */
-	public function tableColumnExists($tableName, $columnName)
-	{
-		$columns = mysql_list_fields($this->dbName(), $tableName);
-		for ($i=0; $i < mysql_num_fields($columns); $i++)
-			if (mysql_field_name($columns, $i) == $columnName)
-				return true;
-		return false;
-	}
 }
 
 ?>

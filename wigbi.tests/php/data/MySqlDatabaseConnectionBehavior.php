@@ -145,10 +145,46 @@
 		{
 			$this->_connection->connect();
 			$this->_connection->query("CREATE DATABASE wigbi_tests");
-			$this->_connection->selectDatabase("wigbi_tests2");
+			$this->_connection->selectDatabase("wigbi_tests");
 			$this->_connection->query("CREATE TABLE wigbi_tests (id VARCHAR(40) NOT NULL, PRIMARY KEY(id))");
 			
 			$result = $this->_connection->tableExists("wigbi_tests");
+			
+			$this->assertTrue($result);
+			
+			$this->_connection->query("DROP DATABASE wigbi_tests");
+		}
+		
+		public function test_tableColumnExists_shouldFailForNoConnection()
+		{
+			$this->disableLogging();
+			$result = $this->_connection->tableColumnExists("wigbi_tests", "wigbi_tests", "id");
+			
+			$this->assertFalse($result);
+		}
+		
+		public function test_tableColumnExists_shouldReturnFalseForNoExistingTableColumn()
+		{
+			$this->_connection->connect();
+			$this->_connection->query("CREATE DATABASE wigbi_tests");
+			$this->_connection->selectDatabase("wigbi_tests");
+			$this->_connection->query("CREATE TABLE wigbi_tests (id VARCHAR(40) NOT NULL, PRIMARY KEY(id))");
+			
+			$result = $this->_connection->tableColumnExists("wigbi_tests", "wigbi_tests", "name");
+			
+			$this->assertFalse($result);
+			
+			$this->_connection->query("DROP DATABASE wigbi_tests");
+		}
+		
+		public function test_tableColumnExists_shouldReturnTrueForExistingTable()
+		{
+			$this->_connection->connect();
+			$this->_connection->query("CREATE DATABASE wigbi_tests");
+			$this->_connection->selectDatabase("wigbi_tests");
+			$this->_connection->query("CREATE TABLE wigbi_tests (id VARCHAR(40) NOT NULL, PRIMARY KEY(id))");
+			
+			$result = $this->_connection->tableColumnExists("wigbi_tests", "wigbi_tests", "id");
 			
 			$this->assertTrue($result);
 			

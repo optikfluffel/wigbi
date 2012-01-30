@@ -136,8 +136,13 @@ class MySqlDatabaseConnection
 	 * 
 	 * @return	bool
 	 */
-	public function tableColumnExists($tableName, $columnName)
+	public function tableColumnExists($databaseName, $tableName, $columnName)
 	{
+		$columns = mysql_list_fields($databaseName, $tableName);
+		for ($i=0; $i < mysql_num_fields($columns); $i++)
+			if (mysql_field_name($columns, $i) == $columnName)
+				return true;
+		return false;
 		
 	}
 }

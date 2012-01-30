@@ -78,7 +78,7 @@ interface IDatabaseConnection
 	 * 
 	 * @return	bool
 	 */
-	function tableColumnExists($tableName, $columnName);
+	function tableColumnExists($databaseName, $tableName, $columnName);
 }
 
 ?>
