@@ -21,14 +21,16 @@
  * @subpackage		PHP.Data
  * @version			2.0.0
  */
-class MySqlDatabaseSelectQueryBuilder implements IDatabaseSelectQueryBuilder
+class MySqlSelectQueryBuilder implements IDatabaseSelectQueryBuilder
 {
 	private $_select;
+	private $_where;
 	
 	
 	public function __construct()
 	{
 		$this->_select = array();
+		$this->_where = array();
 	}
 	
 	
@@ -42,9 +44,10 @@ class MySqlDatabaseSelectQueryBuilder implements IDatabaseSelectQueryBuilder
 		$result = "";
 		$result .= "SELECT ";
 		$result .= sizeof($this->_select) == 0 ? "*" : implode(",", $this->_select);
-		$result .= " FROM $tableName";
+		$result .= " FROM $tableName ";
+		$result .= sizeof($this->_where) == 0 ? "" : "WHERE " . implode(",", $this->_where);
 		
-		return $result;
+		return trim($result);
 	}
 	
 	/**
@@ -56,6 +59,18 @@ class MySqlDatabaseSelectQueryBuilder implements IDatabaseSelectQueryBuilder
 	{
 		foreach ($list as $select)
 			array_push($this->_select, $select);
+		return $this;
+	}
+	
+	/**
+	 * Define which columns that are of interest.
+	 * 
+	 * @param	array	$list	A list of names to select.
+	 */
+	public function where($list)
+	{
+		foreach ($list as $where)
+			array_push($this->_where, $where);
 		return $this;
 	}
 }

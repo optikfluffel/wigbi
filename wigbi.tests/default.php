@@ -5,7 +5,7 @@ require("../wigbi/wigbi.php");
 require($wigbi_root . "wigbi.tests/wigbi.tests.include.php");
 
 SimpleTest::ignore('CookiesBehavior');
-SimpleTest::ignore('MySqlDatabaseConnectionBehavior');
+SimpleTest::ignore('MySqlConnectionBehavior');
 SimpleTest::ignore('UrlExistsValidatorgBehavior');
 
 ?>

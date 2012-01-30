@@ -1,14 +1,14 @@
 <?php
 
 /**
- * The Wigbi MySqlDatabaseConnection class file.
+ * The Wigbi MySqlConnection class file.
  * 
  * Wigbi is released under the MIT license. More info can be found
  * at http://www.opensource.org/licenses/mit-license.php
  */
 
 /**
- * The Wigbi MySqlDatabaseConnection class.
+ * The Wigbi MySqlConnection class.
  * 
  * This class can be used to work with a MySQL database.
  * 
@@ -20,7 +20,7 @@
  * @subpackage		PHP.Data
  * @version			2.0.0
  */
-class MySqlDatabaseConnection implements IDatabaseConnection
+class MySqlConnection implements IDatabaseConnection
 {
 	private $_connection;
 	private $_host;

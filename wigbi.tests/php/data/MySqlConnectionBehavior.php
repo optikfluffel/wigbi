@@ -1,18 +1,13 @@
 <?php
 
-	class MySqlDatabaseConnectionBehavior extends UnitTestCase
+	class MySqlConnectionBehavior extends UnitTestCase
 	{
 		private $_connection;
 		
 		
 		function setUp()
 		{
-			$this->_connection = new MySqlDatabaseConnection("localhost", "root", "root");
-		}
-		
-		function setUpInvalidConnection()
-		{
-			$this->_connection = new MySqlDatabaseConnection("foo", "bar", "foobar");
+			$this->_connection = new MySqlConnection("localhost", "root", "root");
 		}
 		
 		function tearDown()
@@ -36,7 +31,7 @@
 		public function test_connect_shouldNotConnectWithInvalidCredentials()
 		{
 			$this->disableLogging();
-			$this->setUpInvalidConnection();
+			$this->_connection = new MySqlDatabaseConnection("foo", "bar", "foobar");
 			
 			$result = $this->_connection->connect();
 			
