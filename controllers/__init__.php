@@ -3,6 +3,12 @@
 //Include Wigbi (prepares Wigbi, so that it then can be started)
 include "../wigbi/wigbi.php";
 
+//Define shortcut help methods for the view
+function sr($path){ return Wigbi::serverRoot($path); }
+function cr($path){ return Wigbi::clientRoot($path); }
+function psr($path){ print Wigbi::serverRoot($path); }
+function pcr($path){ print Wigbi::clientRoot($path); }
+
 //Get query string values that are set by root .htaccess routes
 $controllerName = Context::current()->get("controller");
 $actionName = Context::current()->get("action");

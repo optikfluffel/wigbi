@@ -11,9 +11,8 @@
       <script src="/js/html5.js"></script>
     <![endif]-->
 
-    <!-- Le styles -->
-    <link href="/bootstrap.min.css" rel="stylesheet">
-    <link href="/style.css" rel="stylesheet">
+    <?php Wigbi::cssIncluder()->includePath("wigbi/assets/css/bootstrap.min.css"); ?>
+    <?php Wigbi::cssIncluder()->includePath("wigbi/assets/css/style.css"); ?>
     
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="/favicon.ico">

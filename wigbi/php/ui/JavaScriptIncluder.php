@@ -10,8 +10,8 @@
 /**
  * The Wigbi JavaScriptIncluder class.
  * 
- * This class can be used to include js files to the page. It only
- * handles single files, and will add a script tag for every file.
+ * This class can be used to include CSS files to the page. It can
+ * include both single and several files.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -21,17 +21,17 @@
  * @subpackage		PHP.UI
  * @version			2.0.0
  */
-class JavaScriptIncluder implements IJavaScriptIncluder
-{ 
+class JavaScriptIncluder extends ClientFileIncluderBase implements IClientFileIncluder
+{
 	/**
-	 * Output a script tag to a certain JavaScript file path.
+	 * Include a certain file.
 	 * 
-	 * If a ~/ is used at the beginning of the path, it's replaced
-	 * with Wigbi::clientRoot().
+	 * When using this method, use the full client url of the file.
+	 * 
+	 * @param	string	$filePath
 	 */
-	public function includePath($path)
+	public function includeFile($path)
 	{
-		$path = str_replace("~/", Wigbi::clientRoot(), $path);
 		print "<script type=\"text/javascript\" src=\"$path\"></script>";
 	}
 }

@@ -11,7 +11,7 @@
  * The Wigbi CssIncluder class.
  * 
  * This class can be used to include CSS files to the page. It can
- * only handle single files and will add a link tag for every file.
+ * include both single and several files.
  * 
  * 
  * @author			Daniel Saidi <daniel.saidi@gmail.com>
@@ -21,17 +21,17 @@
  * @subpackage		PHP.UI
  * @version			2.0.0
  */
-class CssIncluder implements ICssIncluder
+class CssIncluder extends ClientFileIncluderBase implements IClientFileIncluder
 {
 	/**
-	 * Output a link tag to a certain CSS file path.
+	 * Include a certain file.
 	 * 
-	 * If a ~/ is used at the beginning of the path, it's replaced
-	 * with Wigbi::clientRoot().
+	 * When using this method, use the full client url of the file.
+	 * 
+	 * @param	string	$filePath
 	 */
-	public function includePath($path)
+	public function includeFile($path)
 	{
-		$path = str_replace("~/", Wigbi::clientRoot(), $path);
 		print "<link rel=\"stylesheet\" type=\"text/css\" href=\"$path\" />";
 	}
 }

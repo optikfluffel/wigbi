@@ -8,30 +8,27 @@
 		
 		function setUp()
 		{
-			Mock::generate('IFileSystem');
-			$this->_fileSystem = new MockIFileSystem();
-			
 			$this->_includer = new CssIncluder($this->_fileSystem);
 		}
 		
 		
 		
-		public function test_includePath_shouldAddSingleFile()
+		public function test_includeFile_shouldAddSingleFile()
 		{
 			ob_start();
-			$this->_includer->includePath("bar.css");
+			$this->_includer->includeFile("foo.css");
 			$result = ob_get_clean();
 			
-			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"bar.css\" />");
+			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"foo.css\" />");
 		}
 		
-		public function test_includePath_shouldReplaceTildeDashWithClientRoot()
+		public function test_includeFiles_shouldAddMultipleFileAsParameters()
 		{
 			ob_start();
-			$this->_includer->includePath("~/bar.css");
+			$this->_includer->includeFiles("foobar/", "foo.css", "bar.css");
 			$result = ob_get_clean();
 			
-			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"../bar.css\" />");
+			$this->assertEqual($result, "<link rel=\"stylesheet\" type=\"text/css\" href=\"foobar/foo.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"foobar/bar.css\" />");
 		}
 	}
 
