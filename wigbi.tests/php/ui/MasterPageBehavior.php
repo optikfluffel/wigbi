@@ -51,22 +51,16 @@
 			MasterPage::setContent("foo", null);
 		}
 		
-		public function test_phpIncluder_shouldUseFileIncluderByDefault()
+		public function test_hasContent_shouldReturnFalseForNotSet()
 		{
-			$includer = MasterPage::fileIncluder();
-			
-			$this->assertEqual(get_class(MasterPage::fileIncluder()), "PhpIncluder");
+			$this->assertEqual(MasterPage::hasContent("foobar"), false);
 		}
 		
-		public function test_phpIncluder_shouldUseCustomClassAndResetOnNull()
+		public function test_hasContent_shouldReturnTrueForSet()
 		{
-			$includer = MasterPage::fileIncluder($this->_phpIncluder);
+			MasterPage::setContent("foo", "bar");
 			
-			$this->assertEqual(get_class(MasterPage::fileIncluder()), "MockIPhpIncluder");
-			
-			$includer = MasterPage::fileIncluder(null);
-			
-			$this->assertEqual(get_class(MasterPage::fileIncluder()), "PhpIncluder");
+			$this->assertEqual(MasterPage::hasContent("foo"), true);
 		}
 		
 		public function test_file_shouldGetSetValue()
@@ -76,6 +70,24 @@
 			MasterPage::file("foo");
 			
 			$this->assertEqual(MasterPage::file(), "foo");
+		}
+		
+		public function test_fileIncluder_shouldUseFileIncluderByDefault()
+		{
+			$includer = MasterPage::fileIncluder();
+			
+			$this->assertEqual(get_class(MasterPage::fileIncluder()), "PhpIncluder");
+		}
+		
+		public function test_fileIncluder_shouldUseCustomClassAndResetOnNull()
+		{
+			$includer = MasterPage::fileIncluder($this->_phpIncluder);
+			
+			$this->assertEqual(get_class(MasterPage::fileIncluder()), "MockIPhpIncluder");
+			
+			$includer = MasterPage::fileIncluder(null);
+			
+			$this->assertEqual(get_class(MasterPage::fileIncluder()), "PhpIncluder");
 		}
 		
 		public function test_openClose_shouldPopulateContentArea()

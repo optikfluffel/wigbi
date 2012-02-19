@@ -102,6 +102,16 @@ class MasterPage
 	}
 	
 	/**
+	 * Check whether or not a certain contant area has been used.
+	 * 
+	 * @param	string	$contentAreaName	The name of the content area.
+	 */
+	public static function hasContent($contentArea)
+	{
+		return array_key_exists($contentArea, MasterPage::$_contentAreas);
+	}
+	
+	/**
 	 * Open a certain content area for writing.
 	 * 
 	 * Content can be added to the area either with print, echo or
