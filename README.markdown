@@ -19,7 +19,7 @@ The Wigbi unit tests are not part of the release bundle. Grab them by forking th
 Getting started
 ===============
 
-If you are using Wigbi for the first time, you should start off by having a look at the short video tutorial that is up at wigbi.com.
+If you are using Wigbi for the first time, you should start off by having a look at the short video tutorial that is up at [wigbi.com](http://wigbi.com).
 
 Wigbi does not require the MVC components, but since the home view that is included in the release by default helps you configure the framework, you should use it at least the first time you set it up.
 
@@ -53,8 +53,8 @@ With this new setup, you only have to use the line if you need it.
 Contact & downloads
 ===================
 
-You will always find the latest source code and releases at GitHub: http://github.com/danielsaidi/wigbi
+You will always find the latest source code and releases at [GitHub](http://github.com/danielsaidi/wigbi)
 
-If you feel like helping out, contact me at daniel.saidi@gmail.com or visit http://www.wigbi.com
+If you feel like helping out, [contact me](daniel.saidi@gmail.com) or visit http://www.wigbi.com
 
 Since no one has taken contact with me yet, I assume that I can be lazy and work in a slooow pace that fits me :)
